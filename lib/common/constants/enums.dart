@@ -1,0 +1,108 @@
+// ignore_for_file: constant_identifier_names
+
+enum CompetenceFilter { E1, E2, S3, S4 }
+
+Map<CompetenceFilter, bool> initialCompetenceFilterValues = {
+  CompetenceFilter.E1: false,
+  CompetenceFilter.E2: false,
+  CompetenceFilter.S3: false,
+  CompetenceFilter.S4: false
+};
+
+enum PupilSortMode {
+  sortByName,
+  sortByMissedExcused,
+  sortByMissedUnexcused,
+  sortByContacted,
+  sortByLate,
+  sortByCredit,
+  sortByCreditEarned,
+  sortByGoneHome,
+}
+
+enum PupilFilter {
+  E1,
+  E2,
+  E3,
+  S3,
+  S4,
+  A1,
+  A2,
+  A3,
+  B1,
+  B2,
+  B3,
+  B4,
+  C1,
+  C2,
+  C3,
+  late,
+  missed,
+  home,
+  unexcused,
+  contacted,
+  goneHome,
+  present,
+  notPresent,
+  specialNeeds,
+  ogs,
+  migrationSupport,
+  developmentPlan1,
+  developmentPlan2,
+  developmentPlan3,
+  fiveYears,
+  communicationPupil,
+  communicationTutor1,
+  communicationTutor2,
+  justGirls,
+  justBoys,
+}
+
+Map<PupilSortMode, bool> initialSortModeValues = {
+  PupilSortMode.sortByName: true,
+  PupilSortMode.sortByMissedExcused: false,
+  PupilSortMode.sortByMissedUnexcused: false,
+  PupilSortMode.sortByContacted: false,
+  PupilSortMode.sortByLate: false,
+  PupilSortMode.sortByCredit: false,
+  PupilSortMode.sortByCreditEarned: false,
+  PupilSortMode.sortByGoneHome: false
+};
+
+Map<PupilFilter, bool> initialFilterValues = {
+  PupilFilter.E1: false,
+  PupilFilter.E2: false,
+  PupilFilter.E3: false,
+  PupilFilter.S3: false,
+  PupilFilter.S4: false,
+  PupilFilter.A1: false,
+  PupilFilter.A2: false,
+  PupilFilter.A3: false,
+  PupilFilter.B1: false,
+  PupilFilter.B2: false,
+  PupilFilter.B3: false,
+  PupilFilter.B4: false,
+  PupilFilter.C1: false,
+  PupilFilter.C2: false,
+  PupilFilter.C3: false,
+  PupilFilter.late: false,
+  PupilFilter.missed: false,
+  PupilFilter.home: false,
+  PupilFilter.unexcused: false,
+  PupilFilter.contacted: false,
+  PupilFilter.goneHome: false,
+  PupilFilter.present: false,
+  PupilFilter.notPresent: false,
+  PupilFilter.specialNeeds: false,
+  PupilFilter.ogs: false,
+  PupilFilter.migrationSupport: false,
+  PupilFilter.developmentPlan1: false,
+  PupilFilter.developmentPlan2: false,
+  PupilFilter.developmentPlan3: false,
+  PupilFilter.fiveYears: false,
+  PupilFilter.communicationPupil: false,
+  PupilFilter.communicationTutor1: false,
+  PupilFilter.communicationTutor2: false,
+  PupilFilter.justBoys: false,
+  PupilFilter.justGirls: false,
+};

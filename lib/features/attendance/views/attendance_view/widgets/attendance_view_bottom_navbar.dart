@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/attendance_filter_bottom_sheet.dart';
+import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/date_pickers.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
+
+BottomAppBar attendanceViewBottomNavBar(
+    BuildContext context, bool filtersOn, DateTime thisDate) {
+  return BottomAppBar(
+    padding: const EdgeInsets.all(10),
+    shape: null,
+    color: backgroundColor,
+    child: IconTheme(
+      data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+      child: Row(
+        children: <Widget>[
+          IconButton(
+            tooltip: 'zurück',
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          const Spacer(),
+          IconButton(
+            tooltip: 'Scan Kinder-IDs',
+            icon: const Icon(
+              Icons.qr_code_scanner_rounded,
+              size: 30,
+            ),
+            onPressed: () {
+              locator<PupilBaseManager>().scanNewPupilBase(context);
+            },
+          ),
+          const Gap(30),
+          InkWell(
+            onTap: () => selectThisDate(context, thisDate),
+            onLongPress: () => locator<SchooldayManager>().getThisDate(),
+            child: const Icon(
+              Icons.today_rounded,
+              color: Colors.white,
+              size: 30,
+            ),
+          ),
+          const Gap(30),
+          InkWell(
+            onTap: () => showAttendanceFilterBottomSheet(context),
+            onLongPress: () => locator<PupilFilterManager>().resetFilters(),
+            child: Icon(
+              Icons.filter_list,
+              color: filtersOn ? Colors.deepOrange : Colors.white,
+              size: 30,
+            ),
+          ),
+          const Gap(10)
+        ],
+      ),
+    ),
+  );
+}

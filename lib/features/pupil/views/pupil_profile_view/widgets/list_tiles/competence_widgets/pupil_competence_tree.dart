@@ -1,0 +1,177 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
+
+import 'package:schuldaten_hub/features/competence/models/competence.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
+import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/goal/views/new_category_goal_view/new_category_goal_view.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_category_status_widgets/category_status_dialog.dart';
+
+List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
+    double indentation, Color? passedBackGroundColor, BuildContext context) {
+  List<Widget> competenceWidgets = [];
+  final competenceLocator = locator<CompetenceManager>();
+  List<Competence> competences = competenceLocator.competences.value;
+  Color competenceBackgroundColor = backgroundColor;
+  for (var competence in competences) {
+    if (passedBackGroundColor == null) {
+      if (competence.competenceName == 'Sachunterricht') {
+        competenceBackgroundColor = const Color.fromARGB(255, 156, 76, 149);
+      } else if (competence.competenceName == 'Englisch') {
+        competenceBackgroundColor = const Color.fromARGB(255, 44, 46, 193);
+      } else if (competence.competenceName == 'Mathematik') {
+        competenceBackgroundColor = const Color.fromARGB(255, 5, 118, 172);
+      } else if (competence.competenceName == 'Musik') {
+        competenceBackgroundColor = const Color.fromARGB(255, 5, 155, 88);
+      } else if (competence.competenceName == 'Deutsch') {
+        competenceBackgroundColor = const Color.fromARGB(255, 228, 70, 60);
+      } else if (competence.competenceName == 'Kunst') {
+        competenceBackgroundColor = const Color.fromARGB(255, 244, 198, 17);
+      } else if (competence.competenceName == 'Katholische Religion') {
+        competenceBackgroundColor = const Color.fromARGB(255, 211, 115, 13);
+      } else if (competence.competenceName == 'Islamische Religion') {
+        competenceBackgroundColor = const Color.fromARGB(255, 227, 168, 29);
+      }
+    } else {
+      competenceBackgroundColor = passedBackGroundColor;
+    }
+
+    if (competence.parentCompetence == parentId) {
+      final children = buildPupilCompetenceTree(pupil, competence.competenceId,
+          indentation + 15, competenceBackgroundColor, context);
+
+      competenceWidgets.add(
+        Padding(
+          padding: EdgeInsets.only(top: 10, left: indentation),
+          child: children.isNotEmpty
+              ? Wrap(
+                  children: [
+                    Card(
+                      color: competenceBackgroundColor,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      clipBehavior: Clip.antiAlias,
+                      margin: EdgeInsets.zero,
+                      child: ExpansionTile(
+                        iconColor: Colors.white,
+                        collapsedTextColor: Colors.white,
+                        collapsedIconColor: Colors.white,
+                        textColor: Colors.white,
+                        maintainState: true,
+                        backgroundColor: competenceBackgroundColor,
+                        title: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: InkWell(
+                                      onLongPress: () {
+                                        // Navigator.of(context)
+                                        //     .push(MaterialPageRoute(
+                                        //   builder: (ctx) => NewCategoryGoalView(
+                                        //     pupilId: pupil.internalId,
+                                        //     goalCategoryId:
+                                        //         competence.competenceId,
+                                        //   ),
+                                        // ));
+                                      },
+                                      child: Container(
+                                        width: 20.0,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: locator<GoalManager>()
+                                              .getCategoryStatusColor(pupil,
+                                                  competence.competenceId),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                      competence.competenceName,
+                                      maxLines: 3,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // locator<GoalManager>().getCategoryStatusComment(
+                              //     pupil, competence.competenceId),
+                            ],
+                          ),
+                        ),
+                        collapsedBackgroundColor: competenceBackgroundColor,
+                        children: children,
+                      ),
+                    ),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: InkWell(
+                              onTap: () => categoryStatusDialog(
+                                  pupil, competence.competenceId, context),
+                              onLongPress: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => NewCategoryGoalView(
+                                    pupilId: pupil.internalId,
+                                    goalCategoryId: competence.competenceId,
+                                  ),
+                                ));
+                              },
+                              child: Container(
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  color: locator<GoalManager>()
+                                      .getCategoryStatusColor(
+                                          pupil, competence.competenceId),
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Gap(5),
+                          Flexible(
+                            child: Text(
+                              competence.competenceName,
+                              maxLines: 4,
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      locator<GoalManager>().getCategoryStatusComment(
+                          pupil, competence.competenceId),
+                    ],
+                  ),
+                ),
+        ),
+      );
+    }
+  }
+
+  return competenceWidgets;
+}

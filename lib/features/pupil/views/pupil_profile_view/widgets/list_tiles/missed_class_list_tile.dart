@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/widgets/confirmation_dialogue.dart';
 import 'package:schuldaten_hub/common/widgets/display_dialog.dart';
+import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
 
 missedClassMissedTiles(Pupil pupil, context) {
+  List<MissedClass> missedClasses = List.from(pupil.pupilMissedClasses!);
+  // sort by missedDay
+  missedClasses.sort((a, b) => a.missedDay.compareTo(b.missedDay));
   return ListTileTheme(
     contentPadding: const EdgeInsets.all(0),
     dense: true,
@@ -28,7 +33,7 @@ missedClassMissedTiles(Pupil pupil, context) {
             padding: const EdgeInsets.only(left: 10, top: 5, bottom: 15),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: pupil.pupilMissedClasses!.length,
+            itemCount: missedClasses.length,
             itemBuilder: (BuildContext context, int index) {
               // pupil.pupilMissedClasses.sort(
               //     (a, b) => a.missedDay.compareTo(b.missedDay));
@@ -41,9 +46,11 @@ missedClassMissedTiles(Pupil pupil, context) {
                     //- like _changeMissedClassHermannpupilPage
                   },
                   onLongPress: () async {
+                    bool? confirm = await showConfirmationDialog(
+                        context, 'Fehlzeit löschen', 'Die Fehlzeit löschen?');
+                    if (confirm! == false) return;
                     await locator<AttendanceManager>().deleteMissedClass(
-                        pupil.internalId,
-                        pupil.pupilMissedClasses![index].missedDay);
+                        pupil.internalId, missedClasses[index].missedDay);
                     if (context.mounted) {
                       displayDialog(context, 'Fehlzeit gelöscht',
                           'Die Fehlzeit wurden gelöscht!');
@@ -55,8 +62,7 @@ missedClassMissedTiles(Pupil pupil, context) {
                       children: [
                         Text(
                           DateFormat('dd.MM.yyyy')
-                              .format(
-                                  pupil.pupilMissedClasses![index].missedDay)
+                              .format(missedClasses[index].missedDay)
                               .toString(),
                           style: const TextStyle(
                             color: Colors.black,
@@ -65,13 +71,10 @@ missedClassMissedTiles(Pupil pupil, context) {
                           ),
                         ),
                         const Gap(5),
-                        missedTypeBadge(
-                            pupil.pupilMissedClasses![index].missedType),
-                        excusedBadge(pupil.pupilMissedClasses![index].excused),
-                        contactedDayBadge(
-                            pupil.pupilMissedClasses![index].contacted),
-                        returnedBadge(
-                            pupil.pupilMissedClasses![index].returned),
+                        missedTypeBadge(missedClasses[index].missedType),
+                        excusedBadge(missedClasses[index].excused),
+                        contactedDayBadge(missedClasses[index].contacted),
+                        returnedBadge(missedClasses[index].returned),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -79,9 +82,7 @@ missedClassMissedTiles(Pupil pupil, context) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const Gap(5),
-                                if (pupil.pupilMissedClasses![index]
-                                        .missedType ==
-                                    'late')
+                                if (missedClasses[index].missedType == 'late')
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: RichText(
@@ -91,20 +92,18 @@ missedClassMissedTiles(Pupil pupil, context) {
                                       children: <TextSpan>[
                                         TextSpan(
                                             text:
-                                                '${pupil.pupilMissedClasses![index].minutesLate!} min')
+                                                '${missedClasses[index].minutesLate ?? 0} min')
                                       ],
                                     )),
                                   ),
-                                if (pupil.pupilMissedClasses![index].returned ==
-                                    true)
+                                if (missedClasses[index].returned == true)
                                   RichText(
                                       text: TextSpan(
                                     text: 'abgeholt um: ',
                                     style: DefaultTextStyle.of(context).style,
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: pupil.pupilMissedClasses![index]
-                                              .returnedAt)
+                                          text: missedClasses[index].returnedAt)
                                     ],
                                   )),
                               ],
@@ -113,23 +112,19 @@ missedClassMissedTiles(Pupil pupil, context) {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 const Gap(5),
-                                const Text('erstellt von'),
+                                const Text('erstellt von: '),
                                 const Gap(5),
                                 Text(
-                                  pupil.pupilMissedClasses![index].createdBy,
+                                  missedClasses[index].createdBy,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const Gap(5),
-                                if (pupil.pupilMissedClasses![index]
-                                        .modifiedBy !=
-                                    null)
-                                  const Text('zuletzt geändert von'),
-                                if (pupil.pupilMissedClasses![index]
-                                        .modifiedBy !=
-                                    null)
+                                if (missedClasses[index].modifiedBy != null)
+                                  const Text('zuletzt geändert von: '),
+                                if (missedClasses[index].modifiedBy != null)
                                   Text(
-                                    pupil.pupilMissedClasses![index].createdBy,
+                                    missedClasses[index].createdBy,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),

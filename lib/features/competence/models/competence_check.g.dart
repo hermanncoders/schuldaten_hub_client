@@ -35,8 +35,7 @@ Map<String, dynamic> _$$CompetenceCheckImplToJson(
       'pupil_id': instance.pupilId,
       'is_report': instance.isReport,
       'report_id': instance.reportId,
-      'competence_check_files':
-          instance.competenceCheckFiles?.map((e) => e.toJson()).toList(),
+      'competence_check_files': instance.competenceCheckFiles,
     };
 
 _$CompetenceCheckFileImpl _$$CompetenceCheckFileImplFromJson(

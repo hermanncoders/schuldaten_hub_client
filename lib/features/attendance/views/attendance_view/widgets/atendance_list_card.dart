@@ -161,9 +161,10 @@ class AttendanceCard extends WatchingWidget {
                               newValue!,
                               thisDate,
                               minutesLate);
+                        } else {
+                          attendanceManager.changeMissedTypeValue(
+                              pupil.internalId, newValue!, thisDate);
                         }
-                        attendanceManager.changeMissedTypeValue(
-                            pupil.internalId, newValue!, thisDate);
                       },
                     ),
                   ),
@@ -222,7 +223,7 @@ class AttendanceCard extends WatchingWidget {
                   Checkbox(
                     checkColor: Colors.white,
                     activeColor: goneHomeColor,
-                    value: returnedValue!,
+                    value: returnedValue ?? false,
                     onChanged: (bool? newValue) async {
                       if (newValue == true) {
                         final String? returnedTime =

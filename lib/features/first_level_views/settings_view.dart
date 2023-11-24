@@ -100,26 +100,23 @@ class SettingsView extends WatchingWidget {
                       ));
                     },
                   ),
-                  isAdmin == true
-                      ? SettingsTile.navigation(
-                          title: const Text('Kinder QR-Ids zeigen'),
-                          onPressed: (context) async {
-                            final List<int> pupilIds =
-                                await Navigator.of(context)
-                                    .push(MaterialPageRoute(
-                              builder: (ctx) => const SelectPupilList(),
-                            ));
-                            if (pupilIds.isEmpty) {
-                              return;
-                            }
-                            final String qr = await locator<PupilBaseManager>()
-                                .generatePupilBaseQrData(pupilIds);
+                  SettingsTile.navigation(
+                      title: const Text('Kinder QR-Ids zeigen'),
+                      onPressed: (context) async {
+                        final List<int> pupilIds =
+                            await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => const SelectPupilList(),
+                        ));
+                        if (pupilIds.isEmpty) {
+                          return;
+                        }
+                        final String qr = await locator<PupilBaseManager>()
+                            .generatePupilBaseQrData(pupilIds);
 
-                            if (context.mounted) {
-                              await showQrCode(qr, context);
-                            }
-                          })
-                      : SettingsTile.navigation(title: const Text('nur Admin'))
+                        if (context.mounted) {
+                          await showQrCode(qr, context);
+                        }
+                      })
                 ],
               ),
             ],

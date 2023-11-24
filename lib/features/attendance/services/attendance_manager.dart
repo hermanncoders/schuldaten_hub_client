@@ -51,17 +51,10 @@ class AttendanceManager {
     return foundMissedClassIndex;
   }
 
-  Pupil? _findPupilById(int pupilId) {
-    final pupils = pupilManager.readPupils();
-    final Pupil pupil =
-        pupils.singleWhere((element) => element.internalId == pupilId);
-    return pupil;
-  }
-
   bool setExcusedValue(int pupilId, DateTime date) {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1) {
       return false;
@@ -73,7 +66,7 @@ class AttendanceManager {
   void changeExcusedValue(int pupilId, DateTime date, bool newValue) async {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == null || missedClass == -1) {
       return;
@@ -95,7 +88,7 @@ class AttendanceManager {
   bool? setReturnedValue(int pupilId, DateTime date) {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
 
     if (missedClass == -1) {
@@ -127,7 +120,7 @@ class AttendanceManager {
       int pupilId, bool newValue, DateTime date, String? time) async {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     final List<int> pupilBaseIds =
         locator<PupilBaseManager>().availablePupilIds.value;
@@ -142,10 +135,10 @@ class AttendanceManager {
         "missed_day": date.formatForJson(),
         "missed_type": 'none',
         "excused": false,
-        "contacted": false,
+        "contacted": '0',
         "returned": true,
         "returned_at": time,
-        "late_at": null,
+        "minutes_late": null,
         "written_excuse": null
       });
       // making the request
@@ -203,12 +196,12 @@ class AttendanceManager {
     }
   }
 
-  void changeLateTypeValue(
+  Future<void> changeLateTypeValue(
       int pupilId, String dropdownValue, DateTime date, int minutesLate) async {
     resetOperationReport();
     _setIsRunning(true);
     // Let's look for an existing missed class - if pupil and date match, there is one
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1) {
       // The missed class does not exist - let's create one
@@ -218,10 +211,10 @@ class AttendanceManager {
         "missed_day": date.formatForJson(),
         "missed_type": dropdownValue,
         "excused": false,
-        "contacted": false,
+        "contacted": '0',
         "returned": false,
         "returned_at": null,
-        "late_at": minutesLate,
+        "minutes_late": minutesLate,
         "written_excuse": null
       });
 
@@ -240,7 +233,7 @@ class AttendanceManager {
     // The missed class exists already - patching it
     debug.info('This missed class exists - patching');
     final data =
-        jsonEncode({"missed_type": dropdownValue, "late_at": minutesLate});
+        jsonEncode({"missed_type": dropdownValue, "minutes_late": minutesLate});
     final Response response = await client
         .patch(endpoints.patchMissedClass(pupilId, date), data: data);
     final Map<String, dynamic> pupilResponse = response.data;
@@ -249,8 +242,47 @@ class AttendanceManager {
       _setIsRunning(false);
       return;
     }
+    // the request was successful -
+    //we patch the pupil in the pupilmanager with the response
     pupilManager.patchPupilFromResponse(pupilResponse);
     _setIsRunning(false);
+    return;
+  }
+
+  Future<void> createManyMissedClasses(
+      id, startdate, enddate, missedType) async {
+    List<Map<String, dynamic>> missedClasses = [];
+    final Pupil pupil =
+        pupilManager.pupils.value.firstWhere((pupil) => pupil.internalId == id);
+    final List<DateTime> validSchooldays =
+        locator<SchooldayManager>().availableDates.value;
+
+    for (DateTime validSchoolday in validSchooldays) {
+      if (validSchoolday.isSameDate(startdate) ||
+          validSchoolday.isSameDate(enddate) ||
+          (validSchoolday.isAfterDate(startdate) &&
+              validSchoolday.isBeforeDate(enddate))) {
+        Map<String, dynamic> data = {
+          "missed_pupil_id": pupil.internalId,
+          "missed_day": validSchoolday.formatForJson(),
+          "missed_type": missedType,
+          "excused": false,
+          "contacted": '0',
+          "returned": false,
+          "returned_at": null,
+          "minutes_late": null,
+          "written_excuse": null
+        };
+        missedClasses.add(data);
+      }
+    }
+    final listData = jsonEncode(missedClasses);
+    final response =
+        await client.post(Endpoints.postMissedClassList, data: listData);
+    if (response.statusCode != 200) {
+      return;
+    }
+    await pupilManager.patchPupilFromResponse(response.data);
     return;
   }
 
@@ -269,7 +301,7 @@ class AttendanceManager {
       return;
     }
     // Let's look for an existing missed class - if pupil and date match, there is one
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1) {
       // The missed class does not exist - let's create one
@@ -279,10 +311,10 @@ class AttendanceManager {
         "missed_day": date.formatForJson(),
         "missed_type": dropdownValue,
         "excused": false,
-        "contacted": false,
+        "contacted": '0',
         "returned": false,
         "returned_at": null,
-        "late_at": null,
+        "minutes_late": null,
         "written_excuse": null
       });
 
@@ -300,7 +332,10 @@ class AttendanceManager {
     }
     // The missed class exists already - patching it
     debug.info('This missed class exists - patching');
-    final data = jsonEncode({"missed_type": dropdownValue});
+
+    // we make sure that incidentally stored minutes_late values are deleted
+    final data =
+        jsonEncode({"missed_type": dropdownValue, "minutes_late": null});
     final Response response = await client
         .patch(endpoints.patchMissedClass(pupilId, date), data: data);
     final Map<String, dynamic> pupilResponse = response.data;
@@ -339,7 +374,7 @@ class AttendanceManager {
   }
 
   setMissedTypeValue(int pupilId, DateTime date) {
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1 || missedClass == null) {
       return 'none';
@@ -349,7 +384,7 @@ class AttendanceManager {
   }
 
   String setContactedValue(int pupilId, DateTime date) {
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
 
     if (missedClass == -1) {
@@ -362,7 +397,7 @@ class AttendanceManager {
   }
 
   String? setCreatedModifiedValue(int pupilId, DateTime date) {
-    final Pupil? pupil = _findPupilById(pupilId);
+    final Pupil? pupil = pupilManager.findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1 || missedClass == null) {
       return null;
@@ -375,42 +410,6 @@ class AttendanceManager {
       return modifiedBy;
     }
     return createdBy;
-  }
-
-  Future<void> createManyMissedClasses(
-      id, startdate, enddate, missedType) async {
-    List<Map<String, dynamic>> missedClasses = [];
-    final Pupil pupil =
-        pupilManager.pupils.value.firstWhere((pupil) => pupil.internalId == id);
-    final List<DateTime> validSchooldays =
-        locator<SchooldayManager>().availableDates.value;
-
-    for (DateTime validSchoolday in validSchooldays) {
-      if (validSchoolday.isSameDate(startdate) ||
-          validSchoolday.isSameDate(enddate) ||
-          (validSchoolday.isAfterDate(startdate) &&
-              validSchoolday.isBeforeDate(enddate))) {
-        Map<String, dynamic> data = {
-          "missed_pupil_id": pupil.internalId,
-          "missed_day": validSchoolday.formatForJson(),
-          "missed_type": missedType,
-          "excused": false,
-          "contacted": false,
-          "returned": false,
-          "returned_at": null,
-          "late_at": null,
-          "written_excuse": null
-        };
-        missedClasses.add(data);
-      }
-    }
-    final listData = jsonEncode({'missed_classes': missedClasses});
-    final response =
-        await client.post(Endpoints.postMissedClassList, data: listData);
-    if (response.statusCode != 200) {
-      return;
-    }
-    return;
   }
 
   int missedclassSum(Pupil pupil) {

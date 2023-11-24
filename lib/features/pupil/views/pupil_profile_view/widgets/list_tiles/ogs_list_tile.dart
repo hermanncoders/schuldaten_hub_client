@@ -45,9 +45,10 @@ ogsListTiles(Pupil pupil, context) {
             const Gap(10),
             Text(pupil.ogsInfo ?? 'Kein Eintrag',
                 style: const TextStyle(
-                    fontSize: 18.0, fontWeight: FontWeight.bold))
+                    fontSize: 18.0, fontWeight: FontWeight.bold)),
           ],
         ),
+        const Gap(10),
       ],
     ),
   );

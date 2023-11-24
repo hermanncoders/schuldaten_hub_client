@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/communication_values_widget.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/language_dialog.dart';
 
-languageListTiles(Pupil pupil) {
+languageListTiles(Pupil pupil, context) {
   return ListTileTheme(
     contentPadding: const EdgeInsets.all(0),
     dense: true,
@@ -51,17 +55,21 @@ languageListTiles(Pupil pupil) {
               style: TextStyle(fontSize: 18.0),
             ),
             const Gap(10),
-            pupil.communicationPupil == null
-                ? const Text(
-                    'kein Eintrag',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                : Text(
-                    '${pupil.communicationPupil}',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  )
+            InkWell(
+              onTap: () => languageDialog(context, pupil, 'communication_pupil',
+                  pupil.communicationPupil),
+              onLongPress: () => locator<PupilManager>()
+                  .patchCommunicationValue(
+                      pupil.internalId, 'communication_pupil', null),
+              child: Container(
+                  child: pupil.communicationPupil == null
+                      ? const Text(
+                          'kein Eintrag',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )
+                      : communicationValues(pupil.communicationPupil!)),
+            )
           ],
         ),
         const Gap(10),
@@ -73,17 +81,21 @@ languageListTiles(Pupil pupil) {
               style: TextStyle(fontSize: 18.0),
             ),
             const Gap(10),
-            pupil.communicationTutor1 == null
-                ? const Text(
-                    'kein Eintrag',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                : Text(
-                    '${pupil.communicationTutor1}',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  )
+            InkWell(
+              onTap: () => languageDialog(context, pupil,
+                  'communication_tutor1', pupil.communicationTutor1),
+              onLongPress: () => locator<PupilManager>()
+                  .patchCommunicationValue(
+                      pupil.internalId, 'communication_tutor1', null),
+              child: Container(
+                  child: pupil.communicationTutor1 == null
+                      ? const Text(
+                          'kein Eintrag',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )
+                      : communicationValues(pupil.communicationTutor1!)),
+            )
           ],
         ),
         const Gap(10),
@@ -95,17 +107,21 @@ languageListTiles(Pupil pupil) {
               style: TextStyle(fontSize: 18.0),
             ),
             const Gap(10),
-            pupil.communicationTutor2 == null
-                ? const Text(
-                    'kein Eintrag',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                : Text(
-                    '${pupil.communicationTutor2}',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  )
+            InkWell(
+              onTap: () => languageDialog(context, pupil,
+                  'communication_tutor2', pupil.communicationTutor2),
+              onLongPress: () => locator<PupilManager>()
+                  .patchCommunicationValue(
+                      pupil.internalId, 'communication_tutor2', null),
+              child: Container(
+                  child: pupil.communicationTutor2 == null
+                      ? const Text(
+                          'kein Eintrag',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        )
+                      : communicationValues(pupil.communicationTutor2!)),
+            )
           ],
         ),
         const Gap(10),

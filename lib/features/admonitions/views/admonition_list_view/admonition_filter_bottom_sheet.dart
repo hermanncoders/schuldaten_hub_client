@@ -7,8 +7,8 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:watch_it/watch_it.dart';
 
-class CreditFilterBottomSheet extends WatchingWidget {
-  const CreditFilterBottomSheet({super.key});
+class AdmonitionFilterBottomSheet extends WatchingWidget {
+  const AdmonitionFilterBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -359,13 +359,13 @@ class CreditFilterBottomSheet extends WatchingWidget {
   }
 }
 
-showCreditFilterBottomSheet(BuildContext context) {
+showAdmonitionFilterBottomSheet(BuildContext context) {
   return showModalBottomSheet(
     constraints: const BoxConstraints(maxWidth: 800),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20.0),
     ),
     context: context,
-    builder: (_) => const CreditFilterBottomSheet(),
+    builder: (_) => const AdmonitionFilterBottomSheet(),
   );
 }

@@ -44,8 +44,35 @@ class PupilDetailsView extends WatchingWidget {
                     children: [
                       Stack(
                         children: [
-                          InkWell(
-                              onLongPress: () => setAvatar(context, pupil),
+                          GestureDetector(
+                              onLongPressStart: (details) {
+                                final offset = details.globalPosition;
+                                final position = RelativeRect.fromLTRB(
+                                    offset.dx, offset.dy, offset.dx, offset.dy);
+                                showMenu(
+                                  context: context,
+                                  position: position,
+                                  items: [
+                                    PopupMenuItem(
+                                      child: const Text('Option 1'),
+                                      onTap: () {
+                                        // Handle option 1
+                                      },
+                                    ),
+                                    PopupMenuItem(
+                                      child: const Text('Foto ersetzen'),
+                                      onTap: () => setAvatar(context, pupil),
+                                    ),
+                                    PopupMenuItem(
+                                      child: const Text('Bild löschen'),
+                                      onTap: () async {
+                                        await controller.deleteAvatar();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                              //onLongPress: () => setAvatar(context, pupil),
                               // onTap: () => showImageViewer(
                               //     context,
                               //     Image.network(
@@ -53,7 +80,7 @@ class PupilDetailsView extends WatchingWidget {
                               //         .image,
                               //     swipeDismissible: true,
                               //     doubleTapZoomable: true),
-                              child: avatarWithBadges(pupil, 140)),
+                              child: avatarWithBadges(pupil, 120)),
                         ],
                       ),
                       Padding(
@@ -105,6 +132,11 @@ class PupilDetailsView extends WatchingWidget {
                                       fontSize: 18.0),
                                 ),
                                 const Gap(15),
+                              ],
+                            ),
+                            const Gap(2),
+                            Row(
+                              children: [
                                 const Text('id:'),
                                 const Gap(5),
                                 Text(
@@ -118,25 +150,6 @@ class PupilDetailsView extends WatchingWidget {
                               ],
                             ),
                             const Gap(2),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Guthaben: ${pupil.credit}',
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
-                            ),
-                            const Gap(2),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'verdient: ${pupil.creditEarned}',
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
-                            )
                           ],
                         ),
                       )
@@ -168,7 +181,7 @@ class PupilDetailsView extends WatchingWidget {
                       child: Column(
                         children: [
                           infoListTiles(pupil, context),
-                          languageListTiles(pupil),
+                          languageListTiles(pupil, context),
                           creditTiles(pupil, context),
                           missedClasses.isNotEmpty
                               ? missedClassMissedTiles(pupil, context)

@@ -5,7 +5,7 @@ final TextEditingController _textEditingController = TextEditingController();
 
 // based on https://mobikul.com/creating-stateful-dialog-form-in-flutter/
 
-Future<String> pupilAuthorizationCommentDialog(BuildContext context) async {
+Future<String?> pupilAuthorizationCommentDialog(BuildContext context) async {
   return await showDialog(
       context: context,
       builder: (context) {
@@ -17,12 +17,14 @@ Future<String> pupilAuthorizationCommentDialog(BuildContext context) async {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      width: 100,
+                      width: 400,
+                      height: 300,
                       child: TextFormField(
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.normal),
                         keyboardType: TextInputType.multiline,
+                        maxLines: 5,
                         controller: _textEditingController,
                         validator: (value) {
                           return value!.isNotEmpty ? null : "";

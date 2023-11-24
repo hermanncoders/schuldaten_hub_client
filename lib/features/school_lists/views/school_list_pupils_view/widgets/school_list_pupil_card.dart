@@ -27,94 +27,114 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
         .where((pupilList) => pupilList.originList == originList)
         .first;
 
-    // Report attendanceReport =
-    //     watchValue((AttendanceManager x) => x.operationReport);
-    // if (attendanceReport.message != null) {
-    //   snackbar(context, attendanceReport.type, attendanceReport.message);
-    // }
-
     return Card(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 15),
         child: Row(
-      children: [
-        avatarWithBadges(pupil, 80),
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => PupilProfile(
-                pupil,
-              ),
-            ));
-          },
-          child: SizedBox(
-            width: 300,
-            child: Column(
-              children: [
-                Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            avatarWithBadges(pupil, 80),
+            const SizedBox(width: 10), // Add some spacing
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Text(
-                          '${pupil.firstName!} ${pupil.lastName!}',
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => PupilProfile(
+                            pupil,
+                          ),
+                        ));
+                      },
+                      child: Text(
+                        '${pupil.firstName!} ${pupil.lastName!}',
+                        overflow: TextOverflow.fade,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )
+                    ),
+                    const Gap(5),
+                    InkWell(
+                      onTap: () async {
+                        final listComment =
+                            await pupilListCommentDialog(context);
+                        await locator<SchoolListManager>().patchPupilSchoolList(
+                          pupil.internalId,
+                          originList,
+                          null,
+                          listComment,
+                        );
+                      },
+                      child: Text(
+                        pupilList.pupilListComment != null
+                            ? pupilList.pupilListComment!
+                            : 'kein Kommentar',
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 5), // Add some spacing
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                //const Gap(5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text('nein'),
+                    Checkbox(
+                      activeColor: Colors.red,
+                      value: (pupilList.pupilListStatus == null ||
+                              pupilList.pupilListStatus == true)
+                          ? false
+                          : true,
+                      onChanged: (value) async {
+                        await schoolListLocator.patchPupilSchoolList(
+                          pupil.internalId,
+                          originList,
+                          false,
+                          null,
+                        );
+                      },
+                    ),
                   ],
                 ),
                 const Gap(5),
-                InkWell(
-                  onTap: () async {
-                    final listComment = await pupilListCommentDialog(context);
-                    await locator<SchoolListManager>().patchPupilSchoolList(
-                        pupil.internalId, originList, null, listComment);
-                  },
-                  child: Text(
-                    pupilList.pupilListComment != null
-                        ? pupilList.pupilListComment!
-                        : 'kein Kommentar',
-                    textAlign: TextAlign.left,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: () async => changeCreditDialog(context, pupil),
-            child: Column(
-              children: [
-                const Text('nein'),
-                Checkbox(
-                  activeColor: Colors.red,
-                  value: (pupilList.pupilListStatus == null ||
-                          pupilList.pupilListStatus == true)
-                      ? false
-                      : true,
-                  onChanged: (value) async {
-                    await schoolListLocator.patchPupilSchoolList(
-                        pupil.internalId, originList, false, null);
-                  },
-                ),
-                const Text('ja'),
-                Checkbox(
-                  activeColor: Colors.green,
-                  value: (pupilList.pupilListStatus != true ||
-                          pupilList.pupilListStatus == null)
-                      ? false
-                      : true,
-                  onChanged: (value) async {
-                    await schoolListLocator.patchPupilSchoolList(
-                        pupil.internalId, originList, true, null);
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Text('ja'),
+                    Checkbox(
+                      activeColor: Colors.green,
+                      value: (pupilList.pupilListStatus != true ||
+                              pupilList.pupilListStatus == null)
+                          ? false
+                          : true,
+                      onChanged: (value) async {
+                        await schoolListLocator.patchPupilSchoolList(
+                          pupil.internalId,
+                          originList,
+                          true,
+                          null,
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
-          ),
+          ],
         ),
-      ],
-    ));
+      ),
+    );
   }
 }

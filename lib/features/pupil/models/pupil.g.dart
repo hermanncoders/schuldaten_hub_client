@@ -28,6 +28,8 @@ _$PupilImpl _$$PupilImplFromJson(Map<String, dynamic> json) => _$PupilImpl(
       communicationPupil: json['communication_pupil'] as String?,
       communicationTutor1: json['communication_tutor1'] as String?,
       communicationTutor2: json['communication_tutor2'] as String?,
+      contact: json['contact'] as String?,
+      parentsContact: json['parents_contact'] as String?,
       credit: json['credit'] as int,
       creditEarned: json['credit_earned'] as int,
       fiveYears: json['five_years'] as String?,
@@ -90,6 +92,8 @@ Map<String, dynamic> _$$PupilImplToJson(_$PupilImpl instance) =>
       'communication_pupil': instance.communicationPupil,
       'communication_tutor1': instance.communicationTutor1,
       'communication_tutor2': instance.communicationTutor2,
+      'contact': instance.contact,
+      'parents_contact': instance.parentsContact,
       'credit': instance.credit,
       'credit_earned': instance.creditEarned,
       'five_years': instance.fiveYears,
@@ -100,23 +104,15 @@ Map<String, dynamic> _$$PupilImplToJson(_$PupilImpl instance) =>
       'pick_up_time': instance.pickUpTime,
       'preschool_revision': instance.preschoolRevision,
       'special_information': instance.specialInformation,
-      'competence_checks':
-          instance.competenceChecks?.map((e) => e.toJson()).toList(),
-      'pupil_category_statuses':
-          instance.pupilCategoryStatuses?.map((e) => e.toJson()).toList(),
-      'pupil_admonitions':
-          instance.pupilAdmonitions?.map((e) => e.toJson()).toList(),
-      'pupil_books': instance.pupilBooks?.map((e) => e.toJson()).toList(),
-      'pupil_lists': instance.pupilLists?.map((e) => e.toJson()).toList(),
-      'pupil_goals': instance.pupilGoals?.map((e) => e.toJson()).toList(),
-      'pupil_missed_classes':
-          instance.pupilMissedClasses?.map((e) => e.toJson()).toList(),
-      'pupil_workbooks':
-          instance.pupilWorkbooks?.map((e) => e.toJson()).toList(),
-      'authorizations':
-          instance.authorizations?.map((e) => e.toJson()).toList(),
-      'credit_history_logs':
-          instance.creditHistoryLogs?.map((e) => e.toJson()).toList(),
-      'competence_goals':
-          instance.competenceGoals?.map((e) => e.toJson()).toList(),
+      'competence_checks': instance.competenceChecks,
+      'pupil_category_statuses': instance.pupilCategoryStatuses,
+      'pupil_admonitions': instance.pupilAdmonitions,
+      'pupil_books': instance.pupilBooks,
+      'pupil_lists': instance.pupilLists,
+      'pupil_goals': instance.pupilGoals,
+      'pupil_missed_classes': instance.pupilMissedClasses,
+      'pupil_workbooks': instance.pupilWorkbooks,
+      'authorizations': instance.authorizations,
+      'credit_history_logs': instance.creditHistoryLogs,
+      'competence_goals': instance.competenceGoals,
     };

@@ -5,6 +5,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/admonition_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_card.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_view_bottom_navbar.dart';
 import 'package:schuldaten_hub/features/admonitions/views/controller/admonition_list_controller.dart';
@@ -12,8 +13,6 @@ import 'package:schuldaten_hub/features/admonitions/views/controller/admonition_
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-
-import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/credit_filter_bottom_sheet.dart';
 import 'package:watch_it/watch_it.dart';
 
 class AdmonitionListView extends WatchingWidget {
@@ -28,8 +27,6 @@ class AdmonitionListView extends WatchingWidget {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
 
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
-    // Map<PupilFilter, bool> activeFilters =
-    //     watchValue((PupilFilterManager x) => x.filterState);
 
     return Scaffold(
       backgroundColor: canvasColor,
@@ -73,37 +70,6 @@ class AdmonitionListView extends WatchingWidget {
                           fontSize: 20,
                         ),
                       ),
-                      const Gap(15),
-                      const Text(
-                        'BIP:',
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      const Gap(10),
-                      Text(
-                        controller.totalGeneratedCredit(pupils).toString(),
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const Gap(15),
-                      const Text(
-                        'in Umlauf: ',
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      Text(
-                        controller.totalFluidCredit(pupils).toString(),
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -118,7 +84,7 @@ class AdmonitionListView extends WatchingWidget {
                               locator<PupilFilterManager>()
                                   .refreshFilteredPupils)),
                       InkWell(
-                        onTap: () => showCreditFilterBottomSheet(context),
+                        onTap: () => showAdmonitionFilterBottomSheet(context),
                         onLongPress: () =>
                             locator<PupilFilterManager>().resetFilters(),
                         // onPressed: () => showBottomSheetFilters(context),

@@ -49,5 +49,5 @@ _$PupilBaseListImpl _$$PupilBaseListImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$PupilBaseListImplToJson(_$PupilBaseListImpl instance) =>
     <String, dynamic>{
-      'pupilBaseList': instance.pupilBaseList.map((e) => e.toJson()).toList(),
+      'pupilBaseList': instance.pupilBaseList,
     };

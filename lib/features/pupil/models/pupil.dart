@@ -33,6 +33,8 @@ class Pupil with _$Pupil {
     @JsonKey(name: 'communication_pupil') String? communicationPupil,
     @JsonKey(name: 'communication_tutor1') String? communicationTutor1,
     @JsonKey(name: 'communication_tutor2') String? communicationTutor2,
+    @JsonKey(name: 'contact') String? contact,
+    @JsonKey(name: 'parents_contact') String? parentsContact,
     required int credit,
     @JsonKey(name: 'credit_earned') required int creditEarned,
     @JsonKey(name: 'five_years') String? fiveYears,

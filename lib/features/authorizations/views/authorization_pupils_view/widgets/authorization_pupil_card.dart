@@ -28,12 +28,6 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
             authorization.originAuthorization == authorizationId)
         .first;
 
-    // Report attendanceReport =
-    //     watchValue((AttendanceManager x) => x.operationReport);
-    // if (attendanceReport.message != null) {
-    //   snackbar(context, attendanceReport.type, attendanceReport.message);
-    // }
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 15),
@@ -58,6 +52,7 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                       },
                       child: Text(
                         '${pupil.firstName!} ${pupil.lastName!}',
+                        overflow: TextOverflow.fade,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -67,8 +62,9 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                     const Gap(5),
                     InkWell(
                       onTap: () async {
-                        final authorizationComment =
+                        final String? authorizationComment =
                             await pupilAuthorizationCommentDialog(context);
+                        if (authorizationComment == null) return;
                         await locator<AuthorizationManager>()
                             .patchPupilAuthorization(
                           pupil.internalId,
@@ -88,12 +84,12 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                 ),
               ),
             ),
-            const SizedBox(width: 10), // Add some spacing
+            const SizedBox(width: 5), // Add some spacing
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Gap(15),
+                //const Gap(15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -115,7 +111,7 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                     ),
                   ],
                 ),
-                const Gap(10),
+                const Gap(5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

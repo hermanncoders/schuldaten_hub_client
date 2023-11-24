@@ -11,7 +11,6 @@ class PupilAuthorization with _$PupilAuthorization {
     String? comment,
     @JsonKey(name: 'created_by') required String createdBy,
     @JsonKey(name: 'file_url') String? fileUrl,
-    required int id,
     @JsonKey(name: 'origin_authorization') required String originAuthorization,
     @JsonKey(name: 'pupil_id') required int pupilId,
     bool? status,

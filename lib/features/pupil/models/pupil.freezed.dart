@@ -39,6 +39,10 @@ mixin _$Pupil {
   String? get communicationTutor1 => throw _privateConstructorUsedError;
   @JsonKey(name: 'communication_tutor2')
   String? get communicationTutor2 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'contact')
+  String? get contact => throw _privateConstructorUsedError;
+  @JsonKey(name: 'parents_contact')
+  String? get parentsContact => throw _privateConstructorUsedError;
   int get credit => throw _privateConstructorUsedError;
   @JsonKey(name: 'credit_earned')
   int get creditEarned => throw _privateConstructorUsedError;
@@ -111,6 +115,8 @@ abstract class $PupilCopyWith<$Res> {
       @JsonKey(name: 'communication_pupil') String? communicationPupil,
       @JsonKey(name: 'communication_tutor1') String? communicationTutor1,
       @JsonKey(name: 'communication_tutor2') String? communicationTutor2,
+      @JsonKey(name: 'contact') String? contact,
+      @JsonKey(name: 'parents_contact') String? parentsContact,
       int credit,
       @JsonKey(name: 'credit_earned') int creditEarned,
       @JsonKey(name: 'five_years') String? fiveYears,
@@ -168,6 +174,8 @@ class _$PupilCopyWithImpl<$Res, $Val extends Pupil>
     Object? communicationPupil = freezed,
     Object? communicationTutor1 = freezed,
     Object? communicationTutor2 = freezed,
+    Object? contact = freezed,
+    Object? parentsContact = freezed,
     Object? credit = null,
     Object? creditEarned = null,
     Object? fiveYears = freezed,
@@ -250,6 +258,14 @@ class _$PupilCopyWithImpl<$Res, $Val extends Pupil>
       communicationTutor2: freezed == communicationTutor2
           ? _value.communicationTutor2
           : communicationTutor2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contact: freezed == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentsContact: freezed == parentsContact
+          ? _value.parentsContact
+          : parentsContact // ignore: cast_nullable_to_non_nullable
               as String?,
       credit: null == credit
           ? _value.credit
@@ -362,6 +378,8 @@ abstract class _$$PupilImplCopyWith<$Res> implements $PupilCopyWith<$Res> {
       @JsonKey(name: 'communication_pupil') String? communicationPupil,
       @JsonKey(name: 'communication_tutor1') String? communicationTutor1,
       @JsonKey(name: 'communication_tutor2') String? communicationTutor2,
+      @JsonKey(name: 'contact') String? contact,
+      @JsonKey(name: 'parents_contact') String? parentsContact,
       int credit,
       @JsonKey(name: 'credit_earned') int creditEarned,
       @JsonKey(name: 'five_years') String? fiveYears,
@@ -417,6 +435,8 @@ class __$$PupilImplCopyWithImpl<$Res>
     Object? communicationPupil = freezed,
     Object? communicationTutor1 = freezed,
     Object? communicationTutor2 = freezed,
+    Object? contact = freezed,
+    Object? parentsContact = freezed,
     Object? credit = null,
     Object? creditEarned = null,
     Object? fiveYears = freezed,
@@ -499,6 +519,14 @@ class __$$PupilImplCopyWithImpl<$Res>
       communicationTutor2: freezed == communicationTutor2
           ? _value.communicationTutor2
           : communicationTutor2 // ignore: cast_nullable_to_non_nullable
+              as String?,
+      contact: freezed == contact
+          ? _value.contact
+          : contact // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentsContact: freezed == parentsContact
+          ? _value.parentsContact
+          : parentsContact // ignore: cast_nullable_to_non_nullable
               as String?,
       credit: null == credit
           ? _value.credit
@@ -607,6 +635,8 @@ class _$PupilImpl implements _Pupil {
       @JsonKey(name: 'communication_pupil') this.communicationPupil,
       @JsonKey(name: 'communication_tutor1') this.communicationTutor1,
       @JsonKey(name: 'communication_tutor2') this.communicationTutor2,
+      @JsonKey(name: 'contact') this.contact,
+      @JsonKey(name: 'parents_contact') this.parentsContact,
       required this.credit,
       @JsonKey(name: 'credit_earned') required this.creditEarned,
       @JsonKey(name: 'five_years') this.fiveYears,
@@ -685,6 +715,12 @@ class _$PupilImpl implements _Pupil {
   @override
   @JsonKey(name: 'communication_tutor2')
   final String? communicationTutor2;
+  @override
+  @JsonKey(name: 'contact')
+  final String? contact;
+  @override
+  @JsonKey(name: 'parents_contact')
+  final String? parentsContact;
   @override
   final int credit;
   @override
@@ -840,7 +876,7 @@ class _$PupilImpl implements _Pupil {
 
   @override
   String toString() {
-    return 'Pupil(firstName: $firstName, lastName: $lastName, group: $group, schoolyear: $schoolyear, specialNeeds: $specialNeeds, gender: $gender, language: $language, family: $family, birthday: $birthday, migrationSupportEnds: $migrationSupportEnds, pupilSince: $pupilSince, avatarUrl: $avatarUrl, communicationPupil: $communicationPupil, communicationTutor1: $communicationTutor1, communicationTutor2: $communicationTutor2, credit: $credit, creditEarned: $creditEarned, fiveYears: $fiveYears, individualDevelopmentPlan: $individualDevelopmentPlan, internalId: $internalId, ogs: $ogs, ogsInfo: $ogsInfo, pickUpTime: $pickUpTime, preschoolRevision: $preschoolRevision, specialInformation: $specialInformation, competenceChecks: $competenceChecks, pupilCategoryStatuses: $pupilCategoryStatuses, pupilAdmonitions: $pupilAdmonitions, pupilBooks: $pupilBooks, pupilLists: $pupilLists, pupilGoals: $pupilGoals, pupilMissedClasses: $pupilMissedClasses, pupilWorkbooks: $pupilWorkbooks, authorizations: $authorizations, creditHistoryLogs: $creditHistoryLogs, competenceGoals: $competenceGoals)';
+    return 'Pupil(firstName: $firstName, lastName: $lastName, group: $group, schoolyear: $schoolyear, specialNeeds: $specialNeeds, gender: $gender, language: $language, family: $family, birthday: $birthday, migrationSupportEnds: $migrationSupportEnds, pupilSince: $pupilSince, avatarUrl: $avatarUrl, communicationPupil: $communicationPupil, communicationTutor1: $communicationTutor1, communicationTutor2: $communicationTutor2, contact: $contact, parentsContact: $parentsContact, credit: $credit, creditEarned: $creditEarned, fiveYears: $fiveYears, individualDevelopmentPlan: $individualDevelopmentPlan, internalId: $internalId, ogs: $ogs, ogsInfo: $ogsInfo, pickUpTime: $pickUpTime, preschoolRevision: $preschoolRevision, specialInformation: $specialInformation, competenceChecks: $competenceChecks, pupilCategoryStatuses: $pupilCategoryStatuses, pupilAdmonitions: $pupilAdmonitions, pupilBooks: $pupilBooks, pupilLists: $pupilLists, pupilGoals: $pupilGoals, pupilMissedClasses: $pupilMissedClasses, pupilWorkbooks: $pupilWorkbooks, authorizations: $authorizations, creditHistoryLogs: $creditHistoryLogs, competenceGoals: $competenceGoals)';
   }
 
   @override
@@ -875,6 +911,9 @@ class _$PupilImpl implements _Pupil {
                 other.communicationTutor1 == communicationTutor1) &&
             (identical(other.communicationTutor2, communicationTutor2) ||
                 other.communicationTutor2 == communicationTutor2) &&
+            (identical(other.contact, contact) || other.contact == contact) &&
+            (identical(other.parentsContact, parentsContact) ||
+                other.parentsContact == parentsContact) &&
             (identical(other.credit, credit) || other.credit == credit) &&
             (identical(other.creditEarned, creditEarned) ||
                 other.creditEarned == creditEarned) &&
@@ -936,6 +975,8 @@ class _$PupilImpl implements _Pupil {
         communicationPupil,
         communicationTutor1,
         communicationTutor2,
+        contact,
+        parentsContact,
         credit,
         creditEarned,
         fiveYears,
@@ -990,6 +1031,8 @@ abstract class _Pupil implements Pupil {
       @JsonKey(name: 'communication_pupil') final String? communicationPupil,
       @JsonKey(name: 'communication_tutor1') final String? communicationTutor1,
       @JsonKey(name: 'communication_tutor2') final String? communicationTutor2,
+      @JsonKey(name: 'contact') final String? contact,
+      @JsonKey(name: 'parents_contact') final String? parentsContact,
       required final int credit,
       @JsonKey(name: 'credit_earned') required final int creditEarned,
       @JsonKey(name: 'five_years') final String? fiveYears,
@@ -1056,6 +1099,12 @@ abstract class _Pupil implements Pupil {
   @override
   @JsonKey(name: 'communication_tutor2')
   String? get communicationTutor2;
+  @override
+  @JsonKey(name: 'contact')
+  String? get contact;
+  @override
+  @JsonKey(name: 'parents_contact')
+  String? get parentsContact;
   @override
   int get credit;
   @override

@@ -6,17 +6,17 @@ import 'package:schuldaten_hub/features/authorizations/views/authorization_pupil
 
 Card authorizationCard(BuildContext context, Authorization authorization) {
   return Card(
-      child: Row(
-    children: [
-      InkWell(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => AuthorizationPupils(
-              authorization,
-            ),
-          ));
-        },
-        child: Padding(
+      child: InkWell(
+    onTap: () {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => AuthorizationPupils(
+          authorization,
+        ),
+      ));
+    },
+    child: Row(
+      children: [
+        Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 15, bottom: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ Card authorizationCard(BuildContext context, Authorization authorization) {
             ],
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   ));
 }

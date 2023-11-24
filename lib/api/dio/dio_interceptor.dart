@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 
 class DioInterceptor extends Interceptor {
   @override
@@ -18,6 +20,10 @@ class DioInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     log("Error[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}");
+    if (err.response!.statusCode == 401 &&
+        err.response!.data['message'].contains('Token')) {
+      locator<SessionManager>().logout();
+    }
     super.onError(err, handler);
   }
 }

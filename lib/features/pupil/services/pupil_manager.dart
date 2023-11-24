@@ -44,10 +44,27 @@ class PupilManager {
     return;
   }
 
+  updatePupilInRepository(Pupil pupil) {
+    List<Pupil> pupils = List.from(_pupils.value);
+    int index =
+        pupils.indexWhere((element) => element.internalId == pupil.internalId);
+    pupils[index] = pupil;
+
+    _pupils.value = pupils;
+    locator<PupilFilterManager>().cloneToFilteredPupil(pupil);
+  }
+
   sortPupilsByName(List<Pupil> pupils) {
     pupils.sort((a, b) => a.firstName!.compareTo(b.firstName!));
     _pupils.value = pupils;
     return;
+  }
+
+  Pupil findPupilById(int pupilId) {
+    final pupils = _pupils.value;
+    final Pupil pupil =
+        pupils.singleWhere((element) => element.internalId == pupilId);
+    return pupil;
   }
 
   List<Pupil> siblings(Pupil pupil) {
@@ -117,6 +134,23 @@ class PupilManager {
     }
   }
 
+  String communicationPredicate(String? value) {
+    switch (value) {
+      case null:
+        return 'keine Angabe';
+      case '0':
+        return 'nicht';
+      case '1':
+        return "einfache Anliegen";
+      case '2':
+        return "komplexere Informationen";
+      case '3':
+        return "ohne Probleme";
+      default:
+        return "Falscher Wert im Server";
+    }
+  }
+
   Future getPupils(List<int> pupilIds) async {
     // we make a request for the given list of pupil ids
     final client = locator.get<ApiManager>().dioClient.value;
@@ -134,19 +168,17 @@ class PupilManager {
       final response = await client.post(Endpoints.getPupils, data: data);
       debug.info('Pupil request sent!');
       // we have the response - let's build unidentified Pupils with it
-      final pupilsWithoutId =
+      final pupilsWithoutBase =
           (response.data as List).map((e) => Pupil.fromJson(e)).toList();
       debug.success(
-          'PupilManager fetched ${pupilsWithoutId.length} pupils! | ${StackTrace.current}');
+          'PupilManager fetched ${pupilsWithoutBase.length} pupils! | ${StackTrace.current}');
       // now we match them with the pupilbase and add the id key values
-      // we need to check the length of the pupilbase now for later
-      int pupilBaseLength = pupilbase.length;
 
       for (PupilBase pupilBaseElement in pupilbase) {
-        if (pupilsWithoutId
+        if (pupilsWithoutBase
             .where((element) => element.internalId == pupilBaseElement.id)
             .isNotEmpty) {
-          var pupilMatch = pupilsWithoutId
+          var pupilMatch = pupilsWithoutBase
               .where((element) => element.internalId == pupilBaseElement.id)
               .single;
           Pupil namedPupil = pupilMatch.copyWith(
@@ -186,6 +218,9 @@ class PupilManager {
       } else {
         debug.success(
             'PUPILS FETCHED: There are ${matchedPupils.length} matches! | ${StackTrace.current}');
+      }
+      if (locator.isReadySync<PupilFilterManager>()) {
+        locator<PupilFilterManager>().updateFilteredPupils();
       }
       _isRunning.value = false;
 
@@ -278,9 +313,9 @@ class PupilManager {
       data: formData,
       // Not really sure if this headers is necessary, but it helped at some point.
       // It works like this :-)
-      options: Options(headers: {
-        'x-access-token': locator<SessionManager>().credentials.value.jwt
-      }),
+      // options: Options(headers: {
+      //   'x-access-token': locator<SessionManager>().credentials.value.jwt
+      // }),
     );
     // Handle errors.
     if (response.statusCode != 200) {
@@ -289,6 +324,25 @@ class PupilManager {
     // Success! We have a pupil response - let's patch the pupil with the data
     final Map<String, dynamic> pupilResponse = response.data;
     await patchPupilFromResponse(pupilResponse);
+  }
+
+  deleteAvatarImage(int pupilId) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    // send request
+    final Response response = await client.delete(
+      Endpoints().deletePupilAvatar(pupilId),
+      options: Options(headers: {
+        'x-access-token': locator<SessionManager>().credentials.value.jwt
+      }),
+    );
+    // Handle errors.
+    if (response.statusCode != 200) {
+      debug.warning('Something went wrong deleting the avatar');
+      return;
+    }
+    final Pupil pupil = (findPupilById(pupilId)).copyWith(avatarUrl: null);
+    updatePupilInRepository(pupil);
+    // Success! We have a pupil response - let's patch the pupil with the data
   }
 
   void changePupilCredit(int pupilId, int amountToChange) async {
@@ -315,6 +369,24 @@ class PupilManager {
     final client = locator.get<ApiManager>().dioClient.value;
     // prepare the data for thr request
     final data = jsonEncode({"preschool_revision": value});
+    final Response response =
+        await client.patch(Endpoints().patchPupil(pupilId), data: data);
+    // we have a response
+    final Map<String, dynamic> pupilResponse = response.data;
+    // handle errors
+    if (response.statusCode != 200) {
+      _operationReport.value = Report('warning', response.data);
+      return;
+    }
+    // let's patch the pupil with the response
+    await patchPupilFromResponse(pupilResponse);
+    return;
+  }
+
+  void patchCommunicationValue(int pupilId, String type, String? value) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    // prepare the data for thr request
+    final data = jsonEncode({type: value});
     final Response response =
         await client.patch(Endpoints().patchPupil(pupilId), data: data);
     // we have a response

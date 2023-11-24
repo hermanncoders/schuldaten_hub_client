@@ -1,41 +1,38 @@
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 class Endpoints {
-  static const String baseUrl = 'https://datahub.hermannschule.de/api';
+  //static const String baseUrl = 'https://datahub.hermannschule.de/api';
   //static const baseUrl = 'http://10.0.2.2:5000/api'; // android VM
   //static const baseUrl = 'http://127.0.0.1:5000/api'; //windows
 
-  //- SCHOOL LISTS
-
-  static const getSchoolLists = '/list/all/flat';
-  static const postSchoolListWithGroup = '/list/group';
-  String patchPupilSchoolList(int pupilId, String listId) {
-    return '/$pupilId/list/$listId';
-  }
-
   //- SCHOOLDAYS
 
+  //- POST
+  static const postSchoolday = '/schoolday';
+
+  //- GET
+  static const getAllSchooldays = '/schoolday/all';
   static const getSchooldays = '/schoolday/only';
+  String getOneSchoolday(DateTime date) {
+    return '/schoolday/${date.formatForJson()}';
+  }
 
-  //- PUPIL
+  //- DELETE
+  String deleteSchoolday(DateTime date) {
+    return '/schoolday/${date.formatForJson()}';
+  }
 
-  static const getAllPupils = '/pupil/all';
+  //- PUPIL -----------------------------------------------------------
 
-  static const getPupils = '/pupil/list';
-
+  //- POST
   static const postPupil = '/pupil';
-
   static const exportPupilsTxt = '/import/pupils/txt';
 
+  //- GET
+  static const getAllPupils = '/pupil/all';
+  static const getPupils = '/pupil/list';
+  static const getPupilsNoNesting = '/pupil/list/no_nesting';
   String getOnePupil(int id) {
-    return '/pupil/$id';
-  }
-
-  String deletePupil(int id) {
-    return '/pupil/$id';
-  }
-
-  String patchPupil(int id) {
     return '/pupil/$id';
   }
 
@@ -43,23 +40,51 @@ class Endpoints {
     return '/pupil/$id/avatar';
   }
 
+  //- PATCH
+  String patchPupil(int id) {
+    return '/pupil/$id';
+  }
+
   String patchPupilhWithAvatar(int id) {
     return '/pupil/$id/avatar';
   }
-  //- ADMONITION ------------------------------------------------------
 
-  String admonitionPost = '/api/admonition';
-  String admonitionGetAll = '/api/admonition/all';
-  String deleteAdmonition(int id) {
-    return '/admonition/$id';
+  //- DELETE
+  String deletePupil(int pupilId) {
+    return '/pupil/$pupilId';
   }
 
+  String deletePupilAvatar(int pupilId) {
+    return '/pupil/$pupilId/avatar';
+  }
+
+  //- ADMONITION ------------------------------------------------------
+
+  //- POST
+  static const postAdmonition = '/api/admonition';
+
+  //- GET
+  static const fetchAdmonitions = '/api/admonition/all';
   String getAdmonition(int id) {
     return '/admonition/$id';
   }
 
+  String getAdmonitionFile(int id) {
+    return '/admonition/$id/file';
+  }
+
+  //- PATCH
   String patchAdmonition(int id) {
     return '/admonition/$id';
+  }
+
+  String patchAdmonitionFile(int id) {
+    return '/admonition/$id/file';
+  }
+
+  //- DELETE
+  String deleteAdmonition(int id) {
+    return '/admonition/$id/delete';
   }
 
   //- AUTHORIZATIONS ---------------------------------------------------
@@ -85,52 +110,108 @@ class Endpoints {
   }
 
   //- COMPETENCES ------------------------------------------------------
-  String fetchCompetences = '/competence/all/flat';
 
+  //-POST
   String postNewCompetence = '/competence/new';
 
+  //- GET
+  String fetchCompetences = '/competence/all/flat';
+
+  //- PATCH
   String patchCompetence(int competenceId) {
     return '/competence/$competenceId/patch';
   }
 
-  String patchCompetenceCheck(int id) {
-    return '/competence/check/$id';
+  //- DELETE
+  String deleteCompetence(int id) {
+    return '/competence/$id/delete';
   }
 
-  String patchCompetenceCheckWithFile(int id) {
-    return '/competence/check/$id';
+  //- COMPETENCE CHECKS ------------------------------------------------
+
+  //- GET
+
+  String getCompetenceCheckFile(String fileId) {
+    return '/competence/check/$fileId';
   }
 
-  String deleteCompetenceCheckFile(int id) {
-    return '/competence/nomedia/$id';
+  //- POST
+
+  String postCompetenceCheck(int pupilId) {
+    return '/pupil/$pupilId/competence/check';
   }
 
-  String getCompetenceCheckFile(int id) {
-    return '/competence/check/$id/image';
+  String postCompetenceCheckFile(String competenceCheckId) {
+    return '/competence/check/$competenceCheckId/file';
   }
 
-  String postCompetenceCheck(int id) {
-    return '/pupil/$id/competence/check';
+  //- PATCH
+
+  String patchCompetenceCheck(String competenceCheckId) {
+    return '/competence/check/$competenceCheckId';
   }
 
-  String deleteCompetenceCheck(int id) {
-    return '/competence/check/$id';
+  // String patchCompetenceCheckWithFile(String competenceCheckId) {
+  //   return '/competence/check/$competenceCheckId';
+  // }
+
+  //- DELETE
+
+  String deleteCompetenceCheck(String competenceCheckId) {
+    return '/competence/check/$competenceCheckId';
+  }
+
+  String deleteCompetenceCheckFile(String fileId) {
+    return '/competence/check/$fileId';
+  }
+
+  //- COMPETENCE GOALS -------------------------------------------------
+
+  //- POST
+  String postCompetenceGoal(int pupilId) {
+    return '/pupil/$pupilId/competence/goal';
+  }
+
+  //- PATCH
+  String patchCompetenceGoal(String competenceGoalId) {
+    return '/competence/goal/$competenceGoalId';
+  }
+
+  //- DELETE
+  String deleteCompetenceGoal(String competenceGoalId) {
+    return '/competence/goal/$competenceGoalId/delete';
   }
 
   //- GOAL CATEGORIES --------------------------------------------------
+
   String fetchGoalCategories = '/goalcategories/flat';
 
   String postCategoryStatus(int pupilId, int categoryId) {
     return '/pupil/$pupilId/category_status/$categoryId';
   }
-  //- GOALS ------------------------------------------------------------
 
-  String patchgoal(int id) {
-    return '/goal/$id';
+  String deleteCategoryStatus(String categoryStatusId) {
+    return '/pupil/category_status/$categoryStatusId/delete';
   }
 
-  String postGoal(int id) {
-    return '/pupil/$id/goal';
+  //- GOALS ------------------------------------------------------------
+
+  //-POST
+
+  String postGoal(int pupilId) {
+    return '/pupil/$pupilId/goal';
+  }
+
+  //- PATCH
+
+  String patchgoal(String goalId) {
+    return '/goal/$goalId';
+  }
+
+  //- DELETE
+
+  String deleteGoal(String goalId) {
+    return '/goal/$goalId/delete';
   }
 
   //- GOAL CHECKS ------------------------------------------------------
@@ -143,28 +224,72 @@ class Endpoints {
     return '/goal/check/$id';
   }
 
-//- MISSED CLASSES
+//- MISSED CLASSES ----------------------------------------------------
+
+  //- GET
   String getMissedClasses = '/missed_class/all';
   String getOneMissedClass(int id) {
     return '/missed_class/$id';
   }
 
-  static const postMissedClass = '/missed_class';
+  //- POST
 
+  static const postMissedClass = '/missed_class';
   static const postMissedClassList = '/missed_class/list';
+
+  //- PATCH
 
   String patchMissedClass(int id, DateTime date) {
     final missedDate = date.formatForJson();
     return '/missed_class/$id/$missedDate';
   }
 
+  //- DELETE
+
   String deleteMissedClass(int id, DateTime date) {
     final missedDate = date.formatForJson();
     return '/missed_class/$id/$missedDate';
   }
-  //- User Endpoints ------------------------------------------------------
+
+  //- SCHOOL LISTS ------------------------------------------------------
+
+  //- POST
+  static const postSchoolListWithGroup = '/list/group';
+  static const postSchoolList = '/list/all';
+  String patchPupilSchoolList(int pupilId, String listId) {
+    return '/$pupilId/list/$listId';
+  }
+
+  String addPupilsToSchoolList(String listId) {
+    return '/list/$listId/pupils';
+  }
+
+  //- GET
+  static const getSchoolLists = '/list/all/flat';
+
+  //- USER ------------------------------------------------------
 
   static const login = '/login';
+
+  //- POST
+
+  static const createUser = '/user';
+
+  //- GET
+
+  static const getAllUsers = '/user/all';
+
+  //- PATCH
+
+  String patchUser(String publicId) {
+    return 'user/$publicId';
+  }
+
+  //- DELETE
+
+  String deleteUser(String publicId) {
+    return 'user/$publicId';
+  }
 
   // receiveTimeout
   static const Duration receiveTimeout = Duration(milliseconds: 15000);

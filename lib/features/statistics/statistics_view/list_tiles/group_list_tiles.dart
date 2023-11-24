@@ -206,56 +206,66 @@ groupListTiles(context, StatisticsController controller) {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('A1')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('A2')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('A3')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('B1')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('B2')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('B3')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('B4')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('C1')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('C2')),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: groupTiles(
-                context, controller, controller.pupilsInaGivenGroup('C3')),
-          ),
+          if (controller.pupils.any((element) => element.group == 'A1'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('A1')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'A2'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('A2')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'A3'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('A3')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'B1'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('B1')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'B2'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('B2')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'B3'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('B3')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'B4'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('B4')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'C1'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('C1')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'C2'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('C2')),
+            ),
+          if (controller.pupils.any((element) => element.group == 'C3'))
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: groupTiles(
+                  context, controller, controller.pupilsInaGivenGroup('C3')),
+            ),
         ]),
   );
 }

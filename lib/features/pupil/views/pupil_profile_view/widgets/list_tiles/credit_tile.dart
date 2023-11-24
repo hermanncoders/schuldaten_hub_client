@@ -13,15 +13,51 @@ creditTiles(Pupil pupil, context) {
     minLeadingWidth: 0,
     child: ExpansionTile(
         tilePadding: const EdgeInsets.all(0),
-        title: const Text(
-          'Guthaben',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+        title: Row(
+          children: [
+            const Text(
+              'Guthaben',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            const Spacer(),
+            Text(
+              pupil.credit.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            const Gap(10),
+          ],
         ),
         children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Insgesamt verdient: ${pupil.creditEarned}',
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
+          const Row(
+            children: [
+              Text(
+                'Verlauf:',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
           ListView.builder(
             padding: const EdgeInsets.only(left: 10, top: 5, bottom: 15),
             shrinkWrap: true,

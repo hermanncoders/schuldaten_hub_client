@@ -155,7 +155,7 @@ class PupilBaseManager {
     debug.success(
         'Pupilbase extended: ${oldPupilbase.length} pupils before, now ${_pupilbase.value.length} | ${StackTrace.current}');
     await locator<PupilManager>().getAllPupils();
-    locator<PupilFilterManager>().refreshFilteredPupils();
+
     locator<BottomNavManager>().setBottomNavPage(0);
   }
 
@@ -214,15 +214,16 @@ class PupilBaseManager {
     final response = await client.post(
       Endpoints.exportPupilsTxt,
       data: formData,
-      // Not really sure if this headers is necessary, but it helped at some point.
+      // Not really sure if these headers are necessary, but it helped at some point.
       // It works like this :-)
       options: Options(headers: {
         'x-access-token': locator<SessionManager>().credentials.value.jwt
       }),
     );
-    debug.error('RESPONSE is ${response.data}');
+    debug.warning('RESPONSE is ${response.data}');
     //locator<PupilManager>().patchPupilFromResponse(pupilResponse: response.data);
     // we got now the updated data, let's substitute the old pupilbase
+    //textFile.delete();
     _pupilbase.value = scannedPupilBase;
     // old elements not present in the new pupilbase are added
     List<PupilBase> newPupilBase = List<PupilBase>.from(scannedPupilBase);

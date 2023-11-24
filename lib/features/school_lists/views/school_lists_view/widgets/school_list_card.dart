@@ -7,17 +7,17 @@ import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_vi
 
 Card schoolListCard(BuildContext context, SchoolList schoolList) {
   return Card(
-      child: Row(
-    children: [
-      InkWell(
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => SchoolListPupils(
-              schoolList,
-            ),
-          ));
-        },
-        child: Padding(
+      child: InkWell(
+    onTap: () {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => SchoolListPupils(
+          schoolList,
+        ),
+      ));
+    },
+    child: Row(
+      children: [
+        Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 15, bottom: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ Card schoolListCard(BuildContext context, SchoolList schoolList) {
             ],
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   ));
 }

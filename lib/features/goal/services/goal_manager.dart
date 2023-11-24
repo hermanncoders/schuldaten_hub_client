@@ -57,11 +57,8 @@ class GoalManager {
     final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
 
-    final data = jsonEncode({
-      "state": state,
-      "created_at": DateTime.now().formatForJson(),
-      "comment": comment
-    });
+    final data =
+        jsonEncode({"state": state, "file_url": null, "comment": comment});
     try {
       final response = await client.post(
           Endpoints().postCategoryStatus(pupil.internalId, goalCategoryId),

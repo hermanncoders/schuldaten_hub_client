@@ -31,7 +31,7 @@ Map<String, dynamic> _$$PupilGoalImplToJson(_$PupilGoalImpl instance) =>
       'created_by': instance.createdBy,
       'description': instance.description,
       'goal_category_id': instance.goalCategoryId,
-      'goal_checks': instance.goalChecks?.map((e) => e.toJson()).toList(),
+      'goal_checks': instance.goalChecks,
       'goal_id': instance.goalId,
       'strategies': instance.strategies,
     };

@@ -25,7 +25,6 @@ mixin _$PupilAuthorization {
   String get createdBy => throw _privateConstructorUsedError;
   @JsonKey(name: 'file_url')
   String? get fileUrl => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'origin_authorization')
   String get originAuthorization => throw _privateConstructorUsedError;
   @JsonKey(name: 'pupil_id')
@@ -48,7 +47,6 @@ abstract class $PupilAuthorizationCopyWith<$Res> {
       {String? comment,
       @JsonKey(name: 'created_by') String createdBy,
       @JsonKey(name: 'file_url') String? fileUrl,
-      int id,
       @JsonKey(name: 'origin_authorization') String originAuthorization,
       @JsonKey(name: 'pupil_id') int pupilId,
       bool? status});
@@ -70,7 +68,6 @@ class _$PupilAuthorizationCopyWithImpl<$Res, $Val extends PupilAuthorization>
     Object? comment = freezed,
     Object? createdBy = null,
     Object? fileUrl = freezed,
-    Object? id = null,
     Object? originAuthorization = null,
     Object? pupilId = null,
     Object? status = freezed,
@@ -88,10 +85,6 @@ class _$PupilAuthorizationCopyWithImpl<$Res, $Val extends PupilAuthorization>
           ? _value.fileUrl
           : fileUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       originAuthorization: null == originAuthorization
           ? _value.originAuthorization
           : originAuthorization // ignore: cast_nullable_to_non_nullable
@@ -120,7 +113,6 @@ abstract class _$$AuthorizationImplCopyWith<$Res>
       {String? comment,
       @JsonKey(name: 'created_by') String createdBy,
       @JsonKey(name: 'file_url') String? fileUrl,
-      int id,
       @JsonKey(name: 'origin_authorization') String originAuthorization,
       @JsonKey(name: 'pupil_id') int pupilId,
       bool? status});
@@ -140,7 +132,6 @@ class __$$AuthorizationImplCopyWithImpl<$Res>
     Object? comment = freezed,
     Object? createdBy = null,
     Object? fileUrl = freezed,
-    Object? id = null,
     Object? originAuthorization = null,
     Object? pupilId = null,
     Object? status = freezed,
@@ -158,10 +149,6 @@ class __$$AuthorizationImplCopyWithImpl<$Res>
           ? _value.fileUrl
           : fileUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       originAuthorization: null == originAuthorization
           ? _value.originAuthorization
           : originAuthorization // ignore: cast_nullable_to_non_nullable
@@ -185,7 +172,6 @@ class _$AuthorizationImpl implements _Authorization {
       {this.comment,
       @JsonKey(name: 'created_by') required this.createdBy,
       @JsonKey(name: 'file_url') this.fileUrl,
-      required this.id,
       @JsonKey(name: 'origin_authorization') required this.originAuthorization,
       @JsonKey(name: 'pupil_id') required this.pupilId,
       this.status});
@@ -202,8 +188,6 @@ class _$AuthorizationImpl implements _Authorization {
   @JsonKey(name: 'file_url')
   final String? fileUrl;
   @override
-  final int id;
-  @override
   @JsonKey(name: 'origin_authorization')
   final String originAuthorization;
   @override
@@ -214,7 +198,7 @@ class _$AuthorizationImpl implements _Authorization {
 
   @override
   String toString() {
-    return 'PupilAuthorization(comment: $comment, createdBy: $createdBy, fileUrl: $fileUrl, id: $id, originAuthorization: $originAuthorization, pupilId: $pupilId, status: $status)';
+    return 'PupilAuthorization(comment: $comment, createdBy: $createdBy, fileUrl: $fileUrl, originAuthorization: $originAuthorization, pupilId: $pupilId, status: $status)';
   }
 
   @override
@@ -226,7 +210,6 @@ class _$AuthorizationImpl implements _Authorization {
             (identical(other.createdBy, createdBy) ||
                 other.createdBy == createdBy) &&
             (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl) &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.originAuthorization, originAuthorization) ||
                 other.originAuthorization == originAuthorization) &&
             (identical(other.pupilId, pupilId) || other.pupilId == pupilId) &&
@@ -235,7 +218,7 @@ class _$AuthorizationImpl implements _Authorization {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, comment, createdBy, fileUrl, id,
+  int get hashCode => Object.hash(runtimeType, comment, createdBy, fileUrl,
       originAuthorization, pupilId, status);
 
   @JsonKey(ignore: true)
@@ -257,7 +240,6 @@ abstract class _Authorization implements PupilAuthorization {
       {final String? comment,
       @JsonKey(name: 'created_by') required final String createdBy,
       @JsonKey(name: 'file_url') final String? fileUrl,
-      required final int id,
       @JsonKey(name: 'origin_authorization')
       required final String originAuthorization,
       @JsonKey(name: 'pupil_id') required final int pupilId,
@@ -274,8 +256,6 @@ abstract class _Authorization implements PupilAuthorization {
   @override
   @JsonKey(name: 'file_url')
   String? get fileUrl;
-  @override
-  int get id;
   @override
   @JsonKey(name: 'origin_authorization')
   String get originAuthorization;

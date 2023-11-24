@@ -28,15 +28,10 @@ class AttendanceRankingListCard extends WatchingWidget {
           const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => PupilProfile(pupil),
-            )),
-            child: Column(
-              children: [
-                avatarWithBadges(pupil, 80),
-              ],
-            ),
+          Column(
+            children: [
+              avatarWithBadges(pupil, 80),
+            ],
           ),
           Padding(
               padding: const EdgeInsets.only(left: 10, right: 10.0),
@@ -46,15 +41,20 @@ class AttendanceRankingListCard extends WatchingWidget {
                 children: [
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Text(
-                      '${pupil.firstName!} ${pupil.lastName!}',
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => PupilProfile(pupil),
+                      )),
+                      child: Text(
+                        '${pupil.firstName!} ${pupil.lastName!}',
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),

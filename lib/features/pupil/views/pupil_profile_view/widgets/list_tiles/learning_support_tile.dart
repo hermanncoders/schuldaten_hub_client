@@ -84,8 +84,7 @@ learningSupportTiles(Pupil pupil, context) {
             pupil.specialNeeds == '' || pupil.specialNeeds == null
                 ? const Text(
                     'keins',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   )
                 : Text(
                     '${pupil.specialNeeds}',
@@ -192,14 +191,16 @@ learningSupportTiles(Pupil pupil, context) {
                                 const Gap(10),
                                 Text(
                                   pupilGoals[index].createdBy,
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 const Gap(15),
                                 const Text('am'),
                                 const Gap(10),
                                 Text(
                                   pupilGoals[index].createdAt.formatForUser(),
-                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             )

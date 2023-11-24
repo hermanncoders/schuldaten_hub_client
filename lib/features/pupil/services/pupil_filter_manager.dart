@@ -74,8 +74,12 @@ class PupilFilterManager {
     _filteredPupils.value = updatedPupils;
   }
 
-  resetFilters() {
+  updateFilteredPupils() {
     _filteredPupils.value = locator<PupilManager>().pupils.value;
+  }
+
+  resetFilters() {
+    updateFilteredPupils();
     _filterState.value = {...initialFilterValues};
     _filtersOn.value = false;
   }

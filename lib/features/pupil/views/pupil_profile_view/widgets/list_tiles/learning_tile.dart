@@ -17,13 +17,22 @@ learningTiles(Pupil pupil, context) {
     child: ExpansionTile(
       iconColor: backgroundColor,
       tilePadding: const EdgeInsets.all(0),
-      title: const Text(
-        'Lernen',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
+      title: const Row(
+        children: [
+          // Icon(
+          //   Icons.lightbulb_outline_rounded,
+          //   color: backgroundColor,
+          // ),
+          // Gap(10),
+          Text(
+            'Lernen',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
       children: [
         const Gap(10),

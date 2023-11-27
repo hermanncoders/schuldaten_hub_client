@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/attendance_filter_bottom_sheet.dart';
-import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/date_pickers.dart';
+import 'package:schuldaten_hub/common/widgets/date_picker.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
@@ -41,7 +41,10 @@ BottomAppBar attendanceViewBottomNavBar(
           ),
           const Gap(30),
           InkWell(
-            onTap: () => selectThisDate(context, thisDate),
+            onTap: () async {
+              final DateTime newDate = await selectDate(context, thisDate);
+              locator<SchooldayManager>().setThisDate(newDate);
+            },
             onLongPress: () => locator<SchooldayManager>().getThisDate(),
             child: const Icon(
               Icons.today_rounded,

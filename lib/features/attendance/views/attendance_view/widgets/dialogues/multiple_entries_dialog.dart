@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
-import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/date_pickers.dart';
+import 'package:schuldaten_hub/common/widgets/date_picker.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -16,9 +16,9 @@ Future<void> createMissedClassList(BuildContext context, Pupil pupil) async {
   return await showDialog(
       context: context,
       builder: (context) {
-        final schooldayManager = locator<SchooldayManager>();
-        schooldayManager.setStartDate(thisDate);
-        schooldayManager.setEndDate(thisDate);
+        // final schooldayManager = locator<SchooldayManager>();
+        // schooldayManager.setStartDate(thisDate);
+        // schooldayManager.setEndDate(thisDate);
         String dialogdropdownValue = 'missed';
         DateTime startDate = thisDate;
         DateTime endDate = thisDate;
@@ -89,8 +89,7 @@ Future<void> createMissedClassList(BuildContext context, Pupil pupil) async {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                           onTap: () async {
-                            final date =
-                                await selectStartDate(context, thisDate);
+                            final date = await selectDate(context, thisDate);
                             setState(() {
                               startDate = date;
                             });
@@ -108,7 +107,7 @@ Future<void> createMissedClassList(BuildContext context, Pupil pupil) async {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                           onTap: () async {
-                            final date = await selectEndDate(context, thisDate);
+                            final date = await selectDate(context, thisDate);
                             setState(() {
                               endDate = date;
                             });

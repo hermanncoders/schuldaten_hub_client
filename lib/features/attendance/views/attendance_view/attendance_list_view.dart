@@ -10,7 +10,7 @@ import 'package:schuldaten_hub/features/attendance/views/attendance_view/control
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/atendance_list_card.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/attendance_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/attendance_view_bottom_navbar.dart';
-import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/date_pickers.dart';
+import 'package:schuldaten_hub/common/widgets/date_picker.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -40,7 +40,10 @@ class AttendanceListView extends WatchingWidget {
         centerTitle: true,
         backgroundColor: backgroundColor,
         title: InkWell(
-          onTap: () => selectThisDate(context, thisDate),
+          onTap: () async {
+            final DateTime newDate = await selectDate(context, thisDate);
+            locator<SchooldayManager>().setThisDate(newDate);
+          },
           child: Text(
               '${DateFormat('EEEE', Localizations.localeOf(context).toString()).format(thisDate)}, ${thisDate.formatForUser()}'),
         ),

@@ -441,7 +441,7 @@ class AttendanceManager {
     if (pupil.pupilMissedClasses != null) {
       missedClassUnexcusedCount = pupil.pupilMissedClasses!
           .where((element) =>
-              element.missedType == 'late' && element.excused == false)
+              element.missedType == 'late' && element.excused == true)
           .length;
     }
     return missedClassUnexcusedCount;

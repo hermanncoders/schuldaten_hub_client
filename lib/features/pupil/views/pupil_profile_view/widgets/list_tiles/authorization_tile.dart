@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
@@ -13,13 +15,22 @@ pupilAuthorizationListTiles(Pupil pupil) {
     minLeadingWidth: 0,
     child: ExpansionTile(
       tilePadding: const EdgeInsets.all(0),
-      title: const Text(
-        'Einwilligungen',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
+      title: const Row(
+        children: [
+          // Icon(
+          //   Icons.check_circle_rounded,
+          //   color: backgroundColor,
+          // ),
+          Gap(10),
+          Text(
+            'Einwilligungen',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
       children: [
         ListView.builder(

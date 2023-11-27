@@ -7,12 +7,22 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
+import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/secure_storage.dart';
 import 'package:schuldaten_hub/common/models/session_models/session.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
+import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
+import 'package:schuldaten_hub/features/competence/services/competence_filter_manager.dart';
+import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
 import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 
 class SessionManager {
   ValueListenable<Session> get credentials => _credentials;
@@ -151,5 +161,19 @@ class SessionManager {
     _operationReport.value =
         Report('success', 'Zugangsdaten und QR-IDs gelöscht');
     _isRunning.value = false;
+    locator.unregister<ApiManager>();
+    locator.unregister<SchooldayManager>();
+    locator.unregister<GoalManager>();
+    locator.unregister<PupilManager>();
+    locator.unregister<PupilFilterManager>();
+    locator.unregister<CompetenceFilterManager>();
+    locator.unregister<CompetenceManager>();
+    locator.unregister<SchoolListManager>();
+    locator.unregister<AuthorizationManager>();
+    locator.unregister<BottomNavManager>();
+    locator.unregister<AttendanceManager>();
+    locator.unregister<AdmonitionManager>();
+
+    return;
   }
 }

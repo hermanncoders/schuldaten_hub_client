@@ -6,13 +6,14 @@ import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/admonition_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/authorization_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/credit_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/info_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/language_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/learning_support_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/learning_tile.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/missed_class_list_tile.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/attendance_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/ogs_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/school_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_profile_bottom_navbar.dart';
@@ -45,42 +46,37 @@ class PupilDetailsView extends WatchingWidget {
                       Stack(
                         children: [
                           GestureDetector(
-                              onLongPressStart: (details) {
-                                final offset = details.globalPosition;
-                                final position = RelativeRect.fromLTRB(
-                                    offset.dx, offset.dy, offset.dx, offset.dy);
-                                showMenu(
-                                  context: context,
-                                  position: position,
-                                  items: [
-                                    PopupMenuItem(
-                                      child: const Text('Option 1'),
-                                      onTap: () {
-                                        // Handle option 1
-                                      },
-                                    ),
-                                    PopupMenuItem(
-                                      child: const Text('Foto ersetzen'),
-                                      onTap: () => setAvatar(context, pupil),
-                                    ),
-                                    PopupMenuItem(
-                                      child: const Text('Bild löschen'),
-                                      onTap: () async {
-                                        await controller.deleteAvatar();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                              //onLongPress: () => setAvatar(context, pupil),
-                              // onTap: () => showImageViewer(
-                              //     context,
-                              //     Image.network(
-                              //             "https://picsum.photos/id/1001/4912/3264")
-                              //         .image,
-                              //     swipeDismissible: true,
-                              //     doubleTapZoomable: true),
-                              child: avatarWithBadges(pupil, 120)),
+                            onLongPressStart: (details) {
+                              final offset = details.globalPosition;
+                              final position = RelativeRect.fromLTRB(
+                                  offset.dx, offset.dy, offset.dx, offset.dy);
+                              showMenu(
+                                context: context,
+                                position: position,
+                                items: [
+                                  PopupMenuItem(
+                                    child: const Text('Foto ersetzen'),
+                                    onTap: () => setAvatar(context, pupil),
+                                  ),
+                                  PopupMenuItem(
+                                    child: const Text('Bild löschen'),
+                                    onTap: () async {
+                                      await controller.deleteAvatar();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                            //onLongPress: () => setAvatar(context, pupil),
+                            // onTap: () => showImageViewer(
+                            //     context,
+                            //     Image.network(
+                            //             "https://picsum.photos/id/1001/4912/3264")
+                            //         .image,
+                            //     swipeDismissible: true,
+                            //     doubleTapZoomable: true),
+                            child: avatarWithBadges(pupil, 120),
+                          ),
                         ],
                       ),
                       Padding(
@@ -184,7 +180,7 @@ class PupilDetailsView extends WatchingWidget {
                           languageListTiles(pupil, context),
                           creditTiles(pupil, context),
                           missedClasses.isNotEmpty
-                              ? missedClassMissedTiles(pupil, context)
+                              ? attendanceListTiles(pupil, context)
                               : const Text(
                                   'Keine Fehlzeiten!',
                                   textAlign: TextAlign.left,
@@ -201,6 +197,7 @@ class PupilDetailsView extends WatchingWidget {
                           pupilAuthorizationListTiles(pupil),
                           learningSupportTiles(pupil, context),
                           learningTiles(pupil, context),
+                          admonitionListTiles(pupil, context),
                           const Gap(50)
                         ],
                       ),

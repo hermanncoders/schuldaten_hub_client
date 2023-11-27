@@ -90,6 +90,17 @@ Future<void> languageDialog(
                                           fontSize: 18,
                                         )),
                                   )),
+                              DropdownMenuItem(
+                                  value: '4',
+                                  child: Center(
+                                    child: Text("unbekannt",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        )),
+                                  )),
                             ],
                             onChanged: (newvalue) {
                               setState(() {
@@ -165,6 +176,17 @@ Future<void> languageDialog(
                                           fontSize: 18,
                                         )),
                                   )),
+                              DropdownMenuItem(
+                                  value: '4',
+                                  child: Center(
+                                    child: Text("unbekannt",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        )),
+                                  )),
                             ],
                             onChanged: (newvalue) {
                               setState(() {
@@ -194,7 +216,7 @@ Future<void> languageDialog(
                             onTap: () {
                               FocusManager.instance.primaryFocus!.unfocus();
                             },
-                            value: dropdownSpeakValue,
+                            value: dropdownReadValue,
                             items: const [
                               DropdownMenuItem(
                                   value: '0',
@@ -240,10 +262,21 @@ Future<void> languageDialog(
                                           fontSize: 18,
                                         )),
                                   )),
+                              DropdownMenuItem(
+                                  value: '4',
+                                  child: Center(
+                                    child: Text("unbekannt",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        )),
+                                  )),
                             ],
                             onChanged: (newvalue) {
                               setState(() {
-                                dropdownSpeakValue = newvalue!;
+                                dropdownReadValue = newvalue!;
                               });
                             }),
                       ),

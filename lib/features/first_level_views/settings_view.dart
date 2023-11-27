@@ -28,7 +28,6 @@ class SettingsView extends WatchingWidget {
     void logout() async {
       await locator<SessionManager>().logout();
 
-      locator.get<BottomNavManager>().setBottomNavPage(0);
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
         await Navigator.of(context).pushNamed(Routes.login);

@@ -17,13 +17,22 @@ infoListTiles(Pupil pupil, context) {
     child: ExpansionTile(
       iconColor: backgroundColor,
       tilePadding: const EdgeInsets.all(0),
-      title: const Text(
-        'Infos',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
+      title: const Row(
+        children: [
+          // Icon(
+          //   Icons.info_rounded,
+          //   color: backgroundColor,
+          // ),
+          Gap(10),
+          Text(
+            'Infos',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
       children: [
         Row(
@@ -94,7 +103,8 @@ infoListTiles(Pupil pupil, context) {
                             const Gap(10),
                             Text(
                               sibling.firstName!,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             const Gap(10),
                             Text(

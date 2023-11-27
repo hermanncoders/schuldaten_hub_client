@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.0.3 <4.0.0'
 
 dependencies:
+  cached_network_image: ^3.3.0
   collection: ^1.17.1
   connectivity_plus: ^5.0.1
   crop_image: ^1.0.11
@@ -15,6 +16,7 @@ dependencies:
   file_picker: ^6.1.1
   flutter:
     sdk: flutter
+  flutter_cache_manager: ^3.3.1
   flutter_dotenv: ^5.1.0
   flutter_launcher_icons: ^0.13.1
   flutter_localizations:
@@ -34,6 +36,7 @@ dependencies:
   settings_ui: ^2.0.2
   top_snackbar_flutter: ^3.1.0
   watch_it: ^1.1.0
+  widget_zoom: ^0.0.2
 
 dev_dependencies:
   flutter_test:

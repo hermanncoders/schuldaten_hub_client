@@ -8,7 +8,7 @@ import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/admonition_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_card.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_view_bottom_navbar.dart';
-import 'package:schuldaten_hub/features/admonitions/views/controller/admonition_list_controller.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
@@ -34,12 +34,12 @@ class AdmonitionListView extends WatchingWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.money),
-            const Gap(10),
-            Text('Guthaben: $userCredit'),
+            Icon(Icons.warning_amber_rounded),
+            Gap(10),
+            Text('Vorfälle'),
           ],
         ),
       ),

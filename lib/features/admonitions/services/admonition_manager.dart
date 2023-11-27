@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
+import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -64,14 +65,10 @@ class AdmonitionManager {
       int pupilId, DateTime date, String type, String reason) async {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = _findPupilById(pupilId);
-    final int? admonition = _findAdmonitionIndex(pupil!, date);
-    if (admonition == null || admonition == -1) {
-      return;
-    }
+
     final data = jsonEncode({
       "admonished_day": date.formatForJson(),
-      "admonished_pupil": pupilId,
+      "admonished_pupil_id": pupilId,
       "admonition_reason": reason,
       "admonition_type": type,
       "file_url": null,
@@ -88,26 +85,22 @@ class AdmonitionManager {
     }
   }
 
-  fetchAdmonitionFile(File imageFile, Pupil pupil) async {
+  postAdmonitionFile(File imageFile, String admonitionId) async {
     final client = locator.get<ApiManager>().dioClient.value;
-    // We use the server file name, which is anonymous.
-    String fileName = imageFile.path.split('/').last;
+    final encryptedFile = await customEncrypter.encryptFile(imageFile);
+
+    String fileName = encryptedFile.path.split('/').last;
     // Prepare the form data for the request.
     var formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(
-        imageFile.path,
+        encryptedFile.path,
         filename: fileName,
       ),
     });
     // send request
     final Response response = await client.patch(
-      Endpoints().patchPupilhWithAvatar(pupil.internalId),
+      Endpoints().patchAdmonitionFile(admonitionId),
       data: formData,
-      // Not really sure if this headers is necessary, but it helped at some point.
-      // It works like this :-)
-      // options: Options(headers: {
-      //   'x-access-token': locator<SessionManager>().credentials.value.jwt
-      // }),
     );
     // Handle errors.
     if (response.statusCode != 200) {
@@ -115,5 +108,22 @@ class AdmonitionManager {
     }
     // Success! We have a pupil response - let's patch the pupil with the data
     final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
+  }
+
+  deleteAdmonition(String admonitionId) async {
+    resetOperationReport();
+    _setIsRunning(true);
+    // send request
+    Response response =
+        await client.delete(Endpoints().deleteAdmonition(admonitionId));
+
+    if (response.statusCode != 200) {
+      _operationReport.value = Report('warning', response.data);
+      return;
+    }
+    _operationReport.value = Report('success', 'Fehlzeit gelöscht!');
+    locator<PupilManager>().patchPupilFromResponse(response.data);
+    _setIsRunning(false);
   }
 }

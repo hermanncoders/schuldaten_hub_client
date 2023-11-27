@@ -61,29 +61,29 @@ class Endpoints {
   //- ADMONITION ------------------------------------------------------
 
   //- POST
-  static const postAdmonition = '/api/admonition';
+  static const postAdmonition = '/admonition';
 
   //- GET
   static const fetchAdmonitions = '/api/admonition/all';
-  String getAdmonition(int id) {
+  String getAdmonition(String id) {
     return '/admonition/$id';
   }
 
-  String getAdmonitionFile(int id) {
+  String getAdmonitionFile(String id) {
     return '/admonition/$id/file';
   }
 
   //- PATCH
-  String patchAdmonition(int id) {
+  String patchAdmonition(String id) {
     return '/admonition/$id';
   }
 
-  String patchAdmonitionFile(int id) {
+  String patchAdmonitionFile(String id) {
     return '/admonition/$id/file';
   }
 
   //- DELETE
-  String deleteAdmonition(int id) {
+  String deleteAdmonition(String id) {
     return '/admonition/$id/delete';
   }
 

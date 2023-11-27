@@ -5,7 +5,7 @@ import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:watch_it/watch_it.dart';
 
-import '../../../pupil/models/pupil.dart';
+import '../../../../pupil/models/pupil.dart';
 
 class AdmonitionList extends WatchingStatefulWidget {
   const AdmonitionList({Key? key}) : super(key: key);
@@ -25,22 +25,6 @@ class AdmonitionListController extends State<AdmonitionList> {
   void initState() {
     locator<PupilFilterManager>().refreshFilteredPupils();
     super.initState();
-  }
-
-  int totalFluidCredit(List<Pupil> pupils) {
-    int totalCredit = 0;
-    for (Pupil pupil in pupils) {
-      totalCredit = totalCredit + pupil.credit;
-    }
-    return totalCredit;
-  }
-
-  int totalGeneratedCredit(List<Pupil> pupils) {
-    int totalGeneratedCredit = 0;
-    for (Pupil pupil in pupils) {
-      totalGeneratedCredit = totalGeneratedCredit + pupil.creditEarned;
-    }
-    return totalGeneratedCredit;
   }
 
   void getPupilsFromServer() async {

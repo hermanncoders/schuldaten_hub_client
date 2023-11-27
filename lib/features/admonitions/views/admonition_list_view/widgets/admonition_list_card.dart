@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
-import 'package:schuldaten_hub/features/admonitions/views/controller/admonition_list_controller.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/change_credit_dialog.dart';
@@ -51,25 +51,25 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
                 ],
               ),
               const Gap(5),
-              Row(
-                children: [
-                  const Text('Vorfälle:'),
-                  const Gap(10),
-                  Text(
-                    pupil.pupilAdmonitions?.length.toString() ?? 0.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  )
-                ],
-              )
+              // Row(
+              //   children: [
+              //     const Text('Vorfälle:'),
+              //     const Gap(10),
+              //     Text(
+              //       pupil.pupilAdmonitions?.length.toString() ?? 0.toString(),
+              //       style: const TextStyle(
+              //         fontWeight: FontWeight.bold,
+              //         fontSize: 18,
+              //       ),
+              //     )
+              //   ],
+              // )
             ],
           ),
         ),
         Expanded(
           child: InkWell(
-            onTap: () async => changeCreditDialog(context, pupil),
+            onTap: () {},
             child: Column(
               children: [
                 const Text('Ermahnungen'),

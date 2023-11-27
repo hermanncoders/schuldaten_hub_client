@@ -1,37 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
+import 'package:schuldaten_hub/common/widgets/download_decrypt_image.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
+import 'package:widget_zoom/widget_zoom.dart';
 
 Widget avatarImage(Pupil pupil, double size) {
   return SizedBox(
     width: size,
     height: size,
-    child: FullScreenWidget(
-      disposeLevel: DisposeLevel.Medium,
-      child: Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(size / 2),
-          child: pupil.avatarUrl != null
-              ? Image.network(
-                  '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAvatar(pupil.internalId)}',
-                  headers: {
-                    "x-access-token":
-                        locator<SessionManager>().credentials.value.jwt!
+    child: Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(size / 2),
+        child: pupil.avatarUrl != null
+            ? WidgetZoom(
+                heroAnimationTag: pupil,
+                zoomWidget: FutureBuilder<Widget>(
+                  future: downloadAndDecryptImage(
+                    '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAvatar(pupil.internalId)}',
+                  ),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // Display a loading indicator while the future is not complete
+                      return const CircularProgressIndicator(
+                        strokeWidth: 8,
+                        color: backgroundColor,
+                      );
+                    } else if (snapshot.hasError) {
+                      // Display an error message if the future encounters an error
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      // Display the result when the future is complete
+                      return snapshot.data!;
+                    }
                   },
-                )
-              : Image.asset(
-                  'assets/dummy-profile-pic.png',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
                 ),
-        ),
+              )
+            : Image.asset(
+                'assets/dummy-profile-pic.png',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
       ),
     ),
   );

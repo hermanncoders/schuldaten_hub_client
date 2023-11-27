@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:schuldaten_hub/api/dio/dio_exceptions.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
+import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -146,6 +147,8 @@ class PupilManager {
         return "komplexere Informationen";
       case '3':
         return "ohne Probleme";
+      case '4':
+        return "unbekannt";
       default:
         return "Falscher Wert im Server";
     }
@@ -296,14 +299,15 @@ class PupilManager {
     locator<PupilFilterManager>().cloneToFilteredPupil(namedPupil);
   }
 
-  fetchAvatarImage(File imageFile, Pupil pupil) async {
+  postAvatarImage(File imageFile, Pupil pupil) async {
     final client = locator.get<ApiManager>().dioClient.value;
-    // We use the server file name, which is anonymous.
-    String fileName = imageFile.path.split('/').last;
+    final encryptedFile = await customEncrypter.encryptFile(imageFile);
+    // send request
+    String fileName = encryptedFile.path.split('/').last;
     // Prepare the form data for the request.
     var formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(
-        imageFile.path,
+        encryptedFile.path,
         filename: fileName,
       ),
     });
@@ -311,11 +315,6 @@ class PupilManager {
     final Response response = await client.patch(
       Endpoints().patchPupilhWithAvatar(pupil.internalId),
       data: formData,
-      // Not really sure if this headers is necessary, but it helped at some point.
-      // It works like this :-)
-      // options: Options(headers: {
-      //   'x-access-token': locator<SessionManager>().credentials.value.jwt
-      // }),
     );
     // Handle errors.
     if (response.statusCode != 200) {

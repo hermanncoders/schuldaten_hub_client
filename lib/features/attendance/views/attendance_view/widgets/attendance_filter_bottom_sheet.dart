@@ -33,6 +33,8 @@ class AttendanceFilterBottomSheet extends WatchingWidget {
     bool valueNotPresent = activeFilters[PupilFilter.notPresent]!;
     bool valueUnexcused = activeFilters[PupilFilter.unexcused]!;
     bool valueOgs = activeFilters[PupilFilter.ogs]!;
+    bool valueNotOgs = activeFilters[PupilFilter.notOgs]!;
+
     final filterLocator = locator<PupilFilterManager>();
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20, top: 8),
@@ -50,7 +52,6 @@ class AttendanceFilterBottomSheet extends WatchingWidget {
                   color: Colors.amber,
                   onPressed: () {
                     locator<PupilFilterManager>().resetFilters();
-
                     //Navigator.pop(context);
                   },
                   icon: const Icon(Icons.restart_alt_rounded)),
@@ -362,7 +363,30 @@ class AttendanceFilterBottomSheet extends WatchingWidget {
                 ),
                 selected: valueOgs,
                 onSelected: (val) {
-                  filterLocator.setFilter(PupilFilter.ogs, val);
+                  if (val == true) {
+                    filterLocator.setFilter(PupilFilter.notOgs, false);
+                    filterLocator.setFilter(PupilFilter.ogs, val);
+                  } else {
+                    filterLocator.setFilter(PupilFilter.ogs, val);
+                  }
+                },
+              ),
+              FilterChip(
+                selectedColor: filterChipSelectedColor,
+                checkmarkColor: filterChipSelectedCheckColor,
+                backgroundColor: filterChipUnselectedColor,
+                label: const Text(
+                  'nicht OGS',
+                  style: filterItemsTextStyle,
+                ),
+                selected: valueNotOgs,
+                onSelected: (val) {
+                  if (val == true) {
+                    filterLocator.setFilter(PupilFilter.ogs, false);
+                    filterLocator.setFilter(PupilFilter.notOgs, val);
+                  } else {
+                    filterLocator.setFilter(PupilFilter.notOgs, val);
+                  }
                 },
               ),
             ],

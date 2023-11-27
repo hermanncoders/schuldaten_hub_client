@@ -21,13 +21,22 @@ learningSupportTiles(Pupil pupil, context) {
     child: ExpansionTile(
       iconColor: backgroundColor,
       tilePadding: const EdgeInsets.all(0),
-      title: const Text(
-        'Förderung',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
+      title: const Row(
+        children: [
+          // Icon(
+          //   Icons.support_rounded,
+          //   color: backgroundColor,
+          // ),
+          // Gap(10),
+          Text(
+            'Förderung',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
       children: [
         const Row(
@@ -220,7 +229,7 @@ learningSupportTiles(Pupil pupil, context) {
             ),
           ],
         ),
-        ...buildPupilCategoryTree(pupil, null, 0, null, context),
+        ...buildPupilCategoryTree(context, pupil, null, 0, null),
         const Gap(15),
       ],
     ),

@@ -110,20 +110,19 @@ class PupilFilterManager {
   setSearchText(String? text) {
     if (text!.isEmpty) {
       _filteredPupils.value = locator<PupilManager>().pupils.value;
+      _searchText.value = '';
+      _filtersOn.value = false;
       return;
     }
 
     _searchText.value = text;
-    //_filtersOn.value = true;
-    debug.warning('search value is $text');
+    _filtersOn.value = true;
     List<Pupil> filteredPupils = [];
     List<Pupil> filteredPupilsState = List.from(_filteredPupils.value);
     filteredPupils = filteredPupilsState
         .where((Pupil pupil) =>
             pupil.firstName!.toLowerCase().contains(text.toLowerCase()))
         .toList();
-    debug.warning('filteredPupilsLength is ${filteredPupils.length}');
-
     _filteredPupils.value = filteredPupils;
   }
 
@@ -240,6 +239,18 @@ class PupilFilterManager {
           toList == true) {
         toList = true;
       } else if (activeFilters[PupilFilter.ogs] == false && toList == true) {
+        toList = true;
+      } else {
+        _filtersOn.value = true;
+        toList = false;
+      }
+
+      // Filter not ogs
+      if (activeFilters[PupilFilter.notOgs]! &&
+          pupil.ogs == false &&
+          toList == true) {
+        toList = true;
+      } else if (activeFilters[PupilFilter.notOgs] == false && toList == true) {
         toList = true;
       } else {
         _filtersOn.value = true;

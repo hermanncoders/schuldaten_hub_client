@@ -20,19 +20,26 @@ Admonition _$AdmonitionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Admonition {
+  @JsonKey(name: 'admonition_id')
+  String get admonitionId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'admonition_type')
+  String get admonitionType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'admonition_reason')
+  String get admonitionReason => throw _privateConstructorUsedError;
+  @JsonKey(name: 'admonishing_user')
+  String get admonishingUser => throw _privateConstructorUsedError;
+  @JsonKey(name: 'processed')
+  bool get processed => throw _privateConstructorUsedError;
+  @JsonKey(name: 'processed_by')
+  String? get processedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'processed_at')
+  DateTime? get processedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'file_url')
+  String? get fileUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'admonished_day')
   DateTime get admonishedDay => throw _privateConstructorUsedError;
   @JsonKey(name: 'admonished_pupil_id')
   int get admonishedPupilId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'admonishing_user')
-  String get admonishingUser => throw _privateConstructorUsedError;
-  @JsonKey(name: 'admonition_reason')
-  String get admonitionReason => throw _privateConstructorUsedError;
-  @JsonKey(name: 'admonition_type')
-  String get admonitionType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'file_url')
-  String? get fileUrl => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,13 +54,16 @@ abstract class $AdmonitionCopyWith<$Res> {
       _$AdmonitionCopyWithImpl<$Res, Admonition>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'admonished_day') DateTime admonishedDay,
-      @JsonKey(name: 'admonished_pupil_id') int admonishedPupilId,
-      @JsonKey(name: 'admonishing_user') String admonishingUser,
-      @JsonKey(name: 'admonition_reason') String admonitionReason,
+      {@JsonKey(name: 'admonition_id') String admonitionId,
       @JsonKey(name: 'admonition_type') String admonitionType,
+      @JsonKey(name: 'admonition_reason') String admonitionReason,
+      @JsonKey(name: 'admonishing_user') String admonishingUser,
+      @JsonKey(name: 'processed') bool processed,
+      @JsonKey(name: 'processed_by') String? processedBy,
+      @JsonKey(name: 'processed_at') DateTime? processedAt,
       @JsonKey(name: 'file_url') String? fileUrl,
-      int id});
+      @JsonKey(name: 'admonished_day') DateTime admonishedDay,
+      @JsonKey(name: 'admonished_pupil_id') int admonishedPupilId});
 }
 
 /// @nodoc
@@ -69,15 +79,50 @@ class _$AdmonitionCopyWithImpl<$Res, $Val extends Admonition>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? admonitionId = null,
+    Object? admonitionType = null,
+    Object? admonitionReason = null,
+    Object? admonishingUser = null,
+    Object? processed = null,
+    Object? processedBy = freezed,
+    Object? processedAt = freezed,
+    Object? fileUrl = freezed,
     Object? admonishedDay = null,
     Object? admonishedPupilId = null,
-    Object? admonishingUser = null,
-    Object? admonitionReason = null,
-    Object? admonitionType = null,
-    Object? fileUrl = freezed,
-    Object? id = null,
   }) {
     return _then(_value.copyWith(
+      admonitionId: null == admonitionId
+          ? _value.admonitionId
+          : admonitionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      admonitionType: null == admonitionType
+          ? _value.admonitionType
+          : admonitionType // ignore: cast_nullable_to_non_nullable
+              as String,
+      admonitionReason: null == admonitionReason
+          ? _value.admonitionReason
+          : admonitionReason // ignore: cast_nullable_to_non_nullable
+              as String,
+      admonishingUser: null == admonishingUser
+          ? _value.admonishingUser
+          : admonishingUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      processed: null == processed
+          ? _value.processed
+          : processed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      processedBy: freezed == processedBy
+          ? _value.processedBy
+          : processedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      processedAt: freezed == processedAt
+          ? _value.processedAt
+          : processedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      fileUrl: freezed == fileUrl
+          ? _value.fileUrl
+          : fileUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       admonishedDay: null == admonishedDay
           ? _value.admonishedDay
           : admonishedDay // ignore: cast_nullable_to_non_nullable
@@ -85,26 +130,6 @@ class _$AdmonitionCopyWithImpl<$Res, $Val extends Admonition>
       admonishedPupilId: null == admonishedPupilId
           ? _value.admonishedPupilId
           : admonishedPupilId // ignore: cast_nullable_to_non_nullable
-              as int,
-      admonishingUser: null == admonishingUser
-          ? _value.admonishingUser
-          : admonishingUser // ignore: cast_nullable_to_non_nullable
-              as String,
-      admonitionReason: null == admonitionReason
-          ? _value.admonitionReason
-          : admonitionReason // ignore: cast_nullable_to_non_nullable
-              as String,
-      admonitionType: null == admonitionType
-          ? _value.admonitionType
-          : admonitionType // ignore: cast_nullable_to_non_nullable
-              as String,
-      fileUrl: freezed == fileUrl
-          ? _value.fileUrl
-          : fileUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -119,13 +144,16 @@ abstract class _$$AdmonitionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'admonished_day') DateTime admonishedDay,
-      @JsonKey(name: 'admonished_pupil_id') int admonishedPupilId,
-      @JsonKey(name: 'admonishing_user') String admonishingUser,
-      @JsonKey(name: 'admonition_reason') String admonitionReason,
+      {@JsonKey(name: 'admonition_id') String admonitionId,
       @JsonKey(name: 'admonition_type') String admonitionType,
+      @JsonKey(name: 'admonition_reason') String admonitionReason,
+      @JsonKey(name: 'admonishing_user') String admonishingUser,
+      @JsonKey(name: 'processed') bool processed,
+      @JsonKey(name: 'processed_by') String? processedBy,
+      @JsonKey(name: 'processed_at') DateTime? processedAt,
       @JsonKey(name: 'file_url') String? fileUrl,
-      int id});
+      @JsonKey(name: 'admonished_day') DateTime admonishedDay,
+      @JsonKey(name: 'admonished_pupil_id') int admonishedPupilId});
 }
 
 /// @nodoc
@@ -139,15 +167,50 @@ class __$$AdmonitionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? admonitionId = null,
+    Object? admonitionType = null,
+    Object? admonitionReason = null,
+    Object? admonishingUser = null,
+    Object? processed = null,
+    Object? processedBy = freezed,
+    Object? processedAt = freezed,
+    Object? fileUrl = freezed,
     Object? admonishedDay = null,
     Object? admonishedPupilId = null,
-    Object? admonishingUser = null,
-    Object? admonitionReason = null,
-    Object? admonitionType = null,
-    Object? fileUrl = freezed,
-    Object? id = null,
   }) {
     return _then(_$AdmonitionImpl(
+      admonitionId: null == admonitionId
+          ? _value.admonitionId
+          : admonitionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      admonitionType: null == admonitionType
+          ? _value.admonitionType
+          : admonitionType // ignore: cast_nullable_to_non_nullable
+              as String,
+      admonitionReason: null == admonitionReason
+          ? _value.admonitionReason
+          : admonitionReason // ignore: cast_nullable_to_non_nullable
+              as String,
+      admonishingUser: null == admonishingUser
+          ? _value.admonishingUser
+          : admonishingUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      processed: null == processed
+          ? _value.processed
+          : processed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      processedBy: freezed == processedBy
+          ? _value.processedBy
+          : processedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      processedAt: freezed == processedAt
+          ? _value.processedAt
+          : processedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      fileUrl: freezed == fileUrl
+          ? _value.fileUrl
+          : fileUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       admonishedDay: null == admonishedDay
           ? _value.admonishedDay
           : admonishedDay // ignore: cast_nullable_to_non_nullable
@@ -155,26 +218,6 @@ class __$$AdmonitionImplCopyWithImpl<$Res>
       admonishedPupilId: null == admonishedPupilId
           ? _value.admonishedPupilId
           : admonishedPupilId // ignore: cast_nullable_to_non_nullable
-              as int,
-      admonishingUser: null == admonishingUser
-          ? _value.admonishingUser
-          : admonishingUser // ignore: cast_nullable_to_non_nullable
-              as String,
-      admonitionReason: null == admonitionReason
-          ? _value.admonitionReason
-          : admonitionReason // ignore: cast_nullable_to_non_nullable
-              as String,
-      admonitionType: null == admonitionType
-          ? _value.admonitionType
-          : admonitionType // ignore: cast_nullable_to_non_nullable
-              as String,
-      fileUrl: freezed == fileUrl
-          ? _value.fileUrl
-          : fileUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -184,41 +227,54 @@ class __$$AdmonitionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AdmonitionImpl implements _Admonition {
   _$AdmonitionImpl(
-      {@JsonKey(name: 'admonished_day') required this.admonishedDay,
-      @JsonKey(name: 'admonished_pupil_id') required this.admonishedPupilId,
-      @JsonKey(name: 'admonishing_user') required this.admonishingUser,
-      @JsonKey(name: 'admonition_reason') required this.admonitionReason,
+      {@JsonKey(name: 'admonition_id') required this.admonitionId,
       @JsonKey(name: 'admonition_type') required this.admonitionType,
+      @JsonKey(name: 'admonition_reason') required this.admonitionReason,
+      @JsonKey(name: 'admonishing_user') required this.admonishingUser,
+      @JsonKey(name: 'processed') required this.processed,
+      @JsonKey(name: 'processed_by') this.processedBy,
+      @JsonKey(name: 'processed_at') this.processedAt,
       @JsonKey(name: 'file_url') this.fileUrl,
-      required this.id});
+      @JsonKey(name: 'admonished_day') required this.admonishedDay,
+      @JsonKey(name: 'admonished_pupil_id') required this.admonishedPupilId});
 
   factory _$AdmonitionImpl.fromJson(Map<String, dynamic> json) =>
       _$$AdmonitionImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'admonition_id')
+  final String admonitionId;
+  @override
+  @JsonKey(name: 'admonition_type')
+  final String admonitionType;
+  @override
+  @JsonKey(name: 'admonition_reason')
+  final String admonitionReason;
+  @override
+  @JsonKey(name: 'admonishing_user')
+  final String admonishingUser;
+  @override
+  @JsonKey(name: 'processed')
+  final bool processed;
+  @override
+  @JsonKey(name: 'processed_by')
+  final String? processedBy;
+  @override
+  @JsonKey(name: 'processed_at')
+  final DateTime? processedAt;
+  @override
+  @JsonKey(name: 'file_url')
+  final String? fileUrl;
   @override
   @JsonKey(name: 'admonished_day')
   final DateTime admonishedDay;
   @override
   @JsonKey(name: 'admonished_pupil_id')
   final int admonishedPupilId;
-  @override
-  @JsonKey(name: 'admonishing_user')
-  final String admonishingUser;
-  @override
-  @JsonKey(name: 'admonition_reason')
-  final String admonitionReason;
-  @override
-  @JsonKey(name: 'admonition_type')
-  final String admonitionType;
-  @override
-  @JsonKey(name: 'file_url')
-  final String? fileUrl;
-  @override
-  final int id;
 
   @override
   String toString() {
-    return 'Admonition(admonishedDay: $admonishedDay, admonishedPupilId: $admonishedPupilId, admonishingUser: $admonishingUser, admonitionReason: $admonitionReason, admonitionType: $admonitionType, fileUrl: $fileUrl, id: $id)';
+    return 'Admonition(admonitionId: $admonitionId, admonitionType: $admonitionType, admonitionReason: $admonitionReason, admonishingUser: $admonishingUser, processed: $processed, processedBy: $processedBy, processedAt: $processedAt, fileUrl: $fileUrl, admonishedDay: $admonishedDay, admonishedPupilId: $admonishedPupilId)';
   }
 
   @override
@@ -226,24 +282,41 @@ class _$AdmonitionImpl implements _Admonition {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AdmonitionImpl &&
+            (identical(other.admonitionId, admonitionId) ||
+                other.admonitionId == admonitionId) &&
+            (identical(other.admonitionType, admonitionType) ||
+                other.admonitionType == admonitionType) &&
+            (identical(other.admonitionReason, admonitionReason) ||
+                other.admonitionReason == admonitionReason) &&
+            (identical(other.admonishingUser, admonishingUser) ||
+                other.admonishingUser == admonishingUser) &&
+            (identical(other.processed, processed) ||
+                other.processed == processed) &&
+            (identical(other.processedBy, processedBy) ||
+                other.processedBy == processedBy) &&
+            (identical(other.processedAt, processedAt) ||
+                other.processedAt == processedAt) &&
+            (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl) &&
             (identical(other.admonishedDay, admonishedDay) ||
                 other.admonishedDay == admonishedDay) &&
             (identical(other.admonishedPupilId, admonishedPupilId) ||
-                other.admonishedPupilId == admonishedPupilId) &&
-            (identical(other.admonishingUser, admonishingUser) ||
-                other.admonishingUser == admonishingUser) &&
-            (identical(other.admonitionReason, admonitionReason) ||
-                other.admonitionReason == admonitionReason) &&
-            (identical(other.admonitionType, admonitionType) ||
-                other.admonitionType == admonitionType) &&
-            (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl) &&
-            (identical(other.id, id) || other.id == id));
+                other.admonishedPupilId == admonishedPupilId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, admonishedDay, admonishedPupilId,
-      admonishingUser, admonitionReason, admonitionType, fileUrl, id);
+  int get hashCode => Object.hash(
+      runtimeType,
+      admonitionId,
+      admonitionType,
+      admonitionReason,
+      admonishingUser,
+      processed,
+      processedBy,
+      processedAt,
+      fileUrl,
+      admonishedDay,
+      admonishedPupilId);
 
   @JsonKey(ignore: true)
   @override
@@ -261,39 +334,52 @@ class _$AdmonitionImpl implements _Admonition {
 
 abstract class _Admonition implements Admonition {
   factory _Admonition(
-      {@JsonKey(name: 'admonished_day') required final DateTime admonishedDay,
-      @JsonKey(name: 'admonished_pupil_id')
-      required final int admonishedPupilId,
-      @JsonKey(name: 'admonishing_user') required final String admonishingUser,
+      {@JsonKey(name: 'admonition_id') required final String admonitionId,
+      @JsonKey(name: 'admonition_type') required final String admonitionType,
       @JsonKey(name: 'admonition_reason')
       required final String admonitionReason,
-      @JsonKey(name: 'admonition_type') required final String admonitionType,
+      @JsonKey(name: 'admonishing_user') required final String admonishingUser,
+      @JsonKey(name: 'processed') required final bool processed,
+      @JsonKey(name: 'processed_by') final String? processedBy,
+      @JsonKey(name: 'processed_at') final DateTime? processedAt,
       @JsonKey(name: 'file_url') final String? fileUrl,
-      required final int id}) = _$AdmonitionImpl;
+      @JsonKey(name: 'admonished_day') required final DateTime admonishedDay,
+      @JsonKey(name: 'admonished_pupil_id')
+      required final int admonishedPupilId}) = _$AdmonitionImpl;
 
   factory _Admonition.fromJson(Map<String, dynamic> json) =
       _$AdmonitionImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'admonition_id')
+  String get admonitionId;
+  @override
+  @JsonKey(name: 'admonition_type')
+  String get admonitionType;
+  @override
+  @JsonKey(name: 'admonition_reason')
+  String get admonitionReason;
+  @override
+  @JsonKey(name: 'admonishing_user')
+  String get admonishingUser;
+  @override
+  @JsonKey(name: 'processed')
+  bool get processed;
+  @override
+  @JsonKey(name: 'processed_by')
+  String? get processedBy;
+  @override
+  @JsonKey(name: 'processed_at')
+  DateTime? get processedAt;
+  @override
+  @JsonKey(name: 'file_url')
+  String? get fileUrl;
   @override
   @JsonKey(name: 'admonished_day')
   DateTime get admonishedDay;
   @override
   @JsonKey(name: 'admonished_pupil_id')
   int get admonishedPupilId;
-  @override
-  @JsonKey(name: 'admonishing_user')
-  String get admonishingUser;
-  @override
-  @JsonKey(name: 'admonition_reason')
-  String get admonitionReason;
-  @override
-  @JsonKey(name: 'admonition_type')
-  String get admonitionType;
-  @override
-  @JsonKey(name: 'file_url')
-  String? get fileUrl;
-  @override
-  int get id;
   @override
   @JsonKey(ignore: true)
   _$$AdmonitionImplCopyWith<_$AdmonitionImpl> get copyWith =>

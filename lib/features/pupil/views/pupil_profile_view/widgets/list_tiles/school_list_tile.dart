@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/school_lists/models/pupil_list.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -18,13 +20,22 @@ pupilSchoolListTiles(Pupil pupil) {
     minLeadingWidth: 0,
     child: ExpansionTile(
       tilePadding: const EdgeInsets.all(0),
-      title: const Text(
-        'Listeneinträge',
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-        ),
+      title: const Row(
+        children: [
+          // Icon(
+          //   Icons.list_alt_rounded,
+          //   color: backgroundColor,
+          // ),
+          // Gap(10),
+          Text(
+            'Listeneinträge',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
       children: [
         ListView.builder(

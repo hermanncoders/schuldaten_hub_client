@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/credit_history_log.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -15,6 +16,11 @@ creditTiles(Pupil pupil, context) {
         tilePadding: const EdgeInsets.all(0),
         title: Row(
           children: [
+            // const Icon(
+            //   Icons.attach_money_rounded,
+            //   color: accentColor,
+            // ),
+            // const Gap(10),
             const Text(
               'Guthaben',
               style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_filter_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
@@ -128,4 +129,5 @@ void registerDependentManagers(String token) {
   );
 
   locator.registerLazySingleton<AttendanceManager>(() => AttendanceManager());
+  locator.registerLazySingleton<AdmonitionManager>(() => AdmonitionManager());
 }

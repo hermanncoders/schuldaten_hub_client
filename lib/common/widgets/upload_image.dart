@@ -6,23 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
-setAvatar(context, Pupil pupil) async {
+Future<File?> uploadImage(context) async {
   XFile? image = await ImagePicker().pickImage(
       source: ImageSource.camera,
       preferredCameraDevice:
           Platform.isWindows ? CameraDevice.front : CameraDevice.rear);
   if (image == null) {
-    return;
+    return null;
   }
   File imageFile = await Navigator.push(
     context,
     MaterialPageRoute(builder: (context) => CropAvatarView(image: image)),
   );
-  locator<PupilManager>().postAvatarImage(imageFile, pupil);
+  return imageFile;
 }
 
 class CropAvatarView extends StatefulWidget {
@@ -36,7 +33,7 @@ class CropAvatarView extends StatefulWidget {
 
 class _CropAvatarState extends State<CropAvatarView> {
   final controller = CropController(
-    aspectRatio: 1,
+    aspectRatio: 21.0 / 29.7,
     defaultCrop: const Rect.fromLTRB(0.1, 0.1, 0.9, 0.9),
   );
 
@@ -129,13 +126,14 @@ class _CropAvatarState extends State<CropAvatarView> {
   Future<void> _finished() async {
     //final image = await controller.croppedImage();
     final bitmap = await controller.croppedBitmap(
-      maxSize: 300,
-      quality: FilterQuality.low,
+      maxSize: 900,
+      quality: FilterQuality.medium,
     );
     final imageBytes = await bitmap.toByteData(format: ImageByteFormat.png);
     final file = await imageToFile(bytes: imageBytes!);
     if (context.mounted) {
       Navigator.pop(context, file);
+      controller.dispose();
     }
     // ignore: use_build_context_synchronously
     // await showDialog<bool>(

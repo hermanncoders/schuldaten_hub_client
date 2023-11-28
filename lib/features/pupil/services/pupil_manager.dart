@@ -28,6 +28,7 @@ class PupilManager {
   final _pupils = ValueNotifier<List<Pupil>>([]);
   final _operationReport = ValueNotifier<Report>(Report(null, null));
   final _isRunning = ValueNotifier<bool>(false);
+  final client = locator.get<ApiManager>().dioClient.value;
   PupilManager();
   Future init() async {
     await getAllPupils();
@@ -155,8 +156,6 @@ class PupilManager {
   }
 
   Future getPupils(List<int> pupilIds) async {
-    // we make a request for the given list of pupil ids
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     // we request the data posting a json with the id list - let's build that
     final data = jsonEncode({"pupils": pupilIds});
@@ -297,7 +296,6 @@ class PupilManager {
   }
 
   postAvatarImage(File imageFile, Pupil pupil) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     final encryptedFile = await customEncrypter.encryptFile(imageFile);
     // send request
     String fileName = encryptedFile.path.split('/').last;
@@ -323,7 +321,6 @@ class PupilManager {
   }
 
   deleteAvatarImage(int pupilId) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     // send request
     final Response response = await client.delete(
       Endpoints().deletePupilAvatar(pupilId),
@@ -341,103 +338,9 @@ class PupilManager {
     // Success! We have a pupil response - let's patch the pupil with the data
   }
 
-  void changePupilCredit(int pupilId, int amountToChange) async {
-    debug.info('Updating credit');
-    // update the credit of a pupil
-    final client = locator.get<ApiManager>().dioClient.value;
-    // prepare the data for thr request
-    final data = jsonEncode({"credit": amountToChange});
-    final Response response =
-        await client.patch(Endpoints().patchPupil(pupilId), data: data);
-    // we have a response
-    final Map<String, dynamic> pupilResponse = response.data;
-    // handle errors
-    if (response.statusCode != 200) {
-      _operationReport.value = Report('warning', response.data);
-      return;
-    }
-    // let's patch the pupil with the response
-    await patchPupilFromResponse(pupilResponse);
-    return;
-  }
-
-  void changePupilSpecialInformation(
-      int pupilId, String? specialInformation) async {
-    final client = locator.get<ApiManager>().dioClient.value;
-    // prepare the data for thr request
-    final data = jsonEncode({"special_information": specialInformation});
-    final Response response =
-        await client.patch(Endpoints().patchPupil(pupilId), data: data);
-    // we have a response
-    final Map<String, dynamic> pupilResponse = response.data;
-    // handle errors
-    if (response.statusCode != 200) {
-      _operationReport.value = Report('warning', response.data);
-      return;
-    }
-    // let's patch the pupil with the response
-    await patchPupilFromResponse(pupilResponse);
-    return;
-  }
-
-  void patchPreschoolRevisionValue(int pupilId, int value) async {
-    final client = locator.get<ApiManager>().dioClient.value;
-    // prepare the data for thr request
-    final data = jsonEncode({"preschool_revision": value});
-    final Response response =
-        await client.patch(Endpoints().patchPupil(pupilId), data: data);
-    // we have a response
-    final Map<String, dynamic> pupilResponse = response.data;
-    // handle errors
-    if (response.statusCode != 200) {
-      _operationReport.value = Report('warning', response.data);
-      return;
-    }
-    // let's patch the pupil with the response
-    await patchPupilFromResponse(pupilResponse);
-    return;
-  }
-
-  void patchCommunicationValue(int pupilId, String type, String? value) async {
-    final client = locator.get<ApiManager>().dioClient.value;
-    // prepare the data for thr request
-    final data = jsonEncode({type: value});
-    final Response response =
-        await client.patch(Endpoints().patchPupil(pupilId), data: data);
-    // we have a response
-    final Map<String, dynamic> pupilResponse = response.data;
-    // handle errors
-    if (response.statusCode != 200) {
-      _operationReport.value = Report('warning', response.data);
-      return;
-    }
-    // let's patch the pupil with the response
-    await patchPupilFromResponse(pupilResponse);
-    return;
-  }
-
-  void patchPickUpTimeValue(int pupilId, String value) async {
-    final client = locator.get<ApiManager>().dioClient.value;
-    // prepare the data for thr request
-    final data = jsonEncode({"pick_up_time": value});
-    final Response response =
-        await client.patch(Endpoints().patchPupil(pupilId), data: data);
-    // we have a response
-    final Map<String, dynamic> pupilResponse = response.data;
-    // handle errors
-    if (response.statusCode != 200) {
-      _operationReport.value = Report('warning', response.data);
-      return;
-    }
-    // let's patch the pupil with the response
-    await patchPupilFromResponse(pupilResponse);
-    return;
-  }
-
-  void patchIndividualDevelopmentPlanValue(int pupilId, int value) async {
-    final client = locator.get<ApiManager>().dioClient.value;
-    // prepare the data for thr request
-    final data = jsonEncode({"individual_development_plan": value});
+  Future<void> patchPupil(int pupilId, String jsonKey, var value) async {
+    // prepare the data for the request
+    final data = jsonEncode({jsonKey: value});
     final Response response =
         await client.patch(Endpoints().patchPupil(pupilId), data: data);
     // we have a response

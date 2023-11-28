@@ -5,7 +5,7 @@ import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/date_picker.dart';
-import 'package:schuldaten_hub/common/widgets/display_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/display_dialog.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 
@@ -110,36 +110,36 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                         );
                       }).toList(),
                     ),
-                    const Gap(10),
+                  ],
+                ),
+                const Gap(5),
+                Row(
+                  children: [
                     const Text('am', style: subtitle),
                     const Gap(10),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            final DateTime newDate =
-                                await selectDate(context, thisDate);
-                            setState(() {
-                              thisDate = newDate;
-                            });
-                          },
-                          icon: const Icon(Icons.calendar_today_rounded,
-                              color: backgroundColor),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            final DateTime newDate =
-                                await selectDate(context, thisDate);
-                            setState(() {
-                              thisDate = newDate;
-                            });
-                          },
-                          child: Text(
-                            thisDate.formatForUser(),
-                            style: title,
-                          ),
-                        ),
-                      ],
+                    IconButton(
+                      onPressed: () async {
+                        final DateTime newDate =
+                            await selectDate(context, thisDate);
+                        setState(() {
+                          thisDate = newDate;
+                        });
+                      },
+                      icon: const Icon(Icons.calendar_today_rounded,
+                          color: backgroundColor),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        final DateTime newDate =
+                            await selectDate(context, thisDate);
+                        setState(() {
+                          thisDate = newDate;
+                        });
+                      },
+                      child: Text(
+                        thisDate.formatForUser(),
+                        style: title,
+                      ),
                     ),
                   ],
                 ),

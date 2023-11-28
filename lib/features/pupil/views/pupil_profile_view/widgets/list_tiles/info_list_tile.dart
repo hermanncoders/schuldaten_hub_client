@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
-import 'package:schuldaten_hub/common/widgets/display_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/display_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/special_information_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 
 infoListTiles(Pupil pupil, context) {
   return ListTileTheme(
@@ -51,10 +52,23 @@ infoListTiles(Pupil pupil, context) {
         const Gap(5),
         InkWell(
           onTap: () async {
-            await specialInformationDialog(
-                pupil, pupil.specialInformation, context);
+            final String? specialInformation = await longTextFieldDialog(
+                'Besondere Informationen', pupil.specialInformation, context);
+            if (specialInformation == null) return;
+            await locator<PupilManager>().patchPupil(
+                pupil.internalId, 'special_information', specialInformation);
             informationDialog(context, 'Besondere Informationen geändert',
                 'Die neuen Infos wurden im Server geschrieben!');
+          },
+          onLongPress: () async {
+            if (pupil.specialInformation == null) return;
+            final bool? confirm = await confirmationDialog(
+                context,
+                'Besondere Infos löschen',
+                'Besondere Informationen für dieses Kind löschen?');
+            if (confirm == false || confirm == null) return;
+            await locator<PupilManager>()
+                .patchPupil(pupil.internalId, 'special_information', null);
           },
           child: Row(
             children: [

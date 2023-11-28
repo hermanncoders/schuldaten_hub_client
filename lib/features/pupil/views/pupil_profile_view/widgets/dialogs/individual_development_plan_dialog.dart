@@ -12,7 +12,7 @@ Future<void> individualDevelopmentPlanDialog(
   return await showDialog(
       context: context,
       builder: (context) {
-        int dialogdropdownValue = value;
+        int dialogDropdownValue = value;
 
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
@@ -27,7 +27,7 @@ Future<void> individualDevelopmentPlanDialog(
                         onTap: () {
                           FocusManager.instance.primaryFocus!.unfocus();
                         },
-                        value: dialogdropdownValue,
+                        value: dialogDropdownValue,
                         items: const [
                           DropdownMenuItem(
                               value: 0,
@@ -76,7 +76,7 @@ Future<void> individualDevelopmentPlanDialog(
                         ],
                         onChanged: (newvalue) {
                           setState(() {
-                            dialogdropdownValue = newvalue!;
+                            dialogDropdownValue = newvalue!;
                           });
                         }),
                   ),
@@ -111,8 +111,8 @@ Future<void> individualDevelopmentPlanDialog(
                         fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    locator<PupilManager>().patchIndividualDevelopmentPlanValue(
-                        pupil.internalId, dialogdropdownValue);
+                    locator<PupilManager>().patchPupil(pupil.internalId,
+                        'individual_development_plan', dialogDropdownValue);
                     Navigator.of(context).pop();
                   },
                 ),

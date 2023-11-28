@@ -16,11 +16,11 @@ creditTiles(Pupil pupil, context) {
         tilePadding: const EdgeInsets.all(0),
         title: Row(
           children: [
-            // const Icon(
-            //   Icons.attach_money_rounded,
-            //   color: accentColor,
-            // ),
-            // const Gap(10),
+            const Icon(
+              Icons.attach_money_rounded,
+              color: accentColor,
+            ),
+            const Gap(10),
             const Text(
               'Guthaben',
               style: TextStyle(
@@ -46,12 +46,18 @@ creditTiles(Pupil pupil, context) {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Insgesamt verdient: ${pupil.creditEarned}',
+              const Text(
+                'Insgesamt verdient:',
+                style: TextStyle(fontSize: 18.0),
                 textAlign: TextAlign.left,
               ),
+              const Gap(5),
+              Text(pupil.creditEarned.toString(),
+                  style: const TextStyle(
+                      fontSize: 18.0, fontWeight: FontWeight.bold)),
             ],
           ),
+          const Gap(10),
           const Row(
             children: [
               Text(

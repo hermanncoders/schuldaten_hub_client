@@ -12,7 +12,7 @@ Future<void> pickUpTimeDialog(
   return await showDialog(
       context: context,
       builder: (context) {
-        int dialogdropdownValue = value != null ? int.parse(value) : 0;
+        int dialogDropdownValue = value != null ? int.parse(value) : 0;
 
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
@@ -27,7 +27,7 @@ Future<void> pickUpTimeDialog(
                         onTap: () {
                           FocusManager.instance.primaryFocus!.unfocus();
                         },
-                        value: dialogdropdownValue,
+                        value: dialogDropdownValue,
                         items: const [
                           DropdownMenuItem(
                               value: 0,
@@ -76,7 +76,7 @@ Future<void> pickUpTimeDialog(
                         ],
                         onChanged: (newvalue) {
                           setState(() {
-                            dialogdropdownValue = newvalue!;
+                            dialogDropdownValue = newvalue!;
                           });
                         }),
                   ),
@@ -111,8 +111,8 @@ Future<void> pickUpTimeDialog(
                         fontWeight: FontWeight.bold),
                   ),
                   onTap: () {
-                    locator<PupilManager>().patchPickUpTimeValue(
-                        pupil.internalId, dialogdropdownValue.toString());
+                    locator<PupilManager>().patchPupil(pupil.internalId,
+                        'pick_up_time', dialogDropdownValue.toString());
                     Navigator.of(context).pop();
                   },
                 ),

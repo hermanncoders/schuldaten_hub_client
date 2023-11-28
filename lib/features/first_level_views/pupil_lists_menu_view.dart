@@ -34,6 +34,39 @@ class PupilMenuView extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               physics: const NeverScrollableScrollPhysics(),
               children: [
+                // Padding(
+                //   padding: const EdgeInsets.all(4.0),
+                //   child: InkWell(
+                //     onTap: () {
+                //       // Navigator.of(context).push(MaterialPageRoute(
+                //       //   builder: (ctx) => const AdmonitionList(),
+                //       // ));
+                //     },
+                //     child: Card(
+                //       color: backgroundColor,
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(15.0),
+                //       ),
+                //       child: const Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Icon(
+                //             Icons.emergency_rounded,
+                //             size: 50,
+                //             color: gridViewColor,
+                //           ),
+                //           Gap(10),
+                //           Text(
+                //             'Besondere Infos',
+                //             style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: InkWell(

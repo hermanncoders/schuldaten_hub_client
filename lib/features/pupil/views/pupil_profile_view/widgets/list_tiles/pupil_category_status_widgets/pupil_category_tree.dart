@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:schuldaten_hub/common/widgets/confirmation_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 
 import 'package:schuldaten_hub/features/goal/models/category/goal_category.dart';
 import 'package:schuldaten_hub/features/goal/models/category/pupil_category_status.dart';

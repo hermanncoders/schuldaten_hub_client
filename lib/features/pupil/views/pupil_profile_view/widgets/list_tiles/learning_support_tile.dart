@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
-import 'package:schuldaten_hub/common/widgets/confirmation_dialog.dart';
-import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/features/goal/models/goal/pupil_goal.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
@@ -68,7 +67,7 @@ learningSupportTiles(Pupil pupil, context) {
         const Gap(10),
         Row(
           children: [
-            const Text('Förderplan:', style: TextStyle(fontSize: 15.0)),
+            const Text('Förderebene:', style: TextStyle(fontSize: 15.0)),
             const Gap(10),
             InkWell(
               onTap: () => individualDevelopmentPlanDialog(

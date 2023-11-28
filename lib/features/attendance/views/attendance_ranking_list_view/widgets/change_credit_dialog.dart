@@ -67,7 +67,7 @@ Future<void> changeCreditDialog(BuildContext context, Pupil pupil) async {
                     if (_formKey.currentState!.validate()) {
                       int amount = -int.parse(_textEditingController.text);
                       locator<PupilManager>()
-                          .changePupilCredit(pupil.internalId, amount);
+                          .patchPupil(pupil.internalId, 'credit', amount);
                       // Do something like updating SharedPreferences or User Settings etc.
                       _textEditingController.clear();
                       Navigator.of(context).pop();
@@ -92,7 +92,7 @@ Future<void> changeCreditDialog(BuildContext context, Pupil pupil) async {
                     int amount = int.parse(_textEditingController.text);
                     locator<SessionManager>().changeSessionCredit(-amount);
                     locator<PupilManager>()
-                        .changePupilCredit(pupil.internalId, amount);
+                        .patchPupil(pupil.internalId, 'credit', amount);
                     // Do something like updating SharedPreferences or User Settings etc.
                     _textEditingController.clear();
                     Navigator.of(context).pop();

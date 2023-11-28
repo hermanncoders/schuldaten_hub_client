@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
-Future specialInformationDialog(
-    Pupil pupil, String? specialInformation, BuildContext parentContext) async {
+Future longTextFieldDialog(
+    String title, String? textinField, BuildContext parentContext) async {
   return await showDialog(
       context: parentContext,
       builder: (context) {
@@ -14,7 +11,7 @@ Future specialInformationDialog(
           final TextEditingController textEditingController =
               TextEditingController();
           setState(() {
-            textEditingController.text = specialInformation ?? '';
+            textEditingController.text = textinField ?? '';
           });
           return AlertDialog(
             content: Column(
@@ -41,7 +38,7 @@ Future specialInformationDialog(
                 const Gap(10),
               ],
             ),
-            title: const Text('Besondere Infos ändern'),
+            title: Text(title),
             actions: <Widget>[
               Padding(
                 padding:
@@ -52,7 +49,8 @@ Future specialInformationDialog(
                       minimumSize: const Size.fromHeight(50)),
                   onPressed: () {
                     textEditingController.dispose();
-                    Navigator.of(parentContext).pop();
+                    Navigator.of(parentContext).pop(null);
+                    return;
                   },
                   child: const Text(
                     "ABBRECHEN",
@@ -71,16 +69,14 @@ Future specialInformationDialog(
                       backgroundColor: Colors.green,
                       minimumSize: const Size.fromHeight(50)),
                   onPressed: () {
-                    String? newSpecialInformation =
-                        textEditingController.text == ''
-                            ? null
-                            : textEditingController.text;
+                    String? newSpecialInformation = textEditingController.text;
 
-                    locator<PupilManager>().changePupilSpecialInformation(
-                        pupil.internalId, newSpecialInformation);
+                    if (newSpecialInformation.isEmpty) {
+                      return;
+                    }
 
                     textEditingController.dispose();
-                    Navigator.of(parentContext).pop();
+                    Navigator.of(parentContext).pop(newSpecialInformation);
                   },
                   child: const Text(
                     "OKAY",

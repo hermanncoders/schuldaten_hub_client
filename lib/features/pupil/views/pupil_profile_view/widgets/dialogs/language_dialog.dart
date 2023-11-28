@@ -316,8 +316,8 @@ Future<void> languageDialog(
                     final String communicationValue = dropdownUnderstandValue +
                         dropdownSpeakValue +
                         dropdownReadValue;
-                    locator<PupilManager>().patchCommunicationValue(
-                        pupil.internalId, type, communicationValue);
+                    locator<PupilManager>()
+                        .patchPupil(pupil.internalId, type, communicationValue);
                     Navigator.of(context).pop();
                   },
                 ),

@@ -81,8 +81,7 @@ languageListTiles(Pupil pupil, context) {
               onTap: () => languageDialog(context, pupil, 'communication_pupil',
                   pupil.communicationPupil),
               onLongPress: () => locator<PupilManager>()
-                  .patchCommunicationValue(
-                      pupil.internalId, 'communication_pupil', null),
+                  .patchPupil(pupil.internalId, 'communication_pupil', null),
               child: Container(
                   child: pupil.communicationPupil == null
                       ? const Text(
@@ -107,8 +106,7 @@ languageListTiles(Pupil pupil, context) {
               onTap: () => languageDialog(context, pupil,
                   'communication_tutor1', pupil.communicationTutor1),
               onLongPress: () => locator<PupilManager>()
-                  .patchCommunicationValue(
-                      pupil.internalId, 'communication_tutor1', null),
+                  .patchPupil(pupil.internalId, 'communication_tutor1', null),
               child: Container(
                   child: pupil.communicationTutor1 == null
                       ? const Text(
@@ -133,8 +131,7 @@ languageListTiles(Pupil pupil, context) {
               onTap: () => languageDialog(context, pupil,
                   'communication_tutor2', pupil.communicationTutor2),
               onLongPress: () => locator<PupilManager>()
-                  .patchCommunicationValue(
-                      pupil.internalId, 'communication_tutor2', null),
+                  .patchPupil(pupil.internalId, 'communication_tutor2', null),
               child: Container(
                   child: pupil.communicationTutor2 == null
                       ? const Text(

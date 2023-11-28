@@ -110,9 +110,9 @@ Future<void> preschoolRevisionDialog(
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {
-                    locator<PupilManager>().patchPreschoolRevisionValue(
-                        pupil.internalId, dialogdropdownValue);
+                  onTap: () async {
+                    locator<PupilManager>().patchPupil(pupil.internalId,
+                        'preschool_revision', dialogdropdownValue);
                     Navigator.of(context).pop();
                   },
                 ),

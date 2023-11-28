@@ -5,6 +5,7 @@ import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -81,6 +82,8 @@ class PupilFilterManager {
   resetFilters() {
     updateFilteredPupils();
     _filterState.value = {...initialFilterValues};
+    _searchText.value = '';
+    _sortMode.value = {...initialSortModeValues};
     _filtersOn.value = false;
   }
 
@@ -369,6 +372,11 @@ class PupilFilterManager {
       filteredPupils.sort((a, b) => locator<AttendanceManager>()
           .contactedSum(b)
           .compareTo(locator<AttendanceManager>().contactedSum(a)));
+    }
+    if (sortMode[PupilSortMode.sortByAdmonitions] == true) {
+      filteredPupils.sort((a, b) => locator<AdmonitionManager>()
+          .admonitionSum(b)!
+          .compareTo(locator<AdmonitionManager>().admonitionSum(a)!));
     }
     _filteredPupils.value = filteredPupils;
   }

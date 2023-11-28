@@ -1,7 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/widgets/confirmation_dialog.dart';
 
 import 'package:schuldaten_hub/features/goal/models/category/goal_category.dart';
+import 'package:schuldaten_hub/features/goal/models/category/pupil_category_status.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -157,13 +160,35 @@ List<Widget> buildPupilCategoryTree(
                           ),
                           const Gap(5),
                           Flexible(
-                            child: Text(
-                              goalCategory.categoryName,
-                              maxLines: 4,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
+                            child: InkWell(
+                              onLongPress: () async {
+                                if (pupil.pupilCategoryStatuses!.isEmpty) {
+                                  return;
+                                }
+                                final bool? delete = await confirmationDialog(
+                                    context,
+                                    'Kategoriestatus löschen',
+                                    'Kategoriestatus löschen?');
+                                if (delete == true) {
+                                  final PupilCategoryStatus? categoryStatus =
+                                      pupil.pupilCategoryStatuses!
+                                          .lastWhereOrNull((element) =>
+                                              element.goalCategoryId ==
+                                              goalCategory.categoryId);
+                                  await locator<GoalManager>()
+                                      .deleteCategoryStatus(
+                                          categoryStatus!.statusId);
+                                }
+                                return;
+                              },
+                              child: Text(
+                                goalCategory.categoryName,
+                                maxLines: 4,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
                           ),

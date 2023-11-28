@@ -152,26 +152,6 @@ class PupilDetailsView extends WatchingWidget {
                     ],
                   ),
                   const Gap(10),
-                  pupil.specialInformation != null
-                      ? Row(
-                          children: [
-                            const Icon(
-                              Icons.warning_rounded,
-                              color: Colors.red,
-                              size: 40,
-                            ),
-                            const Gap(5),
-                            Flexible(
-                              child: Text(
-                                '${pupil.specialInformation}',
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            )
-                          ],
-                        )
-                      : const SizedBox.shrink(),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(

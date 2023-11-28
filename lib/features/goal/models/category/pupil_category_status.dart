@@ -11,7 +11,7 @@ class PupilCategoryStatus with _$PupilCategoryStatus {
     required String comment,
     @JsonKey(name: 'file_url') String? fileUrl,
     @JsonKey(name: 'goal_category_id') required int goalCategoryId,
-    required int id,
+    @JsonKey(name: 'status_id') required String statusId,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'created_by') required String createdBy,
     required String state,

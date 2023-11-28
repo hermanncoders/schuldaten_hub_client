@@ -18,6 +18,7 @@ enum PupilSortMode {
   sortByCredit,
   sortByCreditEarned,
   sortByGoneHome,
+  sortByAdmonitions,
 }
 
 enum PupilFilter {
@@ -67,7 +68,8 @@ Map<PupilSortMode, bool> initialSortModeValues = {
   PupilSortMode.sortByLate: false,
   PupilSortMode.sortByCredit: false,
   PupilSortMode.sortByCreditEarned: false,
-  PupilSortMode.sortByGoneHome: false
+  PupilSortMode.sortByGoneHome: false,
+  PupilSortMode.sortByAdmonitions: false,
 };
 
 Map<PupilFilter, bool> initialFilterValues = {

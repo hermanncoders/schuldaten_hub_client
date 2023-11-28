@@ -25,7 +25,8 @@ mixin _$PupilCategoryStatus {
   String? get fileUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'goal_category_id')
   int get goalCategoryId => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'status_id')
+  String get statusId => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_by')
@@ -48,7 +49,7 @@ abstract class $PupilCategoryStatusCopyWith<$Res> {
       {String comment,
       @JsonKey(name: 'file_url') String? fileUrl,
       @JsonKey(name: 'goal_category_id') int goalCategoryId,
-      int id,
+      @JsonKey(name: 'status_id') String statusId,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'created_by') String createdBy,
       String state});
@@ -70,7 +71,7 @@ class _$PupilCategoryStatusCopyWithImpl<$Res, $Val extends PupilCategoryStatus>
     Object? comment = null,
     Object? fileUrl = freezed,
     Object? goalCategoryId = null,
-    Object? id = null,
+    Object? statusId = null,
     Object? createdAt = null,
     Object? createdBy = null,
     Object? state = null,
@@ -88,10 +89,10 @@ class _$PupilCategoryStatusCopyWithImpl<$Res, $Val extends PupilCategoryStatus>
           ? _value.goalCategoryId
           : goalCategoryId // ignore: cast_nullable_to_non_nullable
               as int,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+      statusId: null == statusId
+          ? _value.statusId
+          : statusId // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -120,7 +121,7 @@ abstract class _$$PupilCategoryStatusImplCopyWith<$Res>
       {String comment,
       @JsonKey(name: 'file_url') String? fileUrl,
       @JsonKey(name: 'goal_category_id') int goalCategoryId,
-      int id,
+      @JsonKey(name: 'status_id') String statusId,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'created_by') String createdBy,
       String state});
@@ -140,7 +141,7 @@ class __$$PupilCategoryStatusImplCopyWithImpl<$Res>
     Object? comment = null,
     Object? fileUrl = freezed,
     Object? goalCategoryId = null,
-    Object? id = null,
+    Object? statusId = null,
     Object? createdAt = null,
     Object? createdBy = null,
     Object? state = null,
@@ -158,10 +159,10 @@ class __$$PupilCategoryStatusImplCopyWithImpl<$Res>
           ? _value.goalCategoryId
           : goalCategoryId // ignore: cast_nullable_to_non_nullable
               as int,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+      statusId: null == statusId
+          ? _value.statusId
+          : statusId // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -185,7 +186,7 @@ class _$PupilCategoryStatusImpl implements _PupilCategoryStatus {
       {required this.comment,
       @JsonKey(name: 'file_url') this.fileUrl,
       @JsonKey(name: 'goal_category_id') required this.goalCategoryId,
-      required this.id,
+      @JsonKey(name: 'status_id') required this.statusId,
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'created_by') required this.createdBy,
       required this.state});
@@ -202,7 +203,8 @@ class _$PupilCategoryStatusImpl implements _PupilCategoryStatus {
   @JsonKey(name: 'goal_category_id')
   final int goalCategoryId;
   @override
-  final int id;
+  @JsonKey(name: 'status_id')
+  final String statusId;
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -214,7 +216,7 @@ class _$PupilCategoryStatusImpl implements _PupilCategoryStatus {
 
   @override
   String toString() {
-    return 'PupilCategoryStatus(comment: $comment, fileUrl: $fileUrl, goalCategoryId: $goalCategoryId, id: $id, createdAt: $createdAt, createdBy: $createdBy, state: $state)';
+    return 'PupilCategoryStatus(comment: $comment, fileUrl: $fileUrl, goalCategoryId: $goalCategoryId, statusId: $statusId, createdAt: $createdAt, createdBy: $createdBy, state: $state)';
   }
 
   @override
@@ -226,7 +228,8 @@ class _$PupilCategoryStatusImpl implements _PupilCategoryStatus {
             (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl) &&
             (identical(other.goalCategoryId, goalCategoryId) ||
                 other.goalCategoryId == goalCategoryId) &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.statusId, statusId) ||
+                other.statusId == statusId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.createdBy, createdBy) ||
@@ -237,7 +240,7 @@ class _$PupilCategoryStatusImpl implements _PupilCategoryStatus {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, comment, fileUrl, goalCategoryId,
-      id, createdAt, createdBy, state);
+      statusId, createdAt, createdBy, state);
 
   @JsonKey(ignore: true)
   @override
@@ -259,7 +262,7 @@ abstract class _PupilCategoryStatus implements PupilCategoryStatus {
       {required final String comment,
       @JsonKey(name: 'file_url') final String? fileUrl,
       @JsonKey(name: 'goal_category_id') required final int goalCategoryId,
-      required final int id,
+      @JsonKey(name: 'status_id') required final String statusId,
       @JsonKey(name: 'created_at') required final DateTime createdAt,
       @JsonKey(name: 'created_by') required final String createdBy,
       required final String state}) = _$PupilCategoryStatusImpl;
@@ -276,7 +279,8 @@ abstract class _PupilCategoryStatus implements PupilCategoryStatus {
   @JsonKey(name: 'goal_category_id')
   int get goalCategoryId;
   @override
-  int get id;
+  @JsonKey(name: 'status_id')
+  String get statusId;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;

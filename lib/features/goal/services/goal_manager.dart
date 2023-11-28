@@ -11,6 +11,8 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/goal/models/category/goal_category.dart';
 import 'package:schuldaten_hub/features/goal/models/category/pupil_category_status.dart';
+import 'package:schuldaten_hub/features/goal/models/goal/goal_check.dart';
+import 'package:schuldaten_hub/features/goal/models/goal/pupil_goal.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -31,8 +33,8 @@ class GoalManager {
     return this;
   }
 
+  final client = locator.get<ApiManager>().dioClient.value;
   Future fetchGoalCategories() async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     try {
       final response = await client.get(Endpoints().fetchGoalCategories);
@@ -54,7 +56,6 @@ class GoalManager {
 
   Future postCategoryStatus(
       Pupil pupil, int goalCategoryId, String state, String comment) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
 
     final data =
@@ -77,9 +78,23 @@ class GoalManager {
     return;
   }
 
+  Future deleteCategoryStatus(String statusId) async {
+    _isRunning.value = true;
+    try {
+      final response =
+          await client.delete(Endpoints().deleteCategoryStatus(statusId));
+      if (response.statusCode == 200) {
+        locator<PupilManager>().patchPupilFromResponse(response.data);
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e);
+      debug.error(
+          'Dio error: ${errorMessage.toString()} | ${StackTrace.current}');
+    }
+  }
+
   Future postNewCategoryGoal(int goalCategoryId, int pupilId,
       String description, String strategies) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
 
     final data = jsonEncode({
@@ -105,6 +120,26 @@ class GoalManager {
     }
     _isRunning.value = false;
     return;
+  }
+
+  Future deleteGoal(String goalId) async {
+    final List<Pupil> pupils = locator<PupilManager>().pupils.value;
+    // final Pupil pupil = pupils
+    //     .where((element) =>
+    //         element.pupilGoals!.any((element) => element.goalId == goalId))
+    //     .single;
+    _isRunning.value = true;
+
+    try {
+      final response = await client.delete(Endpoints().deleteGoal(goalId));
+      if (response.statusCode == 200) {
+        locator<PupilManager>().patchPupilFromResponse(response.data);
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e);
+      debug.error(
+          'Dio error: ${errorMessage.toString()} | ${StackTrace.current}');
+    }
   }
 
   Widget getCategoryStatusComment(Pupil pupil, int goalCategoryId) {

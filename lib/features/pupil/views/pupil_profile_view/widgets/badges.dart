@@ -6,8 +6,8 @@ contactedBadge(contacted) {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: BoxDecoration(
           color: Colors.red[900],
           shape: BoxShape.circle,
@@ -33,8 +33,8 @@ contactedDayBadge(contacted) {
       ? Padding(
           padding: const EdgeInsets.all(1),
           child: Container(
-            width: 30.0,
-            height: 30.0,
+            width: 25.0,
+            height: 25.0,
             decoration: BoxDecoration(
               color: contacted == '1'
                   ? contactedSuccessColor
@@ -64,8 +64,8 @@ returnedBadge(returned) {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: const BoxDecoration(
           color: goneHomeColor,
           shape: BoxShape.circle,
@@ -91,8 +91,8 @@ excusedBadge(excused) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: const BoxDecoration(
           color: excusedCheckColor,
           shape: BoxShape.circle,
@@ -112,8 +112,8 @@ excusedBadge(excused) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: BoxDecoration(
           color: Colors.green[600],
           shape: BoxShape.circle,
@@ -137,8 +137,8 @@ missedTypeBadge(missedtype) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: const BoxDecoration(
           color: missedColor,
           shape: BoxShape.circle,
@@ -158,8 +158,8 @@ missedTypeBadge(missedtype) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: const BoxDecoration(
           color: lateColor,
           shape: BoxShape.circle,
@@ -179,8 +179,8 @@ missedTypeBadge(missedtype) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: const BoxDecoration(
           color: presentColor,
           shape: BoxShape.circle,
@@ -200,8 +200,8 @@ missedTypeBadge(missedtype) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Container(
-        width: 30.0,
-        height: 30.0,
+        width: 25.0,
+        height: 25.0,
         decoration: const BoxDecoration(
           color: homeColor,
           shape: BoxShape.circle,

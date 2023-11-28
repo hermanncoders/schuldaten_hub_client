@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void displayDialog(context, title, text) => showDialog(
+void informationDialog(context, title, text) => showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),

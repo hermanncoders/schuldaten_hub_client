@@ -9,7 +9,7 @@ Widget documentImage(String? documentUrl, double size) {
     height: size,
     child: Center(
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(size / 2),
+          borderRadius: BorderRadius.circular(5),
           child: documentUrl != null
               ? WidgetZoom(
                   heroAnimationTag: documentUrl,

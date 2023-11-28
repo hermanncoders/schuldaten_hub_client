@@ -43,6 +43,9 @@ class AdmonitionManager {
   }
 
   //- HANDLE Admonition CARD
+  int? admonitionSum(Pupil pupil) {
+    return pupil.pupilAdmonitions?.length;
+  }
 
   int? _findAdmonitionIndex(Pupil pupil, DateTime date) {
     final int? foundAdmonitionIndex = pupil.pupilAdmonitions

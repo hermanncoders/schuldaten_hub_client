@@ -288,9 +288,6 @@ class PupilManager {
         (element) => element.internalId == responsePupil.internalId);
     pupils[index] = namedPupil;
 
-    // as the pupil from the response is up to date, we just
-    // substitute the old one with it
-
     // write the new value in the manager
     _pupils.value = pupils;
     // Because we use the filtered pupils in the presentation layer,
@@ -350,6 +347,25 @@ class PupilManager {
     final client = locator.get<ApiManager>().dioClient.value;
     // prepare the data for thr request
     final data = jsonEncode({"credit": amountToChange});
+    final Response response =
+        await client.patch(Endpoints().patchPupil(pupilId), data: data);
+    // we have a response
+    final Map<String, dynamic> pupilResponse = response.data;
+    // handle errors
+    if (response.statusCode != 200) {
+      _operationReport.value = Report('warning', response.data);
+      return;
+    }
+    // let's patch the pupil with the response
+    await patchPupilFromResponse(pupilResponse);
+    return;
+  }
+
+  void changePupilSpecialInformation(
+      int pupilId, String? specialInformation) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    // prepare the data for thr request
+    final data = jsonEncode({"special_information": specialInformation});
     final Response response =
         await client.patch(Endpoints().patchPupil(pupilId), data: data);
     // we have a response

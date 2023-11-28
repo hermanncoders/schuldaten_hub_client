@@ -32,8 +32,7 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
     bool valueS3 = activeFilters[PupilFilter.S3]!;
     bool valueS4 = activeFilters[PupilFilter.S4]!;
     bool valueSortByName = sortMode[PupilSortMode.sortByName]!;
-    bool valueSortByCredit = sortMode[PupilSortMode.sortByCredit]!;
-    bool valueSortByCreditEarned = sortMode[PupilSortMode.sortByCreditEarned]!;
+    bool valueSortByAdmonitions = sortMode[PupilSortMode.sortByAdmonitions]!;
 
     final filterLocator = locator<PupilFilterManager>();
     return Padding(
@@ -320,32 +319,15 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
                     checkmarkColor: filterChipSelectedCheckColor,
                     backgroundColor: filterChipUnselectedColor,
                     label: const Text(
-                      'nach Guthaben',
+                      'nach Vorfällen',
                       style: filterItemsTextStyle,
                     ),
-                    selected: valueSortByCredit,
+                    selected: valueSortByAdmonitions,
                     onSelected: (val) {
                       filterLocator.setSortMode(
-                          PupilSortMode.sortByCredit, val);
-                      valueSortByCredit = filterLocator
-                          .sortMode.value[PupilSortMode.sortByCredit]!;
-                      filterLocator.sortPupils();
-                    },
-                  ),
-                  FilterChip(
-                    selectedColor: filterChipSelectedColor,
-                    checkmarkColor: filterChipSelectedCheckColor,
-                    backgroundColor: filterChipUnselectedColor,
-                    label: const Text(
-                      'nach Verdienst',
-                      style: filterItemsTextStyle,
-                    ),
-                    selected: valueSortByCreditEarned,
-                    onSelected: (val) {
-                      filterLocator.setSortMode(
-                          PupilSortMode.sortByCreditEarned, val);
-                      valueSortByCreditEarned = filterLocator
-                          .sortMode.value[PupilSortMode.sortByCreditEarned]!;
+                          PupilSortMode.sortByAdmonitions, val);
+                      valueSortByAdmonitions = filterLocator
+                          .sortMode.value[PupilSortMode.sortByAdmonitions]!;
                       filterLocator.sortPupils();
                     },
                   ),

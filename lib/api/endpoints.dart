@@ -1,7 +1,7 @@
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 class Endpoints {
-  //static const String baseUrl = 'https://datahub.hermannschule.de/api';
+  // dev environment urls:
   //static const baseUrl = 'http://10.0.2.2:5000/api'; // android VM
   //static const baseUrl = 'http://127.0.0.1:5000/api'; //windows
 

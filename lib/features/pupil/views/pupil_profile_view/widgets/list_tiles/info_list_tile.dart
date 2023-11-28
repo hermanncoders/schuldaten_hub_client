@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/common/widgets/display_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/special_information_dialog.dart';
 
 infoListTiles(Pupil pupil, context) {
   return ListTileTheme(
@@ -17,24 +19,61 @@ infoListTiles(Pupil pupil, context) {
     child: ExpansionTile(
       iconColor: backgroundColor,
       tilePadding: const EdgeInsets.all(0),
-      title: const Row(
-        children: [
-          // Icon(
-          //   Icons.info_rounded,
-          //   color: backgroundColor,
-          // ),
-          Gap(10),
-          Text(
-            'Infos',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+      title: Row(children: [
+        const Icon(
+          Icons.info_rounded,
+          color: backgroundColor,
+        ),
+        const Gap(10),
+        const Text(
+          'Infos',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-        ],
-      ),
+        ),
+        const Spacer(),
+        if (pupil.specialInformation != null)
+          const Icon(
+            Icons.warning_rounded,
+            color: Colors.red,
+          ),
+        const Gap(5)
+      ]),
       children: [
+        const Row(
+          children: [
+            Text('Besondere Infos:', style: TextStyle(fontSize: 18.0)),
+            Gap(5),
+          ],
+        ),
+        const Gap(5),
+        InkWell(
+          onTap: () async {
+            await specialInformationDialog(
+                pupil, pupil.specialInformation, context);
+            informationDialog(context, 'Besondere Informationen geändert',
+                'Die neuen Infos wurden im Server geschrieben!');
+          },
+          child: Row(
+            children: [
+              Flexible(
+                child: pupil.specialInformation != null
+                    ? Text(pupil.specialInformation!,
+                        softWrap: true,
+                        style: const TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.bold))
+                    : const Text(
+                        'keine Informationen',
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.bold),
+                      ),
+              ),
+            ],
+          ),
+        ),
+        const Gap(10),
         Row(
           children: [
             const Text('Geschlecht:', style: TextStyle(fontSize: 18.0)),

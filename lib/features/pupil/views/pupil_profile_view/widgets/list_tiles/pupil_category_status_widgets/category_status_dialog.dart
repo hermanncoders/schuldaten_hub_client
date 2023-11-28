@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -23,23 +24,31 @@ Future categoryStatusDialog(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(
-                      width: 200,
-                      child: TextFormField(
-                        maxLines: 3,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 14),
-                        keyboardType: TextInputType.multiline,
-                        controller: _textEditingController,
-                        validator: (value) {
-                          return value!.isNotEmpty ? null : "";
-                        },
-                        decoration: const InputDecoration(hintText: "?"),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: backgroundColor),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      width: 300,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          maxLines: 3,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(fontSize: 17),
+                          keyboardType: TextInputType.multiline,
+                          controller: _textEditingController,
+                          decoration: null,
+                        ),
                       ),
                     ),
+                    const Gap(10),
                     Row(
                       children: [
-                        const Text('Eine Farbe auswählen:'),
+                        const Text(
+                          'Eine Farbe auswählen:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         const Gap(10),
                         Padding(
                           padding: const EdgeInsets.only(right: 5.0),
@@ -68,10 +77,11 @@ Future categoryStatusDialog(
             title: const Text('Neuer Kategoriestatus'),
             actions: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
+                padding:
+                    const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber[800],
+                      backgroundColor: buttonDangerColor,
                       minimumSize: const Size.fromHeight(50)),
                   onPressed: () {
                     _textEditingController.clear();
@@ -86,28 +96,32 @@ Future categoryStatusDialog(
                   ),
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    minimumSize: const Size.fromHeight(50)),
-                onPressed: () {
-                  if (_categoryStatusKey.currentState!.validate()) {
-                    locator<GoalManager>().postCategoryStatus(
-                        pupil,
-                        goalCategoryId,
-                        categoryStatusValue,
-                        _textEditingController.text);
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      minimumSize: const Size.fromHeight(50)),
+                  onPressed: () {
+                    if (_categoryStatusKey.currentState!.validate()) {
+                      locator<GoalManager>().postCategoryStatus(
+                          pupil,
+                          goalCategoryId,
+                          categoryStatusValue,
+                          _textEditingController.text);
 
-                    _textEditingController.clear();
-                    Navigator.of(parentContext).pop();
-                  }
-                },
-                child: const Text(
-                  "OKAY",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.0,
-                    color: Colors.white,
+                      _textEditingController.clear();
+                      Navigator.of(parentContext).pop();
+                    }
+                  },
+                  child: const Text(
+                    "OKAY",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

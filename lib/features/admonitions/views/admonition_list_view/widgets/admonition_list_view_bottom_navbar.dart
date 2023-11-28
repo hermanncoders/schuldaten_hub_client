@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/admonition_filter_bottom_sheet.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 
 import '../../../../pupil/services/pupil_filter_manager.dart';

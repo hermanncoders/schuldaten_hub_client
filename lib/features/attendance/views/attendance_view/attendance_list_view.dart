@@ -24,16 +24,9 @@ class AttendanceListView extends WatchingWidget {
   Widget build(BuildContext context) {
     DateTime thisDate = watchValue((SchooldayManager x) => x.thisDate);
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-    // bool _isRunning = watchValue((PupilFilterManager x) => x.isRunning);
 
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
-    // Report attendanceReport =
-    //     watchValue((AttendanceManager x) => x.operationReport);
-    // if (attendanceReport.message != null) {
-    //   registerHandler(
-    //       handler: snackbar(
-    //           context, attendanceReport.type, attendanceReport.message));
-    // }
+
     return Scaffold(
       backgroundColor: canvasColor,
       appBar: AppBar(

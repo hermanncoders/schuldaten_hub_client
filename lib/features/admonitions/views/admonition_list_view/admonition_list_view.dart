@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
-import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
-import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/admonition_filter_bottom_sheet.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_card.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_view_bottom_navbar.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
@@ -21,9 +19,6 @@ class AdmonitionListView extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    debug.info('Widget Build started!');
-
-    int userCredit = watchValue((SessionManager x) => x.credit);
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
 
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
@@ -70,6 +65,52 @@ class AdmonitionListView extends WatchingWidget {
                           fontSize: 20,
                         ),
                       ),
+                      const Gap(10),
+                      const Text(
+                        'Vorfälle:',
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      const Gap(10),
+                      Text(
+                        controller.getAdmonitionCount(pupils).toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Text(
+                        'davon Schule:',
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      const Gap(10),
+                      Text(
+                        controller.getSchoolAdmonitionCount(pupils).toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Text(
+                        'OGS:',
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      const Gap(10),
+                      Text(controller.getOgsAdmonitionCount(pupils).toString(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )),
                     ],
                   ),
                 ),

@@ -4,7 +4,6 @@ import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/change_credit_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 import 'package:watch_it/watch_it.dart';
 
@@ -72,7 +71,7 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
             onTap: () {},
             child: Column(
               children: [
-                const Text('Ermahnungen'),
+                const Text('Vorfälle'),
                 Center(
                   child: Text(
                     pupil.pupilAdmonitions?.length.toString() ?? 0.toString(),

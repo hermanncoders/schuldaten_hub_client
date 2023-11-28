@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view.dart';
+import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/admonition_list_view.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:watch_it/watch_it.dart';
@@ -36,6 +37,46 @@ class AdmonitionListController extends State<AdmonitionList> {
       pupilsToFetch.add(pupil.internalId);
     }
     await locator.get<PupilManager>().getPupils(pupilsToFetch);
+  }
+
+  int getAdmonitionCount(List<Pupil> pupils) {
+    int admonitions = 0;
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilAdmonitions != null) {
+        for (Admonition admonition in pupil.pupilAdmonitions!) {
+          admonitions++;
+        }
+      }
+    }
+    return admonitions;
+  }
+
+  int getSchoolAdmonitionCount(List<Pupil> pupils) {
+    int admonitions = 0;
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilAdmonitions != null) {
+        for (Admonition admonition in pupil.pupilAdmonitions!) {
+          if (admonition.admonitionType == 'rk') {
+            admonitions++;
+          }
+        }
+      }
+    }
+    return admonitions;
+  }
+
+  int getOgsAdmonitionCount(List<Pupil> pupils) {
+    int admonitions = 0;
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilAdmonitions != null) {
+        for (Admonition admonition in pupil.pupilAdmonitions!) {
+          if (admonition.admonitionType == 'rkogs') {
+            admonitions++;
+          }
+        }
+      }
+    }
+    return admonitions;
   }
 
   void _search() async {

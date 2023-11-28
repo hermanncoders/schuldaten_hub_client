@@ -3,7 +3,6 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
-import 'package:schuldaten_hub/common/widgets/sliver_search_text_field.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/controller/attendance_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/attendance_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';

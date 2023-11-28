@@ -11,7 +11,7 @@ TextField searchTextField(
     textInputAction: TextInputAction.search,
     onChanged: controller.onSearchEnter,
     decoration: InputDecoration(
-      fillColor: const Color.fromARGB(255, 237, 237, 237),
+      fillColor: const Color.fromARGB(255, 255, 255, 255),
       filled: true,
       border: UnderlineInputBorder(
         borderSide: BorderSide.none,
@@ -38,24 +38,9 @@ TextField searchTextField(
                 color: Colors.black45,
               ),
             ),
-      suffixIcon: controller.isSearchMode
-          ? controller.isSearching
-              ? const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 12,
-                  ),
-                  child: SizedBox.square(
-                    dimension: 24,
-                    child: CircularProgressIndicator.adaptive(
-                      strokeWidth: 2,
-                    ),
-                  ),
-                )
-              : const SizedBox.shrink()
-          : const SizedBox(
-              width: 0,
-            ),
+      suffixIcon: const SizedBox(
+        width: 0,
+      ),
     ),
     // decoration: InputDecoration(
     //     filled: true,

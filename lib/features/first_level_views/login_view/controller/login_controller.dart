@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:schuldaten_hub/common/routes/routes.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
@@ -59,21 +58,16 @@ class LoginController extends State<Login> {
     }
   }
 
-  textFieldCredentials() {
+  textFieldCredentials() async {
     String username = usernameController.text;
     String password = passwordController.text;
-    attemptLogin(username, password);
+    await attemptLogin(username, password);
   }
 
   attemptLogin(String username, String password) async {
     bool isAuthenticated =
         await locator<SessionManager>().attemptLogin(username, password);
-    debug.error('Is authenticated is $isAuthenticated');
-    // if (isAuthenticated == true) {
-    //   if (context.mounted) {
-    //     await Navigator.of(context).pushNamed(Routes.home);
-    //   }
-    // }
+    debug.success('Is authenticated is $isAuthenticated');
   }
 
   importEnvFromTxt() async {

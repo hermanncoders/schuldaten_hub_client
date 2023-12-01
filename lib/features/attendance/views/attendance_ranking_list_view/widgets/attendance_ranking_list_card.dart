@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
-import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
@@ -65,9 +64,7 @@ class AttendanceRankingListCard extends WatchingWidget {
                     Padding(
                       padding: const EdgeInsets.all(2.0),
                       child: Text(
-                        locator<AttendanceManager>()
-                            .missedclassSum(pupil)
-                            .toString(),
+                        missedclassSum(pupil).toString(),
                         style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -79,9 +76,7 @@ class AttendanceRankingListCard extends WatchingWidget {
                     excusedBadge(true),
                     const Gap(5),
                     Text(
-                      locator<AttendanceManager>()
-                          .missedclassUnexcusedSum(pupil)
-                          .toString(),
+                      missedclassUnexcusedSum(pupil).toString(),
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -92,9 +87,7 @@ class AttendanceRankingListCard extends WatchingWidget {
                     missedTypeBadge('late'),
                     const Gap(5),
                     Text(
-                      locator<AttendanceManager>()
-                          .lateUnexcusedSum(pupil)
-                          .toString(),
+                      lateUnexcusedSum(pupil).toString(),
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -105,9 +98,7 @@ class AttendanceRankingListCard extends WatchingWidget {
                     contactedBadge(1),
                     const Gap(5),
                     Text(
-                      locator<AttendanceManager>()
-                          .contactedSum(pupil)
-                          .toString(),
+                      contactedSum(pupil).toString(),
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

@@ -3,6 +3,7 @@ class Session {
     this.username,
     this.jwt,
     this.isAdmin,
+    this.role,
     this.credit,
   });
 
@@ -10,12 +11,14 @@ class Session {
     String? username,
     String? jwt,
     bool? isAdmin,
+    String? role,
     int? credit,
   }) =>
       Session(
         username: username ?? this.username,
         jwt: jwt ?? this.jwt,
         isAdmin: isAdmin ?? this.isAdmin,
+        role: role ?? this.role,
         credit: credit ?? this.credit,
       );
 
@@ -23,6 +26,7 @@ class Session {
         username: json["username"],
         jwt: json["token"],
         isAdmin: json["admin"],
+        role: json["role"],
         credit: json["credit"],
       );
 
@@ -30,12 +34,14 @@ class Session {
         "username": username,
         "token": jwt,
         "admin": isAdmin,
+        "role": role,
         "credit": credit,
       };
 
   final String? username;
   final String? jwt;
   final bool? isAdmin;
+  final String? role;
   final int? credit;
 
   bool get isAuthenticated => username != null && jwt != null;

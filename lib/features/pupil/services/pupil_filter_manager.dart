@@ -6,6 +6,7 @@ import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -50,7 +51,6 @@ class PupilFilterManager {
   }
 
   refreshFilteredPupils() {
-    //var updatedFilteredPupils = <Pupil>[];
     final List<Pupil> filteredPupils = List.from(_filteredPupils.value);
     final List<Pupil> pupils = locator<PupilManager>().pupils.value;
 
@@ -77,6 +77,10 @@ class PupilFilterManager {
 
   updateFilteredPupils() {
     _filteredPupils.value = locator<PupilManager>().pupils.value;
+
+    filterPupils();
+    sortPupils();
+    setSearchText(_searchText.value);
   }
 
   resetFilters() {
@@ -117,14 +121,14 @@ class PupilFilterManager {
       _filtersOn.value = false;
       return;
     }
-
     _searchText.value = text;
     _filtersOn.value = true;
     List<Pupil> filteredPupils = [];
     List<Pupil> filteredPupilsState = List.from(_filteredPupils.value);
     filteredPupils = filteredPupilsState
         .where((Pupil pupil) =>
-            pupil.firstName!.toLowerCase().contains(text.toLowerCase()))
+            pupil.firstName!.toLowerCase().contains(text.toLowerCase()) ||
+            pupil.lastName!.toLowerCase().contains(text.toLowerCase()))
         .toList();
     _filteredPupils.value = filteredPupils;
   }
@@ -331,6 +335,9 @@ class PupilFilterManager {
     }
     // Now write it in the manager
     _filteredPupils.value = filteredPupils;
+    if (_searchText.value.isNotEmpty) {
+      setSearchText(_searchText.value);
+    }
   }
 
   sortPupils() {
@@ -351,71 +358,29 @@ class PupilFilterManager {
     }
     // Sort by missed excused
     if (sortMode[PupilSortMode.sortByMissedExcused] == true) {
-      filteredPupils.sort((a, b) => locator<AttendanceManager>()
-          .missedclassSum(b)
-          .compareTo(locator<AttendanceManager>().missedclassSum(a)));
+      filteredPupils
+          .sort((a, b) => missedclassSum(b).compareTo(missedclassSum(a)));
     }
     // Sort by missed unexcused
     if (sortMode[PupilSortMode.sortByMissedUnexcused] == true) {
-      filteredPupils.sort((a, b) => locator<AttendanceManager>()
-          .missedclassUnexcusedSum(b)
-          .compareTo(locator<AttendanceManager>().missedclassUnexcusedSum(a)));
+      filteredPupils.sort((a, b) =>
+          missedclassUnexcusedSum(b).compareTo(missedclassUnexcusedSum(a)));
     }
     // Sort by late
     if (sortMode[PupilSortMode.sortByLate] == true) {
-      filteredPupils.sort((a, b) => locator<AttendanceManager>()
-          .lateUnexcusedSum(b)
-          .compareTo(locator<AttendanceManager>().lateUnexcusedSum(a)));
+      filteredPupils
+          .sort((a, b) => lateUnexcusedSum(b).compareTo(lateUnexcusedSum(a)));
     }
     // Sort by contacted
     if (sortMode[PupilSortMode.sortByContacted] == true) {
-      filteredPupils.sort((a, b) => locator<AttendanceManager>()
-          .contactedSum(b)
-          .compareTo(locator<AttendanceManager>().contactedSum(a)));
+      filteredPupils.sort((a, b) => contactedSum(b).compareTo(contactedSum(a)));
     }
     if (sortMode[PupilSortMode.sortByAdmonitions] == true) {
       filteredPupils.sort((a, b) => locator<AdmonitionManager>()
           .admonitionSum(b)!
           .compareTo(locator<AdmonitionManager>().admonitionSum(a)!));
     }
+
     _filteredPupils.value = filteredPupils;
   }
-
-  // sortByMissedExcused() {
-  //   List<Pupil> filteredPupils = List.from(_filteredPupils.value);
-  //   filteredPupils.sort((a, b) => locator<AttendanceManager>()
-  //       .missedclassSum(b)
-  //       .compareTo(locator<AttendanceManager>().missedclassSum(a)));
-  //   _filteredPupils.value = filteredPupils;
-  // }
-
-  // sortByName() {
-  //   List<Pupil> filteredPupils = List.from(_filteredPupils.value);
-  //   filteredPupils.sort((a, b) => a.firstName!.compareTo(b.firstName!));
-  //   _filteredPupils.value = filteredPupils;
-  // }
-
-  // sortByMissedUnexcused() {
-  //   List<Pupil> filteredPupils = List.from(_filteredPupils.value);
-  //   filteredPupils.sort((a, b) => locator<AttendanceManager>()
-  //       .missedclassUnexcusedSum(b)
-  //       .compareTo(locator<AttendanceManager>().missedclassUnexcusedSum(a)));
-  //   _filteredPupils.value = filteredPupils;
-  // }
-
-  // sortByContacted() {
-  //   List<Pupil> filteredPupils = List.from(_filteredPupils.value);
-  //   filteredPupils.sort((a, b) => locator<AttendanceManager>()
-  //       .contactedSum(b)
-  //       .compareTo(locator<AttendanceManager>().contactedSum(a)));
-  //   _filteredPupils.value = filteredPupils;
-  // }
-
-  // sortByLate() {
-  //   List<Pupil> filteredPupils = List.from(_filteredPupils.value);
-  //   filteredPupils.sort((a, b) => locator<AttendanceManager>()
-  //       .lateUnexcusedSum(b)
-  //       .compareTo(locator<AttendanceManager>().lateUnexcusedSum(a)));
-  //   _filteredPupils.value = filteredPupils;
-  // }
 }

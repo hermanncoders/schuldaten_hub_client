@@ -232,6 +232,10 @@ class Endpoints {
     return '/missed_class/$id';
   }
 
+  String getMissedClassesOnDate(DateTime date) {
+    final missedDate = date.formatForJson();
+    return '/missed_class/schoolday/$missedDate';
+  }
   //- POST
 
   static const postMissedClass = '/missed_class';

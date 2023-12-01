@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -10,6 +11,7 @@ import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
+import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil_base.dart';
@@ -90,6 +92,14 @@ class PupilManager {
     return pupilsfromPupilIds;
   }
 
+  List<int> pupilIdsFromPupils(List<Pupil> pupils) {
+    List<int> pupilIds = [];
+    for (Pupil pupil in pupils) {
+      pupilIds.add(pupil.internalId);
+    }
+    return pupilIds;
+  }
+
   bool hasLanguageSupport(DateTime? date) {
     if (date != null) {
       return date.isAfter(DateTime.now());
@@ -153,6 +163,55 @@ class PupilManager {
       default:
         return "Falscher Wert im Server";
     }
+  }
+
+  patchPupilsWithMissedClasses(List<MissedClass> missedClasses) {
+    final List<Pupil> pupils = List.from(_pupils.value);
+    final DateTime schoolday = missedClasses[0].missedDay;
+    for (MissedClass missedClass in missedClasses) {
+      int missedPupil = pupils.indexWhere(
+          (element) => element.internalId == missedClass.missedPupilId);
+
+      int missedClassIndex = pupils[missedPupil]
+          .pupilMissedClasses!
+          .indexWhere((element) => element.missedDay == missedClass.missedDay);
+      //debugger();
+      if (missedClassIndex == -1) {
+        pupils[missedPupil] = pupils[missedPupil].copyWith(
+          pupilMissedClasses: [
+            ...pupils[missedPupil].pupilMissedClasses!,
+            missedClass,
+          ],
+        );
+      } else {
+        List<MissedClass> updatedMissedClasses =
+            List.from(pupils[missedPupil].pupilMissedClasses!);
+        updatedMissedClasses[missedClassIndex] = missedClass;
+        pupils[missedPupil] = pupils[missedPupil].copyWith(
+          pupilMissedClasses: updatedMissedClasses,
+        );
+      }
+    }
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilMissedClasses != null) {
+        int missedClassIndex = pupil.pupilMissedClasses!
+            .indexWhere((element) => element.missedDay == schoolday);
+        if (missedClassIndex != -1 &&
+            !missedClasses.any((element) =>
+                element.missedDay == schoolday &&
+                element.missedPupilId == pupil.internalId)) {
+          List<MissedClass> updatedMissedClasses =
+              List.from(pupil.pupilMissedClasses!);
+          updatedMissedClasses.removeAt(missedClassIndex);
+          pupils[pupils.indexOf(pupil)] = pupils[pupils.indexOf(pupil)]
+              .copyWith(pupilMissedClasses: updatedMissedClasses);
+        }
+      }
+    }
+    _pupils.value = pupils;
+    Pupil testpupil =
+        _pupils.value.firstWhere((element) => element.internalId == 1628);
+    locator<PupilFilterManager>().updateFilteredPupils();
   }
 
   Future getPupils(List<int> pupilIds) async {
@@ -235,6 +294,15 @@ class PupilManager {
       debug.error(
           'Dio error: ${errorMessage.toString()} | ${StackTrace.current}');
       rethrow;
+    }
+  }
+
+  Future fetchShownPupils() async {
+    if (locator.isReadySync<PupilFilterManager>()) {
+      final List<Pupil> shownPupils =
+          locator<PupilFilterManager>().filteredPupils.value;
+      final List<int> shownPupilIds = pupilIdsFromPupils(shownPupils);
+      await getPupils(shownPupilIds);
     }
   }
 

@@ -14,8 +14,16 @@ class BottomNavManager {
   ValueListenable<PageController> get pageViewController => _pageViewController;
   final _bottomNavState = ValueNotifier<int>(0);
   final _pageViewController = ValueNotifier<PageController>(PageController());
+  BottomNavManager() {
+    _bottomNavState.value = 0;
+    _pageViewController.value = PageController();
+  }
   setBottomNavPage(index) {
     _bottomNavState.value = index;
+  }
+
+  disposePageViewController() {
+    _pageViewController.value.dispose();
   }
 }
 
@@ -32,6 +40,7 @@ class BottomNavigation extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
+    final manager = locator<BottomNavManager>();
     final tab = watchValue((BottomNavManager x) => x.bottomNavState);
     final pageViewController =
         watchValue((BottomNavManager x) => x.pageViewController);
@@ -45,15 +54,14 @@ class BottomNavigation extends WatchingWidget {
           QrToolsView(),
           SettingsView(),
         ],
-        onPageChanged: (index) =>
-            locator<BottomNavManager>().setBottomNavPage(index),
+        onPageChanged: (index) => manager.setBottomNavPage(index),
       ),
       bottomNavigationBar: Theme(
         data: ThemeData(canvasColor: backgroundColor),
         child: BottomNavigationBar(
           iconSize: 28,
           onTap: (index) {
-            locator.get<BottomNavManager>().setBottomNavPage(index);
+            manager.setBottomNavPage(index);
             pageViewController.animateToPage(index,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.bounceOut);

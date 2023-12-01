@@ -6,6 +6,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/display_dialog.dart';
 import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
@@ -40,7 +41,7 @@ attendanceListTiles(Pupil pupil, context) {
             excusedBadge(false),
             const Gap(3),
             Text(
-              locator<AttendanceManager>().missedclassSum(pupil).toString(),
+              missedclassSum(pupil).toString(),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -51,9 +52,7 @@ attendanceListTiles(Pupil pupil, context) {
             excusedBadge(true),
             const Gap(3),
             Text(
-              locator<AttendanceManager>()
-                  .missedclassUnexcusedSum(pupil)
-                  .toString(),
+              missedclassUnexcusedSum(pupil).toString(),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -64,7 +63,7 @@ attendanceListTiles(Pupil pupil, context) {
             missedTypeBadge('late'),
             const Gap(3),
             Text(
-              locator<AttendanceManager>().lateUnexcusedSum(pupil).toString(),
+              lateUnexcusedSum(pupil).toString(),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -75,7 +74,7 @@ attendanceListTiles(Pupil pupil, context) {
             contactedBadge(1),
             const Gap(3),
             Text(
-              locator<AttendanceManager>().contactedSum(pupil).toString(),
+              contactedSum(pupil).toString(),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

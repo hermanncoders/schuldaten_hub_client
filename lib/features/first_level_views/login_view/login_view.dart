@@ -38,7 +38,7 @@ class LoginView extends WatchingWidget {
                       Padding(
                           padding: keyboardOn
                               ? const EdgeInsets.only(top: 70)
-                              : const EdgeInsets.only(top: 50)),
+                              : const EdgeInsets.only(top: 0)),
                       keyboardOn
                           ? const SizedBox.shrink()
                           : const SizedBox(
@@ -88,9 +88,11 @@ class LoginView extends WatchingWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 25.0, vertical: 8),
                           child: TextField(
+                            textDirection: null,
                             controller: controller.passwordController,
                             obscureText: true,
                             decoration: const InputDecoration(
+                              border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 5),
                               filled: true,
@@ -145,7 +147,7 @@ class LoginView extends WatchingWidget {
                                   backgroundColor: buttonAppStyleColor,
                                   minimumSize: const Size.fromHeight(50)),
                               onPressed: () async {
-                                controller.textFieldCredentials();
+                                await controller.textFieldCredentials();
                               },
                               child: const Text(
                                 "EINLOGGEN",

@@ -107,9 +107,39 @@ class SessionManager {
     }
   }
 
-  // Async function that queries the REST API and converts the result
+  String tokenLifetimeLeft(String token) {
+    Duration remainingTime = JwtDecoder.getRemainingTime(token);
+    String days = remainingTime.inDays == 1 ? 'Tag' : 'Tage';
+    String hours = remainingTime.inHours == 1 ? 'Stunde' : 'Stunden';
+    String minutes = remainingTime.inMinutes == 1 ? 'Minute' : 'Minuten';
+
+    String timeLeft =
+        '${remainingTime.inDays} $days, ${remainingTime.inHours % 24} $hours, ${remainingTime.inMinutes % 60} $minutes';
+    return timeLeft;
+  }
+
+  Future<int> refreshToken(String password) async {
+    final String username = _credentials.value.username!;
+    String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+    final response = await _dio.get(Endpoints.login,
+        options: Options(headers: <String, String>{'Authorization': auth}));
+
+    if (response.statusCode == 200) {
+      _credentials.value =
+          Session.fromJson(response.data).copyWith(username: username);
+      _isAuthenticated.value = true;
+      locator<ApiManager>().setApi(_credentials.value.jwt!);
+      if (_credentials.value.isAdmin == true) {
+        _isAdmin.value = true;
+      }
+      await saveSession(_credentials.value);
+      return response.statusCode!;
+    }
+    return response.statusCode!;
+  }
+
   Future<bool> attemptLogin(String? username, String? password) async {
-    var auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+    String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
     _operationReport.value = Report(null, null);
     _isRunning.value = true;
     final response = await _dio.get(Endpoints.login,
@@ -118,18 +148,11 @@ class SessionManager {
       _credentials.value =
           Session.fromJson(response.data).copyWith(username: username);
       _isAuthenticated.value = true;
-      debug.warning(
-          'SessionManager: isAuthenticated is ${_isAuthenticated.value.toString()}');
-      debug.success('Session created: ${_credentials.value.username}');
-      debug.warning('Calling ApiManager instance');
-      registerDependentManagers(_credentials.value.jwt!);
-
-      //locator<ApiManager>().setApi(_credentials.value.jwt!);
       if (_credentials.value.isAdmin == true) {
         _isAdmin.value = true;
       }
-      saveSession(_credentials.value);
-      _operationReport.value = Report('success', 'Erfolgreich eingeloggt!');
+      await saveSession(_credentials.value);
+      registerDependentManagers(_credentials.value.jwt!);
       await locator.allReady();
       _isRunning.value = false;
       return true;
@@ -143,7 +166,7 @@ class SessionManager {
     return false;
   }
 
-  void saveSession(final Session session) async {
+  Future<void> saveSession(Session session) async {
     final jsonSession = json.encode(session.toJson());
     await secureStorageWrite('session', jsonSession);
     debug.success('Session stored');
@@ -170,7 +193,6 @@ class SessionManager {
     locator.unregister<CompetenceManager>();
     locator.unregister<SchoolListManager>();
     locator.unregister<AuthorizationManager>();
-    locator.unregister<BottomNavManager>();
     locator.unregister<AttendanceManager>();
     locator.unregister<AdmonitionManager>();
 

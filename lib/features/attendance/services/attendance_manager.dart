@@ -6,6 +6,7 @@ import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -40,6 +41,20 @@ class AttendanceManager {
     _isRunning.value = bool;
   }
 
+  Future<void> fetchMissedClassesOnASchoolday(DateTime schoolday) async {
+    final Response response =
+        await client.get(Endpoints().getMissedClassesOnDate(schoolday));
+    if (response.statusCode != 200) {
+      _operationReport.value = Report('warning', response.data);
+      return;
+    }
+    final List<MissedClass> missedClasses = response.data
+        .map<MissedClass>((missedClass) => MissedClass.fromJson(missedClass))
+        .toList();
+    pupilManager.patchPupilsWithMissedClasses(missedClasses);
+    return;
+  }
+
   //- HANDLE ATTENDANCE CARD
 
   int? _findMissedClassIndex(Pupil pupil, DateTime date) {
@@ -54,8 +69,8 @@ class AttendanceManager {
   bool setExcusedValue(int pupilId, DateTime date) {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final Pupil pupil = pupilManager.findPupilById(pupilId);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1) {
       return false;
     }
@@ -293,16 +308,12 @@ class AttendanceManager {
     if (dropdownValue == 'none') {
       // change value to 'none' means there was a missed class that has to be deleted
       await deleteMissedClass(pupilId, date);
-      //final pupilBase = locator<PupilBaseManager>().availablePupilIds.value;
-      // await client.delete(Endpoints().deleteMissedClass(pupilId, date));
-      // await pupilManager.getPupils(pupilBase);
-      // _operationReport.value = Report('success', 'Fehlzeit eingetragen!');
-      // _setIsRunning(false);
+      _setIsRunning(false);
       return;
     }
     // Let's look for an existing missed class - if pupil and date match, there is one
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final Pupil pupil = pupilManager.findPupilById(pupilId);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1) {
       // The missed class does not exist - let's create one
       debug.info('This missed class is new');
@@ -410,48 +421,5 @@ class AttendanceManager {
       return modifiedBy;
     }
     return createdBy;
-  }
-
-  int missedclassSum(Pupil pupil) {
-    // count the number of missed classes - avoid null when missedClasses is empty
-    int missedclassCount = 0;
-    if (pupil.pupilMissedClasses != null) {
-      missedclassCount = pupil.pupilMissedClasses!
-          .where((element) =>
-              element.missedType == 'missed' && element.excused == false)
-          .length;
-    }
-    return missedclassCount;
-  }
-
-  int missedclassUnexcusedSum(Pupil pupil) {
-    // count the number of unexcused missed classes
-    int missedclassCount = 0;
-    if (pupil.pupilMissedClasses != null) {
-      missedclassCount = pupil.pupilMissedClasses!
-          .where((element) =>
-              element.missedType == 'missed' && element.excused == true)
-          .length;
-    }
-    return missedclassCount;
-  }
-
-  lateUnexcusedSum(Pupil pupil) {
-    int missedClassUnexcusedCount = 0;
-    if (pupil.pupilMissedClasses != null) {
-      missedClassUnexcusedCount = pupil.pupilMissedClasses!
-          .where((element) =>
-              element.missedType == 'late' && element.excused == true)
-          .length;
-    }
-    return missedClassUnexcusedCount;
-  }
-
-  int contactedSum(Pupil pupil) {
-    int contactedCount = pupil.pupilMissedClasses!
-        .where((element) => element.contacted != '0')
-        .length;
-
-    return contactedCount;
   }
 }

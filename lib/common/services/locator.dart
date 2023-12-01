@@ -53,6 +53,7 @@ void registerBaseManagers() {
     debug.info('PupilBaseManager initialized');
     return pupilBaseManager;
   });
+  locator.registerSingleton<BottomNavManager>(BottomNavManager());
 }
 
 void registerDependentManagers(String token) {
@@ -121,7 +122,6 @@ void registerDependentManagers(String token) {
     debug.info('PupilManager initialized');
     return pupilManager;
   }, dependsOn: [EnvManager, ApiManager, SessionManager, PupilBaseManager]);
-  locator.registerSingleton<BottomNavManager>(BottomNavManager());
 
   locator.registerSingletonWithDependencies<PupilFilterManager>(
     () => PupilFilterManager(),

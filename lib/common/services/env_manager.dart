@@ -65,7 +65,7 @@ class EnvManager {
     return;
   }
 
-  logout() async {
+  deleteEnv() async {
     _env.value = Env();
     _envReady.value = false;
     await secureStorageDelete('env');

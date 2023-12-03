@@ -179,7 +179,7 @@ class AttendanceManager {
         pupil.pupilMissedClasses![missedClass!].missedType == 'none') {
       final response =
           await client.delete(Endpoints().deleteMissedClass(pupilId, date));
-      await pupilManager.getPupils(pupilBaseIds);
+      await pupilManager.fetchPupilsById(pupilBaseIds);
       if (response.statusCode != 200) {
         _operationReport.value = Report('warning', response.data);
 

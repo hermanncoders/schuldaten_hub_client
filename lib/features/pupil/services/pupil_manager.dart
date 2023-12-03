@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -132,15 +131,15 @@ class PupilManager {
   String pickupTimePredicate(String? value) {
     switch (value) {
       case null:
-        return 'nicht vorhanden';
+        return 'k.A.';
       case '0':
-        return 'kein Eintrag';
+        return '14:00';
       case '1':
-        return "14:00 Uhr";
+        return "14:00";
       case '2':
-        return "15:00 Uhr";
+        return "15:00";
       case '3':
-        return "16:00 Uhr";
+        return "16:00";
       default:
         return "Falscher Wert im Server";
     }
@@ -209,12 +208,11 @@ class PupilManager {
       }
     }
     _pupils.value = pupils;
-    Pupil testpupil =
-        _pupils.value.firstWhere((element) => element.internalId == 1628);
+
     locator<PupilFilterManager>().updateFilteredPupils();
   }
 
-  Future getPupils(List<int> pupilIds) async {
+  Future fetchPupilsById(List<int> pupilIds) async {
     _isRunning.value = true;
     // we request the data posting a json with the id list - let's build that
     final data = jsonEncode({"pupils": pupilIds});
@@ -228,7 +226,7 @@ class PupilManager {
     try {
       final response = await client.post(Endpoints.getPupils, data: data);
       debug.info('Pupil request sent!');
-      // we have the response - let's build unidentified Pupils with it
+      // we have the res<<<<<<<<<<<<<<<<<<<<<<<<<<<ponse - let's build unidentified Pupils with it
       final pupilsWithoutBase =
           (response.data as List).map((e) => Pupil.fromJson(e)).toList();
       debug.success(
@@ -239,7 +237,7 @@ class PupilManager {
         if (pupilsWithoutBase
             .where((element) => element.internalId == pupilBaseElement.id)
             .isNotEmpty) {
-          var pupilMatch = pupilsWithoutBase
+          Pupil pupilMatch = pupilsWithoutBase
               .where((element) => element.internalId == pupilBaseElement.id)
               .single;
           Pupil namedPupil = pupilMatch.copyWith(
@@ -302,7 +300,7 @@ class PupilManager {
       final List<Pupil> shownPupils =
           locator<PupilFilterManager>().filteredPupils.value;
       final List<int> shownPupilIds = pupilIdsFromPupils(shownPupils);
-      await getPupils(shownPupilIds);
+      await fetchPupilsById(shownPupilIds);
     }
   }
 
@@ -314,14 +312,14 @@ class PupilManager {
       return;
     }
     debug.warning('availablePupils im PupilManager $pupilsToFetch');
-    await getPupils(pupilsToFetch);
+    await fetchPupilsById(pupilsToFetch);
   }
 
-  Future getThesePupils(List<Pupil> pupils) async {
+  Future fetchThesePupils(List<Pupil> pupils) async {
     List<int> pupilIds = [];
     for (Pupil pupil in pupils) {
       pupilIds.add(pupil.internalId);
-      await getPupils(pupilIds);
+      await fetchPupilsById(pupilIds);
     }
   }
 

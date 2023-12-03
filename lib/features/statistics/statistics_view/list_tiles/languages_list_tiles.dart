@@ -34,49 +34,48 @@ languagesListTiles(context, StatisticsController controller) {
           ],
         ),
         children: [
-          ListView.builder(
-            padding: const EdgeInsets.only(left: 10, top: 5, bottom: 15),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: sortedLanguageOccurrences.length,
-            itemBuilder: (BuildContext context, int index) {
-              final entry = sortedLanguageOccurrences[index];
-              final language = entry.key;
-              final occurrences = entry.value;
-              return Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: GestureDetector(
-                  onTap: () {
-                    //- TO-DO: change missed class function
-                    //- like _changeMissedClassHermannpupilPage
-                  },
-                  onLongPress: () async {},
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        Text(
-                          "$language:",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+          Card(
+            child: ListView.builder(
+              padding: const EdgeInsets.only(left: 10, top: 5, bottom: 15),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: sortedLanguageOccurrences.length,
+              itemBuilder: (BuildContext context, int index) {
+                final entry = sortedLanguageOccurrences[index];
+                final language = entry.key;
+                final occurrences = entry.value;
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: GestureDetector(
+                    onTap: () {},
+                    onLongPress: () async {},
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          Text(
+                            "$language:",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        const Gap(10),
-                        Text(
-                          "$occurrences",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                          const Gap(10),
+                          Text(
+                            "$occurrences",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ]),
   );

@@ -20,7 +20,6 @@ import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 
 class PupilBaseManager {

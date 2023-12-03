@@ -30,10 +30,26 @@ class StatisticsController extends State<Statistics> {
     }
   }
 
-  List<Pupil> pupilsNotEnrolledOnDate() {
-    return pupils.where((pupil) {
+  List<Pupil> pupilsNotSpeakingGerman(List<Pupil> givenPupils) {
+    return givenPupils.where((pupil) => pupil.language != 'Deutsch').toList();
+  }
+
+  List<Pupil> pupilsNotEnrolledOnDate(List<Pupil> givenPupils) {
+    return givenPupils.where((pupil) {
       return !(pupil.pupilSince!.month == 8 && pupil.pupilSince!.day == 1);
     }).toList();
+  }
+
+  List<Pupil> pupilsEnrolledAfterDate(DateTime date) {
+    return pupils.where((pupil) => pupil.pupilSince!.isAfter(date)).toList();
+  }
+
+  List<Pupil> pupilsEnrolledBetweenDates(DateTime startDate, DateTime endDate) {
+    return pupils
+        .where((pupil) =>
+            pupil.pupilSince!.isAfter(startDate) &&
+            pupil.pupilSince!.isBefore(endDate))
+        .toList();
   }
 
   List<Pupil> pupilsInaGivenGroup(String group) {
@@ -95,24 +111,112 @@ class StatisticsController extends State<Statistics> {
     return groupPupils;
   }
 
+  List<Pupil> preschoolRevisionSupportInaGivenGroup(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.preschoolRevision == 2) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> preschoolRevisionSpecialNeedsInaGivenGroup(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.preschoolRevision == 3) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> specialNeedsInAGivenGroup(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.specialNeeds != null) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> developmentPlan1InAGivenGroup(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.individualDevelopmentPlan == 1) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> developmentPlan2InAGivenGroup(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.individualDevelopmentPlan == 2) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> developmentPlan3InAGivenGroup(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.individualDevelopmentPlan == 3) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> preschoolRevisionNotAvailable(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.preschoolRevision == 0) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> preschoolRevisionOk(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.preschoolRevision == 1) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> preschoolRevisionSupport(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.preschoolRevision == 2) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> preschoolRevisionSpecialNeeds(List<Pupil> group) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in group) {
+      if (pupil.preschoolRevision == 3) {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
   Map<String, int> groupStatistics(List<Pupil> pupils) {
     Map<String, int> groupStatistics = {};
     for (Pupil pupil in pupils) {
       groupStatistics[pupil.group!] = (groupStatistics[pupil.group!] ?? 0) + 1;
     }
     return groupStatistics;
-  }
-
-  List<Pupil> pupilsEnrolledAfterDate(DateTime date) {
-    return pupils.where((pupil) => pupil.pupilSince!.isAfter(date)).toList();
-  }
-
-  List<Pupil> pupilsEnrolledBetweenDates(DateTime startDate, DateTime endDate) {
-    return pupils
-        .where((pupil) =>
-            pupil.pupilSince!.isAfter(startDate) &&
-            pupil.pupilSince!.isBefore(endDate))
-        .toList();
   }
 
   @override

@@ -271,6 +271,10 @@ class Endpoints {
   //- GET
   static const getSchoolLists = '/list/all/flat';
 
+  String deleteSchoolList(String listId) {
+    return '/list/$listId';
+  }
+
   //- USER ------------------------------------------------------
 
   static const login = '/login';

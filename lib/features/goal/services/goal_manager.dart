@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/api/dio/dio_exceptions.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/goal/models/category/goal_category.dart';
 import 'package:schuldaten_hub/features/goal/models/category/pupil_category_status.dart';
-import 'package:schuldaten_hub/features/goal/models/goal/goal_check.dart';
-import 'package:schuldaten_hub/features/goal/models/goal/pupil_goal.dart';
+
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -218,14 +218,31 @@ class GoalManager {
     return goalCategory;
   }
 
-  String getRootCategoryName(int categoryId) {
+  GoalCategory getRootCategory(int categoryId) {
     GoalCategory goalCategory = goalCategories.value
         .firstWhere((element) => element.categoryId == categoryId);
     if (goalCategory.parentCategory == null) {
-      return goalCategory.categoryName;
+      return goalCategory;
     } else {
-      return getRootCategoryName(goalCategory.parentCategory!);
+      return getRootCategory(goalCategory.parentCategory!);
     }
+  }
+
+  Color? getRootCategoryColor(GoalCategory goalCategory) {
+    if (goalCategory.categoryName == 'Körper, Wahrnehmung, Motorik') {
+      return koerperWahrnehmungMotorikColor;
+    } else if (goalCategory.categoryName == 'Sozialkompetenz / Emotionalität') {
+      return sozialEmotionalColor;
+    } else if (goalCategory.categoryName == 'Mathematik') {
+      return mathematikColor;
+    } else if (goalCategory.categoryName == 'Lernen und Leisten') {
+      return lernenLeistenColor;
+    } else if (goalCategory.categoryName == 'Deutsch') {
+      return deutschColor;
+    } else if (goalCategory.categoryName == 'Sprache und Sprechen') {
+      return spracheSprechenColor;
+    }
+    return null;
   }
 
   Color getCategoryStatusColor(Pupil pupil, int goalCategoryId) {

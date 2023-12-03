@@ -11,7 +11,6 @@ import 'package:schuldaten_hub/features/attendance/views/attendance_view/attenda
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -31,7 +30,8 @@ class AttendanceListController extends State<AttendanceList> {
   @override
   void initState() {
     super.initState();
-    locator<PupilFilterManager>().refreshFilteredPupils();
+    locator<AttendanceManager>().fetchMissedClassesOnASchoolday(
+        locator<SchooldayManager>().thisDate.value);
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       locator<AttendanceManager>().fetchMissedClassesOnASchoolday(
           locator<SchooldayManager>().thisDate.value);

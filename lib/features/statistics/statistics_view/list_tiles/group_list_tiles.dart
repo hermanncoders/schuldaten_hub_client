@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/features/statistics/statistics_view/controller/statistics.dart';
+import 'package:schuldaten_hub/features/statistics/statistics_view/list_tiles/group_card.dart';
 import 'package:schuldaten_hub/features/statistics/statistics_view/list_tiles/group_tiles.dart';
 
 groupListTiles(context, StatisticsController controller) {
@@ -12,9 +13,10 @@ groupListTiles(context, StatisticsController controller) {
     child: ExpansionTile(
         tilePadding: const EdgeInsets.all(0),
         title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              'Schüler*innen insgesamt:',
+              'SuS insgesamt:',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
@@ -26,7 +28,7 @@ groupListTiles(context, StatisticsController controller) {
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 20,
               ),
             ),
             const Gap(20),
@@ -43,229 +45,54 @@ groupListTiles(context, StatisticsController controller) {
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: 20,
               ),
             ),
           ],
         ),
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Row(
+          statisticsGroupCard(controller, controller.pupils),
+          ExpansionTile(
+              title: const Text(
+                'nach Klassen',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      'davon E1:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(10),
-                    Text(
-                      controller
-                          .schoolyearInaGivenGroup(controller.pupils, 'E1')
-                          .length
-                          .toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(20),
-                    const Text(
-                      'E2:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(10),
-                    Text(
-                      controller
-                          .schoolyearInaGivenGroup(controller.pupils, 'E2')
-                          .length
-                          .toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(20),
-                    const Text(
-                      'E3:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(10),
-                    Text(
-                      controller
-                          .schoolyearInaGivenGroup(controller.pupils, 'E3')
-                          .length
-                          .toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(20),
-                    const Text(
-                      'S3:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(10),
-                    Text(
-                      controller
-                          .schoolyearInaGivenGroup(controller.pupils, 'S3')
-                          .length
-                          .toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(20),
-                    const Text(
-                      'S4:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
-                    ),
-                    const Gap(10),
-                    Text(
-                      controller
-                          .schoolyearInaGivenGroup(controller.pupils, 'S4')
-                          .length
-                          .toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Gap(5),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Row(
-              children: [
-                const Text(
-                  'in Erstförderung:',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
-                ),
-                const Gap(10),
-                Text(
-                  controller
-                      .pupilsWithLanguageSupport(controller.pupils)
-                      .length
-                      .toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-                const Gap(10),
-                const Text(
-                  'waren in Erstförderung:',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
-                ),
-                const Gap(10),
-                Text(
-                  controller
-                      .pupilsHadLanguageSupport(controller.pupils)
-                      .length
-                      .toString(),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                )
-              ],
-            ),
-          ),
-          if (controller.pupils.any((element) => element.group == 'A1'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('A1')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'A2'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('A2')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'A3'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('A3')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'B1'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('B1')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'B2'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('B2')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'B3'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('B3')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'B4'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('B4')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'C1'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('C1')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'C2'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('C2')),
-            ),
-          if (controller.pupils.any((element) => element.group == 'C3'))
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: groupTiles(
-                  context, controller, controller.pupilsInaGivenGroup('C3')),
-            ),
+                if (controller.pupils.any((element) => element.group == 'A1'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('A1')),
+                if (controller.pupils.any((element) => element.group == 'A2'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('A2')),
+                if (controller.pupils.any((element) => element.group == 'A3'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('A3')),
+                if (controller.pupils.any((element) => element.group == 'B1'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('B1')),
+                if (controller.pupils.any((element) => element.group == 'B2'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('B2')),
+                if (controller.pupils.any((element) => element.group == 'B3'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('B3')),
+                if (controller.pupils.any((element) => element.group == 'B4'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('B4')),
+                if (controller.pupils.any((element) => element.group == 'C1'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('C1')),
+                if (controller.pupils.any((element) => element.group == 'C2'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('C2')),
+                if (controller.pupils.any((element) => element.group == 'C3'))
+                  groupTiles(context, controller,
+                      controller.pupilsInaGivenGroup('C3')),
+              ]),
         ]),
   );
 }

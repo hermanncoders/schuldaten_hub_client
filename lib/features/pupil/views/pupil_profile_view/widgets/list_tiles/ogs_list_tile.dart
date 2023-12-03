@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
-import 'package:schuldaten_hub/common/widgets/dialogues/display_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -38,7 +38,9 @@ ogsListTiles(Pupil pupil, context) {
                   locator<PupilManager>().pickupTimePredicate(pupil.pickUpTime),
                   style: const TextStyle(
                       fontSize: 18.0, fontWeight: FontWeight.bold)),
-            )
+            ),
+            const Gap(5),
+            const Text('Uhr:', style: TextStyle(fontSize: 18.0)),
           ],
         ),
         const Gap(10),

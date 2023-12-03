@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 
@@ -18,16 +17,17 @@ import 'package:watch_it/watch_it.dart';
 
 class CreditListView extends WatchingWidget {
   final CreditListController controller;
-  const CreditListView(this.controller, {Key? key}) : super(key: key);
+  final int userCredit;
+  final bool filtersOn;
+  final List<Pupil> pupils;
+  const CreditListView(
+      this.controller, this.userCredit, this.filtersOn, this.pupils,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     debug.info('Widget Build started!');
-
-    int userCredit = watchValue((SessionManager x) => x.credit);
-    bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-
-    List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
 
     return Scaffold(
       backgroundColor: canvasColor,

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/first_level_views/check_lists_view.dart';
+import 'package:schuldaten_hub/features/first_level_views/school_lists_view.dart';
 import 'package:schuldaten_hub/features/first_level_views/learn_list_view.dart';
 import 'package:schuldaten_hub/features/first_level_views/pupil_lists_menu_view.dart';
 import 'package:schuldaten_hub/features/first_level_views/scan_tools_view.dart';

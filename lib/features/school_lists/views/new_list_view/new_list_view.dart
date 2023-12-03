@@ -41,6 +41,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextField(
                   minLines: 2,
@@ -57,82 +58,96 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                   decoration: const InputDecoration(
                       labelText: 'Kurze Beschreibung der Liste'),
                 ),
-                const Gap(20),
-                const Text('Ausgewählte Kinder:'),
+                const Gap(10),
+                const Text(
+                  'Ausgewählte Kinder:',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                if (pupilIds.isEmpty) const Gap(30),
                 pupilIds.isNotEmpty
                     ? Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: ListView.builder(
-                              padding: const EdgeInsets.only(
-                                  left: 10, top: 5, bottom: 15),
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: locator<PupilManager>()
-                                  .pupilsFromPupilIds(pupilIds.toList())
-                                  .length,
-                              itemBuilder: (context, int index) {
-                                Pupil listedPupil = locator<PupilManager>()
-                                    .pupilsFromPupilIds(
-                                        pupilIds.toList())[index];
-                                return Column(
-                                  children: [
-                                    const Gap(5),
-                                    InkWell(
-                                      onLongPress: () {
-                                        setState(() {
-                                          pupilIds
-                                              .remove(listedPupil.internalId);
-                                        });
-                                      },
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (ctx) => PupilProfile(
-                                            listedPupil,
-                                          ),
-                                        ));
-                                      },
-                                      child: Row(
-                                        children: [
-                                          avatarImage(listedPupil, 30),
-                                          const Gap(10),
-                                          Text(
-                                            listedPupil.firstName!,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const Gap(10),
-                                          Text(
-                                            listedPupil.lastName!,
-                                            style: const TextStyle(),
-                                          ),
-                                          const Gap(20),
-                                          Text(
-                                            listedPupil.group!,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: groupColor),
-                                          ),
-                                          const Gap(20),
-                                          Text(
-                                            listedPupil.schoolyear!,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: schoolyearColor),
-                                          ),
-                                        ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: ListView.builder(
+                                padding: const EdgeInsets.only(
+                                    left: 10, top: 5, bottom: 15),
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: locator<PupilManager>()
+                                    .pupilsFromPupilIds(pupilIds.toList())
+                                    .length,
+                                itemBuilder: (context, int index) {
+                                  Pupil listedPupil = locator<PupilManager>()
+                                      .pupilsFromPupilIds(
+                                          pupilIds.toList())[index];
+                                  return Column(
+                                    children: [
+                                      const Gap(5),
+                                      InkWell(
+                                        onLongPress: () {
+                                          setState(() {
+                                            pupilIds
+                                                .remove(listedPupil.internalId);
+                                          });
+                                        },
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                            builder: (ctx) => PupilProfile(
+                                              listedPupil,
+                                            ),
+                                          ));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            avatarImage(listedPupil, 30),
+                                            const Gap(10),
+                                            Text(
+                                              listedPupil.firstName!,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const Gap(10),
+                                            Text(
+                                              listedPupil.lastName!,
+                                              style: const TextStyle(),
+                                            ),
+                                            const Gap(20),
+                                            Text(
+                                              listedPupil.group!,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: groupColor),
+                                            ),
+                                            const Gap(20),
+                                            Text(
+                                              listedPupil.schoolyear!,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: schoolyearColor),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                );
-                              }),
+                                    ],
+                                  );
+                                }),
+                          ),
                         ),
                       )
-                    : const Text('Keine Kinder ausgewählt'),
-                const Spacer(
-                  flex: 1,
-                ),
+                    : const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Keine Kinder ausgewählt!',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 91, 91, 91),
+                                  fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                if (pupilIds.isEmpty) const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: accentColor,

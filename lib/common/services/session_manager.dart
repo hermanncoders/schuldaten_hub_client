@@ -28,14 +28,14 @@ class SessionManager {
   ValueListenable<Session> get credentials => _credentials;
   ValueListenable<bool> get isAuthenticated => _isAuthenticated;
   ValueListenable<bool> get isAdmin => _isAdmin;
-  ValueListenable<int> get credit => _credit;
+  //ValueListenable<int> get credit => _credit;
   ValueListenable<Report> get operationReport => _operationReport;
   ValueListenable<bool> get isRunning => _isRunning;
 
   final _credentials = ValueNotifier<Session>(Session());
   final _isAuthenticated = ValueNotifier<bool>(false);
   final _isAdmin = ValueNotifier<bool>(false);
-  final _credit = ValueNotifier<int>(0);
+  //final _credit = ValueNotifier<int>(0);
   final _operationReport = ValueNotifier<Report>(Report(null, null));
   final _isRunning = ValueNotifier<bool>(false);
 
@@ -55,13 +55,19 @@ class SessionManager {
     return this;
   }
 
-  authenticate() {
+  authenticate(Session session) {
+    _credentials.value = session;
+
     _isAuthenticated.value = true;
+    _isAdmin.value = _credentials.value.isAdmin!;
   }
 
-  changeSessionCredit(int value) {
-    int oldCreditValue = _credit.value;
-    _credit.value = oldCreditValue + value;
+  changeSessionCredit(int value) async {
+    int oldCreditValue = _credentials.value.credit!;
+    Session newSession =
+        _credentials.value.copyWith(credit: oldCreditValue + value);
+    _credentials.value = newSession;
+    await saveSession(newSession);
   }
 
   Future<void> checkStoredCredentials() async {
@@ -70,7 +76,7 @@ class SessionManager {
       final String? storedSession = await secureStorageRead('session');
       debug.success('Session found!');
       try {
-        final session = Session.fromJson(
+        final Session session = Session.fromJson(
           json.decode(storedSession!) as Map<String, dynamic>,
         );
         if (JwtDecoder.isExpired(session.jwt!)) {
@@ -81,16 +87,12 @@ class SessionManager {
           return;
         }
         debug.info('Stored session is valid! | ${StackTrace.current}');
-        _credentials.value = session;
-        _isAuthenticated.value = true;
-        _isRunning.value = false;
+        authenticate(session);
         debug.warning(
             'SessionManager: isAuthenticated is ${_isAuthenticated.value.toString()}');
         debug.warning('Calling ApiManager instance');
         registerDependentManagers(_credentials.value.jwt!);
-        //locator<ApiManager>().setApi(_credentials.value.jwt!);
-        _credit.value = _credentials.value.credit!;
-
+        _isRunning.value = false;
         return;
       } catch (e) {
         debug.error(
@@ -112,7 +114,6 @@ class SessionManager {
     String days = remainingTime.inDays == 1 ? 'Tag' : 'Tage';
     String hours = remainingTime.inHours == 1 ? 'Stunde' : 'Stunden';
     String minutes = remainingTime.inMinutes == 1 ? 'Minute' : 'Minuten';
-
     String timeLeft =
         '${remainingTime.inDays} $days, ${remainingTime.inHours % 24} $hours, ${remainingTime.inMinutes % 60} $minutes';
     return timeLeft;
@@ -123,16 +124,12 @@ class SessionManager {
     String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
     final response = await _dio.get(Endpoints.login,
         options: Options(headers: <String, String>{'Authorization': auth}));
-
     if (response.statusCode == 200) {
-      _credentials.value =
+      final Session session =
           Session.fromJson(response.data).copyWith(username: username);
-      _isAuthenticated.value = true;
-      locator<ApiManager>().setApi(_credentials.value.jwt!);
-      if (_credentials.value.isAdmin == true) {
-        _isAdmin.value = true;
-      }
+      authenticate(session);
       await saveSession(_credentials.value);
+      locator<ApiManager>().setApi(_credentials.value.jwt!);
       return response.statusCode!;
     }
     return response.statusCode!;
@@ -145,12 +142,9 @@ class SessionManager {
     final response = await _dio.get(Endpoints.login,
         options: Options(headers: <String, String>{'Authorization': auth}));
     if (response.statusCode == 200) {
-      _credentials.value =
+      final Session session =
           Session.fromJson(response.data).copyWith(username: username);
-      _isAuthenticated.value = true;
-      if (_credentials.value.isAdmin == true) {
-        _isAdmin.value = true;
-      }
+      authenticate(session);
       await saveSession(_credentials.value);
       registerDependentManagers(_credentials.value.jwt!);
       await locator.allReady();
@@ -195,7 +189,6 @@ class SessionManager {
     locator.unregister<AuthorizationManager>();
     locator.unregister<AttendanceManager>();
     locator.unregister<AdmonitionManager>();
-
     return;
   }
 }

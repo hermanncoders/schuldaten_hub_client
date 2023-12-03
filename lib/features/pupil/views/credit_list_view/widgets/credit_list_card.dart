@@ -14,21 +14,28 @@ class CreditListCard extends StatelessWidget with WatchItMixin {
   CreditListCard(this.controller, this.passedPupil, {super.key});
   @override
   Widget build(BuildContext context) {
-    List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
-    final Pupil pupil = pupils
+    Pupil pupil = watchValue((PupilFilterManager x) => x.filteredPupils)
         .where((element) => element.internalId == passedPupil.internalId)
         .first;
 
     return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      color: Colors.white,
+      elevation: 1.0,
+      margin:
+          const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           avatarWithBadges(pupil, 80),
           Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Gap(15),
                 Row(
                   children: [
                     Expanded(
@@ -61,13 +68,22 @@ class CreditListCard extends StatelessWidget with WatchItMixin {
                 const Gap(5),
                 Row(
                   children: [
-                    const Text('bisjetzt verdient:'),
-                    const Gap(10),
-                    Text(
-                      pupil.creditEarned.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            const Text('bisjetzt verdient:'),
+                            const Gap(10),
+                            Text(
+                              pupil.creditEarned.toString(),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -80,6 +96,7 @@ class CreditListCard extends StatelessWidget with WatchItMixin {
             onTap: () async => changeCreditDialog(context, pupil),
             child: Column(
               children: [
+                const Gap(20),
                 const Text('Credit'),
                 Center(
                   child: Text(

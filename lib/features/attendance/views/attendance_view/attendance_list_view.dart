@@ -12,7 +12,6 @@ import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:watch_it/watch_it.dart';
 
 class AttendanceListView extends WatchingWidget {
@@ -23,7 +22,6 @@ class AttendanceListView extends WatchingWidget {
   Widget build(BuildContext context) {
     DateTime thisDate = watchValue((SchooldayManager x) => x.thisDate);
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
 
     return Scaffold(
@@ -53,8 +51,8 @@ class AttendanceListView extends WatchingWidget {
                   automaticallyImplyLeading: false,
                   leading: const SizedBox.shrink(),
                   backgroundColor: Colors.transparent,
-                  collapsedHeight: 120,
-                  expandedHeight: 120.0,
+                  collapsedHeight: 110,
+                  expandedHeight: 110.0,
                   stretch: false,
                   elevation: 0,
                   flexibleSpace: FlexibleSpaceBar(

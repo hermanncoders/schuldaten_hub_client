@@ -7,7 +7,6 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
-import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -80,7 +79,7 @@ class PupilFilterManager {
 
     filterPupils();
     sortPupils();
-    setSearchText(_searchText.value);
+    //setSearchText(_searchText.value);
   }
 
   resetFilters() {
@@ -135,6 +134,7 @@ class PupilFilterManager {
 
   filterPupils() {
     _filtersOn.value = false;
+
     final pupils = locator<PupilManager>().pupils.value;
     final activeFilters = _filterState.value;
 
@@ -240,6 +240,7 @@ class PupilFilterManager {
         toList = false;
       }
 
+      //- OGS filters -//
       // Filter ogs
       if (activeFilters[PupilFilter.ogs]! &&
           pupil.ogs == true &&
@@ -263,9 +264,55 @@ class PupilFilterManager {
         _filtersOn.value = true;
         toList = false;
       }
-
+      //- Special Infomation filter - //
+      if (activeFilters[PupilFilter.specialInfo]! &&
+          pupil.specialInformation != null &&
+          toList == true) {
+        toList = true;
+      } else if (activeFilters[PupilFilter.specialInfo] == false &&
+          toList == true) {
+        toList = true;
+      } else {
+        _filtersOn.value = true;
+        toList = false;
+      }
       //- Development filters -//
-
+      // Filter development plan 1
+      if (activeFilters[PupilFilter.developmentPlan1]! &&
+          pupil.individualDevelopmentPlan == 1 &&
+          toList == true) {
+        toList = true;
+      } else if (activeFilters[PupilFilter.developmentPlan1] == false &&
+          toList == true) {
+        toList = true;
+      } else {
+        _filtersOn.value = true;
+        toList = false;
+      }
+      // Filter development plan 2
+      if (activeFilters[PupilFilter.developmentPlan2]! &&
+          pupil.individualDevelopmentPlan == 2 &&
+          toList == true) {
+        toList = true;
+      } else if (activeFilters[PupilFilter.developmentPlan2] == false &&
+          toList == true) {
+        toList = true;
+      } else {
+        _filtersOn.value = true;
+        toList = false;
+      }
+      // Filter development plan 3
+      if (activeFilters[PupilFilter.developmentPlan3]! &&
+          pupil.individualDevelopmentPlan == 3 &&
+          toList == true) {
+        toList = true;
+      } else if (activeFilters[PupilFilter.developmentPlan3] == false &&
+          toList == true) {
+        toList = true;
+      } else {
+        _filtersOn.value = true;
+        toList = false;
+      }
       // Filter special needs
       if (activeFilters[PupilFilter.specialNeeds]! &&
           pupil.specialNeeds != null &&
@@ -279,8 +326,6 @@ class PupilFilterManager {
         toList = false;
       }
       // Filter pupils with a development goal
-
-      // Filter pupils with special needs
 
       //- Learning filters -//
 
@@ -328,6 +373,7 @@ class PupilFilterManager {
         _filtersOn.value = true;
         toList = false;
       }
+
       // We're done with filtering - let's add the filtered pupils to the list
       if (toList == true) {
         filteredPupils.add(pupil);

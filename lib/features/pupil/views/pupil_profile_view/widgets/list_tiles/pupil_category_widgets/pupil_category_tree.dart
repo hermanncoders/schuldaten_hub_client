@@ -9,7 +9,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/goal/views/new_category_goal_view/new_category_goal_view.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_category_status_widgets/category_status_dialog.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_category_widgets/category_status_dialog.dart';
 
 List<Widget> buildPupilCategoryTree(
   BuildContext context,
@@ -21,24 +21,13 @@ List<Widget> buildPupilCategoryTree(
   List<Widget> goalCategoryWidgets = [];
   final goalLocator = locator<GoalManager>();
   List<GoalCategory> goalCategories = goalLocator.goalCategories.value;
-  Color categoryBackgroundColor = backGroundColor ?? Colors.blue;
+  Color categoryBackgroundColor;
 
   for (var goalCategory in goalCategories) {
     if (backGroundColor == null) {
-      if (goalCategory.categoryName == 'Körper, Wahrnehmung, Motorik') {
-        categoryBackgroundColor = const Color.fromARGB(255, 156, 76, 149);
-      } else if (goalCategory.categoryName ==
-          'Sozialkompetenz / Emotionalität') {
-        categoryBackgroundColor = const Color.fromARGB(255, 233, 127, 22);
-      } else if (goalCategory.categoryName == 'Mathematik') {
-        categoryBackgroundColor = const Color.fromARGB(255, 5, 118, 172);
-      } else if (goalCategory.categoryName == 'Lernen und Leisten') {
-        categoryBackgroundColor = const Color.fromARGB(255, 5, 155, 88);
-      } else if (goalCategory.categoryName == 'Deutsch') {
-        categoryBackgroundColor = const Color.fromARGB(255, 228, 70, 60);
-      } else if (goalCategory.categoryName == 'Sprache und Sprechen') {
-        categoryBackgroundColor = const Color.fromARGB(255, 244, 198, 17);
-      }
+      categoryBackgroundColor =
+          locator<GoalManager>().getRootCategoryColor(goalCategory) ??
+              Colors.red;
     } else {
       categoryBackgroundColor = backGroundColor;
     }

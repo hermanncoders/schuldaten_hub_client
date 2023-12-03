@@ -24,7 +24,7 @@ class SettingsView extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     final Session session = watchValue((SessionManager x) => x.credentials);
-    final int credit = watchValue((SessionManager x) => x.credit);
+    final int credit = session.credit!;
     final String username = session.username!;
 
     final bool isAdmin = session.isAdmin!;
@@ -180,6 +180,7 @@ class SettingsView extends WatchingWidget {
                 ),
                 tiles: <SettingsTile>[
                   SettingsTile.navigation(
+                    leading: const Icon(Icons.bar_chart_rounded),
                     title: const Text('Statistik-Zahlen ansehen'),
                     onPressed: (context) {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -188,6 +189,7 @@ class SettingsView extends WatchingWidget {
                     },
                   ),
                   SettingsTile.navigation(
+                      leading: const Icon(Icons.qr_code_rounded),
                       title: const Text('Kinder QR-Ids zeigen'),
                       onPressed: (context) async {
                         final List<int> pupilIds =

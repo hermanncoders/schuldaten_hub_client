@@ -35,16 +35,16 @@ class SelectPupilListController extends State<SelectPupilList> {
     super.initState();
   }
 
-  void getPupilsFromServer() async {
-    if (filteredPupils == []) {
-      return;
-    }
-    final List<int> pupilsToFetch = [];
-    for (Pupil pupil in filteredPupils!) {
-      pupilsToFetch.add(pupil.internalId);
-    }
-    await locator.get<PupilManager>().getPupils(pupilsToFetch);
-  }
+  // void getPupilsFromServer() async {
+  //   if (filteredPupils == []) {
+  //     return;
+  //   }
+  //   final List<int> pupilsToFetch = [];
+  //   for (Pupil pupil in filteredPupils!) {
+  //     pupilsToFetch.add(pupil.internalId);
+  //   }
+  //   await locator.get<PupilManager>().fetchPupilsById(pupilsToFetch);
+  // }
 
   void search() async {
     if (!isSearching) {

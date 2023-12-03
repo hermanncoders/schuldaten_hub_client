@@ -22,8 +22,7 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
         child: Row(
       children: [
         avatarWithBadges(pupil, 80),
-        SizedBox(
-          width: 200,
+        Expanded(
           child: Column(
             children: [
               Row(
@@ -66,7 +65,8 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
             ],
           ),
         ),
-        Expanded(
+        SizedBox(
+          width: 80,
           child: InkWell(
             onTap: () {},
             child: Column(

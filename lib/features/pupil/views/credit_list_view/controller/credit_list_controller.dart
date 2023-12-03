@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/credit_list_view.dart';
 import 'package:watch_it/watch_it.dart';
 
@@ -25,33 +25,6 @@ class CreditListController extends State<CreditList> {
   void initState() {
     locator<PupilFilterManager>().refreshFilteredPupils();
     super.initState();
-  }
-
-  int totalFluidCredit(List<Pupil> pupils) {
-    int totalCredit = 0;
-    for (Pupil pupil in pupils) {
-      totalCredit = totalCredit + pupil.credit;
-    }
-    return totalCredit;
-  }
-
-  int totalGeneratedCredit(List<Pupil> pupils) {
-    int totalGeneratedCredit = 0;
-    for (Pupil pupil in pupils) {
-      totalGeneratedCredit = totalGeneratedCredit + pupil.creditEarned;
-    }
-    return totalGeneratedCredit;
-  }
-
-  void getPupilsFromServer() async {
-    if (filteredPupils == []) {
-      return;
-    }
-    final List<int> pupilsToFetch = [];
-    for (Pupil pupil in filteredPupils!) {
-      pupilsToFetch.add(pupil.internalId);
-    }
-    await locator.get<PupilManager>().getPupils(pupilsToFetch);
   }
 
   void _search() async {
@@ -101,8 +74,28 @@ class CreditListController extends State<CreditList> {
     // _coolDown = Timer(const Duration(milliseconds: 500), _search);
   }
 
+  //- Values for the search bar
+  int totalFluidCredit(List<Pupil> pupils) {
+    int totalCredit = 0;
+    for (Pupil pupil in pupils) {
+      totalCredit = totalCredit + pupil.credit;
+    }
+    return totalCredit;
+  }
+
+  int totalGeneratedCredit(List<Pupil> pupils) {
+    int totalGeneratedCredit = 0;
+    for (Pupil pupil in pupils) {
+      totalGeneratedCredit = totalGeneratedCredit + pupil.creditEarned;
+    }
+    return totalGeneratedCredit;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CreditListView(this);
+    int userCredit = watchValue((SessionManager x) => x.credentials).credit!;
+    bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
+    List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
+    return CreditListView(this, userCredit, filtersOn, pupils);
   }
 }

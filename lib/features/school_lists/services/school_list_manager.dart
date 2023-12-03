@@ -90,8 +90,17 @@ class SchoolListManager {
       List<SchoolList> updatedSchoolLists = List.from(_schoolLists.value);
       updatedSchoolLists.add(newList);
       _schoolLists.value = updatedSchoolLists;
-      await locator<PupilManager>().getPupils(pupilIds);
+      await locator<PupilManager>().fetchPupilsById(pupilIds);
       debug.success('list entry successful');
+    }
+  }
+
+  Future deleteSchoolList(String listId) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    final response = await client.delete(Endpoints().deleteSchoolList(listId));
+    if (response.statusCode == 200) {
+      debug.success('list entry successful');
+      await fetchSchoolLists();
     }
   }
 

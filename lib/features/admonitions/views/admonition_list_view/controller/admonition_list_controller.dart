@@ -36,7 +36,7 @@ class AdmonitionListController extends State<AdmonitionList> {
     for (Pupil pupil in filteredPupils!) {
       pupilsToFetch.add(pupil.internalId);
     }
-    await locator.get<PupilManager>().getPupils(pupilsToFetch);
+    await locator.get<PupilManager>().fetchPupilsById(pupilsToFetch);
   }
 
   int getAdmonitionCount(List<Pupil> pupils) {

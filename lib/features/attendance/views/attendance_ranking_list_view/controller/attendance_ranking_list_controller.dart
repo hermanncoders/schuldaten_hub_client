@@ -54,7 +54,7 @@ class AttendanceRankingListController extends State<AttendanceRankingList> {
     for (Pupil pupil in filteredPupils!) {
       pupilsToFetch.add(pupil.internalId);
     }
-    await locator.get<PupilManager>().getPupils(pupilsToFetch);
+    await locator.get<PupilManager>().fetchPupilsById(pupilsToFetch);
   }
 
   void _search() async {

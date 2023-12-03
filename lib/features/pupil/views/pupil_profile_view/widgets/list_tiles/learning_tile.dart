@@ -68,8 +68,10 @@ learningTiles(Pupil pupil, context) {
                             Row(
                               children: [
                                 Text(
-                                  locator<GoalManager>().getRootCategoryName(
-                                      pupilGoals[index].competenceId),
+                                  locator<GoalManager>()
+                                      .getRootCategory(
+                                          pupilGoals[index].competenceId)
+                                      .categoryName,
                                   style: const TextStyle(
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold),

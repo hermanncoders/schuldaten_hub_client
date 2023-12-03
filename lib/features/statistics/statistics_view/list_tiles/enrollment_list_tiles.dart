@@ -22,7 +22,10 @@ enrollmentListTiles(context, StatisticsController controller) {
             ),
             const Gap(10),
             Text(
-              controller.pupilsNotEnrolledOnDate().length.toString(),
+              controller
+                  .pupilsNotEnrolledOnDate(controller.pupils)
+                  .length
+                  .toString(),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

@@ -17,15 +17,23 @@ class StatisticsView extends StatelessWidget {
     return Scaffold(
       backgroundColor: canvasColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: backgroundColor,
         centerTitle: true,
-        title: const Text('Statistik'),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.bar_chart_rounded),
+            Gap(10),
+            Text('Statistik'),
+          ],
+        ),
       ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 800),
           child: Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
+            padding: const EdgeInsets.only(left: 10.0, right: 10, bottom: 20),
             child: Column(
               children: [
                 const Gap(15),
@@ -46,6 +54,32 @@ class StatisticsView extends StatelessWidget {
                     enrollmentListTiles(context, controller)
                   ]),
                 ))
+              ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        padding: const EdgeInsets.all(10),
+        shape: null,
+        color: backgroundColor,
+        child: IconTheme(
+          data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Row(
+              children: [
+                IconButton(
+                  tooltip: 'zurück',
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                const Spacer(),
               ],
             ),
           ),

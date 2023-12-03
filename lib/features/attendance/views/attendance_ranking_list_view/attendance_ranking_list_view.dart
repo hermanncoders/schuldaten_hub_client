@@ -53,11 +53,9 @@ class AttendanceRankingListView extends WatchingWidget {
                       left: 10.0, top: 15.0, right: 10.00),
                   child: Row(
                     children: [
-                      const Text(
-                        'Gesamt:',
-                        style: TextStyle(
-                          fontSize: 13,
-                        ),
+                      const Icon(
+                        Icons.people_alt_rounded,
+                        color: backgroundColor,
                       ),
                       const Gap(10),
                       Text(

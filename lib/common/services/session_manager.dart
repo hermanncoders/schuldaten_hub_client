@@ -136,6 +136,14 @@ class SessionManager {
     return response.statusCode!;
   }
 
+  Future<bool> increaseUsersCredit() async {
+    final response = await _dio.get(Endpoints.increaseCredit);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
   Future<bool> attemptLogin(String? username, String? password) async {
     String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
     _operationReport.value = Report(null, null);

@@ -179,6 +179,28 @@ class SettingsView extends WatchingWidget {
                   ),
                 ),
                 tiles: <SettingsTile>[
+                  if (isAdmin == true)
+                    SettingsTile.navigation(
+                      leading: const Icon(Icons.attach_money_rounded),
+                      title: const Text('Guthaben überweisen'),
+                      onPressed: (context) async {
+                        final bool? confirmed = await confirmationDialog(
+                            context, 'Guthaben überweisen', 'Sind Sie sicher?');
+                        if (confirmed != true) {
+                          return;
+                        }
+                        final bool success = await locator<SessionManager>()
+                            .increaseUsersCredit();
+                        if (context.mounted) {
+                          if (success) {
+                            snackbarSuccess(context, 'Guthaben übernommen!');
+                          } else {
+                            snackbarError(
+                                context, 'Fehler bei der Überweisung');
+                          }
+                        }
+                      },
+                    ),
                   SettingsTile.navigation(
                     leading: const Icon(Icons.bar_chart_rounded),
                     title: const Text('Statistik-Zahlen ansehen'),

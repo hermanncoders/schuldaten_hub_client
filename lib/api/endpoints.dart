@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 class Endpoints {
@@ -310,6 +311,8 @@ class Endpoints {
     return 'user/$publicId';
   }
 
+  //- increase credit
+  static const increaseCredit = '/user/all/credit';
   // receiveTimeout
   static const Duration receiveTimeout = Duration(milliseconds: 15000);
 

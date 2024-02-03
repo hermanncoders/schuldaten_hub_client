@@ -109,6 +109,17 @@ class Endpoints {
     return '/pupil/$pupilId/authorization/$authorizationId';
   }
 
+  String patchPupilAuthorizationWithFile(int pupilId, String authorizationId) {
+    return '/pupil/$pupilId/authorization/$authorizationId/file';
+  }
+
+  String getPupilAuthorizationFile(int pupilId, String authorizationId) {
+    return '/pupil/$pupilId/authorization/$authorizationId/file';
+  }
+
+  String deletePupilAuthorization(int pupilId, String authorizationId) {
+    return '/pupil/$pupilId/authorization/$authorizationId/file';
+  }
   //- COMPETENCES ------------------------------------------------------
 
   //-POST

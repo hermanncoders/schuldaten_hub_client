@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:schuldaten_hub/api/dio/dio_exceptions.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
+import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
 import 'package:schuldaten_hub/features/authorizations/models/pupil_authorization.dart';
@@ -53,7 +55,15 @@ class AuthorizationManager {
   Future patchPupilAuthorization(
       int pupilId, String listId, bool? value, String? comment) async {
     final client = locator.get<ApiManager>().dioClient.value;
-    final data = jsonEncode({"comment": comment, "status": value});
+    String data = '';
+    if (value == null) {
+      data = jsonEncode({"comment": comment});
+    } else if (comment == null) {
+      data = jsonEncode({"status": value});
+    } else {
+      data = jsonEncode({"comment": comment, "status": value});
+    }
+
     final response = await client.patch(
         Endpoints().patchPupilAuthorization(pupilId, listId),
         data: data);
@@ -61,6 +71,48 @@ class AuthorizationManager {
       locator<PupilManager>().patchPupilFromResponse(response.data);
       debug.success('list entry successful');
     }
+    // Success! We have a pupil response - let's patch the pupil with the data
+    final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
+  }
+
+  Future postAuthorizationFile(
+    File file,
+    int pupilId,
+    String authId,
+  ) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    _isRunning.value = true;
+    final encryptedFile = await customEncrypter.encryptFile(file);
+    String fileName = encryptedFile.path.split('/').last;
+    final Response response = await client.post(
+      Endpoints().patchPupilAuthorizationWithFile(pupilId, authId),
+      data: FormData.fromMap(
+        {
+          "file": await MultipartFile.fromFile(encryptedFile.path,
+              filename: fileName),
+        },
+      ),
+    );
+    if (response.statusCode != 200) {
+      debug.warning('Something went wrong with the multipart request');
+    }
+    // Success! We have a pupil response - let's patch the pupil with the data
+    final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
+  }
+
+  Future deleteAuthorizationFile(int pupilId, String authId) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    _isRunning.value = true;
+    final Response response = await client
+        .delete(Endpoints().deletePupilAuthorization(pupilId, authId));
+    if (response.statusCode != 200) {
+      debug.warning('Something went wrong with the multipart request');
+    }
+    // Success! We have a pupil response - let's patch the pupil with the data
+    final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
   }
 
   Authorization getAuthorization(String authId) {
@@ -84,10 +136,9 @@ class AuthorizationManager {
     return pupilAuthorization;
   }
 
-  List<Pupil> getPupilsinAuthorization(String authorizationId) {
-    final List<Pupil> pupils = locator<PupilManager>().pupils.value;
-
-    final List<Pupil> listedPupils = pupils
+  List<Pupil> getPupilsinAuthorization(
+      String authorizationId, List<Pupil> filteredPupils) {
+    final List<Pupil> listedPupils = filteredPupils
         .where((pupil) => pupil.authorizations!.any((authorization) =>
             authorization.originAuthorization == authorizationId))
         .toList();

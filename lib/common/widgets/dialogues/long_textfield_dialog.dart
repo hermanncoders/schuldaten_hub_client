@@ -61,6 +61,32 @@ Future longTextFieldDialog(
                   ),
                 ),
               ),
+              textinField != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(
+                          left: 15, right: 15, bottom: 10.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            minimumSize: const Size.fromHeight(50)),
+                        onPressed: () {
+                          String newSpecialInformation = '';
+
+                          textEditingController.dispose();
+                          Navigator.of(parentContext)
+                              .pop(newSpecialInformation);
+                        },
+                        child: const Text(
+                          "LÖSCHEN",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               Padding(
                 padding:
                     const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),

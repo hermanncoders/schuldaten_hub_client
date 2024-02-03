@@ -67,7 +67,16 @@ class LoginController extends State<Login> {
   attemptLogin(String username, String password) async {
     bool isAuthenticated =
         await locator<SessionManager>().attemptLogin(username, password);
-    debug.success('Is authenticated is $isAuthenticated');
+    if (isAuthenticated == true) {
+      if (context.mounted) {
+        snackbarSuccess(context, 'Login erfolgreich!');
+      }
+      debug.success('Is authenticated is $isAuthenticated');
+    } else {
+      if (context.mounted) {
+        snackbarWarning(context, 'Login fehlgeschlagen!');
+      }
+    }
   }
 
   importEnvFromTxt() async {

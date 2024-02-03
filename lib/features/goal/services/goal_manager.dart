@@ -12,7 +12,6 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/goal/models/category/goal_category.dart';
 import 'package:schuldaten_hub/features/goal/models/category/pupil_category_status.dart';
-
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';

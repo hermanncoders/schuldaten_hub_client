@@ -170,7 +170,10 @@ class PupilManager {
     for (MissedClass missedClass in missedClasses) {
       int missedPupil = pupils.indexWhere(
           (element) => element.internalId == missedClass.missedPupilId);
-
+      if (missedPupil == -1) {
+        debug.error('${missedClass.missedPupilId} not found');
+        continue;
+      }
       int missedClassIndex = pupils[missedPupil]
           .pupilMissedClasses!
           .indexWhere((element) => element.missedDay == missedClass.missedDay);
@@ -226,7 +229,7 @@ class PupilManager {
     try {
       final response = await client.post(Endpoints.getPupils, data: data);
       debug.info('Pupil request sent!');
-      // we have the res<<<<<<<<<<<<<<<<<<<<<<<<<<<ponse - let's build unidentified Pupils with it
+      // we have the response - let's build unidentified Pupils with it
       final pupilsWithoutBase =
           (response.data as List).map((e) => Pupil.fromJson(e)).toList();
       debug.success(
@@ -262,6 +265,13 @@ class PupilManager {
         }
         // now check if the pupilbase was modified - if so, store the modified base
         if (outdatedPupilbase.isNotEmpty) {
+          // print the internal_id of every element of the outdated pupilbase in one string
+          String deletedPupils = '';
+          for (PupilBase element in outdatedPupilbase) {
+            deletedPupils += '${element.id}, ';
+          }
+          debug.warning(
+              '$deletedPupils had no match and have been deleted from the pupilbase! | ${StackTrace.current}');
           locator<PupilBaseManager>()
               .deletePupilBaseElements(outdatedPupilbase);
         }

@@ -27,6 +27,8 @@ class ApiManager {
   setApi(String token) {
     _token.value = token;
     final baseUrl = locator<EnvManager>().env.value.serverUrl;
+    //static const baseUrl = 'http://10.0.2.2:5000/api'; // android VM
+    //static const baseUrl = 'http://127.0.0.1:5000/api'; //windows
     _dioClient.value = DioClient(Dio(), token, baseUrl, false);
   }
 }

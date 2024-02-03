@@ -1,5 +1,6 @@
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_filter_manager.dart';
@@ -56,7 +57,7 @@ void registerBaseManagers() {
   locator.registerSingleton<BottomNavManager>(BottomNavManager());
 }
 
-void registerDependentManagers(String token) {
+Future registerDependentManagers(String token) async {
   debug.info('Registering dependent managers');
 
   locator.registerSingletonAsync<ApiManager>(
@@ -130,4 +131,8 @@ void registerDependentManagers(String token) {
 
   locator.registerLazySingleton<AttendanceManager>(() => AttendanceManager());
   locator.registerLazySingleton<AdmonitionManager>(() => AdmonitionManager());
+  locator.registerSingletonWithDependencies<AdmonitionFilterManager>(
+    () => AdmonitionFilterManager(),
+    dependsOn: [PupilManager],
+  );
 }

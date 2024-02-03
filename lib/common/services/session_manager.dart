@@ -13,6 +13,7 @@ import 'package:schuldaten_hub/common/utils/secure_storage.dart';
 import 'package:schuldaten_hub/common/models/session_models/session.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
@@ -146,7 +147,7 @@ class SessionManager {
           Session.fromJson(response.data).copyWith(username: username);
       authenticate(session);
       await saveSession(_credentials.value);
-      registerDependentManagers(_credentials.value.jwt!);
+      await registerDependentManagers(_credentials.value.jwt!);
       await locator.allReady();
       _isRunning.value = false;
       return true;
@@ -189,6 +190,7 @@ class SessionManager {
     locator.unregister<AuthorizationManager>();
     locator.unregister<AttendanceManager>();
     locator.unregister<AdmonitionManager>();
+    locator.unregister<AdmonitionFilterManager>();
     return;
   }
 }

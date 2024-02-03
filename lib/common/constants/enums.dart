@@ -9,6 +9,18 @@ Map<CompetenceFilter, bool> initialCompetenceFilterValues = {
   CompetenceFilter.S4: false
 };
 
+enum AdmonitionFilter {
+  sevenDays,
+  violenceAgainstThings,
+  violenceAgainstPersons
+}
+
+Map<AdmonitionFilter, bool> initialAdmonitionFilterValues = {
+  AdmonitionFilter.sevenDays: false,
+  AdmonitionFilter.violenceAgainstThings: false,
+  AdmonitionFilter.violenceAgainstPersons: false
+};
+
 enum PupilSortMode {
   sortByName,
   sortByMissedExcused,
@@ -20,6 +32,18 @@ enum PupilSortMode {
   sortByGoneHome,
   sortByAdmonitions,
 }
+
+Map<PupilSortMode, bool> initialSortModeValues = {
+  PupilSortMode.sortByName: true,
+  PupilSortMode.sortByMissedExcused: false,
+  PupilSortMode.sortByMissedUnexcused: false,
+  PupilSortMode.sortByContacted: false,
+  PupilSortMode.sortByLate: false,
+  PupilSortMode.sortByCredit: false,
+  PupilSortMode.sortByCreditEarned: false,
+  PupilSortMode.sortByGoneHome: false,
+  PupilSortMode.sortByAdmonitions: false,
+};
 
 enum PupilFilter {
   E1,
@@ -63,19 +87,15 @@ enum PupilFilter {
   communicationTutor2,
   justGirls,
   justBoys,
+  schoolListYesResponse,
+  schoolListNoResponse,
+  schoolListNullResponse,
+  schoolListCommentResponse,
+  authorizationYesResponse,
+  authorizationNoResponse,
+  authorizationNullResponse,
+  authorizationCommentResponse,
 }
-
-Map<PupilSortMode, bool> initialSortModeValues = {
-  PupilSortMode.sortByName: true,
-  PupilSortMode.sortByMissedExcused: false,
-  PupilSortMode.sortByMissedUnexcused: false,
-  PupilSortMode.sortByContacted: false,
-  PupilSortMode.sortByLate: false,
-  PupilSortMode.sortByCredit: false,
-  PupilSortMode.sortByCreditEarned: false,
-  PupilSortMode.sortByGoneHome: false,
-  PupilSortMode.sortByAdmonitions: false,
-};
 
 Map<PupilFilter, bool> initialFilterValues = {
   PupilFilter.E1: false,
@@ -119,4 +139,12 @@ Map<PupilFilter, bool> initialFilterValues = {
   PupilFilter.communicationTutor2: false,
   PupilFilter.justBoys: false,
   PupilFilter.justGirls: false,
+  PupilFilter.schoolListYesResponse: false,
+  PupilFilter.schoolListNoResponse: false,
+  PupilFilter.schoolListNullResponse: false,
+  PupilFilter.schoolListCommentResponse: false,
+  PupilFilter.authorizationYesResponse: false,
+  PupilFilter.authorizationNoResponse: false,
+  PupilFilter.authorizationNullResponse: false,
+  PupilFilter.authorizationCommentResponse: false,
 };

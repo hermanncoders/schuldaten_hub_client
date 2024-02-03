@@ -99,6 +99,18 @@ class PupilFilterManager {
     filterPupils();
   }
 
+  List<Pupil> filteredPupilsFromList(List<Pupil> pupilsFromList) {
+    List<Pupil> filteredPupilsFromList = [];
+    for (Pupil pupil in pupilsFromList) {
+      Pupil filteredPupil = _filteredPupils.value
+          .where((element) => element.internalId == pupil.internalId)
+          .single;
+
+      filteredPupilsFromList.add(filteredPupil);
+    }
+    return filteredPupilsFromList;
+  }
+
   void setSortMode(PupilSortMode sortMode, bool isActive) {
     if (sortMode == PupilSortMode.sortByName || isActive == false) {
       _sortMode.value = initialSortModeValues;
@@ -126,6 +138,7 @@ class PupilFilterManager {
     List<Pupil> filteredPupilsState = List.from(_filteredPupils.value);
     filteredPupils = filteredPupilsState
         .where((Pupil pupil) =>
+            pupil.internalId.toString().contains(text) ||
             pupil.firstName!.toLowerCase().contains(text.toLowerCase()) ||
             pupil.lastName!.toLowerCase().contains(text.toLowerCase()))
         .toList();

@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
+import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/widgets/authorization_pupils_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -26,8 +27,13 @@ class AuthorizationPupilsView extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-    List<Pupil> pupilsInList = locator<AuthorizationManager>()
-        .getPupilsinAuthorization(authorization.authorizationId);
+    List<Pupil> filteredPupils =
+        watchValue((PupilFilterManager x) => x.filteredPupils);
+    List<Pupil> pupilsFromList = locator<AuthorizationManager>()
+        .getPupilsinAuthorization(
+            authorization.authorizationId, filteredPupils);
+    List<Pupil> pupilsInList =
+        controller.getListResponseFilteredPupils(pupilsFromList);
 
     Map<PupilFilter, bool> activeFilters =
         watchValue((PupilFilterManager x) => x.filterState);
@@ -117,8 +123,9 @@ class AuthorizationPupilsView extends WatchingWidget {
                               )),
                               //---------------------------------
                               InkWell(
-                                onTap: () => showGroupYearFilterBottomSheet(
-                                    context, activeFilters),
+                                onTap: () =>
+                                    showAuthorizationPupilsFilterBottomSheet(
+                                        context),
                                 onLongPress: () => locator<PupilFilterManager>()
                                     .resetFilters(),
                                 // onPressed: () => showBottomSheetFilters(context),
@@ -162,7 +169,8 @@ class AuthorizationPupilsView extends WatchingWidget {
                 ),
               ),
       ),
-      bottomNavigationBar: authorizationPupilsBottomNavBar(context),
+      bottomNavigationBar:
+          authorizationPupilsBottomNavBar(context, authorization, filtersOn),
     );
   }
 }

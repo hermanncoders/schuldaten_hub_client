@@ -3,14 +3,16 @@ import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
 
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/authorizations/models/pupil_authorization.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/authorization_pupils_view.dart';
 
 class AuthorizationPupils extends StatefulWidget {
-  final Authorization schoolList;
+  final Authorization authorization;
 
   const AuthorizationPupils(
-    this.schoolList, {
+    this.authorization, {
     Key? key,
   }) : super(key: key);
 
@@ -25,6 +27,7 @@ class AuthorizationPupilsController extends State<AuthorizationPupils> {
   TextEditingController searchController = TextEditingController();
   bool isSearchMode = false;
   bool isSearching = false;
+  final filterLocator = locator<PupilFilterManager>();
 
   @override
   void initState() {
@@ -58,8 +61,68 @@ class AuthorizationPupilsController extends State<AuthorizationPupils> {
     locator<PupilFilterManager>().setSearchText(text);
   }
 
+  List<Pupil> getListResponseFilteredPupils(List<Pupil> pupils) {
+    List<Pupil> filteredPupils = [];
+    for (Pupil pupil in pupils) {
+      bool toList = true;
+      final PupilAuthorization pupilAuthorization = pupil.authorizations!
+          .where((pupilAuthorization) =>
+              pupilAuthorization.originAuthorization ==
+              widget.authorization.authorizationId)
+          .first;
+
+      if (filterLocator
+              .filterState.value[PupilFilter.authorizationYesResponse]! &&
+          pupilAuthorization.status == true) {
+        toList = true;
+      } else if (!filterLocator
+          .filterState.value[PupilFilter.authorizationYesResponse]!) {
+        toList = true;
+      } else {
+        toList = false;
+      }
+      if (filterLocator
+              .filterState.value[PupilFilter.authorizationNoResponse]! &&
+          pupilAuthorization.status == false) {
+        toList = true;
+      } else if (!filterLocator
+              .filterState.value[PupilFilter.authorizationNoResponse]! &&
+          toList == true) {
+        toList = true;
+      } else {
+        toList = false;
+      }
+      if (filterLocator
+              .filterState.value[PupilFilter.authorizationNullResponse]! &&
+          pupilAuthorization.status == null) {
+        toList = true;
+      } else if (!filterLocator
+              .filterState.value[PupilFilter.authorizationNullResponse]! &&
+          toList == true) {
+        toList = true;
+      } else {
+        toList = false;
+      }
+      if (filterLocator
+              .filterState.value[PupilFilter.authorizationCommentResponse]! &&
+          pupilAuthorization.status != null) {
+        toList = true;
+      } else if (!filterLocator
+              .filterState.value[PupilFilter.authorizationCommentResponse]! &&
+          toList == true) {
+        toList = true;
+      } else {
+        toList = false;
+      }
+      if (toList) {
+        filteredPupils.add(pupil);
+      }
+    }
+    return filteredPupils;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AuthorizationPupilsView(this, widget.schoolList);
+    return AuthorizationPupilsView(this, widget.authorization);
   }
 }

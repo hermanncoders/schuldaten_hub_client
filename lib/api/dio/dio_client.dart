@@ -57,6 +57,7 @@ class DioClient {
       return response;
     } catch (e) {
       debug.error('Dio error: $e in request:, $uri | ${StackTrace.current}');
+
       rethrow;
     }
   }

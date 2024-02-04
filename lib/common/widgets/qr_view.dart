@@ -2,12 +2,64 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
+
+showQrCarousel(Map<String, String> qrMap, BuildContext context) async {
+  final mediaQuery = MediaQuery.of(context);
+  final maxWidth =
+      mediaQuery.size.width * 0.8; // Adjust the multiplier as needed
+  final maxHeight = mediaQuery.size.height * 0.8; //
+
+  List<Map<String, String>> myListOfMaps = [];
+
+  // Transforming myMap into a List<Map<String, String>>
+  qrMap.forEach((key, value) {
+    myListOfMaps.add({key: value});
+  });
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: CarouselSlider(
+            options: CarouselOptions(height: maxHeight, autoPlay: true),
+            items: myListOfMaps.map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    width: maxWidth,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: const BoxDecoration(color: Colors.white),
+                    child: Column(
+                      children: [
+                        const Gap(10),
+                        Text(i.keys.first,
+                            style: const TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold)),
+                        const Gap(10),
+                        QrImageView(
+                          padding: const EdgeInsets.all(20),
+                          backgroundColor: Colors.white,
+                          data: i.values.first,
+                          version: QrVersions.auto,
+                          size: min(maxWidth * 0.9, maxHeight * 0.9),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }).toList(),
+          ),
+        );
+      });
+}
 
 showQrCode(String qr, BuildContext context) async {
   final qrImageKey = GlobalKey();

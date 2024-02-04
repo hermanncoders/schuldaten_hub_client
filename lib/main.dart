@@ -30,7 +30,7 @@ void main() async {
   await locator.isReady<PupilBaseManager>();
 
   runApp(const MyApp());
-  // This is a hack to avoid calls to firebase every 15 minutes
+  // This is a hack to avoid calls to firebase from the mobile_scanner package every 15 minutes
   // like described here: https://github.com/juliansteenbakker/mobile_scanner/issues/553
   if (Platform.isAndroid) {
     final dir = await getApplicationDocumentsDirectory();

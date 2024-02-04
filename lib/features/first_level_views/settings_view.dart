@@ -227,7 +227,19 @@ class SettingsView extends WatchingWidget {
                         if (context.mounted) {
                           await showQrCode(qr, context);
                         }
-                      })
+                      }),
+                  SettingsTile.navigation(
+                      leading: const Icon(Icons.qr_code_rounded),
+                      title: const Text('Alle Kinder QR-Ids zeigen'),
+                      onPressed: (context) async {
+                        final Map<String, String> qrData =
+                            await locator<PupilBaseManager>()
+                                .generateAllPupilBaseQrData();
+
+                        if (context.mounted) {
+                          await showQrCarousel(qrData, context);
+                        }
+                      }),
                 ],
               ),
             ],

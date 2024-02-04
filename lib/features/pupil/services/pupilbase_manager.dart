@@ -260,7 +260,60 @@ class PupilBaseManager {
     return encryptedString!;
   }
 
-  //- This is not used anywhere yet
+  Future<Map<String, String>> generateAllPupilBaseQrData() async {
+    final List<PupilBase> pupilBase = _pupilbase.value;
+    // First we group the pupils by their group in a map
+    Map<String, List<PupilBase>> groupedPupils = {};
+
+    for (var pupil in pupilBase) {
+      if (groupedPupils.containsKey(pupil.group)) {
+        groupedPupils[pupil.group]!.add(pupil);
+      } else {
+        groupedPupils[pupil.group] = [pupil];
+      }
+    }
+    final Map<String, String> finalGroupedList = {};
+
+    // Now we iterate over the groupedPupils and generate maps with smaller lists with no more than 12 items and add to the group name the subgroup number
+    for (String groupName in groupedPupils.keys) {
+      final List<PupilBase> group = groupedPupils[groupName]!;
+      int numSubgroups = (group.length / 12).ceil();
+
+      for (int i = 0; i < numSubgroups; i++) {
+        List<PupilBase> smallerGroup = [];
+        int start = i * 12;
+        int end = (i + 1) * 12;
+        if (end > group.length) {
+          end = group.length;
+        }
+        smallerGroup.addAll(group.sublist(start, end));
+        String qrString = '';
+        for (PupilBase pupilbase in smallerGroup) {
+          final migrationSupportEnds = pupilbase.migrationSupportEnds != null
+              ? pupilbase.migrationSupportEnds!.formatForJson()
+              : '';
+          final specialNeeds = pupilbase.specialNeeds ?? '';
+          final family = pupilbase.family ?? '';
+          final String pupilbaseString =
+              '${pupilbase.id},${pupilbase.name},${pupilbase.lastName},${pupilbase.group},${pupilbase.schoolyear},$specialNeeds,,${pupilbase.gender},${pupilbase.language},$family,${pupilbase.birthday.formatForJson()},$migrationSupportEnds,${pupilbase.pupilSince.formatForJson()},\n';
+          qrString = qrString + pupilbaseString;
+        }
+        final encryptedString = await customEncrypter.encrypt(qrString);
+
+        String subgroupName = "$groupName - ${i + 1}/$numSubgroups";
+        finalGroupedList[subgroupName] = encryptedString!;
+      }
+    }
+    // Extracting entries from the map and sorting them based on keys
+    List<MapEntry<String, String>> sortedEntries = finalGroupedList.entries
+        .toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+
+    // Creating a new map with sorted entries
+    Map<String, String> sortedQrGroupLists = Map.fromEntries(sortedEntries);
+    return sortedQrGroupLists;
+  }
+
   void deletePupilBaseElements(List<PupilBase> toBeDeletedPupilBase) {
     _isRunning.value = true;
     List<PupilBase> modifiedPupilBaseList = List.from(_pupilbase.value);

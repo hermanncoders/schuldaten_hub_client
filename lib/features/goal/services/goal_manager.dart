@@ -122,7 +122,7 @@ class GoalManager {
   }
 
   Future deleteGoal(String goalId) async {
-    final List<Pupil> pupils = locator<PupilManager>().pupils.value;
+    // final List<Pupil> pupils = locator<PupilManager>().pupils.value;
     // final Pupil pupil = pupils
     //     .where((element) =>
     //         element.pupilGoals!.any((element) => element.goalId == goalId))

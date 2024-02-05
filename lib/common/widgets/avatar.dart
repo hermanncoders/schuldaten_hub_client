@@ -21,6 +21,7 @@ Widget avatarImage(Pupil pupil, double size) {
                 zoomWidget: FutureBuilder<Widget>(
                   future: downloadAndDecryptImage(
                     '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAvatar(pupil.internalId)}',
+                    pupil.avatarUrl,
                   ),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {

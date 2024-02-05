@@ -11,7 +11,6 @@ import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/controller/authorization_pupils_controller.dart';
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/widgets/authorization_pupil_card.dart';
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/widgets/authorization_pupils_bottom_navbar.dart';
-import 'package:schuldaten_hub/common/widgets/group_schoolyear_filter_bottom_sheet.dart';
 
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 

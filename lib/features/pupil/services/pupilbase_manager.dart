@@ -39,7 +39,6 @@ class PupilBaseManager {
     return this;
   }
 
-  //- Reviewed
   Future deleteData() async {
     _isRunning.value = true;
     await secureStorageDelete('pupilBase');
@@ -50,7 +49,6 @@ class PupilBaseManager {
     _isRunning.value = false;
   }
 
-  //- Reviewed
   Future getStoredPupilBase() async {
     debug.warning('GETPUPILBASE Getting the stored pupilbase');
     List<PupilBase> storedPupilBase = [];
@@ -95,15 +93,11 @@ class PupilBaseManager {
     await secureStorageWrite('pupilBase', jsonEncode(pupilBase));
   }
 
-  //- Reviewed
   void addNewPupilBase(String scanResult) async {
     final String? decryptedResult = await customEncrypter.decrypt(scanResult);
-
     List<PupilBase> oldPupilbase = _pupilbase.value;
-
     // The pupils in the string are separated by a '\n' - let's split them apart
     List splittedPupilBase = decryptedResult!.split('\n');
-
     // The properties are separated by commas, let's build the pupilbase objects with them
     List<PupilBase> scannedPupilBase = [];
     for (String data in splittedPupilBase) {
@@ -149,7 +143,6 @@ class PupilBaseManager {
       availablePupils.add(pupil.id);
     }
     _availablePupilIds.value = availablePupils;
-
     await secureStorageWrite('pupilBase', jsonEncode(_pupilbase.value));
     debug.success(
         'Pupilbase extended: ${oldPupilbase.length} pupils before, now ${_pupilbase.value.length} | ${StackTrace.current}');
@@ -160,7 +153,6 @@ class PupilBaseManager {
 
   void importPupilsFromTxt(String scanResult) async {
     List<PupilBase> oldPupilbase = _pupilbase.value;
-
     // The pupils in the string are separated by a line break - let's split them out
     List splittedPupilBase = scanResult.split('\n');
     // prepare a string for updating pupils in the server later
@@ -299,7 +291,6 @@ class PupilBaseManager {
           qrString = qrString + pupilbaseString;
         }
         final encryptedString = await customEncrypter.encrypt(qrString);
-
         String subgroupName = "$groupName - ${i + 1}/$numSubgroups";
         finalGroupedList[subgroupName] = encryptedString!;
       }
@@ -308,7 +299,6 @@ class PupilBaseManager {
     List<MapEntry<String, String>> sortedEntries = finalGroupedList.entries
         .toList()
       ..sort((a, b) => a.key.compareTo(b.key));
-
     // Creating a new map with sorted entries
     Map<String, String> sortedQrGroupLists = Map.fromEntries(sortedEntries);
     return sortedQrGroupLists;
@@ -317,14 +307,8 @@ class PupilBaseManager {
   void deletePupilBaseElements(List<PupilBase> toBeDeletedPupilBase) {
     _isRunning.value = true;
     List<PupilBase> modifiedPupilBaseList = List.from(_pupilbase.value);
-
-    for (PupilBase pupilBase in modifiedPupilBaseList) {
-      if (toBeDeletedPupilBase
-          .where((element) => element.id == pupilBase.id)
-          .isNotEmpty) {
-        modifiedPupilBaseList.remove(pupilBase);
-      }
-    }
+    modifiedPupilBaseList.removeWhere((pupilBase) =>
+        toBeDeletedPupilBase.any((element) => element.id == pupilBase.id));
     _pupilbase.value = modifiedPupilBaseList;
     secureStorageWrite('pupilBase', jsonEncode(_pupilbase.value));
     _isRunning.value = false;

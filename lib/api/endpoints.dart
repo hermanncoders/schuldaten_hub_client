@@ -66,6 +66,7 @@ class Endpoints {
 
   //- GET
   static const fetchAdmonitions = '/api/admonition/all';
+
   String getAdmonition(String id) {
     return '/admonition/$id';
   }
@@ -76,7 +77,7 @@ class Endpoints {
 
   //- PATCH
   String patchAdmonition(String id) {
-    return '/admonition/$id';
+    return '/admonition/$id/patch';
   }
 
   String patchAdmonitionFile(String id) {
@@ -88,6 +89,10 @@ class Endpoints {
     return '/admonition/$id/delete';
   }
 
+//- DELETE
+  String deleteAdmonitionFile(String id) {
+    return '/admonition/$id/file';
+  }
   //- AUTHORIZATIONS ---------------------------------------------------
 
   static const String getAuthorizations = '/authorization/all';

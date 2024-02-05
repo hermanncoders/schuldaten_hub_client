@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
@@ -125,6 +124,7 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                       child: pupilAuthorization.fileUrl != null
                           ? documentImage(
                               '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAuthorizationFile(pupil.internalId, authorizationId)}',
+                              pupilAuthorization.fileUrl,
                               70)
                           : Container(
                               width: 40.0,

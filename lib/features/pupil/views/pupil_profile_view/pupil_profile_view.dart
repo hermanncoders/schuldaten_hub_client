@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
@@ -30,6 +31,8 @@ class PupilDetailsView extends WatchingWidget {
     final passedPupil = controller.widget.pupil;
     final pupil = pupils
         .firstWhere((element) => element.internalId == passedPupil.internalId);
+    final List<Admonition> admonitions = List.from(pupil.pupilAdmonitions!);
+    admonitions.sort((a, b) => b.admonishedDay.compareTo(a.admonishedDay));
     List<MissedClass> missedClasses = pupil.pupilMissedClasses!;
     return Scaffold(
       backgroundColor: canvasColor,
@@ -177,7 +180,27 @@ class PupilDetailsView extends WatchingWidget {
                           pupilAuthorizationListTiles(pupil),
                           learningSupportTiles(pupil, context),
                           learningTiles(pupil, context),
-                          admonitionListTiles(pupil, context),
+                          admonitionListTiles(
+                              pupil,
+                              admonitions,
+                              const Row(
+                                children: [
+                                  Icon(
+                                    Icons.warning_amber_rounded,
+                                    color: accentColor,
+                                  ),
+                                  Gap(10),
+                                  Text(
+                                    'Vorfälle',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              context),
                           const Gap(50)
                         ],
                       ),

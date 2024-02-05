@@ -434,12 +434,40 @@ class PupilFilterManager {
     if (sortMode[PupilSortMode.sortByContacted] == true) {
       filteredPupils.sort((a, b) => contactedSum(b).compareTo(contactedSum(a)));
     }
+    // Sort by admonitions
     if (sortMode[PupilSortMode.sortByAdmonitions] == true) {
       filteredPupils.sort((a, b) => locator<AdmonitionManager>()
           .admonitionSum(b)!
           .compareTo(locator<AdmonitionManager>().admonitionSum(a)!));
     }
+    // Sort by last admonition
+    if (sortMode[PupilSortMode.sortByLastAdmonition] == true) {
+      filteredPupils.sort(comparePupilsByAdmonishedDate);
+    }
 
     _filteredPupils.value = filteredPupils;
+  }
+
+  int comparePupilsByAdmonishedDate(Pupil a, Pupil b) {
+    // Handle potential null cases with null-aware operators
+    return (a.pupilAdmonitions?.isEmpty ?? true) ==
+            (b.pupilAdmonitions?.isEmpty ?? true)
+        ? compareLastAdmonishedDates(a, b) // Handle empty or both empty
+        : (a.pupilAdmonitions?.isEmpty ?? true)
+            ? 1
+            : -1; // Place empty after non-empty
+  }
+
+  int compareLastAdmonishedDates(Pupil a, Pupil b) {
+    // Ensure non-empty lists before accessing elements
+    if (a.pupilAdmonitions!.isNotEmpty && b.pupilAdmonitions!.isNotEmpty) {
+      final admonishedDateA = a.pupilAdmonitions!.last.admonishedDay;
+      final admonishedDateB = b.pupilAdmonitions!.last.admonishedDay;
+      return admonishedDateB
+          .compareTo(admonishedDateA); // Reversed for descending order
+    } else {
+      // Handle cases where one or both lists are empty (optional, adjust logic as needed)
+      return 0; // Consider them equal, or apply other logic based on your requirements
+    }
   }
 }

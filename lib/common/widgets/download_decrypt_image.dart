@@ -6,12 +6,12 @@ import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 
-Future<Widget> downloadAndDecryptImage(String? imageUrl) async {
+Future<Widget> downloadAndDecryptImage(String? imageUrl, String? tag) async {
   if (imageUrl == null) {
     return const Icon(Icons.camera_alt_rounded);
   }
   final cacheManager = DefaultCacheManager();
-  final cacheKey = imageUrl;
+  final cacheKey = tag!;
   final customEncrypter = CustomEncrypter();
   final fileInfo = await cacheManager.getFileFromCache(cacheKey);
   if (fileInfo != null && await fileInfo.file.exists()) {

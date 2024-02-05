@@ -7,43 +7,28 @@ import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/document_image.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/common/widgets/upload_image.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/views/new_admonition_view/new_admonition_view.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 
-admonitionListTiles(Pupil pupil, context) {
-  List<Admonition> admonitions = List.from(pupil.pupilAdmonitions!);
-  admonitions.sort((a, b) => a.admonishedDay.compareTo(b.admonishedDay));
-
+admonitionListTiles(Pupil pupil, List<Admonition> admonitions, Widget title,
+    BuildContext context) {
   return ListTileTheme(
     contentPadding: const EdgeInsets.all(0),
     dense: true,
     horizontalTitleGap: 0.0,
     minLeadingWidth: 0,
+    minVerticalPadding: 0,
     child: ExpansionTile(
         tilePadding: const EdgeInsets.all(0),
-        title: const Row(
-          children: [
-            Icon(
-              Icons.warning_amber_rounded,
-              color: accentColor,
-            ),
-            Gap(10),
-            Text(
-              'Vorfälle',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
+        title: title,
         children: [
           ListView.builder(
             padding: const EdgeInsets.only(top: 5, bottom: 15),
@@ -127,16 +112,52 @@ admonitionListTiles(Pupil pupil, context) {
                                     const Gap(10),
                                     const Text('Bearbeitet:'),
                                     const Gap(5),
-                                    Text(
-                                        admonitions[index].processed
-                                            ? 'Ja'
-                                            : 'Nein',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold)),
+                                    InkWell(
+                                      onTap: () async {
+                                        bool? confirm = await confirmationDialog(
+                                            context,
+                                            'Vorfall bearbeitet?',
+                                            'Den Vorfall als erledigt markieren?');
+                                        if (confirm! == false) return;
+                                        await locator<AdmonitionManager>()
+                                            .patchAdmonitionAsProcessed(
+                                                admonitions[index].admonitionId,
+                                                true);
+                                        if (context.mounted) {
+                                          snackbarSuccess(
+                                              context, 'Vorfall markiert');
+                                        }
+                                      },
+                                      onLongPress: () async {
+                                        bool? confirm = await confirmationDialog(
+                                            context,
+                                            'Vorfall bearbeitet?',
+                                            'Den Vorfall als unbearbeitet markieren?');
+                                        if (confirm! == false) return;
+                                        await locator<AdmonitionManager>()
+                                            .patchAdmonitionAsProcessed(
+                                                admonitions[index].admonitionId,
+                                                false);
+                                      },
+                                      child: Text(
+                                          admonitions[index].processed
+                                              ? 'Ja'
+                                              : 'Nein',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
                                     const Gap(10),
                                     if (admonitions[index].processedBy != null)
                                       Text(
                                         'von: ${admonitions[index].processedBy}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    if (admonitions[index].processedAt != null)
+                                      const Gap(10),
+                                    if (admonitions[index].processedAt != null)
+                                      Text(
+                                        'am: ${admonitions[index].processedAt!.formatForUser()}',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -165,9 +186,26 @@ admonitionListTiles(Pupil pupil, context) {
                                         'Der Vorfall wurde geändert!');
                                   }
                                 },
+                                onLongPress: () async {
+                                  bool? confirm = await confirmationDialog(
+                                      context,
+                                      'Dokument löschen',
+                                      'Dokument löschen?');
+                                  if (confirm! == false) return;
+                                  await locator<AdmonitionManager>()
+                                      .deleteAdmonitionFile(
+                                          admonitions[index].admonitionId);
+                                  if (context.mounted) {
+                                    informationDialog(
+                                        context,
+                                        'Vorfall geändert',
+                                        'Der Vorfall wurde geändert!');
+                                  }
+                                },
                                 child: admonitions[index].fileUrl != null
                                     ? documentImage(
                                         '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getAdmonitionFile(admonitions[index].admonitionId)}',
+                                        admonitions[index].fileUrl,
                                         70)
                                     : Container(
                                         width: 40.0,

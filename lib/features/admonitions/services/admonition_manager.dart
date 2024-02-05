@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
@@ -86,6 +87,34 @@ class AdmonitionManager {
     }
   }
 
+  //- PATCH ADMONITION
+
+  patchAdmonitionAsProcessed(String admonitionId, bool processed) async {
+    resetOperationReport();
+    _setIsRunning(true);
+    String data;
+    if (processed) {
+      data = jsonEncode({
+        "processed": processed,
+        "processed_at": DateTime.now().formatForJson(),
+        "processed_by": locator<SessionManager>().credentials.value.username
+      });
+    } else {
+      data = jsonEncode(
+          {"processed": processed, "processed_at": null, "processed_by": null});
+    }
+    // send request
+    final Response response =
+        await client.patch(endpoints.patchAdmonition(admonitionId), data: data);
+    // Handle errors.
+    if (response.statusCode != 200) {
+      debug.warning('Something went wrong with the multipart request');
+    }
+    // Success! We have a pupil response - let's patch the pupil with the data
+    final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
+  }
+
   postAdmonitionFile(File imageFile, String admonitionId) async {
     final client = locator.get<ApiManager>().dioClient.value;
     final encryptedFile = await customEncrypter.encryptFile(imageFile);
@@ -103,6 +132,20 @@ class AdmonitionManager {
       Endpoints().patchAdmonitionFile(admonitionId),
       data: formData,
     );
+    // Handle errors.
+    if (response.statusCode != 200) {
+      debug.warning('Something went wrong with the multipart request');
+    }
+    // Success! We have a pupil response - let's patch the pupil with the data
+    final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
+  }
+
+  deleteAdmonitionFile(String admonitionId) async {
+    final client = locator.get<ApiManager>().dioClient.value;
+    // send request
+    final Response response =
+        await client.delete(Endpoints().deleteAdmonitionFile(admonitionId));
     // Handle errors.
     if (response.statusCode != 200) {
       debug.warning('Something went wrong with the multipart request');

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'package:schuldaten_hub/common/models/session_models/env.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
@@ -12,9 +13,17 @@ import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 class EnvManager {
   ValueListenable<Env> get env => _env;
   ValueListenable<bool> get envReady => _envReady;
+  ValueListenable<PackageInfo> get packageInfo => _packageInfo;
 
   final _env = ValueNotifier<Env>(Env());
   final _envReady = ValueNotifier<bool>(false);
+  final _packageInfo = ValueNotifier<PackageInfo>(PackageInfo(
+    appName: '',
+    packageName: '',
+    version: '',
+    buildNumber: '',
+    buildSignature: '',
+  ));
 
   EnvManager();
   Future<EnvManager> init() async {
@@ -26,6 +35,8 @@ class EnvManager {
 
   Future<void> checkStoredEnv() async {
     bool isStoredEnv = await secureStorageContains('env');
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    _packageInfo.value = packageInfo;
     if (isStoredEnv == true) {
       final String? storedSession = await secureStorageRead('env');
       debug.success('env found!');

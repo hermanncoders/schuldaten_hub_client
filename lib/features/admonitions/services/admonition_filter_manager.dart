@@ -13,7 +13,7 @@ class AdmonitionFilterManager {
       ValueNotifier<Map<AdmonitionFilter, bool>>(initialAdmonitionFilterValues);
   final _admonitionsFiltersOn = ValueNotifier<bool>(false);
   AdmonitionFilterManager() {
-    //logger.w('AdmonitionFilterManager says hello!');
+    debug.info('AdmonitionFilterManager says hello!');
   }
 
   resetFilters() {

@@ -28,7 +28,7 @@ showQrCarousel(Map<String, String> qrMap, BuildContext context) async {
       builder: (context) {
         return Dialog(
           child: CarouselSlider(
-            options: CarouselOptions(height: maxHeight, autoPlay: true),
+            options: CarouselOptions(height: maxHeight, autoPlay: false),
             items: myListOfMaps.map((i) {
               return Builder(
                 builder: (BuildContext context) {

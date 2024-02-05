@@ -26,12 +26,10 @@ class SettingsView extends WatchingWidget {
     final Session session = watchValue((SessionManager x) => x.credentials);
     final int credit = session.credit!;
     final String username = session.username!;
-
     final bool isAdmin = session.isAdmin!;
 
     void logout() async {
       await locator<SessionManager>().logout();
-
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
         await Navigator.of(context).pushNamed(Routes.login);
@@ -42,7 +40,6 @@ class SettingsView extends WatchingWidget {
       await locator<PupilBaseManager>().deleteData();
       await locator<EnvManager>().deleteEnv();
       await locator<SessionManager>().logout();
-
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
         await Navigator.of(context).pushNamed(Routes.login);
@@ -230,7 +227,8 @@ class SettingsView extends WatchingWidget {
                       }),
                   SettingsTile.navigation(
                       leading: const Icon(Icons.qr_code_rounded),
-                      title: const Text('Alle Kinder QR-Ids zeigen'),
+                      title:
+                          const Text('Alle vorhandenen Gruppen-QR-Ids zeigen'),
                       onPressed: (context) async {
                         final Map<String, String> qrData =
                             await locator<PupilBaseManager>()
@@ -240,6 +238,27 @@ class SettingsView extends WatchingWidget {
                           await showQrCarousel(qrData, context);
                         }
                       }),
+                ],
+              ),
+              SettingsSection(
+                title: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Über die App',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                tiles: <SettingsTile>[
+                  SettingsTile(
+                    leading: const Icon(Icons.perm_device_info_rounded),
+                    title: Text(
+                        'Versionsnummer: ${locator<EnvManager>().packageInfo.value.version}'),
+                  ),
+                  SettingsTile(
+                    leading: const Icon(Icons.build_rounded),
+                    title: Text(
+                        'Build: ${locator<EnvManager>().packageInfo.value.buildNumber}'),
+                  ),
                 ],
               ),
             ],

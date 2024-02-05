@@ -37,7 +37,7 @@ class CustomEncrypter {
     final tempDir = await getTemporaryDirectory();
     final uri = Uri.parse(file.path);
     final extension = uri.pathSegments.last.split('.').last;
-    final tempFile = File('${tempDir.path}/encrypted_file$extension');
+    final tempFile = File('${tempDir.path}/encrypted_file.$extension');
     await tempFile.writeAsBytes(encrypted.bytes);
     return tempFile;
   }

@@ -33,7 +33,8 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
     bool valueS4 = activeFilters[PupilFilter.S4]!;
     bool valueSortByName = sortMode[PupilSortMode.sortByName]!;
     bool valueSortByAdmonitions = sortMode[PupilSortMode.sortByAdmonitions]!;
-
+    bool valueSortByLastAdmonition =
+        sortMode[PupilSortMode.sortByLastAdmonition]!;
     final filterLocator = locator<PupilFilterManager>();
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20, top: 8),
@@ -328,6 +329,23 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
                           PupilSortMode.sortByAdmonitions, val);
                       valueSortByAdmonitions = filterLocator
                           .sortMode.value[PupilSortMode.sortByAdmonitions]!;
+                      filterLocator.sortPupils();
+                    },
+                  ),
+                  FilterChip(
+                    selectedColor: filterChipSelectedColor,
+                    checkmarkColor: filterChipSelectedCheckColor,
+                    backgroundColor: filterChipUnselectedColor,
+                    label: const Text(
+                      'letzter Vorfall',
+                      style: filterItemsTextStyle,
+                    ),
+                    selected: valueSortByLastAdmonition,
+                    onSelected: (val) {
+                      filterLocator.setSortMode(
+                          PupilSortMode.sortByLastAdmonition, val);
+                      valueSortByAdmonitions = filterLocator
+                          .sortMode.value[PupilSortMode.sortByLastAdmonition]!;
                       filterLocator.sortPupils();
                     },
                   ),

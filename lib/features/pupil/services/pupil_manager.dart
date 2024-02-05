@@ -371,7 +371,10 @@ class PupilManager {
     locator<PupilFilterManager>().cloneToFilteredPupil(namedPupil);
   }
 
-  postAvatarImage(File imageFile, Pupil pupil) async {
+  postAvatarImage(
+    File imageFile,
+    Pupil pupil,
+  ) async {
     final encryptedFile = await customEncrypter.encryptFile(imageFile);
     // send request
     String fileName = encryptedFile.path.split('/').last;

@@ -24,9 +24,7 @@ Future<File?> uploadImage(context) async {
 
 class CropAvatarView extends StatefulWidget {
   final XFile image;
-
   const CropAvatarView({Key? key, required this.image}) : super(key: key);
-
   @override
   State<CropAvatarView> createState() => _CropAvatarState();
 }
@@ -126,8 +124,8 @@ class _CropAvatarState extends State<CropAvatarView> {
   Future<void> _finished() async {
     //final image = await controller.croppedImage();
     final bitmap = await controller.croppedBitmap(
-      maxSize: 900,
-      quality: FilterQuality.medium,
+      maxSize: 600,
+      quality: FilterQuality.low,
     );
     final imageBytes = await bitmap.toByteData(format: ImageByteFormat.png);
     final file = await imageToFile(bytes: imageBytes!);

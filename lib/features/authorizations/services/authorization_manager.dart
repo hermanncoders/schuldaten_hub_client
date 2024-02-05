@@ -85,7 +85,7 @@ class AuthorizationManager {
     _isRunning.value = true;
     final encryptedFile = await customEncrypter.encryptFile(file);
     String fileName = encryptedFile.path.split('/').last;
-    final Response response = await client.post(
+    final Response response = await client.patch(
       Endpoints().patchPupilAuthorizationWithFile(pupilId, authId),
       data: FormData.fromMap(
         {

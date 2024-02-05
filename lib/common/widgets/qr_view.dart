@@ -11,11 +11,16 @@ import 'package:gap/gap.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 
-showQrCarousel(Map<String, String> qrMap, BuildContext context) async {
+showQrCarousel(
+    Map<String, String> qrMap, bool autoPlay, BuildContext context) async {
   final mediaQuery = MediaQuery.of(context);
-  final maxWidth =
-      mediaQuery.size.width * 0.8; // Adjust the multiplier as needed
-  final maxHeight = mediaQuery.size.height * 0.8; //
+  double maxHeight;
+  final maxWidth = mediaQuery.size.width; // Adjust the multiplier as needed
+  if (mediaQuery.orientation == Orientation.landscape) {
+    maxHeight = mediaQuery.size.height * 0.9;
+  } else {
+    maxHeight = mediaQuery.size.height * 0.6;
+  }
 
   List<Map<String, String>> myListOfMaps = [];
 
@@ -26,37 +31,54 @@ showQrCarousel(Map<String, String> qrMap, BuildContext context) async {
   await showDialog(
       context: context,
       builder: (context) {
-        return Dialog(
-          child: CarouselSlider(
-            options: CarouselOptions(height: maxHeight, autoPlay: false),
-            items: myListOfMaps.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
+        return CarouselSlider(
+          options: CarouselOptions(
+            viewportFraction:
+                (mediaQuery.orientation == Orientation.landscape) ? 0.6 : 0.9,
+            enlargeCenterPage: true,
+            height: maxHeight,
+            autoPlay: autoPlay,
+            pauseAutoPlayInFiniteScroll: true,
+            pauseAutoPlayOnTouch: true,
+            scrollPhysics: const PageScrollPhysics(),
+          ),
+          items: myListOfMaps.map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Center(
+                  child: Container(
                     width: maxWidth,
                     margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: const BoxDecoration(color: Colors.white),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
                     child: Column(
                       children: [
                         const Gap(10),
                         Text(i.keys.first,
                             style: const TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.bold)),
-                        const Gap(10),
-                        QrImageView(
-                          padding: const EdgeInsets.all(20),
-                          backgroundColor: Colors.white,
-                          data: i.values.first,
-                          version: QrVersions.auto,
-                          size: min(maxWidth * 0.9, maxHeight * 0.9),
+                        Expanded(
+                          child: QrImageView(
+                            padding: const EdgeInsets.all(20),
+                            backgroundColor: Colors.white,
+                            data: i.values.first,
+                            version: QrVersions.auto,
+                            size: (mediaQuery.orientation ==
+                                        Orientation.landscape ||
+                                    Platform.isWindows)
+                                ? maxHeight * 0.9
+                                : maxWidth,
+                          ),
                         ),
                       ],
                     ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
+                  ),
+                );
+              },
+            );
+          }).toList(),
         );
       });
 }

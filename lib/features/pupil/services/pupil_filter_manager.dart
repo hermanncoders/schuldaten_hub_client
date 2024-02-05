@@ -344,7 +344,9 @@ class PupilFilterManager {
 
       // Filter migrationSupport
       if (activeFilters[PupilFilter.migrationSupport]! &&
-          pupil.specialNeeds != null &&
+          locator<PupilManager>()
+                  .hasLanguageSupport(pupil.migrationSupportEnds) ==
+              true &&
           toList == true) {
         toList = true;
       } else if (activeFilters[PupilFilter.migrationSupport] == false &&

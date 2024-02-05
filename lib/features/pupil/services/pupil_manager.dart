@@ -258,25 +258,23 @@ class PupilManager {
 
           matchedPupils.add(namedPupil);
         } else {
-          // if the pupilbase didn't get a response from the server,
+          // if the pupilbase was sent andidn't get a response from the server,
           // this means it is outdated -
           // let's remove those
-          outdatedPupilbase.add(pupilBaseElement);
-        }
-        // now check if the pupilbase was modified - if so, store the modified base
-        if (outdatedPupilbase.isNotEmpty) {
-          // print the internal_id of every element of the outdated pupilbase in one string
-          String deletedPupils = '';
-          for (PupilBase element in outdatedPupilbase) {
-            deletedPupils += '${element.id}, ';
-          }
-          debug.warning(
-              '$deletedPupils had no match and have been deleted from the pupilbase! | ${StackTrace.current}');
-          locator<PupilBaseManager>()
-              .deletePupilBaseElements(outdatedPupilbase);
+          if (pupilIds.contains(pupilBaseElement.id)) {}
         }
       }
-
+      // now check if the pupilbase was modified - if so, store the modified base
+      if (outdatedPupilbase.isNotEmpty) {
+        // print the internal_id of every element of the outdated pupilbase in one string
+        String deletedPupils = '';
+        for (PupilBase element in outdatedPupilbase) {
+          deletedPupils += '${element.id}, ';
+        }
+        debug.warning(
+            '$deletedPupils had no match and have been deleted from the pupilbase! | ${StackTrace.current}');
+        locator<PupilBaseManager>().deletePupilBaseElements(outdatedPupilbase);
+      }
       // sort the list alphabetically before writing to the manager
       sortPupilsByName(matchedPupils);
       _pupils.value = matchedPupils;

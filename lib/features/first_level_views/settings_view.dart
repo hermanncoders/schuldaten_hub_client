@@ -235,7 +235,20 @@ class SettingsView extends WatchingWidget {
                                 .generateAllPupilBaseQrData();
 
                         if (context.mounted) {
-                          await showQrCarousel(qrData, context);
+                          await showQrCarousel(qrData, false, context);
+                        }
+                      }),
+                  SettingsTile.navigation(
+                      leading: const Icon(Icons.qr_code_rounded),
+                      title: const Text(
+                          'Alle vorhandenen Gruppen-QR-Ids zeigen (autoplay)'),
+                      onPressed: (context) async {
+                        final Map<String, String> qrData =
+                            await locator<PupilBaseManager>()
+                                .generateAllPupilBaseQrData();
+
+                        if (context.mounted) {
+                          await showQrCarousel(qrData, true, context);
                         }
                       }),
                 ],

@@ -33,6 +33,7 @@ class LearningSupportFilterBottomSheet extends WatchingWidget {
     bool valueDevelopmentPlan1 = activeFilters[PupilFilter.developmentPlan1]!;
     bool valueDevelopmentPlan2 = activeFilters[PupilFilter.developmentPlan2]!;
     bool valueDevelopmentPlan3 = activeFilters[PupilFilter.developmentPlan3]!;
+    bool valueMigrationSupport = activeFilters[PupilFilter.migrationSupport]!;
     final filterLocator = locator<PupilFilterManager>();
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20, top: 8),
@@ -370,6 +371,27 @@ class LearningSupportFilterBottomSheet extends WatchingWidget {
 
                   valueSpecialNeeds = filterLocator
                       .filterState.value[PupilFilter.specialNeeds]!;
+                  // if (valueDevelopmentPlan1 == true) {
+                  //   //_valueNotPresent = false;
+                  //   filterLocator.setFilter(PupilFilter.notPresent, false);
+                  //   filterLocator.setFilter(PupilFilter.unexcused, false);
+                  // }
+                },
+              ),
+              FilterChip(
+                selectedColor: filterChipSelectedColor,
+                checkmarkColor: filterChipSelectedCheckColor,
+                backgroundColor: filterChipUnselectedColor,
+                label: const Text(
+                  'EF',
+                  style: filterItemsTextStyle,
+                ),
+                selected: valueMigrationSupport,
+                onSelected: (val) {
+                  filterLocator.setFilter(PupilFilter.migrationSupport, val);
+
+                  valueMigrationSupport = filterLocator
+                      .filterState.value[PupilFilter.migrationSupport]!;
                   // if (valueDevelopmentPlan1 == true) {
                   //   //_valueNotPresent = false;
                   //   filterLocator.setFilter(PupilFilter.notPresent, false);

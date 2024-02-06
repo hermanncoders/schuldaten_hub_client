@@ -4,6 +4,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
@@ -30,6 +31,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
 
   @override
   Widget build(BuildContext context) {
+    List<Pupil> pupilsFromIds = pupilsFromPupilIds(pupilIds.toList());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
@@ -75,13 +77,9 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                                     left: 10, top: 5, bottom: 15),
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: locator<PupilManager>()
-                                    .pupilsFromPupilIds(pupilIds.toList())
-                                    .length,
+                                itemCount: pupilsFromIds.length,
                                 itemBuilder: (context, int index) {
-                                  Pupil listedPupil = locator<PupilManager>()
-                                      .pupilsFromPupilIds(
-                                          pupilIds.toList())[index];
+                                  Pupil listedPupil = pupilsFromIds[index];
                                   return Column(
                                     children: [
                                       const Gap(5),

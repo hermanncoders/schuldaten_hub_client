@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:schuldaten_hub/api/dio/dio_exceptions.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
@@ -102,7 +103,8 @@ class AuthorizationManager {
     await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
   }
 
-  Future deleteAuthorizationFile(int pupilId, String authId) async {
+  Future deleteAuthorizationFile(
+      int pupilId, String authId, String cacheKey) async {
     final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     final Response response = await client
@@ -110,8 +112,12 @@ class AuthorizationManager {
     if (response.statusCode != 200) {
       debug.warning('Something went wrong with the multipart request');
     }
-    // Success! We have a pupil response - let's patch the pupil with the data
+    // Success! We have a pupil response
     final Map<String, dynamic> pupilResponse = response.data;
+    // First we delete the cached image
+    final cacheManager = DefaultCacheManager();
+    await cacheManager.removeFile(cacheKey);
+    // Then we patch the pupil with the data
     await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
   }
 

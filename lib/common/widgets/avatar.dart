@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
-import 'package:schuldaten_hub/common/widgets/download_decrypt_image.dart';
+import 'package:schuldaten_hub/common/widgets/download_decrypt_or_cached_image.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 
@@ -17,11 +18,11 @@ Widget avatarImage(Pupil pupil, double size) {
         borderRadius: BorderRadius.circular(size / 2),
         child: pupil.avatarUrl != null
             ? WidgetZoom(
-                heroAnimationTag: pupil,
+                heroAnimationTag: pupil.internalId,
                 zoomWidget: FutureBuilder<Widget>(
-                  future: downloadAndDecryptImage(
+                  future: downloadAndDecryptOrCachedImage(
                     '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAvatar(pupil.internalId)}',
-                    pupil.avatarUrl,
+                    pupil.internalId.toString(),
                   ),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -135,8 +136,7 @@ Widget avatarWithBadges(Pupil pupil, double size) {
               width: 30.0,
               height: 30.0,
               decoration: BoxDecoration(
-                color: locator<PupilManager>()
-                        .hasLanguageSupport(pupil.migrationSupportEnds)
+                color: hasLanguageSupport(pupil.migrationSupportEnds)
                     ? Colors.green
                     : Colors.grey,
                 shape: BoxShape.circle,

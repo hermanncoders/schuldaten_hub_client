@@ -9,6 +9,7 @@ import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
@@ -30,6 +31,10 @@ class AttendanceManager {
   AttendanceManager(
       // this.session,
       );
+  Future init() async {
+    // await fetchMissedClassesOnASchoolday(schooldayManager.thisDate.value);
+    return;
+  }
 
   //- HELPER FUNCTIONS
 
@@ -69,7 +74,7 @@ class AttendanceManager {
   bool setExcusedValue(int pupilId, DateTime date) {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1) {
       return false;
@@ -81,8 +86,8 @@ class AttendanceManager {
   void changeExcusedValue(int pupilId, DateTime date, bool newValue) async {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final Pupil pupil = findPupilById(pupilId);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == null || missedClass == -1) {
       return;
     }
@@ -103,8 +108,8 @@ class AttendanceManager {
   bool? setReturnedValue(int pupilId, DateTime date) {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final Pupil pupil = findPupilById(pupilId);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
 
     if (missedClass == -1) {
       _setIsRunning(false);
@@ -135,7 +140,7 @@ class AttendanceManager {
       int pupilId, bool newValue, DateTime date, String? time) async {
     resetOperationReport();
     _setIsRunning(true);
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     final List<int> pupilBaseIds =
         locator<PupilBaseManager>().availablePupilIds.value;
@@ -216,7 +221,7 @@ class AttendanceManager {
     resetOperationReport();
     _setIsRunning(true);
     // Let's look for an existing missed class - if pupil and date match, there is one
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1) {
       // The missed class does not exist - let's create one
@@ -312,7 +317,7 @@ class AttendanceManager {
       return;
     }
     // Let's look for an existing missed class - if pupil and date match, there is one
-    final Pupil pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1) {
       // The missed class does not exist - let's create one
@@ -385,7 +390,7 @@ class AttendanceManager {
   }
 
   setMissedTypeValue(int pupilId, DateTime date) {
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1 || missedClass == null) {
       return 'none';
@@ -395,7 +400,7 @@ class AttendanceManager {
   }
 
   String setContactedValue(int pupilId, DateTime date) {
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
 
     if (missedClass == -1) {
@@ -408,7 +413,7 @@ class AttendanceManager {
   }
 
   String? setCreatedModifiedValue(int pupilId, DateTime date) {
-    final Pupil? pupil = pupilManager.findPupilById(pupilId);
+    final Pupil pupil = findPupilById(pupilId);
     final int? missedClass = _findMissedClassIndex(pupil!, date);
     if (missedClass == -1 || missedClass == null) {
       return null;

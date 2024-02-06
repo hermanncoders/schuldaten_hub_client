@@ -105,22 +105,26 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                               context, 'Die Einwilligung wurde geändert!');
                         }
                       },
-                      onLongPress: () async {
-                        final bool? result = await confirmationDialog(
-                            context,
-                            'Einwilligung löschen',
-                            'Dokument für ${pupil.firstName} ${pupil.lastName} löschen?');
-                        if (result != true) return;
-                        await locator<AuthorizationManager>()
-                            .deleteAuthorizationFile(
-                          pupil.internalId,
-                          authorizationId,
-                        );
-                        if (context.mounted) {
-                          snackbarSuccess(
-                              context, 'Die Einwilligung wurde geändert!');
-                        }
-                      },
+                      onLongPress: (pupilAuthorization.fileUrl == null)
+                          ? () {}
+                          : () async {
+                              if (pupilAuthorization.fileUrl == null) return;
+                              final bool? result = await confirmationDialog(
+                                  context,
+                                  'Dokument löschen',
+                                  'Dokument für die Einwilligung von ${pupil.firstName} ${pupil.lastName} löschen?');
+                              if (result != true) return;
+                              await locator<AuthorizationManager>()
+                                  .deleteAuthorizationFile(
+                                pupil.internalId,
+                                authorizationId,
+                                pupilAuthorization.fileUrl!,
+                              );
+                              if (context.mounted) {
+                                snackbarSuccess(context,
+                                    'Die Einwilligung wurde geändert!');
+                              }
+                            },
                       child: pupilAuthorization.fileUrl != null
                           ? documentImage(
                               '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAuthorizationFile(pupil.internalId, authorizationId)}',

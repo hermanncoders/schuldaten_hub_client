@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 
 Widget communicationValues(String values) {
   String understandingValue = values.substring(0, 1);
@@ -13,16 +12,15 @@ Widget communicationValues(String values) {
         children: [
           const Icon(Icons.hearing),
           const Gap(5),
-          Text(locator<PupilManager>()
-              .communicationPredicate(understandingValue)),
+          Text(communicationPredicate(understandingValue)),
           const Gap(5),
           const Icon(Icons.chat_bubble_outline_rounded),
           const Gap(5),
-          Text(locator<PupilManager>().communicationPredicate(speakingValue)),
+          Text(communicationPredicate(speakingValue)),
           const Gap(5),
           const Icon(Icons.book),
           const Gap(5),
-          Text(locator<PupilManager>().communicationPredicate(readingValue)),
+          Text(communicationPredicate(readingValue)),
         ],
       )
     ],

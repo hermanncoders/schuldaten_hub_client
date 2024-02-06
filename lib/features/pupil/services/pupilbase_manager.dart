@@ -155,9 +155,8 @@ class PupilBaseManager {
     List<PupilBase> oldPupilbase = _pupilbase.value;
     // The pupils in the string are separated by a line break - let's split them out
     List splittedPupilBase = scanResult.split('\n');
-    // prepare a string for updating pupils in the server later
-    String updatedPupils = '';
     // The properties are separated by commas, let's build the pupilbase objects with them
+    String updatedPupils = '';
     List<PupilBase> scannedPupilBase = [];
     for (String data in splittedPupilBase) {
       if (data != '') {
@@ -227,8 +226,6 @@ class PupilBaseManager {
     _availablePupilIds.value = availablePupils;
 
     await secureStorageWrite('pupilBase', jsonEncode(_pupilbase.value));
-    debug.info(
-        'GETPUPILBASE Pupilbase extended: ${oldPupilbase.length} pupils before, now ${_pupilbase.value.length} | ${StackTrace.current}');
     await locator<PupilManager>().getAllPupils();
     locator<PupilFilterManager>().refreshFilteredPupils();
     locator<BottomNavManager>().setBottomNavPage(0);

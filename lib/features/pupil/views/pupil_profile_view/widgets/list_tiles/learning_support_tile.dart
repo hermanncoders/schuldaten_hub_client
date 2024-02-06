@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/individual_development_plan_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/preschool_revision_dialog.dart';
@@ -53,8 +54,7 @@ learningSupportTiles(Pupil pupil, context) {
               onTap: () => preschoolRevisionDialog(
                   context, pupil, pupil.preschoolRevision!),
               child: Text(
-                locator<PupilManager>()
-                    .preschoolRevisionPredicate(pupil.preschoolRevision!),
+                preschoolRevisionPredicate(pupil.preschoolRevision!),
                 style: const TextStyle(
                     fontSize: 18.0, fontWeight: FontWeight.bold),
               ),

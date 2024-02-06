@@ -7,6 +7,7 @@ import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart'
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/pickup_time_dialog.dart';
 
@@ -34,8 +35,7 @@ ogsListTiles(Pupil pupil, context) {
             const Gap(10),
             InkWell(
               onTap: () => pickUpTimeDialog(context, pupil, pupil.pickUpTime),
-              child: Text(
-                  locator<PupilManager>().pickupTimePredicate(pupil.pickUpTime),
+              child: Text(pickupTimePredicate(pupil.pickUpTime),
                   style: const TextStyle(
                       fontSize: 18.0, fontWeight: FontWeight.bold)),
             ),

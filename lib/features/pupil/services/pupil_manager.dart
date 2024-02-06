@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:schuldaten_hub/api/dio/dio_exceptions.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
@@ -17,6 +18,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil_base.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
@@ -52,7 +54,6 @@ class PupilManager {
     int index =
         pupils.indexWhere((element) => element.internalId == pupil.internalId);
     pupils[index] = pupil;
-
     _pupils.value = pupils;
     locator<PupilFilterManager>().cloneToFilteredPupil(pupil);
   }
@@ -61,107 +62,6 @@ class PupilManager {
     pupils.sort((a, b) => a.firstName!.compareTo(b.firstName!));
     _pupils.value = pupils;
     return;
-  }
-
-  Pupil findPupilById(int pupilId) {
-    final pupils = _pupils.value;
-    final Pupil pupil =
-        pupils.singleWhere((element) => element.internalId == pupilId);
-    return pupil;
-  }
-
-  List<Pupil> siblings(Pupil pupil) {
-    if (pupil.family == null) {
-      return [];
-    }
-    List<Pupil> pupilSiblings = [];
-    final pupils = _pupils.value;
-    pupilSiblings =
-        pupils.where((element) => element.family == pupil.family).toList();
-    pupilSiblings.remove(pupil);
-    return pupilSiblings;
-  }
-
-  List<Pupil> pupilsFromPupilIds(List<int> pupilIds) {
-    List<Pupil> pupilsfromPupilIds = [];
-    final pupils = _pupils.value;
-    pupilsfromPupilIds = pupils
-        .where((element) => pupilIds.contains(element.internalId))
-        .toList();
-    return pupilsfromPupilIds;
-  }
-
-  List<int> pupilIdsFromPupils(List<Pupil> pupils) {
-    List<int> pupilIds = [];
-    for (Pupil pupil in pupils) {
-      pupilIds.add(pupil.internalId);
-    }
-    return pupilIds;
-  }
-
-  bool hasLanguageSupport(DateTime? date) {
-    if (date != null) {
-      return date.isAfter(DateTime.now());
-    }
-    return false;
-  }
-
-  bool hadLanguageSupport(DateTime? date) {
-    if (date != null) {
-      return date.isBefore(DateTime.now());
-    }
-    return false;
-  }
-
-  String preschoolRevisionPredicate(int value) {
-    switch (value) {
-      case 0:
-        return 'nicht vorhanden';
-      case 1:
-        return "unauffällig";
-      case 2:
-        return "Förderbedarf";
-      case 3:
-        return "AO-SF prüfen";
-      default:
-        return "Falscher Wert im Server";
-    }
-  }
-
-  String pickupTimePredicate(String? value) {
-    switch (value) {
-      case null:
-        return 'k.A.';
-      case '0':
-        return '14:00';
-      case '1':
-        return "14:00";
-      case '2':
-        return "15:00";
-      case '3':
-        return "16:00";
-      default:
-        return "Falscher Wert im Server";
-    }
-  }
-
-  String communicationPredicate(String? value) {
-    switch (value) {
-      case null:
-        return 'keine Angabe';
-      case '0':
-        return 'nicht';
-      case '1':
-        return "einfache Anliegen";
-      case '2':
-        return "komplexere Informationen";
-      case '3':
-        return "ohne Probleme";
-      case '4':
-        return "unbekannt";
-      default:
-        return "Falscher Wert im Server";
-    }
   }
 
   patchPupilsWithMissedClasses(List<MissedClass> missedClasses) {
@@ -397,7 +297,7 @@ class PupilManager {
     await patchPupilFromResponse(pupilResponse);
   }
 
-  deleteAvatarImage(int pupilId) async {
+  deleteAvatarImage(int pupilId, String cacheKey) async {
     // send request
     final Response response = await client.delete(
       Endpoints().deletePupilAvatar(pupilId),
@@ -410,9 +310,12 @@ class PupilManager {
       debug.warning('Something went wrong deleting the avatar');
       return;
     }
+    // Delete the cached image
+    final cacheManager = DefaultCacheManager();
+    await cacheManager.removeFile(cacheKey);
+    // and update the repository
     final Pupil pupil = (findPupilById(pupilId)).copyWith(avatarUrl: null);
     updatePupilInRepository(pupil);
-    // Success! We have a pupil response - let's patch the pupil with the data
   }
 
   Future<void> patchPupil(int pupilId, String jsonKey, var value) async {

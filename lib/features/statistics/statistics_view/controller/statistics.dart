@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/statistics/statistics_view/statistics_view.dart';
 import 'package:watch_it/watch_it.dart';
@@ -78,8 +79,7 @@ class StatisticsController extends State<Statistics> {
       // if the pupil has a language support as of today, add to list
 
       if (pupil.migrationSupportEnds != null) {
-        if (locator<PupilManager>()
-            .hasLanguageSupport(pupil.migrationSupportEnds)) {
+        if (hasLanguageSupport(pupil.migrationSupportEnds)) {
           groupPupils.add(pupil);
         }
       }
@@ -92,8 +92,7 @@ class StatisticsController extends State<Statistics> {
     for (Pupil pupil in givenPupils) {
       // if the pupil has a language support as of today, add to list
       if (pupil.migrationSupportEnds != null) {
-        if (locator<PupilManager>()
-            .hadLanguageSupport(pupil.migrationSupportEnds)) {
+        if (hadLanguageSupport(pupil.migrationSupportEnds)) {
           groupPupils.add(pupil);
         }
       }

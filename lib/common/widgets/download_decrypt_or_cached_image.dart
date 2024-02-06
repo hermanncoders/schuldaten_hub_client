@@ -6,7 +6,8 @@ import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 
-Future<Widget> downloadAndDecryptImage(String? imageUrl, String? tag) async {
+Future<Widget> downloadAndDecryptOrCachedImage(
+    String? imageUrl, String? tag) async {
   if (imageUrl == null) {
     return const Icon(Icons.camera_alt_rounded);
   }

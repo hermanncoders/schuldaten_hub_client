@@ -9,6 +9,7 @@ import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.
 import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
 
@@ -52,12 +53,10 @@ class PupilFilterManager {
   refreshFilteredPupils() {
     final List<Pupil> filteredPupils = List.from(_filteredPupils.value);
     final List<Pupil> pupils = locator<PupilManager>().pupils.value;
-
     for (Pupil filteredPupil in filteredPupils) {
       Pupil pupil = pupils
           .where((pupil) => pupil.internalId == filteredPupil.internalId)
           .single;
-
       filteredPupil = pupil.copyWith();
     }
     _filteredPupils.value = filteredPupils;
@@ -65,29 +64,26 @@ class PupilFilterManager {
 
   cloneToFilteredPupil(Pupil pupil) {
     List<Pupil> filteredPupils = _filteredPupils.value;
-
     int index = filteredPupils
         .indexWhere((element) => element.internalId == pupil.internalId);
     List<Pupil> updatedPupils = List<Pupil>.from(filteredPupils);
     updatedPupils[index] = pupil;
-
     _filteredPupils.value = updatedPupils;
   }
 
   updateFilteredPupils() {
     _filteredPupils.value = locator<PupilManager>().pupils.value;
-
     filterPupils();
     sortPupils();
     //setSearchText(_searchText.value);
   }
 
   resetFilters() {
-    updateFilteredPupils();
     _filterState.value = {...initialFilterValues};
     _searchText.value = '';
     _sortMode.value = {...initialSortModeValues};
     _filtersOn.value = false;
+    updateFilteredPupils();
   }
 
   // Set modified filter value
@@ -105,7 +101,6 @@ class PupilFilterManager {
       Pupil filteredPupil = _filteredPupils.value
           .where((element) => element.internalId == pupil.internalId)
           .single;
-
       filteredPupilsFromList.add(filteredPupil);
     }
     return filteredPupilsFromList;
@@ -344,9 +339,7 @@ class PupilFilterManager {
 
       // Filter migrationSupport
       if (activeFilters[PupilFilter.migrationSupport]! &&
-          locator<PupilManager>()
-                  .hasLanguageSupport(pupil.migrationSupportEnds) ==
-              true &&
+          hasLanguageSupport(pupil.migrationSupportEnds) == true &&
           toList == true) {
         toList = true;
       } else if (activeFilters[PupilFilter.migrationSupport] == false &&

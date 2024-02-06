@@ -6,11 +6,12 @@ import 'package:schuldaten_hub/common/models/session_models/session.dart';
 import 'package:schuldaten_hub/common/routes/routes.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_helper_functions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
-import 'package:schuldaten_hub/common/widgets/qr_view.dart';
+import 'package:schuldaten_hub/common/widgets/qr_views.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
 
@@ -95,9 +96,7 @@ class SettingsView extends WatchingWidget {
                     leading: const Icon(Icons.punch_clock_rounded),
                     title: const Text('Token gültig noch:'),
                     value: Text(
-                      locator<SessionManager>()
-                          .tokenLifetimeLeft(session.jwt!)
-                          .toString(),
+                      tokenLifetimeLeft(session.jwt!).toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

@@ -61,12 +61,13 @@ class PupilDetailsView extends WatchingWidget {
                                     child: const Text('Foto ersetzen'),
                                     onTap: () => setAvatar(context, pupil),
                                   ),
-                                  PopupMenuItem(
-                                    child: const Text('Bild löschen'),
-                                    onTap: () async {
-                                      await controller.deleteAvatar();
-                                    },
-                                  ),
+                                  if (pupil.avatarUrl != null)
+                                    PopupMenuItem(
+                                      child: const Text('Bild löschen'),
+                                      onTap: () async {
+                                        await controller.deleteAvatar();
+                                      },
+                                    ),
                                 ],
                               );
                             },

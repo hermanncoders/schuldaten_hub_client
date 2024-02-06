@@ -112,7 +112,7 @@ Future registerDependentManagers(String token) async {
     debug.info('Registering AuthorizationManager');
     final authorizationManager = AuthorizationManager();
     await authorizationManager.init();
-    debug.info('AuthorizarionManager initialized');
+    debug.info('AuthorizationManager initialized');
     return authorizationManager;
   }, dependsOn: [SessionManager, ApiManager]);
 
@@ -126,10 +126,16 @@ Future registerDependentManagers(String token) async {
 
   locator.registerSingletonWithDependencies<PupilFilterManager>(
     () => PupilFilterManager(),
-    dependsOn: [PupilManager],
+    dependsOn: [PupilManager, SchoolListManager],
   );
-
-  locator.registerLazySingleton<AttendanceManager>(() => AttendanceManager());
+  locator.registerSingletonAsync<AttendanceManager>(() async {
+    debug.info('Registering AttendanceManager');
+    final attendanceManager = AttendanceManager();
+    await attendanceManager.init();
+    debug.info('AttendanceManager initialized');
+    return attendanceManager;
+  }, dependsOn: [PupilManager]);
+  //locator.registerLazySingleton<AttendanceManager>(() => AttendanceManager());
   locator.registerLazySingleton<AdmonitionManager>(() => AdmonitionManager());
   locator.registerSingletonWithDependencies<AdmonitionFilterManager>(
     () => AdmonitionFilterManager(),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
@@ -141,7 +142,7 @@ class AdmonitionManager {
     await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
   }
 
-  deleteAdmonitionFile(String admonitionId) async {
+  deleteAdmonitionFile(String admonitionId, String cacheKey) async {
     final client = locator.get<ApiManager>().dioClient.value;
     // send request
     final Response response =
@@ -150,8 +151,12 @@ class AdmonitionManager {
     if (response.statusCode != 200) {
       debug.warning('Something went wrong with the multipart request');
     }
-    // Success! We have a pupil response - let's patch the pupil with the data
+    // Success! We have a pupil response
     final Map<String, dynamic> pupilResponse = response.data;
+    // Delete the file from the cache
+    final cacheManager = DefaultCacheManager();
+    await cacheManager.removeFile(cacheKey);
+    // And patch the pupil with the data
     await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
   }
 

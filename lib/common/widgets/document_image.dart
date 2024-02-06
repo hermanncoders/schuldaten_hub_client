@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-import 'package:schuldaten_hub/common/widgets/download_decrypt_image.dart';
+import 'package:schuldaten_hub/common/widgets/download_decrypt_or_cached_image.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 
 Widget documentImage(String? documentUrl, String? documentTag, double size) {
@@ -14,7 +14,8 @@ Widget documentImage(String? documentUrl, String? documentTag, double size) {
               ? WidgetZoom(
                   heroAnimationTag: documentTag!,
                   zoomWidget: FutureBuilder<Widget>(
-                    future: downloadAndDecryptImage(documentUrl, documentTag),
+                    future: downloadAndDecryptOrCachedImage(
+                        documentUrl, documentTag),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         // Display a loading indicator while the future is not complete

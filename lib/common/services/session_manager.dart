@@ -110,16 +110,6 @@ class SessionManager {
     }
   }
 
-  String tokenLifetimeLeft(String token) {
-    Duration remainingTime = JwtDecoder.getRemainingTime(token);
-    String days = remainingTime.inDays == 1 ? 'Tag' : 'Tage';
-    String hours = remainingTime.inHours == 1 ? 'Stunde' : 'Stunden';
-    String minutes = remainingTime.inMinutes == 1 ? 'Minute' : 'Minuten';
-    String timeLeft =
-        '${remainingTime.inDays} $days, ${remainingTime.inHours % 24} $hours, ${remainingTime.inMinutes % 60} $minutes';
-    return timeLeft;
-  }
-
   Future<int> refreshToken(String password) async {
     final String username = _credentials.value.username!;
     String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';

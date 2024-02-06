@@ -26,7 +26,7 @@ class SpecialInfoListView extends WatchingWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('OGS Infos'),
+        title: const Text('Besondere Infos'),
         automaticallyImplyLeading: false,
       ),
       body: RefreshIndicator(

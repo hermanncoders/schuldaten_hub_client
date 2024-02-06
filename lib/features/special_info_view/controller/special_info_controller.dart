@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/special_info_view/special_info_list_view.dart';
 import 'package:watch_it/watch_it.dart';
 
@@ -25,7 +25,7 @@ class SpecialInfoListController extends State<SpecialInfoList> {
   FocusNode focusNode = FocusNode();
 
   String pickUpValue(String? value) {
-    return locator<PupilManager>().pickupTimePredicate(value);
+    return pickupTimePredicate(value);
   }
 
   void cancelSearch({bool unfocus = true}) {

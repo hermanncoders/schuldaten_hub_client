@@ -194,7 +194,8 @@ admonitionListTiles(Pupil pupil, List<Admonition> admonitions, Widget title,
                                   if (confirm! == false) return;
                                   await locator<AdmonitionManager>()
                                       .deleteAdmonitionFile(
-                                          admonitions[index].admonitionId);
+                                          admonitions[index].admonitionId,
+                                          admonitions[index].fileUrl!);
                                   if (context.mounted) {
                                     informationDialog(
                                         context,

@@ -58,10 +58,10 @@ class LoginController extends State<Login> {
     }
   }
 
-  textFieldCredentials() async {
+  textFieldCredentials() {
     String username = usernameController.text;
     String password = passwordController.text;
-    await attemptLogin(username, password);
+    attemptLogin(username, password);
   }
 
   attemptLogin(String username, String password) async {

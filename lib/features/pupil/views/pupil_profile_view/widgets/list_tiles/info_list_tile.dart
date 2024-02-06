@@ -6,12 +6,14 @@ import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 
 infoListTiles(Pupil pupil, context) {
+  List<Pupil> pupilSiblings = siblings(pupil);
   return ListTileTheme(
     contentPadding: const EdgeInsets.all(0),
     dense: true,
@@ -118,7 +120,7 @@ infoListTiles(Pupil pupil, context) {
           ],
         ),
         const Gap(10),
-        locator<PupilManager>().siblings(pupil).isNotEmpty
+        pupilSiblings.isNotEmpty
             ? const Row(
                 children: [
                   Text(
@@ -130,15 +132,14 @@ infoListTiles(Pupil pupil, context) {
                 ],
               )
             : const SizedBox.shrink(),
-        locator<PupilManager>().siblings(pupil).isNotEmpty
+        pupilSiblings.isNotEmpty
             ? ListView.builder(
                 padding: const EdgeInsets.only(left: 10, top: 5, bottom: 15),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: locator<PupilManager>().siblings(pupil).length,
+                itemCount: pupilSiblings.length,
                 itemBuilder: (context, int index) {
-                  Pupil sibling =
-                      locator<PupilManager>().siblings(pupil)[index];
+                  Pupil sibling = pupilSiblings[index];
                   return Column(
                     children: [
                       const Gap(5),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/credit_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
+import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/widgets/select_pupils_filter_bottom_sheet.dart';
 
 import '../../../services/pupil_filter_manager.dart';
 
@@ -61,7 +61,7 @@ BottomAppBar selectPupilsViewBottomNavBar(BuildContext context,
               },
             ),
             InkWell(
-              onTap: () => showCreditFilterBottomSheet(context),
+              onTap: () => showSelectPupilsFilterBottomSheet(context),
               onLongPress: () => locator<PupilFilterManager>().resetFilters(),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

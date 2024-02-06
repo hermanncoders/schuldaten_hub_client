@@ -3,7 +3,7 @@ import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-import 'package:schuldaten_hub/features/special_info_view/ogs_list_view.dart';
+import 'package:schuldaten_hub/features/special_info_view/special_info_list_view.dart';
 import 'package:watch_it/watch_it.dart';
 
 class SpecialInfoList extends WatchingStatefulWidget {

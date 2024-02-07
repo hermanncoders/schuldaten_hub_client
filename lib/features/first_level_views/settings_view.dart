@@ -231,7 +231,7 @@ class SettingsView extends WatchingWidget {
                       onPressed: (context) async {
                         final Map<String, String> qrData =
                             await locator<PupilBaseManager>()
-                                .generateAllPupilBaseQrData();
+                                .generateAllPupilBaseQrData(12);
 
                         if (context.mounted) {
                           await showQrCarousel(qrData, false, context);
@@ -244,7 +244,7 @@ class SettingsView extends WatchingWidget {
                       onPressed: (context) async {
                         final Map<String, String> qrData =
                             await locator<PupilBaseManager>()
-                                .generateAllPupilBaseQrData();
+                                .generateAllPupilBaseQrData(8);
 
                         if (context.mounted) {
                           await showQrCarousel(qrData, true, context);

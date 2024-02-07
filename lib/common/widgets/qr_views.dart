@@ -38,6 +38,7 @@ showQrCarousel(
             enlargeCenterPage: true,
             height: maxHeight,
             autoPlay: autoPlay,
+            autoPlayInterval: const Duration(seconds: 3),
             pauseAutoPlayInFiniteScroll: true,
             pauseAutoPlayOnTouch: true,
             scrollPhysics: const PageScrollPhysics(),

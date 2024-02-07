@@ -163,7 +163,7 @@ class SchoolListPupilsView extends WatchingWidget {
                 ),
               ),
       ),
-      bottomNavigationBar: schoolListPupilsBottomNavBar(context),
+      bottomNavigationBar: schoolListPupilsBottomNavBar(context, schoolList),
     );
   }
 }

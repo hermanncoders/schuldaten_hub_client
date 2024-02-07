@@ -249,7 +249,7 @@ class PupilBaseManager {
     return encryptedString!;
   }
 
-  Future<Map<String, String>> generateAllPupilBaseQrData() async {
+  Future<Map<String, String>> generateAllPupilBaseQrData(int qrsize) async {
     final List<PupilBase> pupilBase = _pupilbase.value;
     // First we group the pupils by their group in a map
     Map<String, List<PupilBase>> groupedPupils = {};
@@ -266,12 +266,12 @@ class PupilBaseManager {
     // Now we iterate over the groupedPupils and generate maps with smaller lists with no more than 12 items and add to the group name the subgroup number
     for (String groupName in groupedPupils.keys) {
       final List<PupilBase> group = groupedPupils[groupName]!;
-      int numSubgroups = (group.length / 12).ceil();
+      int numSubgroups = (group.length / qrsize).ceil();
 
       for (int i = 0; i < numSubgroups; i++) {
         List<PupilBase> smallerGroup = [];
-        int start = i * 12;
-        int end = (i + 1) * 12;
+        int start = i * qrsize;
+        int end = (i + 1) * qrsize;
         if (end > group.length) {
           end = group.length;
         }

@@ -59,8 +59,8 @@ class SessionManager {
   authenticate(Session session) {
     _credentials.value = session;
 
-    _isAuthenticated.value = true;
     _isAdmin.value = _credentials.value.isAdmin!;
+    _isAuthenticated.value = true;
   }
 
   changeSessionCredit(int value) async {
@@ -143,10 +143,10 @@ class SessionManager {
     if (response.statusCode == 200) {
       final Session session =
           Session.fromJson(response.data).copyWith(username: username);
+      await registerDependentManagers(session.jwt!);
+      await saveSession(session);
       authenticate(session);
-      await saveSession(_credentials.value);
-      await registerDependentManagers(_credentials.value.jwt!);
-      await locator.allReady();
+      //await locator.allReady();
       _isRunning.value = false;
       return true;
     }

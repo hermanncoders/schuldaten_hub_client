@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
+import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 
-import '../../../../../common/services/session_manager.dart';
-
-BottomAppBar schoolListPupilsBottomNavBar(BuildContext context, PupilLi) {
+BottomAppBar schoolListPupilsBottomNavBar(
+    BuildContext context, String listId, List<int> pupilsInList) {
   return BottomAppBar(
     padding: const EdgeInsets.all(9),
     shape: null,
@@ -43,6 +46,29 @@ BottomAppBar schoolListPupilsBottomNavBar(BuildContext context, PupilLi) {
           //   ),
           // ),
           // const Gap(10)
+          const Gap(15),
+          IconButton(
+            tooltip: 'Kinder hinzufügen',
+            icon: const Icon(
+              Icons.add,
+              size: 35,
+            ),
+            onPressed: () async {
+              final List<int> selectedPupilIds =
+                  await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) =>
+                            SelectPupilList(restOfPupils(pupilsInList)),
+                      )) ??
+                      [];
+              if (selectedPupilIds.isNotEmpty) {
+                locator<SchoolListManager>().addPupilsToSchoolList(
+                  listId,
+                  selectedPupilIds,
+                );
+              }
+            },
+          ),
+          const Gap(15)
         ],
       ),
     ),

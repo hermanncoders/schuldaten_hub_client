@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/school_lists/models/pupil_list.dart';
 
@@ -48,6 +50,22 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                           ),
                         ));
                       },
+                      onLongPress: () async {
+                        final bool? confirm = await confirmationDialog(
+                            context,
+                            'Kind aus der Liste löschen',
+                            '${pupil.firstName} wirklich aus der Liste löschen?');
+                        if (confirm != true) {
+                          return;
+                        }
+                        await locator<SchoolListManager>()
+                            .deletePupilsFromSchoolList(
+                                [pupil.internalId], originList);
+                        if (context.mounted) {
+                          informationDialog(context, 'Kind aus Liste gelöscht',
+                              'Das Kind wurde gelöscht!');
+                        }
+                      },
                       child: Text(
                         '${pupil.firstName!} ${pupil.lastName!}',
                         overflow: TextOverflow.fade,
@@ -64,7 +82,7 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                             'Kommentar ändern',
                             pupilList.pupilListComment,
                             context);
-                        await locator<SchoolListManager>().patchPupilSchoolList(
+                        await locator<SchoolListManager>().patchSchoolListPupil(
                           pupil.internalId,
                           originList,
                           null,
@@ -99,7 +117,7 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                           ? false
                           : true,
                       onChanged: (value) async {
-                        await schoolListLocator.patchPupilSchoolList(
+                        await schoolListLocator.patchSchoolListPupil(
                           pupil.internalId,
                           originList,
                           false,
@@ -121,7 +139,7 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                           ? false
                           : true,
                       onChanged: (value) async {
-                        await schoolListLocator.patchPupilSchoolList(
+                        await schoolListLocator.patchSchoolListPupil(
                           pupil.internalId,
                           originList,
                           true,

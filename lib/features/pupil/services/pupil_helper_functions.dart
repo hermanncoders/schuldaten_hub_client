@@ -1,5 +1,6 @@
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil_base.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
 Pupil findPupilById(int pupilId) {
@@ -23,6 +24,50 @@ List<int> pupilIdsFromPupils(List<Pupil> pupils) {
     pupilIds.add(pupil.internalId);
   }
   return pupilIds;
+}
+
+List<int> restOfPupils(List<int> pupilIds) {
+  List<int> restOfPupils = [];
+  final pupils = locator<PupilManager>().pupils.value;
+  for (Pupil pupil in pupils) {
+    if (!pupilIds.contains(pupil.internalId)) {
+      restOfPupils.add(pupil.internalId);
+    }
+  }
+  return restOfPupils;
+}
+
+Pupil pupilCopiedWith(Pupil namedPupil, Pupil updatedPupil) {
+  final Pupil pupil = updatedPupil.copyWith(
+    firstName: namedPupil.firstName,
+    lastName: namedPupil.lastName,
+    group: namedPupil.group,
+    schoolyear: namedPupil.schoolyear,
+    specialNeeds: namedPupil.specialNeeds,
+    gender: namedPupil.gender,
+    language: namedPupil.language,
+    family: namedPupil.family,
+    birthday: namedPupil.birthday,
+    migrationSupportEnds: namedPupil.migrationSupportEnds,
+    pupilSince: namedPupil.pupilSince,
+  );
+  return pupil;
+}
+
+Pupil patchPupilWithPupilbaseData(PupilBase pupilbase, Pupil pupil) {
+  return pupil.copyWith(
+    firstName: pupilbase.name,
+    lastName: pupilbase.lastName,
+    group: pupilbase.group,
+    schoolyear: pupilbase.schoolyear,
+    specialNeeds: pupilbase.specialNeeds,
+    gender: pupilbase.gender,
+    language: pupilbase.language,
+    family: pupilbase.family,
+    birthday: pupilbase.birthday,
+    migrationSupportEnds: pupilbase.migrationSupportEnds,
+    pupilSince: pupilbase.pupilSince,
+  );
 }
 
 String preschoolRevisionPredicate(int value) {

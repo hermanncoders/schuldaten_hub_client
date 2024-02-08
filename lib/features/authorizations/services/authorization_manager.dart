@@ -22,7 +22,7 @@ class AuthorizationManager {
 
   final _authorizations = ValueNotifier<List<Authorization>>([]);
   final _isRunning = ValueNotifier<bool>(false);
-
+  final client = locator.get<ApiManager>().dioClient.value;
   AuthorizationManager() {
     debug.warning('AuthorizationManager initialized');
   }
@@ -32,7 +32,6 @@ class AuthorizationManager {
   }
 
   Future fetchAuthorizations() async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     try {
       final response = await client.get(Endpoints.getAuthorizations);
@@ -55,7 +54,6 @@ class AuthorizationManager {
 
   Future patchPupilAuthorization(
       int pupilId, String listId, bool? value, String? comment) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     String data = '';
     if (value == null) {
       data = jsonEncode({"comment": comment});
@@ -82,7 +80,6 @@ class AuthorizationManager {
     int pupilId,
     String authId,
   ) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     final encryptedFile = await customEncrypter.encryptFile(file);
     String fileName = encryptedFile.path.split('/').last;
@@ -105,7 +102,6 @@ class AuthorizationManager {
 
   Future deleteAuthorizationFile(
       int pupilId, String authId, String cacheKey) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     final Response response = await client
         .delete(Endpoints().deletePupilAuthorization(pupilId, authId));

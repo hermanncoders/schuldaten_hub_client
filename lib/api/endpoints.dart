@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 class Endpoints {
@@ -283,6 +282,10 @@ class Endpoints {
 
   String addPupilsToSchoolList(String listId) {
     return '/list/$listId/pupils';
+  }
+
+  String deletePupilsFromSchoolList(String listId) {
+    return '/list/$listId/deletepupils';
   }
 
   //- GET

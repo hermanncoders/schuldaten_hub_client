@@ -50,6 +50,10 @@ class PupilFilterManager {
     _filteredPupils.value = [];
   }
 
+  restoreFilterValues(Map<PupilFilter, bool> inheritedFilters) {
+    _filterState.value = {...inheritedFilters};
+  }
+
   refreshFilteredPupils() {
     final List<Pupil> filteredPupils = List.from(_filteredPupils.value);
     final List<Pupil> pupils = locator<PupilManager>().pupils.value;

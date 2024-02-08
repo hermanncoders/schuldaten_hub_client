@@ -117,7 +117,6 @@ class AdmonitionManager {
   }
 
   postAdmonitionFile(File imageFile, String admonitionId) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     final encryptedFile = await customEncrypter.encryptFile(imageFile);
 
     String fileName = encryptedFile.path.split('/').last;
@@ -143,7 +142,6 @@ class AdmonitionManager {
   }
 
   deleteAdmonitionFile(String admonitionId, String cacheKey) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     // send request
     final Response response =
         await client.delete(Endpoints().deleteAdmonitionFile(admonitionId));

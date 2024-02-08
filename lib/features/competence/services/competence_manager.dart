@@ -9,7 +9,6 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/competence/models/competence.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_filter_manager.dart';
-//import 'package:schuldaten_hub/services/competence_services/competence_filter_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 
 class CompetenceManager {
@@ -18,7 +17,7 @@ class CompetenceManager {
 
   final _competences = ValueNotifier<List<Competence>>([]);
   final _isRunning = ValueNotifier<bool>(false);
-
+  final client = locator.get<ApiManager>().dioClient.value;
   CompetenceManager() {
     debug.warning('CompetenceManager initialized');
   }
@@ -28,7 +27,6 @@ class CompetenceManager {
   }
 
   Future firstFetchCompetences() async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     try {
       final response = await client.get(Endpoints().fetchCompetences);
@@ -49,7 +47,6 @@ class CompetenceManager {
   }
 
   Future fetchCompetences() async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     try {
       final response = await client.get(Endpoints().fetchCompetences);
@@ -73,7 +70,6 @@ class CompetenceManager {
 
   Future postNewCompetence(int? parentCompetence, String competenceName,
       String? competenceLevel, String? indicators) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     final data = jsonEncode({
       "parent_competence": parentCompetence,
@@ -95,7 +91,6 @@ class CompetenceManager {
       final errorMessage = DioExceptions.fromDioError(e);
       debug.error(
           'Dio error: ${errorMessage.toString()} | ${StackTrace.current}');
-
       rethrow;
     }
     _isRunning.value = false;
@@ -104,7 +99,6 @@ class CompetenceManager {
 
   Future patchCompetence(int competenceId, String competenceName,
       String? competenceLevel, String? indicators) async {
-    final client = locator.get<ApiManager>().dioClient.value;
     _isRunning.value = true;
     final data = jsonEncode({
       "competence_name": competenceName,

@@ -5,7 +5,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
@@ -153,7 +153,10 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                   onPressed: () async {
                     final List<int> selectedPupilIds =
                         await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => const SelectPupilList(),
+                              builder: (ctx) => SelectPupilList(locator
+                                  .get<PupilBaseManager>()
+                                  .availablePupilIds
+                                  .value),
                             )) ??
                             [];
                     if (selectedPupilIds.isNotEmpty) {

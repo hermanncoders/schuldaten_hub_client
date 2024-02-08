@@ -4,11 +4,13 @@ import 'package:schuldaten_hub/features/first_level_views/learn_list_view.dart';
 import 'package:schuldaten_hub/features/first_level_views/login_view/controller/login_controller.dart';
 import 'package:schuldaten_hub/features/first_level_views/scan_tools_view.dart';
 import 'package:schuldaten_hub/features/first_level_views/settings_view.dart';
+import 'package:schuldaten_hub/main.dart';
 
 import 'routes.dart';
 
 class AppRoutes {
   static final routes = {
+    Routes.start: (context) => const MyApp(),
     Routes.login: (context) => const Login(),
     //Routes.loginScan: (context) => const QRScanCredentials(),
     Routes.home: (context) => BottomNavigation(),

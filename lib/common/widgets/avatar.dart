@@ -6,7 +6,6 @@ import 'package:schuldaten_hub/common/widgets/download_decrypt_or_cached_image.d
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 
 Widget avatarImage(Pupil pupil, double size) {

@@ -141,7 +141,7 @@ class AttendanceManager {
     resetOperationReport();
     _setIsRunning(true);
     final Pupil pupil = findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     final List<int> pupilBaseIds =
         locator<PupilBaseManager>().availablePupilIds.value;
     // pupils gone home during class for whatever reason
@@ -222,7 +222,7 @@ class AttendanceManager {
     _setIsRunning(true);
     // Let's look for an existing missed class - if pupil and date match, there is one
     final Pupil pupil = findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1) {
       // The missed class does not exist - let's create one
       debug.info('This missed class is new');
@@ -391,7 +391,7 @@ class AttendanceManager {
 
   setMissedTypeValue(int pupilId, DateTime date) {
     final Pupil pupil = findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1 || missedClass == null) {
       return 'none';
     }
@@ -401,7 +401,7 @@ class AttendanceManager {
 
   String setContactedValue(int pupilId, DateTime date) {
     final Pupil pupil = findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
 
     if (missedClass == -1) {
       return '0';
@@ -414,7 +414,7 @@ class AttendanceManager {
 
   String? setCreatedModifiedValue(int pupilId, DateTime date) {
     final Pupil pupil = findPupilById(pupilId);
-    final int? missedClass = _findMissedClassIndex(pupil!, date);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
     if (missedClass == -1 || missedClass == null) {
       return null;
     }

@@ -44,9 +44,7 @@ class AdmonitionListController extends State<AdmonitionList> {
     int admonitions = 0;
     for (Pupil pupil in pupils) {
       if (pupil.pupilAdmonitions != null) {
-        for (Admonition admonition in pupil.pupilAdmonitions!) {
-          admonitions++;
-        }
+        admonitions = admonitions + pupil.pupilAdmonitions!.length;
       }
     }
     return admonitions;
@@ -80,18 +78,18 @@ class AdmonitionListController extends State<AdmonitionList> {
     return admonitions;
   }
 
-  void _search() async {
-    if (!isSearching) {
-      setState(() {
-        isSearching = true;
-      });
-    }
+  // void _search() async {
+  //   if (!isSearching) {
+  //     setState(() {
+  //       isSearching = true;
+  //     });
+  //   }
 
-    if (!isSearchMode) return;
-    setState(() {
-      isSearching = false;
-    });
-  }
+  //   if (!isSearchMode) return;
+  //   setState(() {
+  //     isSearching = false;
+  //   });
+  // }
 
   void cancelSearch({bool unfocus = true}) {
     setState(() {

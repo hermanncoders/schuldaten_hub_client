@@ -177,7 +177,7 @@ class PupilDetailsView extends WatchingWidget {
                           pupil.ogs == true
                               ? ogsListTiles(pupil, context)
                               : const SizedBox.shrink(),
-                          pupilSchoolListTiles(pupil),
+                          schoolListPupilTiles(pupil),
                           pupilAuthorizationListTiles(pupil),
                           learningSupportTiles(pupil, context),
                           learningTiles(pupil, context),

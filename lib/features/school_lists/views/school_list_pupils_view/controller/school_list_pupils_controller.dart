@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/school_list_pupils_view.dart';
+import 'package:watch_it/watch_it.dart';
 
 class SchoolListPupils extends StatefulWidget {
   final SchoolList schoolList;
@@ -27,7 +30,7 @@ class SchoolListPupilsController extends State<SchoolListPupils> {
 
   @override
   void initState() {
-    locator<PupilFilterManager>().refreshFilteredPupils();
+    //locator<PupilFilterManager>().refreshFilteredPupils();
     super.initState();
   }
 

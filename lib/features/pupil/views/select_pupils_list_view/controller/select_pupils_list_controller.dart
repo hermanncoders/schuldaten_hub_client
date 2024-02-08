@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/select_pupils_list_view.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 
 import 'package:watch_it/watch_it.dart';
 import '../../../models/pupil.dart';
 
 class SelectPupilList extends WatchingStatefulWidget {
-  const SelectPupilList({Key? key}) : super(key: key);
+  final List<int>? selectablePupils;
+  const SelectPupilList(this.selectablePupils, {super.key});
 
   @override
   SelectPupilListController createState() => SelectPupilListController();
@@ -17,6 +21,7 @@ class SelectPupilList extends WatchingStatefulWidget {
 class SelectPupilListController extends State<SelectPupilList> {
   List<Pupil>? pupils;
   List<Pupil>? filteredPupils;
+  Map<PupilFilter, bool>? inheritedFilters;
   TextEditingController searchController = TextEditingController();
   bool isSearchMode = false;
   bool isSearching = false;
@@ -27,10 +32,12 @@ class SelectPupilListController extends State<SelectPupilList> {
 
   @override
   void initState() {
-    locator<PupilFilterManager>().refreshFilteredPupils();
+    //locator<PupilFilterManager>().refreshFilteredPupils();
     setState(() {
+      Map<PupilFilter, bool> inheritedFilters =
+          locator<PupilFilterManager>().filterState.value;
       pupils = locator<PupilManager>().pupils.value;
-      filteredPupils = List.from(pupils!);
+      //filteredPupils = List.from(pupils!);
     });
     super.initState();
   }
@@ -141,7 +148,21 @@ class SelectPupilListController extends State<SelectPupilList> {
   }
 
   @override
+  void dispose() {
+    if (inheritedFilters != null) {
+      locator<PupilFilterManager>().restoreFilterValues(inheritedFilters!);
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SelectPupilListView(this);
+    List<Pupil> filteredPupils =
+        watchValue((PupilFilterManager x) => x.filteredPupils);
+    List<Pupil> filteredListedPupils =
+        pupilsFromPupilIds(widget.selectablePupils!)
+            .where((pupil) => filteredPupils.contains(pupil))
+            .toList();
+    return SelectPupilListView(this, filteredListedPupils);
   }
 }

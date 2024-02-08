@@ -20,7 +20,7 @@ class PupilProfile extends StatefulWidget {
 class PupilProfileController extends State<PupilProfile> {
   deleteAvatar() async {
     await locator<PupilManager>().deleteAvatarImage(
-        widget.pupil.internalId, widget.pupil.internalId.toString()!);
+        widget.pupil.internalId, widget.pupil.internalId.toString());
   }
 
   @override

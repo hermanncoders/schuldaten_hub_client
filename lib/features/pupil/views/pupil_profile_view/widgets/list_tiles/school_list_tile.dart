@@ -5,7 +5,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/controller/school_list_pupils_controller.dart';
 
-pupilSchoolListTiles(Pupil pupil) {
+schoolListPupilTiles(Pupil pupil) {
   final schoolListLocator = locator<SchoolListManager>();
   List<PupilList> pupilLists =
       locator<SchoolListManager>().getVisibleSchoolLists(pupil);
@@ -78,19 +78,21 @@ pupilSchoolListTiles(Pupil pupil) {
                         Checkbox(
                           activeColor: Colors.red,
                           value: (schoolListLocator
-                                          .getPupilSchoolList(pupil.internalId,
+                                          .getPupilSchoolListEntry(
+                                              pupil.internalId,
                                               pupilLists[index].originList)
                                           .pupilListStatus ==
                                       true ||
                                   schoolListLocator
-                                          .getPupilSchoolList(pupil.internalId,
+                                          .getPupilSchoolListEntry(
+                                              pupil.internalId,
                                               pupilLists[index].originList)
                                           .pupilListStatus ==
                                       null)
                               ? false
                               : true,
                           onChanged: (value) async {
-                            await schoolListLocator.patchPupilSchoolList(
+                            await schoolListLocator.patchSchoolListPupil(
                                 pupil.internalId,
                                 pupilLists[index].originList,
                                 false,
@@ -100,14 +102,14 @@ pupilSchoolListTiles(Pupil pupil) {
                         Checkbox(
                           activeColor: Colors.green,
                           value: (schoolListLocator
-                                      .getPupilSchoolList(pupil.internalId,
+                                      .getPupilSchoolListEntry(pupil.internalId,
                                           pupilLists[index].originList)
                                       .pupilListStatus ==
                                   true)
                               ? true
                               : false,
                           onChanged: (value) async {
-                            await schoolListLocator.patchPupilSchoolList(
+                            await schoolListLocator.patchSchoolListPupil(
                                 pupil.internalId,
                                 pupilLists[index].originList,
                                 true,

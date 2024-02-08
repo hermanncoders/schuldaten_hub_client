@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -28,9 +29,10 @@ class SchoolListPupilsView extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     bool _filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-    List<Pupil> pupilsInList =
-        locator<SchoolListManager>().getPupilsinSchoolList(schoolList.listId);
-
+    List<Pupil> filteredPupils =
+        watchValue((PupilFilterManager x) => x.filteredPupils);
+    List<Pupil> pupilsInList = locator<SchoolListManager>()
+        .filteredPupilsInSchoolList(schoolList.listId, filteredPupils);
     Map<PupilFilter, bool> activeFilters =
         watchValue((PupilFilterManager x) => x.filterState);
     return Scaffold(
@@ -50,120 +52,107 @@ class SchoolListPupilsView extends WatchingWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async => locator<SchoolListManager>().fetchSchoolLists(),
-        child: pupilsInList.isEmpty
-            ? const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(30.0),
-                  child: Text(
-                    'Es sind keine Kinder in dieser Liste!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 5.0, right: 5),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: Column(
+                children: [
+                  const Gap(15),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 15, top: 10.0, right: 10.00),
+                    child: Text(
+                      schoolList.listDescription.toString(),
+                      maxLines: 3,
+                      overflow: TextOverflow.clip,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(left: 5.0, right: 5),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 800),
-                    child: Column(
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10, top: 10.0, right: 10.00),
+                    child: Row(
                       children: [
-                        const Gap(15),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 15, top: 10.0, right: 10.00),
-                          child: Text(
-                            schoolList.listDescription.toString(),
-                            maxLines: 3,
-                            overflow: TextOverflow.clip,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
+                        const Text(
+                          'Kinder in der Liste:',
+                          style: TextStyle(
+                            fontSize: 13,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, top: 10.0, right: 10.00),
-                          child: Row(
-                            children: [
-                              const Text(
-                                'Kinder in der Liste:',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                ),
-                              ),
-                              const Gap(10),
-                              Text(
-                                pupilsInList.length.toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
+                        const Gap(10),
+                        Text(
+                          pupilsInList.length.toString(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: searchTextField(
-                                'Schüler/in suchen',
-                                controller,
-                                locator<PupilFilterManager>()
-                                    .refreshFilteredPupils,
-                              )),
-                              //---------------------------------
-                              InkWell(
-                                onTap: () => showGroupYearFilterBottomSheet(
-                                    context, activeFilters),
-                                onLongPress: () => locator<PupilFilterManager>()
-                                    .resetFilters(),
-                                // onPressed: () => showBottomSheetFilters(context),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Icon(
-                                    Icons.filter_list,
-                                    color: _filtersOn
-                                        ? Colors.deepOrange
-                                        : Colors.grey,
-                                    size: 30,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        pupilsInList.isEmpty
-                            ? const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Keine Ergebnisse',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                ),
-                              )
-                            : Expanded(
-                                child: ListView.builder(
-                                    itemCount: pupilsInList.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return SchoolListPupilCard(
-                                          pupilsInList[index].internalId,
-                                          schoolList.listId);
-                                    }),
-                              ),
                       ],
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: searchTextField(
+                          'Schüler/in suchen',
+                          controller,
+                          locator<PupilFilterManager>().refreshFilteredPupils,
+                        )),
+                        //---------------------------------
+                        InkWell(
+                          onTap: () => showGroupYearFilterBottomSheet(
+                              context, activeFilters),
+                          onLongPress: () =>
+                              locator<PupilFilterManager>().resetFilters(),
+                          // onPressed: () => showBottomSheetFilters(context),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Icon(
+                              Icons.filter_list,
+                              color:
+                                  _filtersOn ? Colors.deepOrange : Colors.grey,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  pupilsInList.isEmpty
+                      ? const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Keine Ergebnisse',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                              itemCount: pupilsInList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return SchoolListPupilCard(
+                                    pupilsInList[index].internalId,
+                                    schoolList.listId);
+                              }),
+                        ),
+                ],
               ),
+            ),
+          ),
+        ),
       ),
-      bottomNavigationBar: schoolListPupilsBottomNavBar(context, schoolList),
+      bottomNavigationBar: schoolListPupilsBottomNavBar(
+          context, schoolList.listId, pupilIdsFromPupils(pupilsInList)),
     );
   }
 }

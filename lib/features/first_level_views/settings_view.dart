@@ -33,7 +33,7 @@ class SettingsView extends WatchingWidget {
       await locator<SessionManager>().logout();
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
-        await Navigator.of(context).pushNamed(Routes.login);
+        Navigator.of(context).popUntil(ModalRoute.withName(Routes.start));
       }
     }
 
@@ -43,7 +43,7 @@ class SettingsView extends WatchingWidget {
       await locator<SessionManager>().logout();
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
-        await Navigator.of(context).pushNamed(Routes.login);
+        Navigator.of(context).popUntil(ModalRoute.withName(Routes.start));
       }
     }
 
@@ -69,6 +69,10 @@ class SettingsView extends WatchingWidget {
                   ),
                 ),
                 tiles: <SettingsTile>[
+                  SettingsTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text('Instanz:'),
+                      value: Text(locator<EnvManager>().env.value.serverUrl!)),
                   SettingsTile.navigation(
                     leading: const Icon(
                       Icons.account_circle_rounded,
@@ -212,7 +216,10 @@ class SettingsView extends WatchingWidget {
                       onPressed: (context) async {
                         final List<int> pupilIds =
                             await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const SelectPupilList(),
+                          builder: (ctx) => SelectPupilList(
+                              locator<PupilBaseManager>()
+                                  .availablePupilIds
+                                  .value),
                         ));
                         if (pupilIds.isEmpty) {
                           return;

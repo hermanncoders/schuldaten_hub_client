@@ -27,7 +27,6 @@ class PupilManager {
   ValueListenable<List<Pupil>> get pupils => _pupils;
   ValueListenable<Report> get operationReport => _operationReport;
   ValueListenable<bool> get isRunning => _isRunning;
-
   final _pupils = ValueNotifier<List<Pupil>>([]);
   final _operationReport = ValueNotifier<Report>(Report(null, null));
   final _isRunning = ValueNotifier<bool>(false);
@@ -35,7 +34,6 @@ class PupilManager {
   PupilManager();
   Future init() async {
     await getAllPupils();
-
     return;
   }
 
@@ -111,7 +109,6 @@ class PupilManager {
       }
     }
     _pupils.value = pupils;
-
     locator<PupilFilterManager>().updateFilteredPupils();
   }
 
@@ -143,19 +140,8 @@ class PupilManager {
           Pupil pupilMatch = pupilsWithoutBase
               .where((element) => element.internalId == pupilBaseElement.id)
               .single;
-          Pupil namedPupil = pupilMatch.copyWith(
-              firstName: pupilBaseElement.name,
-              lastName: pupilBaseElement.lastName,
-              group: pupilBaseElement.group,
-              schoolyear: pupilBaseElement.schoolyear,
-              specialNeeds: pupilBaseElement.specialNeeds,
-              gender: pupilBaseElement.gender,
-              language: pupilBaseElement.language,
-              family: pupilBaseElement.family,
-              birthday: pupilBaseElement.birthday,
-              migrationSupportEnds: pupilBaseElement.migrationSupportEnds,
-              pupilSince: pupilBaseElement.pupilSince);
-
+          Pupil namedPupil =
+              patchPupilWithPupilbaseData(pupilBaseElement, pupilMatch);
           matchedPupils.add(namedPupil);
         } else {
           // if the pupilbase was sent andidn't get a response from the server,
@@ -203,6 +189,22 @@ class PupilManager {
     }
   }
 
+  Future updateListOfPupils(List<Pupil> pupils) async {
+    _isRunning.value = true;
+    List<Pupil> repositoryPupils = List.from(_pupils.value);
+    for (Pupil pupil in pupils) {
+      int index = repositoryPupils
+          .indexWhere((element) => element.internalId == pupil.internalId);
+
+      repositoryPupils[index] = pupilCopiedWith(repositoryPupils[index], pupil);
+    }
+    _pupils.value = repositoryPupils;
+
+    locator<PupilFilterManager>().updateFilteredPupils();
+
+    _isRunning.value = false;
+  }
+
   Future fetchShownPupils() async {
     if (locator.isReadySync<PupilFilterManager>()) {
       final List<Pupil> shownPupils =
@@ -241,19 +243,7 @@ class PupilManager {
         .where((element) => element.id == responsePupil.internalId)
         .first;
     // now let's patch
-    Pupil namedPupil = responsePupil.copyWith(
-        firstName: pupilbase.name,
-        lastName: pupilbase.lastName,
-        group: pupilbase.group,
-        schoolyear: pupilbase.schoolyear,
-        specialNeeds: pupilbase.specialNeeds,
-        gender: pupilbase.gender,
-        language: pupilbase.language,
-        family: pupilbase.family,
-        birthday: pupilbase.birthday,
-        migrationSupportEnds: pupilbase.migrationSupportEnds,
-        pupilSince: pupilbase.pupilSince);
-
+    Pupil namedPupil = patchPupilWithPupilbaseData(pupilbase, responsePupil);
     // we create a list to manipulate it
     List<Pupil> pupils = List.from(_pupils.value);
     // let's find the pupil by index from the response

@@ -13,19 +13,21 @@ import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/cre
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/widgets/select_pupils_list_card.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/widgets/select_pupils_view_bottom_navbar.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:watch_it/watch_it.dart';
 
 class SelectPupilListView extends WatchingWidget {
   final SelectPupilListController controller;
-  const SelectPupilListView(this.controller, {Key? key}) : super(key: key);
+  final List<Pupil> filteredPupilsInLIst;
+  const SelectPupilListView(this.controller, this.filteredPupilsInLIst,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     debug.info('Widget Build started!');
 
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-
-    List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
 
     return Scaffold(
       backgroundColor: canvasColor,
@@ -67,7 +69,7 @@ class SelectPupilListView extends WatchingWidget {
                       ),
                       const Gap(10),
                       Text(
-                        pupils.length.toString(),
+                        filteredPupilsInLIst.length.toString(),
                         style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -168,17 +170,17 @@ class SelectPupilListView extends WatchingWidget {
                     ],
                   ),
                 ),
-                pupils.isEmpty
+                filteredPupilsInLIst.isEmpty
                     ? const Center(
                         child: Text('Keine Ergebnisse'),
                       )
                     : Expanded(
                         child: ListView.builder(
-                            itemCount: pupils.length,
+                            itemCount: filteredPupilsInLIst.length,
                             itemBuilder: (BuildContext context, int index) {
                               return SelectPupilListCard(
                                 controller,
-                                pupils[index],
+                                filteredPupilsInLIst[index],
                               );
                             })),
               ],

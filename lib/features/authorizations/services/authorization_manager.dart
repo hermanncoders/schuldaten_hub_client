@@ -52,6 +52,51 @@ class AuthorizationManager {
     return;
   }
 
+  Future postPupilAuthorization(int pupilId, String authId) async {
+    final data =
+        jsonEncode({"comment": null, "file_url": null, "status": null});
+    final response = await client
+        .post(Endpoints().postPupilAuthorization(pupilId, authId), data: data);
+    if (response.statusCode == 200) {
+      locator<PupilManager>().patchPupilFromResponse(response.data);
+      debug.success('list entry successful');
+    }
+    // Success! We have a pupil response - let's patch the pupil with the data
+    final Map<String, dynamic> pupilResponse = response.data;
+    await locator<PupilManager>().patchPupilFromResponse(pupilResponse);
+  }
+
+  Future postPupilAuthorizations(List<int> pupilIds, String authId) async {
+    _isRunning.value = true;
+    final data = jsonEncode({"pupils": pupilIds});
+    final response = await client
+        .post(Endpoints().postPupilAuthorizations(authId), data: data);
+    if (response.statusCode != 200) {
+      //handle errors...
+
+      debug.error(
+          'Dio error: ${response.statusCode} ${response.toString()} | ${StackTrace.current}');
+      return;
+    }
+    final List<Pupil> responsePupils = (List<Pupil>.from(
+        (response.data as List).map((e) => Pupil.fromJson(e))));
+    locator<PupilManager>().updateListOfPupils(responsePupils);
+  }
+
+  Future deletePupilAuthorization(int pupilId, String authId) async {
+    final response = await client
+        .delete(Endpoints().deletePupilAuthorization(pupilId, authId));
+    if (response.statusCode != 200) {
+      //handle errors...
+
+      debug.error(
+          'Dio error: ${response.statusCode} ${response.toString()} | ${StackTrace.current}');
+      return;
+    }
+    final pupil = Pupil.fromJson(response.data);
+    locator<PupilManager>().updatePupilInRepository(pupil);
+  }
+
   Future patchPupilAuthorization(
       int pupilId, String listId, bool? value, String? comment) async {
     String data = '';
@@ -104,7 +149,7 @@ class AuthorizationManager {
       int pupilId, String authId, String cacheKey) async {
     _isRunning.value = true;
     final Response response = await client
-        .delete(Endpoints().deletePupilAuthorization(pupilId, authId));
+        .delete(Endpoints().deletePupilAuthorizationFile(pupilId, authId));
     if (response.statusCode != 200) {
       debug.warning('Something went wrong with the multipart request');
     }
@@ -138,7 +183,17 @@ class AuthorizationManager {
     return pupilAuthorization;
   }
 
-  List<Pupil> getPupilsinAuthorization(
+  List<Pupil> getPupilsInAuthorization(String authorizationId) {
+    final List<Pupil> listedPupils = locator<PupilManager>()
+        .pupils
+        .value
+        .where((pupil) => pupil.authorizations!.any((authorization) =>
+            authorization.originAuthorization == authorizationId))
+        .toList();
+    return listedPupils;
+  }
+
+  List<Pupil> getFilteredPupilsInAuthorization(
       String authorizationId, List<Pupil> filteredPupils) {
     final List<Pupil> listedPupils = filteredPupils
         .where((pupil) => pupil.authorizations!.any((authorization) =>

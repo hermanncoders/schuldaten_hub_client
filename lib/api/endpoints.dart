@@ -110,6 +110,22 @@ class Endpoints {
 
   //-PUPIL AUTHORIZATIONS -------------------------------------------
 
+  String getPupilAuthorizationFile(int pupilId, String authorizationId) {
+    return '/pupil/$pupilId/authorization/$authorizationId/file';
+  }
+
+  String postPupilAuthorization(int pupilId, String authorizationId) {
+    return '/pupil/$pupilId/authorization/$authorizationId/new';
+  }
+
+  String postPupilAuthorizations(String authorizationId) {
+    return '/pupil/authorization/$authorizationId/group';
+  }
+
+  String deletePupilAuthorization(int pupilId, String authorizationId) {
+    return '/pupil/$pupilId/authorization/$authorizationId';
+  }
+
   String patchPupilAuthorization(int pupilId, String authorizationId) {
     return '/pupil/$pupilId/authorization/$authorizationId';
   }
@@ -118,11 +134,7 @@ class Endpoints {
     return '/pupil/$pupilId/authorization/$authorizationId/file';
   }
 
-  String getPupilAuthorizationFile(int pupilId, String authorizationId) {
-    return '/pupil/$pupilId/authorization/$authorizationId/file';
-  }
-
-  String deletePupilAuthorization(int pupilId, String authorizationId) {
+  String deletePupilAuthorizationFile(int pupilId, String authorizationId) {
     return '/pupil/$pupilId/authorization/$authorizationId/file';
   }
   //- COMPETENCES ------------------------------------------------------

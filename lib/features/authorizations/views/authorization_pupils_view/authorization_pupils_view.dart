@@ -13,6 +13,7 @@ import 'package:schuldaten_hub/features/authorizations/views/authorization_pupil
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/widgets/authorization_pupils_bottom_navbar.dart';
 
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -28,8 +29,11 @@ class AuthorizationPupilsView extends WatchingWidget {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
     List<Pupil> filteredPupils =
         watchValue((PupilFilterManager x) => x.filteredPupils);
+    List<Pupil> pupilsInAuthorization = locator<AuthorizationManager>()
+        .getPupilsInAuthorization(authorization.authorizationId);
+
     List<Pupil> pupilsFromList = locator<AuthorizationManager>()
-        .getPupilsinAuthorization(
+        .getFilteredPupilsInAuthorization(
             authorization.authorizationId, filteredPupils);
     List<Pupil> pupilsInList =
         controller.getListResponseFilteredPupils(pupilsFromList);
@@ -168,8 +172,8 @@ class AuthorizationPupilsView extends WatchingWidget {
                 ),
               ),
       ),
-      bottomNavigationBar:
-          authorizationPupilsBottomNavBar(context, authorization, filtersOn),
+      bottomNavigationBar: authorizationPupilsBottomNavBar(context,
+          authorization, filtersOn, pupilIdsFromPupils(pupilsInAuthorization)),
     );
   }
 }

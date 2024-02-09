@@ -11,7 +11,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
-import 'package:schuldaten_hub/common/widgets/group_schoolyear_filter_bottom_sheet.dart';
+import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/pupil_list_filter_bottom_sheet.dart';
 
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/controller/school_list_pupils_controller.dart';
@@ -29,7 +29,7 @@ class SchoolListPupilsView extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
+    bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
     List<Pupil> filteredPupils =
         watchValue((PupilFilterManager x) => x.filteredPupils);
     List<Pupil> pupilsInList = locator<SchoolListManager>()
@@ -109,7 +109,7 @@ class SchoolListPupilsView extends WatchingWidget {
                         )),
                         //---------------------------------
                         InkWell(
-                          onTap: () => showGroupYearFilterBottomSheet(
+                          onTap: () => showPupilListFilterBottomSheet(
                               context, activeFilters),
                           onLongPress: () =>
                               locator<PupilFilterManager>().resetFilters(),
@@ -119,7 +119,7 @@ class SchoolListPupilsView extends WatchingWidget {
                             child: Icon(
                               Icons.filter_list,
                               color:
-                                  _filtersOn ? Colors.deepOrange : Colors.grey,
+                                  filtersOn ? Colors.deepOrange : Colors.grey,
                               size: 30,
                             ),
                           ),
@@ -152,8 +152,8 @@ class SchoolListPupilsView extends WatchingWidget {
           ),
         ),
       ),
-      bottomNavigationBar: schoolListPupilsBottomNavBar(
-          context, schoolList.listId, pupilIdsFromPupils(pupilsInList)),
+      bottomNavigationBar: schoolListPupilsBottomNavBar(context,
+          schoolList.listId, filtersOn, pupilIdsFromPupils(pupilsInList)),
     );
   }
 }

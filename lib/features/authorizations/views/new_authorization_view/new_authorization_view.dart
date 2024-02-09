@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
@@ -10,19 +9,19 @@ import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controlle
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 
-class NewSchoolListView extends StatefulWidget {
-  const NewSchoolListView({super.key});
+class NewAuthorizationView extends StatefulWidget {
+  const NewAuthorizationView({super.key});
 
   @override
-  NewSchoolListViewState createState() => NewSchoolListViewState();
+  NewAuthorizationViewState createState() => NewAuthorizationViewState();
 }
 
-class NewSchoolListViewState extends State<NewSchoolListView> {
+class NewAuthorizationViewState extends State<NewAuthorizationView> {
   final TextEditingController textField1Controller = TextEditingController();
   final TextEditingController textField2Controller = TextEditingController();
   bool _isOn = false;
   Set<int> pupilIds = {};
-  void postNewSchoolList() async {
+  void postNewAuthorization() async {
     String text1 = textField1Controller.text;
     String text2 = textField2Controller.text;
     String listType = 'private';
@@ -39,7 +38,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: const Text('Neue Liste'),
+        title: const Text('Neue Einwilligung'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -54,7 +53,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                   maxLines: 3,
                   controller: textField1Controller,
                   decoration:
-                      const InputDecoration(labelText: 'Name der Liste'),
+                      const InputDecoration(labelText: 'Name der Einwilligung'),
                 ),
                 const Gap(20),
                 TextField(
@@ -62,31 +61,9 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                   maxLines: 3,
                   controller: textField2Controller,
                   decoration: const InputDecoration(
-                      labelText: 'Kurze Beschreibung der Liste'),
+                      labelText: 'Kurze Beschreibung der Einwilligung'),
                 ),
                 const Gap(10),
-                locator<SessionManager>().isAdmin.value == true
-                    ? Row(
-                        children: [
-                          const Text(
-                            'Öffentliche Liste:',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          const Gap(10),
-                          Switch(
-                            value:
-                                _isOn, // Boolean value representing the switch state
-                            onChanged: (newValue) {
-                              setState(() {
-                                _isOn = newValue;
-                              });
-                            },
-                            activeColor: Colors.blue, // Change color if desired
-                          ),
-                        ],
-                      )
-                    : const SizedBox.shrink(),
                 Row(
                   children: [
                     const Text(
@@ -211,7 +188,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                       backgroundColor: Colors.amber[800],
                       minimumSize: const Size.fromHeight(60)),
                   onPressed: () {
-                    postNewSchoolList();
+                    postNewAuthorization();
                     Navigator.pop(context);
                   },
                   child: const Text(

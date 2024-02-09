@@ -51,7 +51,7 @@ class PupilManager {
     List<Pupil> pupils = List.from(_pupils.value);
     int index =
         pupils.indexWhere((element) => element.internalId == pupil.internalId);
-    pupils[index] = pupil;
+    pupils[index] = pupilCopiedWith(pupils[index], pupil);
     _pupils.value = pupils;
     locator<PupilFilterManager>().cloneToFilteredPupil(pupil);
   }

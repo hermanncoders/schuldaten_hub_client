@@ -7,7 +7,7 @@ import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 
-showGroupYearFilterBottomSheet(BuildContext context, activeFilters) {
+showPupilListFilterBottomSheet(BuildContext context, activeFilters) {
   bool valueA1 = activeFilters[PupilFilter.A1]!;
   bool valueA2 = activeFilters[PupilFilter.A2]!;
   bool valueA3 = activeFilters[PupilFilter.A3]!;

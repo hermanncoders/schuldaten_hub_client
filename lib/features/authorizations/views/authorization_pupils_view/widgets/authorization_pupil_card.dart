@@ -62,6 +62,18 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                               ),
                             ));
                           },
+                          onLongPress: () async {
+                            final bool? confirmation = await confirmationDialog(
+                                context,
+                                'Kind aus der Liste löschen',
+                                'Die Einwilligung von ${pupil.firstName} löschen?');
+                            if (confirmation == true) {
+                              locator<AuthorizationManager>()
+                                  .deletePupilAuthorization(
+                                      pupil.internalId, authorizationId);
+                            }
+                            return;
+                          },
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(

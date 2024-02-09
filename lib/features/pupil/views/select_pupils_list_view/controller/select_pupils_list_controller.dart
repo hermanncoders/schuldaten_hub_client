@@ -145,13 +145,13 @@ class SelectPupilListController extends State<SelectPupilList> {
     });
   }
 
-  @override
-  void dispose() {
-    if (inheritedFilters != null) {
-      locator<PupilFilterManager>().restoreFilterValues(inheritedFilters!);
-    }
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   if (inheritedFilters != null) {
+  //     locator<PupilFilterManager>().restoreFilterValues(inheritedFilters!);
+  //   }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

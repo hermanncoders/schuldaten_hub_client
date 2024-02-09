@@ -29,8 +29,10 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
   bool ignoreTeacherInstructions = false;
   bool disturbLesson = false;
   bool other = false;
-  Color admonitionReasonChipUnselectedColor = Color.fromARGB(255, 248, 162, 93);
-  Color admonitionReasonChipSelectedColor = Color.fromARGB(255, 239, 137, 13);
+  Color admonitionReasonChipUnselectedColor =
+      const Color.fromARGB(255, 248, 162, 93);
+  Color admonitionReasonChipSelectedColor =
+      const Color.fromARGB(255, 239, 137, 13);
   Color admonitionReasonChipSelectedCheckColor =
       const Color.fromARGB(255, 249, 56, 56);
   DateTime thisDate = locator<SchooldayManager>().thisDate.value;

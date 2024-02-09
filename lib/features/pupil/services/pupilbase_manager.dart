@@ -94,7 +94,12 @@ class PupilBaseManager {
   }
 
   void addNewPupilBase(String scanResult) async {
-    final String? decryptedResult = await customEncrypter.decrypt(scanResult);
+    String? decryptedResult;
+    if (!Platform.isWindows) {
+      decryptedResult = await customEncrypter.decrypt(scanResult);
+    } else {
+      decryptedResult = scanResult;
+    }
     List<PupilBase> oldPupilbase = _pupilbase.value;
     // The pupils in the string are separated by a '\n' - let's split them apart
     List splittedPupilBase = decryptedResult!.split('\n');

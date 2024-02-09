@@ -13,7 +13,6 @@ import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/cre
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/widgets/select_pupils_list_card.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/widgets/select_pupils_view_bottom_navbar.dart';
-import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:watch_it/watch_it.dart';
 
 class SelectPupilListView extends WatchingWidget {

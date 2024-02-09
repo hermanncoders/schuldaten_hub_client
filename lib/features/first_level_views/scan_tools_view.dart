@@ -17,7 +17,6 @@ class QrToolsView extends WatchingWidget {
     if (result != null) {
       File file = File(result.files.single.path!);
       String rawTextResult = await file.readAsString();
-
       if (function == 'schild') {
         locator.get<PupilBaseManager>().importPupilsFromTxt(rawTextResult);
       } else if (function == 'pupilbase') {

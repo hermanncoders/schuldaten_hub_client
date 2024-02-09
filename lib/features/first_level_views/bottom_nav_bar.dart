@@ -20,6 +20,7 @@ class BottomNavManager {
   }
   setBottomNavPage(index) {
     _bottomNavState.value = index;
+    _pageViewController.value.jumpToPage(index);
   }
 
   disposePageViewController() {

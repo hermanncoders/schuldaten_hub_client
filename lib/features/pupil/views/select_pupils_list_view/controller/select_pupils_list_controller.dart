@@ -5,7 +5,6 @@ import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/select_pupils_list_view.dart';
-import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 
 import 'package:watch_it/watch_it.dart';
 import '../../../models/pupil.dart';
@@ -34,8 +33,7 @@ class SelectPupilListController extends State<SelectPupilList> {
   void initState() {
     //locator<PupilFilterManager>().refreshFilteredPupils();
     setState(() {
-      Map<PupilFilter, bool> inheritedFilters =
-          locator<PupilFilterManager>().filterState.value;
+      inheritedFilters = locator<PupilFilterManager>().filterState.value;
       pupils = locator<PupilManager>().pupils.value;
       //filteredPupils = List.from(pupils!);
     });

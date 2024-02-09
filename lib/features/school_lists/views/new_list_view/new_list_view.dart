@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
@@ -20,13 +21,17 @@ class NewSchoolListView extends StatefulWidget {
 class NewSchoolListViewState extends State<NewSchoolListView> {
   final TextEditingController textField1Controller = TextEditingController();
   final TextEditingController textField2Controller = TextEditingController();
+  bool _isOn = false;
   Set<int> pupilIds = {};
   void postNewSchoolList() async {
     String text1 = textField1Controller.text;
     String text2 = textField2Controller.text;
-
+    String listType = 'private';
+    if (_isOn == true) {
+      listType = 'public';
+    }
     await locator<SchoolListManager>()
-        .postSchoolListWithGroup(text1, text2, pupilIds.toList(), 'private');
+        .postSchoolListWithGroup(text1, text2, pupilIds.toList(), listType);
   }
 
   @override
@@ -61,6 +66,28 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                       labelText: 'Kurze Beschreibung der Liste'),
                 ),
                 const Gap(10),
+                locator<SessionManager>().isAdmin.value == true
+                    ? Row(
+                        children: [
+                          const Text(
+                            'Öffentliche Liste:',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Gap(10),
+                          Switch(
+                            value:
+                                _isOn, // Boolean value representing the switch state
+                            onChanged: (newValue) {
+                              setState(() {
+                                _isOn = newValue;
+                              });
+                            },
+                            activeColor: Colors.blue, // Change color if desired
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
                 const Text(
                   'Ausgewählte Kinder:',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

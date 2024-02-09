@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -51,7 +52,7 @@ class SchoolListPupilsView extends WatchingWidget {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async => locator<SchoolListManager>().fetchSchoolLists(),
+        onRefresh: () async => locator<PupilManager>().getAllPupils(),
         child: Padding(
           padding: const EdgeInsets.only(left: 5.0, right: 5),
           child: Center(

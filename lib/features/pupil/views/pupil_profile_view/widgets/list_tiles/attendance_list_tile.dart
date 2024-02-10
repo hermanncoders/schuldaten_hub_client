@@ -11,7 +11,7 @@ import 'package:schuldaten_hub/features/attendance/services/attendance_manager.d
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
 
-attendanceListTiles(Pupil pupil, context) {
+attendanceListTiles(Widget? titleWidget, Pupil pupil, context) {
   List<MissedClass> missedClasses = List.from(pupil.pupilMissedClasses!);
   // sort by missedDay
   missedClasses.sort((a, b) => a.missedDay.compareTo(b.missedDay));
@@ -24,19 +24,20 @@ attendanceListTiles(Pupil pupil, context) {
         tilePadding: const EdgeInsets.all(0),
         title: Row(
           children: [
-            const Icon(
-              Icons.calendar_month_rounded,
-              color: backgroundColor,
-            ),
-            const Gap(10),
-            const Text(
-              'Fehlzeiten',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
+            titleWidget ?? const SizedBox.shrink(),
+            // const Icon(
+            //   Icons.calendar_month_rounded,
+            //   color: backgroundColor,
+            // ),
+            // const Gap(10),
+            // const Text(
+            //   'Fehlzeiten',
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 20,
+            //   ),
+            // ),
             const Spacer(),
             excusedBadge(false),
             const Gap(3),

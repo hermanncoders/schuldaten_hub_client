@@ -18,6 +18,7 @@ BottomAppBar attendanceViewBottomNavBar(
       data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
       child: Row(
         children: <Widget>[
+          const Spacer(),
           IconButton(
             tooltip: 'zurück',
             icon: const Icon(
@@ -28,7 +29,7 @@ BottomAppBar attendanceViewBottomNavBar(
               Navigator.pop(context);
             },
           ),
-          const Spacer(),
+          const Gap(30),
           IconButton(
             tooltip: 'Scan Kinder-IDs',
             icon: const Icon(

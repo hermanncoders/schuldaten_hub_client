@@ -3,6 +3,7 @@ import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/widgets/download_decrypt_or_cached_image.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
@@ -66,8 +67,10 @@ Widget avatarWithBadges(Pupil pupil, double size) {
           child: Container(
             width: 30.0,
             height: 30.0,
-            decoration: const BoxDecoration(
-              color: groupColor,
+            decoration: BoxDecoration(
+              color: locator<AttendanceManager>().pupilIsMissedToday(pupil)
+                  ? buttonWarningColor
+                  : groupColor,
               shape: BoxShape.circle,
             ),
             child: Center(

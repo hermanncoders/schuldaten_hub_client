@@ -11,6 +11,7 @@ BottomAppBar authorizationListBottomNavBar(BuildContext context) {
       data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
       child: Row(
         children: <Widget>[
+          const Spacer(),
           IconButton(
             tooltip: 'zurück',
             icon: const Icon(
@@ -21,8 +22,7 @@ BottomAppBar authorizationListBottomNavBar(BuildContext context) {
               Navigator.pop(context);
             },
           ),
-          const Spacer(),
-          const Gap(15),
+          const Gap(30),
           IconButton(
             tooltip: 'Neue Liste',
             icon: const Icon(

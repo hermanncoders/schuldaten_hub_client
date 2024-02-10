@@ -73,8 +73,16 @@ class CreditListView extends WatchingWidget {
                   ),
                 ),
                 pupils.isEmpty
-                    ? const Center(
-                        child: Text('Keine Ergebnisse'),
+                    ? const SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Keine Ergebnisse',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
                       )
                     : SliverList(
                         delegate: SliverChildBuilderDelegate(

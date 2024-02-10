@@ -23,6 +23,7 @@ BottomAppBar authorizationPupilsBottomNavBar(
       data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
       child: Row(
         children: <Widget>[
+          const Spacer(),
           IconButton(
             tooltip: 'zurück',
             icon: const Icon(
@@ -33,7 +34,7 @@ BottomAppBar authorizationPupilsBottomNavBar(
               Navigator.pop(context);
             },
           ),
-          const Spacer(),
+          const Gap(30),
           locator<SessionManager>().credentials.value.username ==
                   authorization.createdBy
               ? IconButton(

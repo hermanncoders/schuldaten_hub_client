@@ -92,7 +92,7 @@ Future longTextFieldDialog(
                     const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: buttonSuccessColor,
                       minimumSize: const Size.fromHeight(50)),
                   onPressed: () {
                     String? newSpecialInformation = textEditingController.text;

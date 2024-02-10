@@ -27,7 +27,7 @@ class PupilMenuView extends StatelessWidget {
       body: Center(
         child: SizedBox(
           width: Platform.isWindows ? 570 : 380,
-          height: Platform.isWindows ? 380 : 600,
+          height: Platform.isWindows ? 380 : 800,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             physics: const ScrollPhysics(),

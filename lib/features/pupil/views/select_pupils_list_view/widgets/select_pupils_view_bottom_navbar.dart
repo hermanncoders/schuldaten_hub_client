@@ -10,7 +10,7 @@ import '../../../services/pupil_filter_manager.dart';
 BottomAppBar selectPupilsViewBottomNavBar(BuildContext context,
     SelectPupilListController controller, bool filtersOn) {
   return BottomAppBar(
-    // padding: EdgeInsets.all(9),
+    padding: const EdgeInsets.all(9),
     shape: null,
     color: backgroundColor,
     child: IconTheme(
@@ -19,18 +19,18 @@ BottomAppBar selectPupilsViewBottomNavBar(BuildContext context,
         constraints: const BoxConstraints(maxWidth: 800),
         child: Row(
           children: [
+            const Spacer(),
             IconButton(
               tooltip: 'zurück',
               icon: const Icon(
                 Icons.arrow_back,
-                size: 35,
+                size: 30,
               ),
               onPressed: () {
-                controller.clearAll();
-                Navigator.pop(context, controller.selectedPupilIds);
+                Navigator.pop(context);
               },
             ),
-            const Spacer(),
+            const Gap(30),
             controller.isSelectMode
                 ? IconButton(
                     onPressed: () {
@@ -45,6 +45,7 @@ BottomAppBar selectPupilsViewBottomNavBar(BuildContext context,
                 color: controller.isSelectAllMode
                     ? Colors.deepOrange
                     : Colors.white,
+                size: 30,
               ),
               onPressed: () {
                 controller.toggleSelectAll();
@@ -55,6 +56,7 @@ BottomAppBar selectPupilsViewBottomNavBar(BuildContext context,
               icon: Icon(
                 Icons.check,
                 color: controller.isSelectMode ? Colors.green : Colors.white,
+                size: 30,
               ),
               onPressed: () {
                 Navigator.pop(context, controller.selectedPupilIds);

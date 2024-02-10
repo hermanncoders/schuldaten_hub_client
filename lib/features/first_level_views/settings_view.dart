@@ -33,7 +33,7 @@ class SettingsView extends WatchingWidget {
       await locator<SessionManager>().logout();
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
-        Navigator.of(context).popUntil(ModalRoute.withName(Routes.start));
+        //Navigator.of(context).popUntil(ModalRoute.withName(Routes.login));
       }
     }
 
@@ -43,7 +43,7 @@ class SettingsView extends WatchingWidget {
       await locator<SessionManager>().logout();
       if (context.mounted) {
         snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
-        Navigator.of(context).popUntil(ModalRoute.withName(Routes.start));
+        //Navigator.of(context).popUntil(ModalRoute.withName(Routes.login));
       }
     }
 

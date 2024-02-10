@@ -18,6 +18,7 @@ BottomAppBar attendanceRankingListViewBottomNavBar(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Row(
           children: [
+            const Spacer(),
             IconButton(
               tooltip: 'zurück',
               icon: const Icon(
@@ -28,7 +29,8 @@ BottomAppBar attendanceRankingListViewBottomNavBar(
                 Navigator.pop(context);
               },
             ),
-            const Spacer(),
+
+            const Gap(30),
             // IconButton(
             //   tooltip: 'Search',
             //   icon: const Icon(Icons.search),

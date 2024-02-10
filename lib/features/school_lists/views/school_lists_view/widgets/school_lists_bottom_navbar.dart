@@ -12,6 +12,7 @@ BottomAppBar schoolListsBottomNavBar(BuildContext context) {
       data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
       child: Row(
         children: <Widget>[
+          const Spacer(),
           IconButton(
             tooltip: 'zurück',
             icon: const Icon(
@@ -22,13 +23,7 @@ BottomAppBar schoolListsBottomNavBar(BuildContext context) {
               Navigator.pop(context);
             },
           ),
-
-          // IconButton(
-          //   tooltip: 'Search',
-          //   icon: const Icon(Icons.search),
-          //   onPressed: () {},
-          // ),
-          const Spacer(),
+          const Gap(15),
           IconButton(
             tooltip: 'Neue Liste',
             icon: const Icon(

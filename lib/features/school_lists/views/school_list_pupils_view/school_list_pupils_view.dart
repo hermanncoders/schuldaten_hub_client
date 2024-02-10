@@ -33,8 +33,11 @@ class SchoolListPupilsView extends WatchingWidget {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
     List<Pupil> filteredPupils =
         watchValue((PupilFilterManager x) => x.filteredPupils);
-    List<Pupil> pupilsInList = locator<SchoolListManager>()
+    List<Pupil> filteredPupilsInList = locator<SchoolListManager>()
         .filteredPupilsInSchoolList(schoolList.listId, filteredPupils);
+    List<Pupil> pupilsInList =
+        controller.addPupilListFiltersToFilteredPupils(filteredPupilsInList);
+
     Map<PupilFilter, bool> activeFilters =
         watchValue((PupilFilterManager x) => x.filterState);
     return Scaffold(
@@ -61,7 +64,7 @@ class SchoolListPupilsView extends WatchingWidget {
               constraints: const BoxConstraints(maxWidth: 800),
               child: CustomScrollView(
                 slivers: [
-                  const SliverGap(15),
+                  const SliverGap(10),
                   SliverAppBar(
                     pinned: false,
                     floating: true,
@@ -69,8 +72,8 @@ class SchoolListPupilsView extends WatchingWidget {
                     automaticallyImplyLeading: false,
                     leading: const SizedBox.shrink(),
                     backgroundColor: Colors.transparent,
-                    collapsedHeight: 110,
-                    expandedHeight: 110.0,
+                    collapsedHeight: 130,
+                    expandedHeight: 130.0,
                     stretch: false,
                     elevation: 0,
                     flexibleSpace: FlexibleSpaceBar(

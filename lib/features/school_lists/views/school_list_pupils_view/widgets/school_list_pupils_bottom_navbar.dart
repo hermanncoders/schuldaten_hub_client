@@ -23,17 +23,18 @@ BottomAppBar schoolListPupilsBottomNavBar(
       data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
       child: Row(
         children: <Widget>[
+          const Spacer(),
           IconButton(
             tooltip: 'zurück',
             icon: const Icon(
               Icons.arrow_back,
-              size: 35,
+              size: 30,
             ),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          const Spacer(),
+          const Gap(30),
 
           // locator<SessionManager>().credentials.value.username ==
           //         authorization.createdBy
@@ -65,7 +66,7 @@ BottomAppBar schoolListPupilsBottomNavBar(
               },
               icon: const Icon(
                 Icons.share,
-                size: 35,
+                size: 30,
               )),
           const Gap(15),
           IconButton(
@@ -91,7 +92,7 @@ BottomAppBar schoolListPupilsBottomNavBar(
           ),
           const Gap(15),
           InkWell(
-            onTap: () => showPupilListFilterBottomSheet(context, filtersOn),
+            onTap: () => showPupilListFilterBottomSheet(context),
             onLongPress: () => locator<PupilFilterManager>().resetFilters(),
             child: Icon(
               Icons.filter_list,

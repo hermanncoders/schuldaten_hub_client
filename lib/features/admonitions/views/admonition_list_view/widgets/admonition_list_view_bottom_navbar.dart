@@ -19,6 +19,7 @@ BottomAppBar admonitionListViewBottomNavBar(
         constraints: const BoxConstraints(maxWidth: 800),
         child: Row(
           children: [
+            const Spacer(),
             IconButton(
               tooltip: 'zurück',
               icon: const Icon(
@@ -29,7 +30,7 @@ BottomAppBar admonitionListViewBottomNavBar(
                 Navigator.pop(context);
               },
             ),
-            const Spacer(),
+            const Gap(30),
             IconButton(
               tooltip: 'Scan Kinder-IDs',
               icon: const Icon(

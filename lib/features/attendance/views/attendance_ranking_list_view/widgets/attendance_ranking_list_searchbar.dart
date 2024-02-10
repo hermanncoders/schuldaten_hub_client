@@ -7,6 +7,7 @@ import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
 
 Widget attendanceRankingListSearchBar(BuildContext context, List<Pupil> pupils,
     AttendanceRankingListController controller, bool filtersOn) {
@@ -36,6 +37,8 @@ Widget attendanceRankingListSearchBar(BuildContext context, List<Pupil> pupils,
                   fontSize: 20,
                 ),
               ),
+              const Gap(10),
+              excusedBadge(false),
             ],
           ),
         ),

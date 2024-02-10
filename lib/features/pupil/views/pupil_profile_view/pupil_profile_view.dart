@@ -164,7 +164,22 @@ class PupilDetailsView extends WatchingWidget {
                           languageListTiles(pupil, context),
                           creditTiles(pupil, context),
                           missedClasses.isNotEmpty
-                              ? attendanceListTiles(pupil, context)
+                              ? attendanceListTiles(
+                                  const Row(
+                                    children: [
+                                      Gap(10),
+                                      Text(
+                                        'Fehlzeiten',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  pupil,
+                                  context)
                               : const Text(
                                   'Keine Fehlzeiten!',
                                   textAlign: TextAlign.left,

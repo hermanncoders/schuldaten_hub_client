@@ -22,42 +22,131 @@ Widget schoolListPupilsSearchBar(BuildContext context, List<Pupil> pupils,
             padding: const EdgeInsets.only(left: 10.0, right: 10.00),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.people_alt_rounded,
-                    color: backgroundColor,
+                  Row(
+                    children: [
+                      const Text(
+                        'Beschreibung:',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Gap(10),
+                      Text(
+                        controller.widget.schoolList.listDescription,
+                        style:
+                            const TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ],
                   ),
                   const Gap(10),
-                  Text(
-                    pupils.length.toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.people_alt_rounded,
+                        color: backgroundColor,
+                      ),
+                      const Gap(10),
+                      Text(
+                        pupils.length.toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                      const Gap(5),
+                      Text(
+                        controller
+                            .totalShownPupilsMarkedWithYesNoOrNull(
+                                pupils, false)
+                            .toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Icon(
+                        Icons.done,
+                        color: Colors.green,
+                      ),
+                      const Gap(5),
+                      Text(
+                        controller
+                            .totalShownPupilsMarkedWithYesNoOrNull(pupils, true)
+                            .toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Icon(
+                        Icons.question_mark_rounded,
+                        color: accentColor,
+                      ),
+                      const Gap(5),
+                      Text(
+                        controller
+                            .totalShownPupilsMarkedWithYesNoOrNull(pupils, null)
+                            .toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Icon(
+                        Icons.create,
+                        color: backgroundColor,
+                      ),
+                      const Gap(5),
+                      Text(
+                        controller
+                            .totalShownPupilsWithComment(pupils)
+                            .toString(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      const Icon(
+                        Icons.school_rounded,
+                        color: backgroundColor,
+                      ),
+                      const Gap(10),
+                      Text(
+                        controller.widget.schoolList.createdBy,
+                        style: const TextStyle(
+                            color: backgroundColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Gap(10),
+                      Text(
+                        controller.listOwners(),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                    ],
                   ),
-                  const Gap(10),
-                  const Icon(
-                    Icons.school_rounded,
-                    color: backgroundColor,
-                  ),
-                  const Gap(10),
-                  Text(
-                    controller.widget.schoolList.createdBy,
-                    style: const TextStyle(
-                        color: backgroundColor, fontWeight: FontWeight.bold),
-                  ),
-                  const Gap(10),
-                  Text(
-                    controller.listOwners(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const Gap(10),
                 ],
               ),
             ),

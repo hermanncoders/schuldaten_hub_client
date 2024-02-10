@@ -7,6 +7,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/attendance_list_tile.dart';
 import 'package:watch_it/watch_it.dart';
 
 class AttendanceRankingListCard extends WatchingWidget {
@@ -34,93 +35,102 @@ class AttendanceRankingListCard extends WatchingWidget {
         children: [
           avatarWithBadges(pupil, 80),
           Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Gap(15),
-              Row(
-                children: [
-                  Flexible(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: InkWell(
-                        onTap: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              PupilProfile(pupil),
-                        )),
-                        child: Text(
-                          '${pupil.firstName!} ${pupil.lastName!}',
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Gap(15),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: InkWell(
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    PupilProfile(pupil),
+                              )),
+                              child: Text(
+                                '${pupil.firstName!} ${pupil.lastName!}',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              const Gap(10),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: [
-                  missedTypeBadge('missed'),
-                  const Gap(5),
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text(
-                      missedclassSum(pupil).toString(),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  const Gap(5),
-                  excusedBadge(true),
-                  const Gap(5),
-                  Text(
-                    missedclassUnexcusedSum(pupil).toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const Gap(5),
-                  missedTypeBadge('late'),
-                  const Gap(5),
-                  Text(
-                    lateUnexcusedSum(pupil).toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const Gap(5),
-                  contactedBadge(1),
-                  const Gap(5),
-                  Text(
-                    contactedSum(pupil).toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const Gap(10),
-                ]),
-              ),
-            ],
-          )),
+// Row(children: [
+//   attendanceListTiles(pupil, context),
+// ],),
+                  ],
+                ),
+                const Gap(10),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(children: [
+                //     missedTypeBadge('missed'),
+                //     const Gap(5),
+                //     Padding(
+                //       padding: const EdgeInsets.all(2.0),
+                //       child: Text(
+                //         missedclassSum(pupil).toString(),
+                //         style: const TextStyle(
+                //           color: Colors.black,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 20,
+                //         ),
+                //       ),
+                //     ),
+                //     const Gap(5),
+                //     excusedBadge(true),
+                //     const Gap(5),
+                //     Text(
+                //       missedclassUnexcusedSum(pupil).toString(),
+                //       style: const TextStyle(
+                //         color: Colors.black,
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 20,
+                //       ),
+                //     ),
+                //     const Gap(5),
+                //     missedTypeBadge('late'),
+                //     const Gap(5),
+                //     Text(
+                //       lateUnexcusedSum(pupil).toString(),
+                //       style: const TextStyle(
+                //         color: Colors.black,
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 20,
+                //       ),
+                //     ),
+                //     const Gap(5),
+                //     contactedBadge(1),
+                //     const Gap(5),
+                //     Text(
+                //       contactedSum(pupil).toString(),
+                //       style: const TextStyle(
+                //         color: Colors.black,
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 20,
+                //       ),
+                //     ),
+                //     const Gap(10),
+                //   ]),
+                // ),
+                attendanceListTiles(null, pupil, context),
+              ],
+            ),
+          ),
         ],
       ),
     );

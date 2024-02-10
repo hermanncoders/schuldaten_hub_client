@@ -36,7 +36,8 @@ class GoalManager {
   Future fetchGoalCategories() async {
     _isRunning.value = true;
     try {
-      final response = await client.get(Endpoints().fetchGoalCategories);
+      final response =
+          await client.get(EndpointsLearningSupport().fetchGoalCategories);
       final goalCategories =
           (response.data as List).map((e) => GoalCategory.fromJson(e)).toList();
       debug.success(
@@ -61,7 +62,8 @@ class GoalManager {
         jsonEncode({"state": state, "file_url": null, "comment": comment});
     try {
       final response = await client.post(
-          Endpoints().postCategoryStatus(pupil.internalId, goalCategoryId),
+          EndpointsLearningSupport()
+              .postCategoryStatus(pupil.internalId, goalCategoryId),
           data: data);
       if (response.statusCode == 200) {
         locator<PupilManager>().patchPupilFromResponse(response.data);
@@ -80,8 +82,8 @@ class GoalManager {
   Future deleteCategoryStatus(String statusId) async {
     _isRunning.value = true;
     try {
-      final response =
-          await client.delete(Endpoints().deleteCategoryStatus(statusId));
+      final response = await client
+          .delete(EndpointsLearningSupport().deleteCategoryStatus(statusId));
       if (response.statusCode == 200) {
         locator<PupilManager>().patchPupilFromResponse(response.data);
       }
@@ -105,8 +107,8 @@ class GoalManager {
       "strategies": strategies
     });
     try {
-      final response =
-          await client.post(Endpoints().postGoal(pupilId), data: data);
+      final response = await client
+          .post(EndpointsLearningSupport().postGoal(pupilId), data: data);
       if (response.statusCode == 200) {
         locator<PupilManager>().patchPupilFromResponse(response.data);
       }
@@ -130,7 +132,8 @@ class GoalManager {
     _isRunning.value = true;
 
     try {
-      final response = await client.delete(Endpoints().deleteGoal(goalId));
+      final response =
+          await client.delete(EndpointsLearningSupport().deleteGoal(goalId));
       if (response.statusCode == 200) {
         locator<PupilManager>().patchPupilFromResponse(response.data);
       }

@@ -21,7 +21,7 @@ class AttendanceManager {
   final pupilManager = locator<PupilManager>();
   final schooldayManager = locator<SchooldayManager>();
   final client = locator<ApiManager>().dioClient.value;
-  final endpoints = Endpoints();
+  final endpoints = EndpointsMissedClass();
   ValueListenable<Report> get operationReport => _operationReport;
   ValueListenable<bool> get isRunning => _isRunning;
 
@@ -47,8 +47,8 @@ class AttendanceManager {
   }
 
   Future<void> fetchMissedClassesOnASchoolday(DateTime schoolday) async {
-    final Response response =
-        await client.get(Endpoints().getMissedClassesOnDate(schoolday));
+    final Response response = await client
+        .get(EndpointsMissedClass().getMissedClassesOnDate(schoolday));
     if (response.statusCode != 200) {
       _operationReport.value = Report('warning', response.data);
       return;
@@ -121,8 +121,8 @@ class AttendanceManager {
   }
 
   Future<void> deleteMissedClass(int pupilId, DateTime date) async {
-    final response =
-        await client.delete(Endpoints().deleteMissedClass(pupilId, date));
+    final response = await client
+        .delete(EndpointsMissedClass().deleteMissedClass(pupilId, date));
 
     if (response.statusCode != 200) {
       _operationReport.value = Report('warning', response.data);
@@ -163,7 +163,7 @@ class AttendanceManager {
       });
       // making the request
       final Response response =
-          await client.post(Endpoints.postMissedClass, data: data);
+          await client.post(EndpointsMissedClass.postMissedClass, data: data);
       final Map<String, dynamic> pupilResponse = response.data;
       // handle errors
       if (response.statusCode != 200) {
@@ -182,8 +182,8 @@ class AttendanceManager {
     // is if we uncheck 'return' - let's check that
     if (newValue == false &&
         pupil.pupilMissedClasses![missedClass!].missedType == 'none') {
-      final response =
-          await client.delete(Endpoints().deleteMissedClass(pupilId, date));
+      final response = await client
+          .delete(EndpointsMissedClass().deleteMissedClass(pupilId, date));
       await pupilManager.fetchPupilsById(pupilBaseIds);
       if (response.statusCode != 200) {
         _operationReport.value = Report('warning', response.data);
@@ -239,7 +239,7 @@ class AttendanceManager {
       });
 
       final Response response =
-          await client.post(Endpoints.postMissedClass, data: data);
+          await client.post(EndpointsMissedClass.postMissedClass, data: data);
       final Map<String, dynamic> pupilResponse = response.data;
       if (response.statusCode != 200) {
         _operationReport.value = Report('warning', response.data);
@@ -297,8 +297,8 @@ class AttendanceManager {
       }
     }
     final listData = jsonEncode(missedClasses);
-    final response =
-        await client.post(Endpoints.postMissedClassList, data: listData);
+    final response = await client.post(EndpointsMissedClass.postMissedClassList,
+        data: listData);
     if (response.statusCode != 200) {
       return;
     }
@@ -335,7 +335,7 @@ class AttendanceManager {
       });
 
       final Response response =
-          await client.post(Endpoints.postMissedClass, data: data);
+          await client.post(EndpointsMissedClass.postMissedClass, data: data);
       final Map<String, dynamic> pupilResponse = response.data;
       if (response.statusCode != 200) {
         _operationReport.value = Report('warning', response.data);

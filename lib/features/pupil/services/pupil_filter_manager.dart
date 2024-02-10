@@ -68,9 +68,9 @@ class PupilFilterManager {
 
   cloneToFilteredPupil(Pupil pupil) {
     List<Pupil> filteredPupils = _filteredPupils.value;
-    int index = filteredPupils
-        .indexWhere((element) => element.internalId == pupil.internalId);
     List<Pupil> updatedPupils = List<Pupil>.from(filteredPupils);
+    int index = updatedPupils
+        .indexWhere((element) => element.internalId == pupil.internalId);
     updatedPupils[index] = pupil;
     _filteredPupils.value = updatedPupils;
   }

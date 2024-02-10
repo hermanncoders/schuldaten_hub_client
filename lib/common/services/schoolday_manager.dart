@@ -42,7 +42,7 @@ class SchooldayManager {
   Future getSchooldays() async {
     _isRunning.value = true;
     try {
-      final response = await client.get(Endpoints.getSchooldays);
+      final response = await client.get(EndpointsSchoolday.getSchooldays);
       final schooldays =
           (response.data as List).map((e) => Schoolday.fromJson(e)).toList();
       debug.success(

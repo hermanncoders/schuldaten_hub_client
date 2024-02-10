@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
@@ -54,7 +55,14 @@ BottomAppBar schoolListPupilsBottomNavBar(
           // const Gap(10)
           IconButton(
               tooltip: 'Liste teilen',
-              onPressed: () {},
+              onPressed: () async {
+                final String? visibility = await shortTextfieldDialog(
+                    context, 'Liste teilen mit...', 'Kürzel eintragen!');
+                if (visibility != null) {
+                  locator<SchoolListManager>()
+                      .patchSchoolList(listId, null, null, visibility);
+                }
+              },
               icon: const Icon(
                 Icons.share,
                 size: 35,

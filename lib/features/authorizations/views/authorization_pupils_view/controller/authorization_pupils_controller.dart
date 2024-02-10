@@ -61,7 +61,7 @@ class AuthorizationPupilsController extends State<AuthorizationPupils> {
     locator<PupilFilterManager>().setSearchText(text);
   }
 
-  List<Pupil> getListResponseFilteredPupils(List<Pupil> pupils) {
+  List<Pupil> addAuthorizationFiltersToFilteredPupils(List<Pupil> pupils) {
     List<Pupil> filteredPupils = [];
     for (Pupil pupil in pupils) {
       bool toList = true;

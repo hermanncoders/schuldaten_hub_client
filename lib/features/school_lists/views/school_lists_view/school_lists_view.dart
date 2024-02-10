@@ -29,7 +29,8 @@ class SchoolListsView extends WatchingWidget {
     List<SchoolList> visibleSchoolLists = schoolLists
         .where((element) =>
             element.visibility == 'public' ||
-            element.createdBy == session.username)
+            element.createdBy == session.username ||
+            element.visibility.contains(session.username!))
         .toList();
 
     return Scaffold(

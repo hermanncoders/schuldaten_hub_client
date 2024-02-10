@@ -17,6 +17,7 @@ import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/controller/school_list_pupils_controller.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/school_list_pupil_card.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/school_list_pupils_bottom_navbar.dart';
+import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/school_list_pupils_searchbar.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -58,93 +59,49 @@ class SchoolListPupilsView extends WatchingWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 800),
-              child: Column(
-                children: [
-                  const Gap(15),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 15, top: 10.0, right: 10.00),
-                    child: Text(
-                      schoolList.listDescription.toString(),
-                      maxLines: 3,
-                      overflow: TextOverflow.clip,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10, top: 10.0, right: 10.00),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'Kinder in der Liste:',
-                          style: TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        const Gap(10),
-                        Text(
-                          pupilsInList.length.toString(),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: searchTextField(
-                          'Schüler/in suchen',
-                          controller,
-                          locator<PupilFilterManager>().refreshFilteredPupils,
-                        )),
-                        //---------------------------------
-                        InkWell(
-                          onTap: () => showPupilListFilterBottomSheet(
-                              context, activeFilters),
-                          onLongPress: () =>
-                              locator<PupilFilterManager>().resetFilters(),
-                          // onPressed: () => showBottomSheetFilters(context),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Icon(
-                              Icons.filter_list,
-                              color:
-                                  filtersOn ? Colors.deepOrange : Colors.grey,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ],
+              child: CustomScrollView(
+                slivers: [
+                  const SliverGap(15),
+                  SliverAppBar(
+                    pinned: false,
+                    floating: true,
+                    scrolledUnderElevation: null,
+                    automaticallyImplyLeading: false,
+                    leading: const SizedBox.shrink(),
+                    backgroundColor: Colors.transparent,
+                    collapsedHeight: 110,
+                    expandedHeight: 110.0,
+                    stretch: false,
+                    elevation: 0,
+                    flexibleSpace: FlexibleSpaceBar(
+                      titlePadding: const EdgeInsets.only(
+                          left: 5, top: 5, right: 5, bottom: 5),
+                      collapseMode: CollapseMode.none,
+                      title: schoolListPupilsSearchBar(
+                          context, pupilsInList, controller, filtersOn),
                     ),
                   ),
                   pupilsInList.isEmpty
-                      ? const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Keine Ergebnisse',
-                              style: TextStyle(fontSize: 18),
+                      ? const SliverToBoxAdapter(
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                'Keine Ergebnisse',
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
                           ),
                         )
-                      : Expanded(
-                          child: ListView.builder(
-                              itemCount: pupilsInList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return SchoolListPupilCard(
-                                    pupilsInList[index].internalId,
-                                    schoolList.listId);
-                              }),
+                      : SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return SchoolListPupilCard(
+                                  pupilsInList[index].internalId,
+                                  schoolList.listId);
+                            },
+                            childCount: pupilsInList.length,
+                          ),
                         ),
                 ],
               ),

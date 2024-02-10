@@ -14,6 +14,7 @@ import 'package:schuldaten_hub/features/authorizations/views/authorization_pupil
 
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
 import 'package:watch_it/watch_it.dart';
 
@@ -27,16 +28,18 @@ class AuthorizationPupilsView extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
+    List<Pupil> pupilsInRepository = watchValue((PupilManager x) => x.pupils);
     List<Pupil> filteredPupils =
         watchValue((PupilFilterManager x) => x.filteredPupils);
     List<Pupil> pupilsInAuthorization = locator<AuthorizationManager>()
-        .getPupilsInAuthorization(authorization.authorizationId);
+        .getListedPupilsInAuthorization(
+            authorization.authorizationId, pupilsInRepository);
 
     List<Pupil> pupilsFromList = locator<AuthorizationManager>()
-        .getFilteredPupilsInAuthorization(
-            authorization.authorizationId, filteredPupils);
+        .getListedPupilsInAuthorization(
+            authorization.authorizationId, pupilsInRepository);
     List<Pupil> pupilsInList =
-        controller.getListResponseFilteredPupils(pupilsFromList);
+        controller.addAuthorizationFiltersToFilteredPupils(pupilsFromList);
 
     // Map<PupilFilter, bool> activeFilters =
     //     watchValue((PupilFilterManager x) => x.filterState);
@@ -56,8 +59,7 @@ class AuthorizationPupilsView extends WatchingWidget {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async =>
-            locator<AuthorizationManager>().fetchAuthorizations(),
+        onRefresh: () async => locator<PupilManager>().getAllPupils(),
         child: pupilsInList.isEmpty
             ? const Center(
                 child: Padding(

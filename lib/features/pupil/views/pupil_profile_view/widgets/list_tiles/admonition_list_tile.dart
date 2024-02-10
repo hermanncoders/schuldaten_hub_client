@@ -205,7 +205,7 @@ admonitionListTiles(Pupil pupil, List<Admonition> admonitions, Widget title,
                                 },
                                 child: admonitions[index].fileUrl != null
                                     ? documentImage(
-                                        '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getAdmonitionFile(admonitions[index].admonitionId)}',
+                                        '${locator<EnvManager>().env.value.serverUrl}${EndpointsAdmonition().getAdmonitionFile(admonitions[index].admonitionId)}',
                                         admonitions[index].fileUrl,
                                         70)
                                     : Container(

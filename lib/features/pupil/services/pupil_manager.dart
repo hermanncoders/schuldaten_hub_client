@@ -124,7 +124,7 @@ class PupilManager {
     List<PupilBase> outdatedPupilbase = [];
     // request
     try {
-      final response = await client.post(Endpoints.getPupils, data: data);
+      final response = await client.post(EndpointsPupil.getPupils, data: data);
       debug.info('Pupil request sent!');
       // we have the response - let's build unidentified Pupils with it
       final pupilsWithoutBase =
@@ -275,7 +275,7 @@ class PupilManager {
     });
     // send request
     final Response response = await client.patch(
-      Endpoints().patchPupilhWithAvatar(pupil.internalId),
+      EndpointsPupil().patchPupilhWithAvatar(pupil.internalId),
       data: formData,
     );
     // Handle errors.
@@ -290,7 +290,7 @@ class PupilManager {
   deleteAvatarImage(int pupilId, String cacheKey) async {
     // send request
     final Response response = await client.delete(
-      Endpoints().deletePupilAvatar(pupilId),
+      EndpointsPupil().deletePupilAvatar(pupilId),
       options: Options(headers: {
         'x-access-token': locator<SessionManager>().credentials.value.jwt
       }),
@@ -312,7 +312,7 @@ class PupilManager {
     // prepare the data for the request
     final data = jsonEncode({jsonKey: value});
     final Response response =
-        await client.patch(Endpoints().patchPupil(pupilId), data: data);
+        await client.patch(EndpointsPupil().patchPupil(pupilId), data: data);
     // we have a response
     final Map<String, dynamic> pupilResponse = response.data;
     // handle errors

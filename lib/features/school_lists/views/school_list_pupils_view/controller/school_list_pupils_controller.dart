@@ -30,6 +30,28 @@ class SchoolListPupilsController extends State<SchoolListPupils> {
     super.initState();
   }
 
+  String listOwners() {
+    String owners = '';
+    if (widget.schoolList.visibility == 'public') {
+      return 'Hermannschule';
+    }
+    if (widget.schoolList.visibility == 'private') {
+      return '';
+    }
+    widget.schoolList.visibility.split('*').forEach((element) {
+      if (element.isNotEmpty) {
+        owners += '$element, ';
+      }
+    });
+    return widget.schoolList.visibility;
+  }
+
+  String shareList(String teacher) {
+    String visibility = widget.schoolList.visibility;
+    visibility += '*$teacher';
+    return visibility;
+  }
+
   void cancelSearch({bool unfocus = true}) {
     if (locator<PupilFilterManager>().filterState.value ==
         initialFilterValues) {

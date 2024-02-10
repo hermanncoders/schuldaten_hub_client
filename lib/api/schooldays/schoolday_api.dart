@@ -9,7 +9,7 @@ class SchooldayApi {
 
   Future fetchSchooldayfromApi() async {
     try {
-      final response = await client.get(Endpoints.getSchooldays);
+      final response = await client.get(EndpointsSchoolday.getSchooldays);
       return response.data;
     } catch (e) {
       rethrow;

@@ -29,7 +29,7 @@ class CompetenceManager {
   Future firstFetchCompetences() async {
     _isRunning.value = true;
     try {
-      final response = await client.get(Endpoints().fetchCompetences);
+      final response = await client.get(EndpointsCompetence().fetchCompetences);
       final competences =
           (response.data as List).map((e) => Competence.fromJson(e)).toList();
       debug.success(
@@ -49,7 +49,7 @@ class CompetenceManager {
   Future fetchCompetences() async {
     _isRunning.value = true;
     try {
-      final response = await client.get(Endpoints().fetchCompetences);
+      final response = await client.get(EndpointsCompetence().fetchCompetences);
       final competences =
           (response.data as List).map((e) => Competence.fromJson(e)).toList();
       debug.success(
@@ -78,8 +78,8 @@ class CompetenceManager {
       "indicators": indicators == '' ? null : indicators
     });
     try {
-      final response =
-          await client.post(Endpoints().postNewCompetence, data: data);
+      final response = await client
+          .post(EndpointsCompetence().postNewCompetence, data: data);
       final newCompetences =
           (response.data as List).map((e) => Competence.fromJson(e)).toList();
       debug.success(
@@ -106,8 +106,9 @@ class CompetenceManager {
       "indicators": indicators
     });
     try {
-      final response = await client
-          .patch(Endpoints().patchCompetence(competenceId), data: data);
+      final response = await client.patch(
+          EndpointsCompetence().patchCompetence(competenceId),
+          data: data);
       final patchedCompetence = Competence.fromJson(response.data);
       final List<Competence> competences = List.from(_competences.value);
       final index = competences

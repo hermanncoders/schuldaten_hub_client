@@ -139,7 +139,7 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                             },
                       child: pupilAuthorization.fileUrl != null
                           ? documentImage(
-                              '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAuthorizationFile(pupil.internalId, authorizationId)}',
+                              '${locator<EnvManager>().env.value.serverUrl}${EndpointsAuthorization().getPupilAuthorizationFile(pupil.internalId, authorizationId)}',
                               pupilAuthorization.fileUrl,
                               70)
                           : Container(

@@ -80,7 +80,7 @@ class AdmonitionManager {
       "processed_by": null
     });
     final Response response =
-        await client.post(Endpoints.postAdmonition, data: data);
+        await client.post(EndpointsAdmonition.postAdmonition, data: data);
     final Map<String, dynamic> pupilResponse = response.data;
     if (response.statusCode == 200) {
       _operationReport.value = Report('success', 'Eintrag erfolgreich!');
@@ -105,8 +105,8 @@ class AdmonitionManager {
           {"processed": processed, "processed_at": null, "processed_by": null});
     }
     // send request
-    final Response response =
-        await client.patch(endpoints.patchAdmonition(admonitionId), data: data);
+    final Response response = await client
+        .patch(EndpointsAdmonition().patchAdmonition(admonitionId), data: data);
     // Handle errors.
     if (response.statusCode != 200) {
       debug.warning('Something went wrong with the multipart request');
@@ -129,7 +129,7 @@ class AdmonitionManager {
     });
     // send request
     final Response response = await client.patch(
-      Endpoints().patchAdmonitionFile(admonitionId),
+      EndpointsAdmonition().patchAdmonitionFile(admonitionId),
       data: formData,
     );
     // Handle errors.
@@ -143,8 +143,8 @@ class AdmonitionManager {
 
   deleteAdmonitionFile(String admonitionId, String cacheKey) async {
     // send request
-    final Response response =
-        await client.delete(Endpoints().deleteAdmonitionFile(admonitionId));
+    final Response response = await client
+        .delete(EndpointsAdmonition().deleteAdmonitionFile(admonitionId));
     // Handle errors.
     if (response.statusCode != 200) {
       debug.warning('Something went wrong with the multipart request');
@@ -162,8 +162,8 @@ class AdmonitionManager {
     resetOperationReport();
     _setIsRunning(true);
     // send request
-    Response response =
-        await client.delete(Endpoints().deleteAdmonition(admonitionId));
+    Response response = await client
+        .delete(EndpointsAdmonition().deleteAdmonition(admonitionId));
 
     if (response.statusCode != 200) {
       _operationReport.value = Report('warning', response.data);

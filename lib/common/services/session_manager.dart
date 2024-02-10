@@ -113,7 +113,7 @@ class SessionManager {
   Future<int> refreshToken(String password) async {
     final String username = _credentials.value.username!;
     String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
-    final response = await _dio.get(Endpoints.login,
+    final response = await _dio.get(EndpointsUser.login,
         options: Options(headers: <String, String>{'Authorization': auth}));
     if (response.statusCode == 200) {
       final Session session =
@@ -127,7 +127,7 @@ class SessionManager {
   }
 
   Future<bool> increaseUsersCredit() async {
-    final response = await _dio.get(Endpoints.increaseCredit);
+    final response = await _dio.get(EndpointsUser.increaseCredit);
     if (response.statusCode == 200) {
       return true;
     }
@@ -138,7 +138,7 @@ class SessionManager {
     String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
     _operationReport.value = Report(null, null);
     _isRunning.value = true;
-    final response = await _dio.get(Endpoints.login,
+    final response = await _dio.get(EndpointsUser.login,
         options: Options(headers: <String, String>{'Authorization': auth}));
     if (response.statusCode == 200) {
       final Session session =

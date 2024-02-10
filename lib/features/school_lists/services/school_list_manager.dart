@@ -34,7 +34,7 @@ class SchoolListManager {
 
   Future fetchSchoolLists() async {
     try {
-      final response = await client.get(Endpoints.getSchoolLists);
+      final response = await client.get(EndpointsSchoolList.getSchoolLists);
       final schoolLists =
           (response.data as List).map((e) => SchoolList.fromJson(e)).toList();
       debug.success(
@@ -51,6 +51,59 @@ class SchoolListManager {
     return;
   }
 
+  Future patchSchoolList(String listId, String? name, String? description,
+      String? visibility) async {
+    Map<String, String> jsonMap = {};
+    if (name != null) {
+      jsonMap["list_name"] = name;
+    }
+    if (description != null) {
+      jsonMap["list_description"] = description;
+    }
+    if (visibility != null) {
+      jsonMap["visibility"] = visibility;
+    }
+    final String data = jsonEncode(jsonMap);
+    final Response response = await client
+        .patch(EndpointsSchoolList().patchSchoolList(listId), data: data);
+    if (response.statusCode != 200) {
+      //handle errors
+      debug.error(
+          'patchSchoolList error: ${response.statusCode} | ${StackTrace.current}');
+    }
+    final updatedSchoolList = SchoolList.fromJson(response.data);
+    List<SchoolList> updatedSchoolLists = List.from(_schoolLists.value);
+    int index =
+        updatedSchoolLists.indexWhere((element) => element.listId == listId);
+    updatedSchoolLists[index] = updatedSchoolList;
+    _schoolLists.value = updatedSchoolLists;
+  }
+
+  Future deleteSchoolList(String listId) async {
+    final response =
+        await client.delete(EndpointsSchoolList().deleteSchoolList(listId));
+    if (response.statusCode == 200) {
+      debug.success('list entry successful');
+      await fetchSchoolLists();
+    }
+  }
+
+  SchoolList getSchoolList(String listId) {
+    final SchoolList schoolList =
+        _schoolLists.value.where((element) => element.listId == listId).first;
+    return schoolList;
+  }
+
+  List<PupilList> getVisibleSchoolLists(Pupil pupil) {
+    final Session session = locator<SessionManager>().credentials.value;
+    List<PupilList> visiblePupilLists = pupil.pupilLists!
+        .where((pupilList) =>
+            getSchoolList(pupilList.originList).visibility == 'public' ||
+            getSchoolList(pupilList.originList).createdBy == session.username)
+        .toList();
+    return visiblePupilLists;
+  }
+
   Future postSchoolListWithGroup(String name, String description,
       List<int> pupilIds, String visibility) async {
     String data = jsonEncode({
@@ -59,8 +112,8 @@ class SchoolListManager {
       "pupils": pupilIds,
       "visibility": visibility
     });
-    final response =
-        await client.post(Endpoints.postSchoolListWithGroup, data: data);
+    final response = await client
+        .post(EndpointsSchoolList.postSchoolListWithGroup, data: data);
     if (response.statusCode == 200) {
       final newList = SchoolList.fromJson(response.data);
       List<SchoolList> updatedSchoolLists = List.from(_schoolLists.value);
@@ -74,7 +127,7 @@ class SchoolListManager {
   Future addPupilsToSchoolList(String listId, List<int> pupilIds) async {
     final data = jsonEncode({"pupils": pupilIds});
     final response = await client
-        .post(Endpoints().addPupilsToSchoolList(listId), data: data);
+        .post(EndpointsSchoolList().addPupilsToSchoolList(listId), data: data);
     if (response.statusCode != 200) {
       // handle errors
       debug.error('addPupilToSchoolList error: ${response.data}');
@@ -97,8 +150,9 @@ class SchoolListManager {
     String listId,
   ) async {
     final data = jsonEncode({"pupils": pupilIds});
-    final response = await client
-        .post(Endpoints().deletePupilsFromSchoolList(listId), data: data);
+    final response = await client.post(
+        EndpointsSchoolList().deletePupilsFromSchoolList(listId),
+        data: data);
     if (response.statusCode != 200) {
       // handle errors
       debug.error('removePupilFromSchoolList error: ${response.data}');
@@ -124,8 +178,9 @@ class SchoolListManager {
       data = jsonEncode({"pupil_list_comment": comment});
     }
     //   jsonEncode({"pupil_list_comment": comment, "pupil_list_status": value});
-    final response = await client
-        .patch(Endpoints().patchPupilSchoolList(pupilId, listId), data: data);
+    final response = await client.patch(
+        EndpointsSchoolList().patchPupilSchoolList(pupilId, listId),
+        data: data);
     if (response.statusCode == 200) {
       await locator<PupilManager>().patchPupilFromResponse(response.data);
       debug.success('list entry successful');
@@ -137,7 +192,7 @@ class SchoolListManager {
   //   final client = locator.get<ApiManager>().dioClient.value;
   //   final String data = jsonEncode({"pupils": pupilIds});
   //   final response = await client
-  //       .post(Endpoints().deletePupilsFromSchoolList(listId), data: data);
+  //       .post(EndpointsSchoolList().deletePupilsFromSchoolList(listId), data: data);
   //   if (response.statusCode != 200) {
   //     //handle errors
   //     debug.error('deletePupilsFromSchoolList error: ${response.data}');
@@ -147,30 +202,6 @@ class SchoolListManager {
 
   //   locator<PupilManager>().patchListOfPupils(pupils);
   // }
-
-  Future deleteSchoolList(String listId) async {
-    final response = await client.delete(Endpoints().deleteSchoolList(listId));
-    if (response.statusCode == 200) {
-      debug.success('list entry successful');
-      await fetchSchoolLists();
-    }
-  }
-
-  SchoolList getSchoolList(String listId) {
-    final SchoolList schoolList =
-        _schoolLists.value.where((element) => element.listId == listId).first;
-    return schoolList;
-  }
-
-  List<PupilList> getVisibleSchoolLists(Pupil pupil) {
-    final Session session = locator<SessionManager>().credentials.value;
-    List<PupilList> visiblePupilLists = pupil.pupilLists!
-        .where((pupilList) =>
-            getSchoolList(pupilList.originList).visibility == 'public' ||
-            getSchoolList(pupilList.originList).createdBy == session.username)
-        .toList();
-    return visiblePupilLists;
-  }
 
   PupilList getPupilSchoolListEntry(int pupilId, String listId) {
     final Pupil pupil = locator<PupilManager>()

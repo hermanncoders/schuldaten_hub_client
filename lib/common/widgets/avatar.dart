@@ -20,7 +20,7 @@ Widget avatarImage(Pupil pupil, double size) {
                 heroAnimationTag: pupil.internalId,
                 zoomWidget: FutureBuilder<Widget>(
                   future: downloadAndDecryptOrCachedImage(
-                    '${locator<EnvManager>().env.value.serverUrl}${Endpoints().getPupilAvatar(pupil.internalId)}',
+                    '${locator<EnvManager>().env.value.serverUrl}${EndpointsPupil().getPupilAvatar(pupil.internalId)}',
                     pupil.internalId.toString(),
                   ),
                   builder: (context, snapshot) {

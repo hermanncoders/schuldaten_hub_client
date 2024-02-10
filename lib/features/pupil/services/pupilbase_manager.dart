@@ -207,7 +207,7 @@ class PupilBaseManager {
       ),
     });
     final response = await client.post(
-      Endpoints.exportPupilsTxt,
+      EndpointsPupil.exportPupilsTxt,
       data: formData,
     );
     debug.warning('RESPONSE is ${response.data}');

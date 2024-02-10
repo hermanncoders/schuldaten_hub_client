@@ -3,11 +3,10 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
-import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
-import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_list_card.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_list_view_bottom_navbar.dart';
+import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_searchbar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -46,70 +45,43 @@ class AttendanceRankingListView extends WatchingWidget {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10.0, top: 15.0, right: 10.00),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.people_alt_rounded,
-                        color: backgroundColor,
-                      ),
-                      const Gap(10),
-                      Text(
-                        pupils.length.toString(),
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                      const Gap(15),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: searchTextField(
-                          'Schüler*in suchen',
-                          controller,
-                          locator<PupilFilterManager>().refreshFilteredPupils,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () =>
-                            showAttendanceRankingFilterBottomSheet(context),
-                        onLongPress: () =>
-                            locator<PupilFilterManager>().resetFilters(),
-                        // onPressed: () => showBottomSheetFilters(context),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Icon(
-                            Icons.filter_list,
-                            color: filtersOn ? Colors.deepOrange : Colors.grey,
-                            size: 30,
-                          ),
-                        ),
-                      ),
-                    ],
+            child: CustomScrollView(
+              slivers: [
+                const SliverGap(5),
+                SliverAppBar(
+                  pinned: false,
+                  floating: true,
+                  scrolledUnderElevation: null,
+                  automaticallyImplyLeading: false,
+                  leading: const SizedBox.shrink(),
+                  backgroundColor: Colors.transparent,
+                  collapsedHeight: 110,
+                  expandedHeight: 110.0,
+                  stretch: false,
+                  elevation: 0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    titlePadding: const EdgeInsets.only(
+                        left: 5, top: 5, right: 5, bottom: 5),
+                    collapseMode: CollapseMode.none,
+                    title: attendanceRankingListSearchBar(
+                        context, pupils, controller, filtersOn),
                   ),
                 ),
                 pupils.isEmpty
                     ? const Center(
                         child: Text('Keine Ergebnisse'),
                       )
-                    : Expanded(
-                        child: ListView.builder(
-                            itemCount: pupils.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return AttendanceRankingListCard(
-                                  controller, pupils[index]);
-                            })),
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            // Your list view items go here
+                            return AttendanceRankingListCard(
+                                controller, pupils[index]);
+                          },
+                          childCount:
+                              pupils.length, // Adjust this based on your data
+                        ),
+                      ),
               ],
             ),
           ),

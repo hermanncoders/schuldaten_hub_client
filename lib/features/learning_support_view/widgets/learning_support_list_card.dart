@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/individual_development_plan_dialog.dart';
 import 'package:watch_it/watch_it.dart';
 
 class LearningSupportCard extends WatchingWidget {
@@ -70,7 +71,7 @@ class LearningSupportCard extends WatchingWidget {
                 const Gap(5),
                 Row(
                   children: [
-                    const Text('FörderSchwerpunkt:'),
+                    const Text('FöSchw.:'),
                     const Gap(10),
                     Text(
                       pupil.specialNeeds != null
@@ -135,11 +136,17 @@ class LearningSupportCard extends WatchingWidget {
               const Gap(20),
               const Text('Ebene'),
               Center(
-                child: Text(
-                  pupil.individualDevelopmentPlan.toString(),
-                  style: const TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
+                child: InkWell(
+                  onTap: () async {
+                    individualDevelopmentPlanDialog(
+                        context, pupil, pupil.individualDevelopmentPlan);
+                  },
+                  child: Text(
+                    pupil.individualDevelopmentPlan.toString(),
+                    style: const TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

@@ -14,11 +14,25 @@ import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/first_level_views/loading_page.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:watch_it/watch_it.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'common/services/locator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // using package window_manager for windows window size
+  await windowManager.ensureInitialized();
+  WindowOptions windowOptions = const WindowOptions(
+    size: Size(1000, 700),
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.normal,
+  );
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: backgroundColor,

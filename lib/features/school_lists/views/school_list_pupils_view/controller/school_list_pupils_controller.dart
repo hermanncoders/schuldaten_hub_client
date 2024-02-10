@@ -46,7 +46,7 @@ class SchoolListPupilsController extends State<SchoolListPupils> {
         owners += '$element, ';
       }
     });
-    return widget.schoolList.visibility;
+    return owners;
   }
 
   String shareList(String teacher) {

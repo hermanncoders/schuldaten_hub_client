@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
@@ -29,159 +30,173 @@ class LoginView extends WatchingWidget {
             body: Container(
               color: const Color.fromRGBO(74, 76, 161, 1),
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                        padding: keyboardOn
-                            ? const EdgeInsets.only(top: 70)
-                            : const EdgeInsets.only(top: 0)),
-                    keyboardOn
-                        ? const SizedBox.shrink()
-                        : const SizedBox(
-                            height: 350,
-                            width: 350,
-                            child: Image(
-                              image: AssetImage('assets/foreground.png'),
-                            ),
-                          ),
-                    const Text(
-                      "Schuldaten Hub",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
-                    ),
-                    keyboardOn
-                        ? const SizedBox(
-                            height: 15,
-                          )
-                        : const SizedBox(
-                            height: 30,
-                          ),
-                    if (envReady)
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 380),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 8),
-                        child: TextField(
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          controller: controller.usernameController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            filled: true,
-                            fillColor: Colors.white,
-                            labelText: 'Benutzername',
-                            labelStyle: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromRGBO(74, 76, 161, 1),
+                          padding: keyboardOn
+                              ? const EdgeInsets.only(top: 70)
+                              : Platform.isWindows
+                                  ? const EdgeInsets.only(top: 0)
+                                  : const EdgeInsets.only(top: 0)),
+                      keyboardOn
+                          ? const SizedBox.shrink()
+                          : const SizedBox(
+                              height: 250,
+                              width: 250,
+                              child: Image(
+                                image:
+                                    AssetImage('assets/foreground_windows.png'),
+                              ),
                             ),
-                          ),
+                      const Gap(20),
+                      const Text(
+                        "Schuldaten Hub",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
                         ),
                       ),
-                    if (envReady)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 25.0, vertical: 8),
-                        child: TextField(
-                          textDirection: null,
-                          controller: controller.passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            filled: true,
-                            fillColor: Colors.white,
-                            labelText: 'Passwort',
-                            labelStyle: TextStyle(
-                              color: Color.fromRGBO(74, 76, 161, 1),
+                      keyboardOn
+                          ? const SizedBox(
+                              height: 15,
+                            )
+                          : const SizedBox(
+                              height: 30,
                             ),
-                          ),
-                        ),
-                      ),
-                    if (!envReady)
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Center(
-                          child: Platform.isWindows
-                              ? const Text(
-                                  'Schul-ID importieren, um fortfahren zu können.',
-                                  softWrap: true,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
-                                )
-                              : const Text(
-                                  'Schul-ID scannen, um fortfahren zu können.',
-                                  softWrap: true,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                  ),
+                      if (envReady)
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 380),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25.0, vertical: 8),
+                            child: TextField(
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              controller: controller.usernameController,
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: 'Benutzername',
+                                labelStyle: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Color.fromRGBO(74, 76, 161, 1),
                                 ),
+                              ),
+                            ),
+                          ),
                         ),
+                      if (envReady)
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 380),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25.0, vertical: 8),
+                            child: TextField(
+                              textDirection: null,
+                              controller: controller.passwordController,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                filled: true,
+                                fillColor: Colors.white,
+                                labelText: 'Passwort',
+                                labelStyle: TextStyle(
+                                  color: Color.fromRGBO(74, 76, 161, 1),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (!envReady)
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Center(
+                            child: Platform.isWindows
+                                ? const Text(
+                                    'Schul-ID importieren, um fortfahren zu können.',
+                                    softWrap: true,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Schul-ID scannen, um fortfahren zu können.',
+                                    softWrap: true,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 40,
                       ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    if (envReady)
+                      if (envReady)
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            //margin: const EdgeInsets.only(bottom: 16),
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: buttonAppStyleColor,
+                                  minimumSize: const Size.fromHeight(50)),
+                              onPressed: () async {
+                                await controller.textFieldCredentials();
+                              },
+                              child: const Text(
+                                "EINLOGGEN",
+                                style: TextStyle(fontSize: 17.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           //margin: const EdgeInsets.only(bottom: 16),
-                          width: double.infinity,
                           child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: buttonAppStyleColor,
-                                minimumSize: const Size.fromHeight(50)),
-                            onPressed: () async {
-                              await controller.textFieldCredentials();
-                            },
-                            child: const Text(
-                              "EINLOGGEN",
-                              style: TextStyle(fontSize: 17.0),
-                            ),
-                          ),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.amber[800],
+                                  minimumSize: const Size.fromHeight(50)),
+                              onPressed: () async {
+                                envReady
+                                    ? controller.scanCredentials()
+                                    : Platform.isWindows
+                                        ? controller.importEnvFromTxt()
+                                        : controller.scanEnv();
+                              },
+                              child: Platform.isWindows
+                                  ? const Text(
+                                      'DATEI AUSWÄHLEN',
+                                      style: TextStyle(fontSize: 17.0),
+                                    )
+                                  : const Text(
+                                      "SCANNEN",
+                                      style: TextStyle(fontSize: 17.0),
+                                    )),
                         ),
                       ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        //margin: const EdgeInsets.only(bottom: 16),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.amber[800],
-                                minimumSize: const Size.fromHeight(50)),
-                            onPressed: () async {
-                              envReady
-                                  ? controller.scanCredentials()
-                                  : Platform.isWindows
-                                      ? controller.importEnvFromTxt()
-                                      : controller.scanEnv();
-                            },
-                            child: Platform.isWindows
-                                ? const Text(
-                                    'DATEI AUSWÄHLEN',
-                                    style: TextStyle(fontSize: 17.0),
-                                  )
-                                : const Text(
-                                    "SCANNEN",
-                                    style: TextStyle(fontSize: 17.0),
-                                  )),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

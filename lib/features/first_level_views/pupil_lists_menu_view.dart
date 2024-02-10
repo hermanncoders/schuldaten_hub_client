@@ -26,14 +26,14 @@ class PupilMenuView extends StatelessWidget {
       ),
       body: Center(
         child: SizedBox(
-          width: Platform.isWindows ? 570 : 380,
-          height: Platform.isWindows ? 380 : 800,
+          width: Platform.isWindows ? 750 : 380,
+          height: Platform.isWindows ? 400 : 800,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             physics: const ScrollPhysics(),
             child: GridView.count(
               shrinkWrap: true,
-              crossAxisCount: Platform.isWindows ? 3 : 2,
+              crossAxisCount: Platform.isWindows ? 4 : 2,
               padding: const EdgeInsets.all(20),
               physics: const NeverScrollableScrollPhysics(),
               children: [

@@ -1,7 +1,7 @@
 name: schuldaten_hub
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.1.31
+version: 0.1.40
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -40,6 +40,7 @@ dependencies:
   top_snackbar_flutter: ^3.1.0
   watch_it: ^1.1.0
   widget_zoom: ^0.0.2
+  window_manager: ^0.3.8
 
 dev_dependencies:
   flutter_test:

@@ -21,6 +21,7 @@ Widget attendanceRankingListSearchBar(BuildContext context, List<Pupil> pupils,
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.people_alt_rounded,

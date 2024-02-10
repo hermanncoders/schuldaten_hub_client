@@ -22,13 +22,11 @@ Widget specialInfoListSearchBar(BuildContext context, List<Pupil> pupils,
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Gesamt:',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.black,
-                ),
+              const Icon(
+                Icons.people_alt_rounded,
+                color: backgroundColor,
               ),
               const Gap(5),
               Text(

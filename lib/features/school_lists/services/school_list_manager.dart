@@ -32,6 +32,10 @@ class SchoolListManager {
     return this;
   }
 
+  SchoolList getSchoolListById(String listId) {
+    return _schoolLists.value.firstWhere((element) => element.listId == listId);
+  }
+
   Future fetchSchoolLists() async {
     try {
       final response = await client.get(EndpointsSchoolList.getSchoolLists);

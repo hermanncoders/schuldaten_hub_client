@@ -43,7 +43,7 @@ class SchoolListPupilsController extends State<SchoolListPupils> {
     }
     widget.schoolList.visibility.split('*').forEach((element) {
       if (element.isNotEmpty) {
-        owners += '$element, ';
+        owners += ' - $element';
       }
     });
     return owners;

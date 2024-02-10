@@ -3,17 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-import 'package:schuldaten_hub/common/constants/enums.dart';
+//import 'package:schuldaten_hub/common/constants/enums.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
-import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/pupil_list_filter_bottom_sheet.dart';
 
-import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
+import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/controller/school_list_pupils_controller.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/school_list_pupil_card.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/school_list_pupils_bottom_navbar.dart';
@@ -38,8 +36,8 @@ class SchoolListPupilsView extends WatchingWidget {
     List<Pupil> pupilsInList =
         controller.addPupilListFiltersToFilteredPupils(filteredPupilsInList);
 
-    Map<PupilFilter, bool> activeFilters =
-        watchValue((PupilFilterManager x) => x.filterState);
+    // Map<PupilFilter, bool> activeFilters =
+    //     watchValue((PupilFilterManager x) => x.filterState);
     return Scaffold(
       backgroundColor: canvasColor,
       appBar: AppBar(

@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
-import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/controller/credit_list_controller.dart';
-import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/credit_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/credit_list_card.dart';
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/credit_list_searchbar.dart';
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/credit_list_view_bottom_navbar.dart';
+
 import 'package:watch_it/watch_it.dart';
 
 class CreditListView extends WatchingWidget {

@@ -105,11 +105,14 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                //const Gap(5),
+                const Gap(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text('nein'),
+                    const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
                     Checkbox(
                       activeColor: Colors.red,
                       value: (pupilList.pupilListStatus == null ||
@@ -131,7 +134,10 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text('ja'),
+                    const Icon(
+                      Icons.done,
+                      color: Colors.green,
+                    ),
                     Checkbox(
                       activeColor: Colors.green,
                       value: (pupilList.pupilListStatus != true ||

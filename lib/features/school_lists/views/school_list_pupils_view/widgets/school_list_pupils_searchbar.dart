@@ -129,13 +129,14 @@ Widget schoolListPupilsSearchBar(BuildContext context, List<Pupil> pupils,
                         color: backgroundColor,
                       ),
                       const Gap(10),
-                      Text(
-                        controller.widget.schoolList.createdBy,
-                        style: const TextStyle(
-                            color: backgroundColor,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const Gap(10),
+                      controller.widget.schoolList.visibility != 'public'
+                          ? Text(
+                              controller.widget.schoolList.createdBy,
+                              style: const TextStyle(
+                                  color: backgroundColor,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : const SizedBox.shrink(),
                       Text(
                         controller.listOwners(),
                         style: const TextStyle(

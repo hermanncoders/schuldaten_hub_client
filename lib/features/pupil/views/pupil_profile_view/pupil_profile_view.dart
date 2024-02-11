@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
@@ -23,8 +24,9 @@ import 'package:watch_it/watch_it.dart';
 
 class PupilDetailsView extends WatchingWidget {
   final PupilProfileController controller;
-  const PupilDetailsView(this.controller, {Key? key}) : super(key: key);
-
+  PupilDetailsView(this.controller, {Key? key}) : super(key: key);
+  final CustomExpansionTileController _tileController =
+      CustomExpansionTileController();
   @override
   Widget build(BuildContext context) {
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
@@ -216,7 +218,8 @@ class PupilDetailsView extends WatchingWidget {
                                   ),
                                 ],
                               ),
-                              context),
+                              context,
+                              _tileController),
                           const Gap(50)
                         ],
                       ),

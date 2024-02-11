@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/document_image.dart';
@@ -19,16 +20,17 @@ import 'package:schuldaten_hub/features/admonitions/views/new_admonition_view/ne
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 
 admonitionListTiles(Pupil pupil, List<Admonition> admonitions, Widget title,
-    BuildContext context) {
+    BuildContext context, CustomExpansionTileController controller) {
   return ListTileTheme(
     contentPadding: const EdgeInsets.all(0),
     dense: true,
     horizontalTitleGap: 0.0,
     minLeadingWidth: 0,
     minVerticalPadding: 0,
-    child: ExpansionTile(
+    child: CustomExpansionTile(
         tilePadding: const EdgeInsets.all(0),
-        title: title,
+        title: const SizedBox.shrink(),
+        controller: controller,
         children: [
           ListView.builder(
             padding: const EdgeInsets.only(top: 5, bottom: 15),

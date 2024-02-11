@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
+import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -14,6 +15,9 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
   final AdmonitionListController controller;
   final Pupil passedPupil;
   AdmonitionListCard(this.controller, this.passedPupil, {super.key});
+  final CustomExpansionTileController _tileController =
+      CustomExpansionTileController();
+
   @override
   Widget build(BuildContext context) {
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
@@ -83,7 +87,13 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
             SizedBox(
               width: 80,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  if (_tileController.isExpanded) {
+                    _tileController.collapse();
+                  } else {
+                    _tileController.expand();
+                  }
+                },
                 child: Column(
                   children: [
                     const Gap(20),
@@ -107,12 +117,13 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
         Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 10.0),
             child: admonitionListTiles(
-                pupil,
-                admonitions,
-                const Text('Vorfälle',
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-                context)),
+              pupil,
+              admonitions,
+              const Text('Vorfälle',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+              context,
+              _tileController,
+            )),
       ],
     ));
   }

@@ -120,7 +120,7 @@ class PupilMenuView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.rule,
+                            Icons.today,
                             size: 50,
                             color: gridViewColor,
                           ),

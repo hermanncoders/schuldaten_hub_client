@@ -27,19 +27,6 @@ class CreditListController extends State<CreditList> {
     super.initState();
   }
 
-  void _search() async {
-    if (!isSearching) {
-      setState(() {
-        isSearching = true;
-      });
-    }
-
-    if (!isSearchMode) return;
-    setState(() {
-      isSearching = false;
-    });
-  }
-
   void cancelSearch({bool unfocus = true}) {
     setState(() {
       searchController.clear();
@@ -59,19 +46,6 @@ class CreditListController extends State<CreditList> {
     }
     isSearchMode = true;
     locator<PupilFilterManager>().setSearchText(text);
-    setState(() {
-      // final pupils = locator<PupilFilterManager>().filteredPupils.value;
-      // isSearchMode = true;
-      // filteredPupils = pupils
-      //     .where(
-      //       (user) =>
-      //           user.firstName!.toLowerCase().contains(text.toLowerCase()),
-      //     )
-      //     .toList();
-    });
-
-    // _coolDown?.cancel();
-    // _coolDown = Timer(const Duration(milliseconds: 500), _search);
   }
 
   //- Values for the search bar

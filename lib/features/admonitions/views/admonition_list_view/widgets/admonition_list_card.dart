@@ -5,27 +5,40 @@ import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/pupil_admonition_content_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/admonition_list_tile.dart';
+import 'package:schuldaten_hub/common/widgets/list_tile.dart';
 import 'package:watch_it/watch_it.dart';
 
-class AdmonitionListCard extends StatelessWidget with WatchItMixin {
+class AdmonitionListCard extends WatchingStatefulWidget {
   final AdmonitionListController controller;
   final Pupil passedPupil;
-  AdmonitionListCard(this.controller, this.passedPupil, {super.key});
-  final CustomExpansionTileController _tileController =
-      CustomExpansionTileController();
+  const AdmonitionListCard(this.controller, this.passedPupil, {super.key});
+
+  @override
+  State<AdmonitionListCard> createState() => _AdmonitionListCardState();
+}
+
+class _AdmonitionListCardState extends State<AdmonitionListCard> {
+  late CustomExpansionTileController _tileController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tileController = CustomExpansionTileController();
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
     final Pupil pupil = pupils
-        .where((element) => element.internalId == passedPupil.internalId)
+        .where((element) => element.internalId == widget.passedPupil.internalId)
         .first;
     final List<Admonition> admonitions = List.from(pupil.pupilAdmonitions!);
     admonitions.sort((a, b) => b.admonishedDay.compareTo(a.admonishedDay));
+
     return Card(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -115,14 +128,13 @@ class AdmonitionListCard extends StatelessWidget with WatchItMixin {
           ],
         ),
         Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 10.0),
-            child: admonitionListTiles(
-              pupil,
-              admonitions,
+            padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
+            child: listTiles(
               const Text('Vorfälle',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               context,
               _tileController,
+              pupilAdmonitionsContentList(pupil, context, admonitions),
             )),
       ],
     ));

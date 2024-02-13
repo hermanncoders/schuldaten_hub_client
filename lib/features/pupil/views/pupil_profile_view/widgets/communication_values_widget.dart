@@ -9,20 +9,33 @@ Widget communicationValues(String values) {
   return Column(
     children: [
       Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Icon(Icons.hearing),
           const Gap(5),
           Text(communicationPredicate(understandingValue)),
           const Gap(5),
+        ],
+      ),
+      const Gap(10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
           const Icon(Icons.chat_bubble_outline_rounded),
           const Gap(5),
           Text(communicationPredicate(speakingValue)),
-          const Gap(5),
+        ],
+      ),
+      const Gap(5),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
           const Icon(Icons.book),
           const Gap(5),
           Text(communicationPredicate(readingValue)),
         ],
-      )
+      ),
+      const Gap(5),
     ],
   );
 }

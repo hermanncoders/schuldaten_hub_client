@@ -5,7 +5,7 @@ class EndpointsAdmonition {
   static const postAdmonition = '/admonition';
 
   //- GET
-  static const fetchAdmonitions = '/api/admonition/all';
+  static const fetchAdmonitions = '/admonition/all';
 
   String getAdmonition(String id) {
     return '/admonition/$id';

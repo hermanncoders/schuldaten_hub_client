@@ -46,7 +46,7 @@ class CheckListsView extends WatchingWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.lightbulb,
+                          Icons.rule,
                           size: 50,
                           color: gridViewColor,
                         ),

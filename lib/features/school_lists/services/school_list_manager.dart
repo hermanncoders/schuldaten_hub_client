@@ -229,12 +229,11 @@ class SchoolListManager {
     return listedPupils;
   }
 
-  List<Pupil> filteredPupilsInSchoolList(
-      String listId, List<Pupil> filteredPupils) {
+  List<Pupil> pupilsInSchoolList(String listId, List<Pupil> pupils) {
     List<Pupil> pupilsInList = getPupilsinSchoolList(listId);
-    return filteredPupils
-        .where((filteredPupil) => pupilsInList
-            .any((element) => element.internalId == filteredPupil.internalId))
+    return pupils
+        .where((pupil) => pupilsInList
+            .any((element) => element.internalId == pupil.internalId))
         .toList();
   }
 }

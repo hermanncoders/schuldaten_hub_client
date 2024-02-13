@@ -32,7 +32,7 @@ class SchoolListPupilsView extends WatchingWidget {
     List<Pupil> filteredPupils =
         watchValue((PupilFilterManager x) => x.filteredPupils);
     List<Pupil> filteredPupilsInList = locator<SchoolListManager>()
-        .filteredPupilsInSchoolList(schoolList.listId, filteredPupils);
+        .pupilsInSchoolList(schoolList.listId, filteredPupils);
     List<Pupil> pupilsInList =
         controller.addPupilListFiltersToFilteredPupils(filteredPupilsInList);
 
@@ -78,8 +78,8 @@ class SchoolListPupilsView extends WatchingWidget {
                       titlePadding: const EdgeInsets.only(
                           left: 5, top: 5, right: 5, bottom: 5),
                       collapseMode: CollapseMode.none,
-                      title: schoolListPupilsSearchBar(
-                          context, pupilsInList, controller, filtersOn),
+                      title: schoolListPupilsSearchBar(context, pupilsInList,
+                          schoolList, controller, filtersOn),
                     ),
                   ),
                   pupilsInList.isEmpty

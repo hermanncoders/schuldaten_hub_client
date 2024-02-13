@@ -47,7 +47,7 @@ class AdmonitionManager {
     return pupil.pupilAdmonitions?.length;
   }
 
-  int? _findAdmonitionIndex(Pupil pupil, DateTime date) {
+  int? findAdmonitionIndex(Pupil pupil, DateTime date) {
     final int? foundAdmonitionIndex = pupil.pupilAdmonitions
         ?.indexWhere((datematch) => (datematch.admonishedDay.isSameDate(date)));
     if (foundAdmonitionIndex == null) {
@@ -56,7 +56,16 @@ class AdmonitionManager {
     return foundAdmonitionIndex;
   }
 
-  Pupil? _findPupilById(int pupilId) {
+  bool pupilIsAdmonishedToday(Pupil pupil) {
+    if (pupil.pupilAdmonitions!.isEmpty) return false;
+    if (pupil.pupilAdmonitions!
+        .any((element) => element.admonishedDay.isSameDate(DateTime.now()))) {
+      return true;
+    }
+    return false;
+  }
+
+  Pupil? findPupilById(int pupilId) {
     final pupils = pupilManager.readPupils();
     final Pupil pupil =
         pupils.singleWhere((element) => element.internalId == pupilId);

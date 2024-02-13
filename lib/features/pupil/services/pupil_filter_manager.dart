@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
+import 'package:schuldaten_hub/common/services/search_textfield_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
@@ -75,7 +76,7 @@ class PupilFilterManager {
     _filteredPupils.value = updatedPupils;
   }
 
-  updateFilteredPupils() {
+  resetFilteredPupils() {
     _filteredPupils.value = locator<PupilManager>().pupils.value;
     filterPupils();
     sortPupils();
@@ -84,10 +85,12 @@ class PupilFilterManager {
 
   resetFilters() {
     _filterState.value = {...initialFilterValues};
+    locator<SearchManager>().searchController.value.clear();
+    locator<SearchManager>().changeSearchState(false);
     _searchText.value = '';
     _sortMode.value = {...initialSortModeValues};
     _filtersOn.value = false;
-    updateFilteredPupils();
+    resetFilteredPupils();
   }
 
   // Set modified filter value
@@ -393,6 +396,7 @@ class PupilFilterManager {
     }
     // Now write it in the manager
     _filteredPupils.value = filteredPupils;
+
     if (_searchText.value.isNotEmpty) {
       setSearchText(_searchText.value);
     }

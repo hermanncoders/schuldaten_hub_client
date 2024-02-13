@@ -4,11 +4,13 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/controller/school_list_pupils_controller.dart';
+import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/school_list_stats_row.dart';
 
 Card schoolListCard(BuildContext context, SchoolList schoolList) {
   return Card(
@@ -38,37 +40,55 @@ Card schoolListCard(BuildContext context, SchoolList schoolList) {
       }
     },
     borderRadius: BorderRadius.circular(15.0),
-    child: Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 15, bottom: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                schoolList.listName,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const Gap(5),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  schoolList.listDescription,
-                  maxLines: 2,
-                  overflow: TextOverflow.fade,
-                  style: const TextStyle(
-                    fontSize: 14,
+    child: Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 5),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 15, bottom: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      schoolList.listName,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    Text(schoolList.visibility != 'public'
+                        ? 'Hermannschule'
+                        : schoolList.createdBy),
+                  ],
+                ),
+                const Gap(5),
+                SizedBox(
+                  width: 250,
+                  child: Text(
+                    schoolList.listDescription,
+                    maxLines: 2,
+                    overflow: TextOverflow.fade,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                 ),
-              ),
-              const Column(
-                children: [],
-              )
-            ],
+                const Gap(10),
+                schoolListStatsRow(
+                    schoolList,
+                    locator<SchoolListManager>().pupilsInSchoolList(
+                      schoolList.listId,
+                      locator<PupilManager>().pupils.value,
+                    )),
+                const Column(
+                  children: [],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   ));
 }

@@ -1,4 +1,5 @@
 import 'package:schuldaten_hub/common/services/env_manager.dart';
+import 'package:schuldaten_hub/common/services/search_textfield_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
@@ -9,6 +10,7 @@ import 'package:schuldaten_hub/api/services/connection_manager.dart';
 import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
@@ -55,6 +57,7 @@ void registerBaseManagers() {
     return pupilBaseManager;
   });
   locator.registerSingleton<BottomNavManager>(BottomNavManager());
+  locator.registerSingleton<SearchManager>(SearchManager());
 }
 
 Future registerDependentManagers(String token) async {

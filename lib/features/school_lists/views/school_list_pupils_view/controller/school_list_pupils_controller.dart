@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
-import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/school_lists/models/pupil_list.dart';
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
@@ -31,59 +30,6 @@ class SchoolListPupilsController extends State<SchoolListPupils> {
   void initState() {
     //locator<PupilFilterManager>().refreshFilteredPupils();
     super.initState();
-  }
-
-  String listOwners() {
-    String owners = '';
-    if (widget.schoolList.visibility == 'public') {
-      return 'Hermannschule';
-    }
-    if (widget.schoolList.visibility == 'private') {
-      return '';
-    }
-    widget.schoolList.visibility.split('*').forEach((element) {
-      if (element.isNotEmpty) {
-        owners += ' - $element';
-      }
-    });
-    return owners;
-  }
-
-  String shareList(String teacher) {
-    String visibility = widget.schoolList.visibility;
-    visibility += '*$teacher';
-    return visibility;
-  }
-
-  int totalShownPupilsMarkedWithYesNoOrNull(
-      List<Pupil> pupilsInList, bool? yesNoOrNull) {
-    int count = 0;
-    for (Pupil pupil in pupilsInList) {
-      if (pupil.pupilLists != null) {
-        if (pupil.pupilLists!.any((element) =>
-            element.originList == widget.schoolList.listId &&
-            element.pupilListStatus == yesNoOrNull)) {
-          count++;
-        }
-      }
-    }
-    debug.info('totalShownPupilsMarkedWithYes: $count');
-    return count;
-  }
-
-  int totalShownPupilsWithComment(List<Pupil> pupilsInList) {
-    int count = 0;
-    for (Pupil pupil in pupilsInList) {
-      if (pupil.pupilLists != null) {
-        if (pupil.pupilLists!.any((element) =>
-            element.originList == widget.schoolList.listId &&
-            element.pupilListComment != null &&
-            element.pupilListComment!.isNotEmpty)) {
-          count++;
-        }
-      }
-    }
-    return count;
   }
 
   void cancelSearch({bool unfocus = true}) {

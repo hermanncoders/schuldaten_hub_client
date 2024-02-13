@@ -109,7 +109,7 @@ class PupilManager {
       }
     }
     _pupils.value = pupils;
-    locator<PupilFilterManager>().updateFilteredPupils();
+    locator<PupilFilterManager>().refreshFilteredPupils();
   }
 
   Future fetchPupilsById(List<int> pupilIds) async {
@@ -173,8 +173,9 @@ class PupilManager {
             'PUPILS FETCHED: There are ${matchedPupils.length} matches! | ${StackTrace.current}');
       }
       if (locator.isReadySync<PupilFilterManager>()) {
-        locator<PupilFilterManager>().updateFilteredPupils();
+        locator<PupilFilterManager>().refreshFilteredPupils();
       }
+
       _isRunning.value = false;
 
       // //! This one gives an error
@@ -200,7 +201,7 @@ class PupilManager {
     }
     _pupils.value = repositoryPupils;
 
-    locator<PupilFilterManager>().updateFilteredPupils();
+    locator<PupilFilterManager>().refreshFilteredPupils();
 
     _isRunning.value = false;
   }

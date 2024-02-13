@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-// import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/widgets/authorization_pupil_list_searchbar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -28,8 +27,7 @@ class AuthorizationPupilsView extends WatchingWidget {
   Widget build(BuildContext context) {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
     List<Pupil> pupilsInRepository = watchValue((PupilManager x) => x.pupils);
-    List<Pupil> filteredPupils =
-        watchValue((PupilFilterManager x) => x.filteredPupils);
+
     List<Pupil> pupilsInAuthorization = locator<AuthorizationManager>()
         .getListedPupilsInAuthorization(
             authorization.authorizationId, pupilsInRepository);

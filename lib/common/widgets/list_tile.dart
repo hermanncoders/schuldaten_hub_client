@@ -4,10 +4,6 @@ import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 
 listTiles(Widget? title, BuildContext context,
     CustomExpansionTileController? controller, List<Widget> detailsList) {
-  late final CustomExpansionTileController _tileController;
-  if (controller == null) {
-    _tileController = CustomExpansionTileController();
-  }
   return ListTileTheme(
     contentPadding: const EdgeInsets.all(0),
     dense: true,

@@ -11,8 +11,6 @@ import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/document_image.dart';
-import 'package:schuldaten_hub/common/widgets/infinity_async_button.dart';
-import 'package:schuldaten_hub/common/widgets/infinity_button.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/common/widgets/upload_image.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';

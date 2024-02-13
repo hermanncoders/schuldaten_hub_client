@@ -4,7 +4,6 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_helper_functions.dart';
-import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/controller/school_list_pupils_controller.dart';
 
 Widget schoolListStatsRow(SchoolList schoolList, List<Pupil> pupils) {
   return Row(

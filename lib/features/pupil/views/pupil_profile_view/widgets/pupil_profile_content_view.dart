@@ -11,12 +11,8 @@ import 'package:schuldaten_hub/features/ogs_view/widgets/pupil_ogs_content_list.
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/pupil_credit_content_list.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/language_list_tile.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/learning_support_tile.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/learning_tile.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/ogs_list_tile.dart';
+
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_infos_content_list.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/school_list_tile.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_language_content_list.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_learning_support_content.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/pupil_school_list_content_list.dart';

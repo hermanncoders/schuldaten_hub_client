@@ -6,7 +6,8 @@ const Color backgroundColor = Color.fromRGBO(74, 76, 161, 1);
 const Color accentColor = Color.fromRGBO(252, 160, 39, 1);
 const Color canvasColor = Color(0xfff2f2f7);
 const Color gridViewColor = Color.fromRGBO(252, 160, 39, 1);
-
+const Color pupilProfileCardColor = Color.fromARGB(255, 237, 237, 251);
+const Color cardInCardColor = Color.fromARGB(255, 248, 248, 255);
 //button colors
 
 const buttonAppStyleColor = Color.fromRGBO(252, 160, 39, 1);

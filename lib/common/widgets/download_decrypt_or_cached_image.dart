@@ -17,6 +17,8 @@ Future<Widget> downloadAndDecryptOrCachedImage(
   final fileInfo = await cacheManager.getFileFromCache(cacheKey);
   if (fileInfo != null && await fileInfo.file.exists()) {
     // File is already cached, use it directly
+    //cacheManager.emptyCache();
+
     return Image.file(fileInfo.file);
   }
   final client = locator.get<ApiManager>().dioClient.value;

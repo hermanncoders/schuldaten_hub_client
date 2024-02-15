@@ -14,24 +14,42 @@ String getAdmonitionTypeText(String value) {
 }
 
 String getAdmonitionReasonText(String value) {
+  bool firstItem = true;
   String admonitionReasonText = '';
+
   if (value.contains('gm')) {
     admonitionReasonText = '${admonitionReasonText}Gewalt gegen Menschen';
+    firstItem = false;
   }
+
   if (value.contains('gs')) {
-    admonitionReasonText = '$admonitionReasonText | Gewalt gegen Sachen';
+    if (firstItem == false) admonitionReasonText = '$admonitionReasonText - ';
+    admonitionReasonText = '${admonitionReasonText}Gewalt gegen Sachen';
+    firstItem = false;
   }
   if (value.contains('äa')) {
-    admonitionReasonText = '$admonitionReasonText | Ärgern anderer Kinder';
+    if (firstItem == false) admonitionReasonText = '$admonitionReasonText - ';
+
+    admonitionReasonText = '${admonitionReasonText}Ärgern anderer Kinder';
+    firstItem = false;
   }
+
   if (value.contains('il')) {
-    admonitionReasonText = '$admonitionReasonText | Ignorieren von Anweisungen';
+    if (firstItem == false) admonitionReasonText = '$admonitionReasonText - ';
+    admonitionReasonText = '${admonitionReasonText}Ignorieren von Anweisungen';
+    firstItem == false;
   }
+
   if (value.contains('us')) {
-    admonitionReasonText = '$admonitionReasonText | Unterrichtsstörung';
+    if (firstItem == false) admonitionReasonText = '$admonitionReasonText - ';
+    admonitionReasonText = '${admonitionReasonText}Unterrichtsstörung';
+    firstItem = false;
   }
+
   if (value.contains('ss')) {
+    if (firstItem == false) admonitionReasonText = '$admonitionReasonText - ';
     admonitionReasonText = '${admonitionReasonText}Sonstiges';
+    firstItem = false;
   }
   return admonitionReasonText;
 }

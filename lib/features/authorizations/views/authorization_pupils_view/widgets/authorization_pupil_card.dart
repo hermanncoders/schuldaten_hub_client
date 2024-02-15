@@ -25,7 +25,8 @@ import 'package:watch_it/watch_it.dart';
 class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
   final int internalId;
   final String authorizationId;
-  AuthorizationPupilCard(this.internalId, this.authorizationId, {super.key});
+  AuthorizationPupilCard(this.internalId, this.authorizationId, {Key? key})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     final schoolListLocator = locator<AuthorizationManager>();
@@ -97,6 +98,62 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                             ),
                           ),
                         ),
+                        const Gap(10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                            SizedBox(
+                              width: 25,
+                              height: 25,
+                              child: Checkbox(
+                                activeColor: Colors.red,
+                                value: (pupilAuthorization.status == null ||
+                                        pupilAuthorization.status == true)
+                                    ? false
+                                    : true,
+                                onChanged: (value) async {
+                                  await schoolListLocator
+                                      .patchPupilAuthorization(
+                                    pupil.internalId,
+                                    authorizationId,
+                                    false,
+                                    null,
+                                  );
+                                },
+                              ),
+                            ),
+                            const Gap(10),
+                            const Icon(
+                              Icons.done,
+                              color: Colors.green,
+                            ),
+                            SizedBox(
+                              width: 25,
+                              height: 25,
+                              child: Checkbox(
+                                activeColor: Colors.green,
+                                value: (pupilAuthorization.status != true ||
+                                        pupilAuthorization.status == null)
+                                    ? false
+                                    : true,
+                                onChanged: (value) async {
+                                  await schoolListLocator
+                                      .patchPupilAuthorization(
+                                    pupil.internalId,
+                                    authorizationId,
+                                    true,
+                                    null,
+                                  );
+                                },
+                              ),
+                            ),
+                            const Gap(15),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -142,77 +199,15 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                               '${locator<EnvManager>().env.value.serverUrl}${EndpointsAuthorization().getPupilAuthorizationFile(pupil.internalId, authorizationId)}',
                               pupilAuthorization.fileUrl,
                               70)
-                          : Container(
-                              width: 40.0,
-                              height: 40.0,
-                              decoration: const BoxDecoration(
-                                color: backgroundColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.camera_alt_rounded,
-                                size: 30,
-                                color: Colors.white,
+                          : SizedBox(
+                              height: 70,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child:
+                                    Image.asset('assets/document_camera.png'),
                               ),
                             ),
                     )
-                  ],
-                ),
-                const SizedBox(width: 5), // Add some spacing
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Gap(15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                        Checkbox(
-                          activeColor: Colors.red,
-                          value: (pupilAuthorization.status == null ||
-                                  pupilAuthorization.status == true)
-                              ? false
-                              : true,
-                          onChanged: (value) async {
-                            await schoolListLocator.patchPupilAuthorization(
-                              pupil.internalId,
-                              authorizationId,
-                              false,
-                              null,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const Gap(5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Icon(
-                          Icons.done,
-                          color: Colors.green,
-                        ),
-                        Checkbox(
-                          activeColor: Colors.green,
-                          value: (pupilAuthorization.status != true ||
-                                  pupilAuthorization.status == null)
-                              ? false
-                              : true,
-                          onChanged: (value) async {
-                            await schoolListLocator.patchPupilAuthorization(
-                              pupil.internalId,
-                              authorizationId,
-                              true,
-                              null,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ],

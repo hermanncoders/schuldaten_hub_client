@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
@@ -50,6 +51,7 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
             Expanded(
               child: Column(
                 children: [
+                  const Gap(10),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -67,7 +69,7 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
-                                '${pupil.firstName!} ${pupil.lastName!}',
+                                pupil.firstName!,
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
@@ -77,7 +79,31 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                       )
                     ],
                   ),
-                  const Gap(5),
+                  const Gap(3),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => PupilProfile(
+                                  pupil,
+                                ),
+                              ));
+                            },
+                            child: Text(
+                              pupil.lastName!,
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const Gap(7),
                   Row(
                     children: [
                       const Text('zuletzt:'),
@@ -110,14 +136,18 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                 child: Column(
                   children: [
                     const Gap(20),
-                    const Text('Vorfälle'),
+                    const Text(
+                      'Ereignisse',
+                    ),
+                    const Gap(5),
                     Center(
                       child: Text(
                         pupil.pupilAdmonitions?.length.toString() ??
                             0.toString(),
                         style: const TextStyle(
-                          fontSize: 23,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
+                          color: backgroundColor,
                         ),
                       ),
                     ),

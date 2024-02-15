@@ -33,7 +33,7 @@ class PupilDetailsView extends WatchingWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 15.0, top: 5, right: 15),
+              padding: const EdgeInsets.only(left: 5.0, top: 5, right: 5),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 800),
@@ -164,7 +164,7 @@ class PupilDetailsView extends WatchingWidget {
                           )
                         ],
                       ),
-                      const Gap(10),
+                      //const Gap(10),
                       pupilProfileContentView(
                           pupil, admonitions, context, controller),
                       const Gap(60),
@@ -185,7 +185,9 @@ class PupilDetailsView extends WatchingWidget {
           ],
         ),
       ),
-      bottomNavigationBar: pupilProfileBottomNavBar(context),
+      bottomNavigationBar: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800),
+          child: pupilProfileBottomNavBar(context)),
     );
   }
 }

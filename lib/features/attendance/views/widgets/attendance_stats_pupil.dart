@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
+import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_badges.dart';
 
 Widget attendanceStats(Pupil pupil) {
   return Row(

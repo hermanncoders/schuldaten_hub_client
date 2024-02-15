@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
@@ -90,11 +91,14 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                         );
                       },
                       child: Text(
-                        pupilList.pupilListComment != null
-                            ? pupilList.pupilListComment!
-                            : 'kein Kommentar',
-                        textAlign: TextAlign.left,
-                      ),
+                          pupilList.pupilListComment != null
+                              ? pupilList.pupilListComment!
+                              : 'kein Kommentar',
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: backgroundColor,
+                          )),
                     ),
                   ],
                 ),
@@ -113,24 +117,28 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                       Icons.close,
                       color: Colors.red,
                     ),
-                    Checkbox(
-                      activeColor: Colors.red,
-                      value: (pupilList.pupilListStatus == null ||
-                              pupilList.pupilListStatus == true)
-                          ? false
-                          : true,
-                      onChanged: (value) async {
-                        await schoolListLocator.patchSchoolListPupil(
-                          pupil.internalId,
-                          originList,
-                          false,
-                          null,
-                        );
-                      },
+                    SizedBox(
+                      width: 25,
+                      height: 25,
+                      child: Checkbox(
+                        activeColor: Colors.red,
+                        value: (pupilList.pupilListStatus == null ||
+                                pupilList.pupilListStatus == true)
+                            ? false
+                            : true,
+                        onChanged: (value) async {
+                          await schoolListLocator.patchSchoolListPupil(
+                            pupil.internalId,
+                            originList,
+                            false,
+                            null,
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
-                const Gap(5),
+                const Gap(15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -138,23 +146,38 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                       Icons.done,
                       color: Colors.green,
                     ),
-                    Checkbox(
-                      activeColor: Colors.green,
-                      value: (pupilList.pupilListStatus != true ||
-                              pupilList.pupilListStatus == null)
-                          ? false
-                          : true,
-                      onChanged: (value) async {
-                        await schoolListLocator.patchSchoolListPupil(
-                          pupil.internalId,
-                          originList,
-                          true,
-                          null,
-                        );
-                      },
+                    SizedBox(
+                      width: 25,
+                      height: 25,
+                      child: Checkbox(
+                        activeColor: Colors.green,
+                        value: (pupilList.pupilListStatus != true ||
+                                pupilList.pupilListStatus == null)
+                            ? false
+                            : true,
+                        onChanged: (value) async {
+                          await schoolListLocator.patchSchoolListPupil(
+                            pupil.internalId,
+                            originList,
+                            true,
+                            null,
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
+                const Gap(10),
+                if (pupilList.pupilListEntryBy != null)
+                  Row(
+                    children: [
+                      Text(
+                        pupilList.pupilListEntryBy!,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                    ],
+                  )
               ],
             ),
           ],

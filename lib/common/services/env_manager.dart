@@ -68,9 +68,10 @@ class EnvManager {
     final Env env =
         Env.fromJson(json.decode(scanResult) as Map<String, dynamic>);
     _env.value = env;
-    _envReady.value = true;
+
     final jsonEnv = json.encode(env.toJson());
     await secureStorageWrite('env', jsonEnv);
+    _envReady.value = true;
     debug.success('Env stored');
     debug.success(jsonEnv);
     return;

@@ -177,9 +177,17 @@ class SchoolListManager {
       int pupilId, String listId, bool? value, String? comment) async {
     String data;
     if (value != null) {
-      data = jsonEncode({"pupil_list_status": value});
+      data = jsonEncode({
+        "pupil_list_status": value,
+        "pupil_list_entry_by":
+            locator<SessionManager>().credentials.value.username
+      });
     } else {
-      data = jsonEncode({"pupil_list_comment": comment});
+      data = jsonEncode({
+        "pupil_list_comment": comment,
+        "pupil_list_entry_by":
+            locator<SessionManager>().credentials.value.username
+      });
     }
     //   jsonEncode({"pupil_list_comment": comment, "pupil_list_status": value});
     final response = await client.patch(

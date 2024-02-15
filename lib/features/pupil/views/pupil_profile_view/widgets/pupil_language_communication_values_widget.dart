@@ -7,6 +7,7 @@ Widget communicationValues(String values) {
   String speakingValue = values.substring(1, 2);
   String readingValue = values.substring(2, 3);
   return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.start,

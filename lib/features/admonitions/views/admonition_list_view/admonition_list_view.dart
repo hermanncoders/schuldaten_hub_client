@@ -32,7 +32,7 @@ class AdmonitionListView extends WatchingWidget {
           children: [
             Icon(Icons.warning_amber_rounded),
             Gap(10),
-            Text('Vorfälle'),
+            Text('Ereignisse'),
           ],
         ),
       ),

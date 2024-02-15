@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/communication_values_widget.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_language_communication_values_widget.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/language_dialog.dart';
 
 List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
@@ -53,25 +54,35 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
       ],
     ),
     const Gap(10),
-    Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Gap(10),
-        InkWell(
-          onTap: () => languageDialog(
-              context, pupil, 'communication_pupil', pupil.communicationPupil),
-          onLongPress: () => locator<PupilManager>()
-              .patchPupil(pupil.internalId, 'communication_pupil', null),
-          child: Container(
-              child: pupil.communicationPupil == null
-                  ? const Text(
-                      'kein Eintrag',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    InkWell(
+      onTap: () => languageDialog(
+          context, pupil, 'communication_pupil', pupil.communicationPupil),
+      onLongPress: () => locator<PupilManager>()
+          .patchPupil(pupil.internalId, 'communication_pupil', null),
+      child: pupil.communicationPupil == null
+          ? const Text(
+              'kein Eintrag',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: backgroundColor),
+            )
+          : Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Gap(10),
+                    InkWell(
+                      child: Container(
+                          child:
+                              communicationValues(pupil.communicationPupil!)),
                     )
-                  : communicationValues(pupil.communicationPupil!)),
-        )
-      ],
+                  ],
+                ),
+              ),
+            ),
     ),
     const Gap(10),
     const Row(
@@ -84,24 +95,32 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
       ],
     ),
     const Gap(10),
-    Row(
-      children: [
-        InkWell(
-          onTap: () => languageDialog(context, pupil, 'communication_tutor1',
-              pupil.communicationTutor1),
-          onLongPress: () => locator<PupilManager>()
-              .patchPupil(pupil.internalId, 'communication_tutor1', null),
-          child: Container(
-              child: pupil.communicationTutor1 == null
-                  ? const Text(
-                      'kein Eintrag',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    )
-                  : communicationValues(pupil.communicationTutor1!)),
-        )
-      ],
-    ),
+    pupil.communicationTutor1 == null
+        ? const Text(
+            'kein Eintrag',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: backgroundColor),
+          )
+        : Card(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: InkWell(
+                onTap: () => languageDialog(context, pupil,
+                    'communication_tutor1', pupil.communicationTutor1),
+                onLongPress: () => locator<PupilManager>()
+                    .patchPupil(pupil.internalId, 'communication_tutor1', null),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        child: communicationValues(pupil.communicationTutor1!))
+                  ],
+                ),
+              ),
+            ),
+          ),
     const Gap(10),
     const Row(
       children: [

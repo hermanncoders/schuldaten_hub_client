@@ -47,7 +47,7 @@ void registerBaseManagers() {
     await sessionManager.init();
     debug.info('SessionManager initialized');
     return sessionManager;
-  });
+  }, dependsOn: [EnvManager, ConnectionManager]);
 
   locator.registerSingletonAsync<PupilBaseManager>(() async {
     debug.info('Registering PupilBaseManager');

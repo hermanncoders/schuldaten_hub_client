@@ -23,17 +23,21 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
         sortMode[PupilSortMode.sortByLastAdmonition]!;
     final filterLocator = locator<PupilFilterManager>();
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20, top: 8),
+      padding: const EdgeInsets.only(left: 15.0, right: 15, top: 5),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 800),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [
                   const Text(
                     'Filter',
-                    style: title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
                   ),
                   const Spacer(),
                   IconButton.filled(
@@ -66,7 +70,7 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
                     checkmarkColor: filterChipSelectedCheckColor,
                     backgroundColor: filterChipUnselectedColor,
                     label: const Text(
-                      'alphabetisch',
+                      'A-Z',
                       style: filterItemsTextStyle,
                     ),
                     selected: valueSortByName,
@@ -82,7 +86,7 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
                     checkmarkColor: filterChipSelectedCheckColor,
                     backgroundColor: filterChipUnselectedColor,
                     label: const Text(
-                      'nach Vorfällen',
+                      'Anzahl',
                       style: filterItemsTextStyle,
                     ),
                     selected: valueSortByAdmonitions,
@@ -99,7 +103,7 @@ class AdmonitionFilterBottomSheet extends WatchingWidget {
                     checkmarkColor: filterChipSelectedCheckColor,
                     backgroundColor: filterChipUnselectedColor,
                     label: const Text(
-                      'letzter Vorfall',
+                      'zuletzt',
                       style: filterItemsTextStyle,
                     ),
                     selected: valueSortByLastAdmonition,

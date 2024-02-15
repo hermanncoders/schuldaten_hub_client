@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
@@ -34,7 +35,7 @@ BottomAppBar schoolListPupilsBottomNavBar(
               Navigator.pop(context);
             },
           ),
-          const Gap(30),
+          const Gap(15),
 
           // locator<SessionManager>().credentials.value.username ==
           //         authorization.createdBy
@@ -54,29 +55,34 @@ BottomAppBar schoolListPupilsBottomNavBar(
           //   ),
           // ),
           // const Gap(10)
-          locator<SchoolListManager>().getSchoolListById(listId).visibility !=
-                  'public'
-              ? IconButton(
-                  tooltip: 'Liste teilen',
-                  onPressed: () async {
-                    final String? visibility = await shortTextfieldDialog(
-                        context, 'Liste teilen mit...', 'Kürzel eintragen!');
-                    if (visibility != null) {
-                      locator<SchoolListManager>()
-                          .patchSchoolList(listId, null, null, visibility);
-                    }
-                  },
-                  icon: const Icon(
-                    Icons.share,
-                    size: 30,
-                  ))
-              : const SizedBox.shrink(),
+          if (locator<SchoolListManager>()
+                      .getSchoolListById(listId)
+                      .visibility !=
+                  'public' ||
+              locator<SessionManager>().credentials.value.username ==
+                  locator<SchoolListManager>()
+                      .getSchoolListById(listId)
+                      .createdBy)
+            IconButton(
+                tooltip: 'Liste teilen',
+                onPressed: () async {
+                  final String? visibility = await shortTextfieldDialog(
+                      context, 'Liste teilen mit...', 'Kürzel eintragen!');
+                  if (visibility != null) {
+                    locator<SchoolListManager>()
+                        .patchSchoolList(listId, null, null, visibility);
+                  }
+                },
+                icon: const Icon(
+                  Icons.share,
+                  size: 30,
+                )),
           const Gap(15),
           IconButton(
             tooltip: 'Kinder hinzufügen',
             icon: const Icon(
               Icons.add,
-              size: 35,
+              size: 30,
             ),
             onPressed: () async {
               final List<int> selectedPupilIds =

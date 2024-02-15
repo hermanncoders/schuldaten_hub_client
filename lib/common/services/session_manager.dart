@@ -87,6 +87,11 @@ class SessionManager {
           _isRunning.value = false;
           return;
         }
+        if (locator<EnvManager>().env.value.serverUrl == null) {
+          debug.warning('No environment found! | ${StackTrace.current}');
+          _isRunning.value = false;
+          return;
+        }
         debug.info('Stored session is valid! | ${StackTrace.current}');
         authenticate(session);
         debug.warning(

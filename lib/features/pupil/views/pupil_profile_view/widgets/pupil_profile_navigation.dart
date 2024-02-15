@@ -26,11 +26,12 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(0),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: backgroundColor, width: 2.0),
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
+                        topLeft: Radius.circular(
+                            10.0), // Adjust the radius as needed
                       ),
                     ),
                     backgroundColor: controller.navigationBackgroundColor(0),
@@ -53,7 +54,9 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
+                        side: BorderSide(color: backgroundColor, width: 2.0),
                         borderRadius: BorderRadius.zero),
                     backgroundColor: controller.navigationBackgroundColor(1),
                   ),
@@ -75,7 +78,9 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
+                        side: BorderSide(color: backgroundColor, width: 2.0),
                         borderRadius: BorderRadius.zero),
                     backgroundColor: controller.navigationBackgroundColor(2),
                   ),
@@ -97,7 +102,9 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
+                        side: BorderSide(color: backgroundColor, width: 2.0),
                         borderRadius: BorderRadius.zero),
                     backgroundColor: controller.navigationBackgroundColor(3),
                   ),
@@ -119,7 +126,9 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: backgroundColor, width: 2.0),
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(
                             10.0), // Adjust the radius as needed
@@ -151,6 +160,7 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    elevation: 0,
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero),
                     backgroundColor: controller.navigationBackgroundColor(5),
@@ -175,6 +185,7 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      elevation: 0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero),
                       backgroundColor: controller.navigationBackgroundColor(6)),
@@ -196,6 +207,7 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      elevation: 0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero),
                       backgroundColor: controller.navigationBackgroundColor(7)),
@@ -217,6 +229,7 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      elevation: 0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero),
                       backgroundColor: controller.navigationBackgroundColor(8)),
@@ -238,6 +251,7 @@ Widget pupilProfileNavigation(
                 height: boxHeight,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      elevation: 0,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero),
                       backgroundColor: controller.navigationBackgroundColor(9)),

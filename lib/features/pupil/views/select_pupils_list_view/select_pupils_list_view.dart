@@ -23,8 +23,6 @@ class SelectPupilListView extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    debug.info('Widget Build started!');
-
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
 
     return Scaffold(

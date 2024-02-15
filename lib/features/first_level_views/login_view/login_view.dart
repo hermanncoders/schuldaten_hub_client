@@ -19,11 +19,12 @@ class LoginView extends WatchingWidget {
   Widget build(BuildContext context) {
     bool isAuthenticated = watchValue((SessionManager x) => x.isAuthenticated);
     bool envReady = watchValue((EnvManager x) => x.envReady);
+
     debug.warning('LoginView: isAuthenticated: ${isAuthenticated.toString()}');
     final bool keyboardOn = MediaQuery.of(context).viewInsets.vertical > 0.0;
     //FocusScopeNode currentFocus = FocusScope.of(context);
 
-    return isAuthenticated
+    return (envReady && isAuthenticated)
         ? BottomNavigation()
         : Scaffold(
             resizeToAvoidBottomInset: true,
@@ -68,7 +69,7 @@ class LoginView extends WatchingWidget {
                           : const SizedBox(
                               height: 30,
                             ),
-                      if (envReady)
+                      if (envReady) ...<Widget>[
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: 380),
                           child: Padding(
@@ -92,7 +93,6 @@ class LoginView extends WatchingWidget {
                             ),
                           ),
                         ),
-                      if (envReady)
                         ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: 380),
                           child: Padding(
@@ -116,7 +116,32 @@ class LoginView extends WatchingWidget {
                             ),
                           ),
                         ),
-                      if (!envReady)
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            //margin: const EdgeInsets.only(bottom: 16),
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: buttonAppStyleColor,
+                                  minimumSize: const Size.fromHeight(50)),
+                              onPressed: () async {
+                                // locator<EnvManager>().deleteEnv();
+                                await controller.textFieldCredentials();
+                              },
+                              child: const Text(
+                                "EINLOGGEN",
+                                style: TextStyle(fontSize: 17.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                      if (envReady == false) ...<Widget>[
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Center(
@@ -141,33 +166,8 @@ class LoginView extends WatchingWidget {
                                   ),
                           ),
                         ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      if (envReady)
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            //margin: const EdgeInsets.only(bottom: 16),
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: buttonAppStyleColor,
-                                  minimumSize: const Size.fromHeight(50)),
-                              onPressed: () async {
-                                await controller.textFieldCredentials();
-                              },
-                              child: const Text(
-                                "EINLOGGEN",
-                                style: TextStyle(fontSize: 17.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                      ],
+                      const Gap(20),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: Container(

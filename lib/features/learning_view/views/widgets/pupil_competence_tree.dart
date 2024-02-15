@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 
 import 'package:schuldaten_hub/features/competence/models/competence.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -27,7 +28,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
       } else if (competence.competenceName == 'Musik') {
         competenceBackgroundColor = const Color.fromARGB(255, 5, 155, 88);
       } else if (competence.competenceName == 'Deutsch') {
-        competenceBackgroundColor = const Color.fromARGB(255, 228, 70, 60);
+        competenceBackgroundColor = const Color.fromARGB(255, 231, 143, 56);
       } else if (competence.competenceName == 'Kunst') {
         competenceBackgroundColor = const Color.fromARGB(255, 244, 198, 17);
       } else if (competence.competenceName == 'Katholische Religion') {

@@ -8,6 +8,8 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_helper_functions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
+import 'package:schuldaten_hub/features/first_level_views/login_view/controller/login_controller.dart';
+import 'package:schuldaten_hub/features/first_level_views/login_view/login_view.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/qr_views.dart';
@@ -27,24 +29,6 @@ class SettingsView extends WatchingWidget {
     final int credit = session.credit!;
     final String username = session.username!;
     final bool isAdmin = session.isAdmin!;
-
-    void logout() async {
-      await locator<SessionManager>().logout();
-      if (context.mounted) {
-        snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
-        //Navigator.of(context).popUntil(ModalRoute.withName(Routes.login));
-      }
-    }
-
-    void logoutAndDeleteAllData() async {
-      await locator<PupilBaseManager>().deleteData();
-      await locator<EnvManager>().deleteEnv();
-      await locator<SessionManager>().logout();
-      if (context.mounted) {
-        snackbarSuccess(context, 'Zugangsdaten und QR-Ids gelöscht!');
-        //Navigator.of(context).popUntil(ModalRoute.withName(Routes.login));
-      }
-    }
 
     return Scaffold(
       backgroundColor: canvasColor,
@@ -133,9 +117,36 @@ class SettingsView extends WatchingWidget {
                   ),
                   SettingsTile.navigation(
                     leading: GestureDetector(
-                        onTap: logout, child: const Icon(Icons.logout)),
+                        onTap: () async {
+                          logout(context);
+                        },
+                        child: const Icon(Icons.logout)),
                     title: const Text('Ausloggen'),
                     value: const Text('Daten bleiben erhalten'),
+                    //onPressed:
+                  ),
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.delete_forever_outlined),
+                    title: const Text('Lokale ID-Schlüssel löschen'),
+                    onPressed: (context) =>
+                        locator.get<PupilBaseManager>().deleteData(),
+                    value: const Text('QR-IDs löschen'),
+                    //onPressed:
+                  ),
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.delete_forever_outlined),
+                    title: const Text('Instanz-ID-Schlüssel löschen'),
+                    onPressed: (context) async {
+                      locator<EnvManager>().deleteEnv();
+                      //locator<SessionManager>().logout();
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (ctx) => const Login(),
+                        ),
+                        (route) => false,
+                      );
+                    },
+                    value: const Text('Nur Instanz-ID löschen'),
                     //onPressed:
                   ),
                   SettingsTile.navigation(
@@ -143,8 +154,8 @@ class SettingsView extends WatchingWidget {
                         onTap: () async {
                           bool? confirm = await confirmationDialog(context,
                               'Achtung!', 'Ausloggen und alle Daten löschen?');
-                          if (confirm == true) {
-                            logoutAndDeleteAllData();
+                          if (confirm == true && context.mounted) {
+                            logoutAndDeleteAllData(context);
                           }
                           return;
                         },
@@ -157,14 +168,6 @@ class SettingsView extends WatchingWidget {
                         )),
                     title: const Text('Ausloggen und Daten löschen'),
                     value: const Text('App wird zurückgesetzt!'),
-                    //onPressed:
-                  ),
-                  SettingsTile.navigation(
-                    leading: const Icon(Icons.delete_forever_outlined),
-                    title: const Text('Lokale ID-Schlüssel löschen'),
-                    onPressed: (context) =>
-                        locator.get<PupilBaseManager>().deleteData(),
-                    value: const Text('QR-IDs löschen'),
                     //onPressed:
                   ),
                 ],

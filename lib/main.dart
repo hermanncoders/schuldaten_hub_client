@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/routes/app_routes.dart';
 import 'package:schuldaten_hub/api/services/connection_manager.dart';
+import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/features/first_level_views/login_view/controller/login_controller.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
@@ -41,6 +42,7 @@ void main() async {
     ),
   );
   registerBaseManagers();
+  await locator.isReady<EnvManager>();
   await locator.isReady<ConnectionManager>();
   await locator.isReady<SessionManager>();
   await locator.isReady<PupilBaseManager>();
@@ -62,6 +64,7 @@ class MyApp extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool envIsReady = watchValue((EnvManager x) => x.envReady);
     bool isAuthenticated = watchValue((SessionManager x) => x.isAuthenticated);
 
     bool isConnected = locator<ConnectionManager>().isConnected;
@@ -87,12 +90,12 @@ class MyApp extends WatchingWidget {
                 ),
               ),
             )
-          : isAuthenticated
+          : envIsReady && isAuthenticated
               ? FutureBuilder(
                   future: locator.allReady(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return BottomNavigation();
+                      return Scaffold(bottomNavigationBar: BottomNavigation());
                     } else {
                       return const LoadingPage();
                     }

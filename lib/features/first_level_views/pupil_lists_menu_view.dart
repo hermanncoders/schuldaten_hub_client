@@ -60,7 +60,7 @@ class PupilMenuView extends StatelessWidget {
                           ),
                           Gap(10),
                           Text(
-                            'Vorfälle',
+                            'Ereignisse',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),

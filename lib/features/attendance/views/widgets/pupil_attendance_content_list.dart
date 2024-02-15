@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/badges.dart';
+import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_badges.dart';
 
 List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
   List<MissedClass> missedClasses = List.from(pupil.pupilMissedClasses!);
@@ -24,8 +25,9 @@ List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
         //     (a, b) => a.missedDay.compareTo(b.missedDay));
 
         return Card(
+          color: cardInCardColor,
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
             child: GestureDetector(
               onTap: () {
                 //- TO-DO: change missed class function
@@ -102,7 +104,7 @@ List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
                         missedClasses[index].createdBy,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const Gap(5),
+                      const Spacer(),
                       if (missedClasses[index].modifiedBy != null)
                         const Text('zuletzt geändert von: '),
                       if (missedClasses[index].modifiedBy != null)

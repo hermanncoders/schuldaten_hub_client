@@ -62,10 +62,8 @@ class SchoolListPupilsController extends State<SchoolListPupils> {
     List<Pupil> filteredPupils = [];
     for (Pupil pupil in pupils) {
       bool toList = true;
-      final PupilList pupilList = pupil.pupilLists!
-          .where(
-              (pupilList) => pupilList.originList == widget.schoolList.listId)
-          .first;
+      final PupilList pupilList = pupil.pupilLists!.firstWhere(
+          (pupilList) => pupilList.originList == widget.schoolList.listId);
 
       if (filterLocator.filterState.value[PupilFilter.schoolListYesResponse]! &&
           pupilList.pupilListStatus == true) {

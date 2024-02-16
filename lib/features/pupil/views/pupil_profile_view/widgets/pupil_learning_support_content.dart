@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/individual_development_plan_dialog.dart';
@@ -48,7 +49,10 @@ List<Widget> pupilLearningSupportContentList(
                     : pupil.individualDevelopmentPlan == 2
                         ? 'Förderebene 2'
                         : 'Förderebene 3',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: backgroundColor),
           ),
         )
       ],

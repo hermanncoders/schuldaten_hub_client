@@ -21,7 +21,7 @@ List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
     const Gap(10),
     ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: ogsColor, minimumSize: const Size.fromHeight(50)),
+          backgroundColor: accentColor, minimumSize: const Size.fromHeight(50)),
       onPressed: () async {},
       child: const Text(
         "NEUES LERNZIEL",

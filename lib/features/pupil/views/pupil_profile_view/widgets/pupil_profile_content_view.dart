@@ -122,7 +122,7 @@ Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
                           fontSize: 60,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Padding(padding: EdgeInsets.only(right: 5))
+                    const Gap(20),
                   ]),
                   //const Gap(15),
                   ...pupilCreditContentList(pupil, context),

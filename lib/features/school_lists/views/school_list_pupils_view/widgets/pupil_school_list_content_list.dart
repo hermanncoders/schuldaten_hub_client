@@ -30,6 +30,10 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: pupilLists.length,
       itemBuilder: (BuildContext context, int index) {
+        final schoolList =
+            schoolListLocator.getSchoolList(pupilLists[index].originList);
+        final pupilListEntry = schoolListLocator.getPupilSchoolListEntry(
+            pupil.internalId, pupilLists[index].originList);
         return GestureDetector(
           onTap: () {},
           onLongPress: () async {},
@@ -45,8 +49,6 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                     children: [
                       InkWell(
                         onTap: () {
-                          final schoolList = schoolListLocator
-                              .getSchoolList(pupilLists[index].originList);
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (ctx) => SchoolListPupils(
                               schoolList,
@@ -54,9 +56,7 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                           ));
                         },
                         child: Text(
-                          schoolListLocator
-                              .getSchoolList(pupilLists[index].originList)
-                              .listName,
+                          schoolList.listName,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -66,9 +66,7 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                       const Gap(5),
                       Text(
                         maxLines: 2,
-                        schoolListLocator
-                            .getSchoolList(pupilLists[index].originList)
-                            .listDescription,
+                        schoolList.listDescription,
                         style: const TextStyle(fontSize: 15),
                       ),
                     ],
@@ -83,12 +81,8 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                         children: [
                           ...addCheckByTeacher(
                               index,
-                              (schoolListLocator
-                                          .getPupilSchoolListEntry(
-                                              pupil.internalId,
-                                              pupilLists[index].originList)
-                                          .pupilListStatus ==
-                                      false)
+                              ((pupilListEntry.pupilListStatus == false) &&
+                                      (pupilListEntry.pupilListEntryBy != null))
                                   ? true
                                   : false),
                           Icon(Icons.close, color: Colors.red[400]),
@@ -97,20 +91,9 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                             height: 25,
                             child: Checkbox(
                               activeColor: Colors.red,
-                              value: (schoolListLocator
-                                              .getPupilSchoolListEntry(
-                                                  pupil.internalId,
-                                                  pupilLists[index].originList)
-                                              .pupilListStatus ==
-                                          true ||
-                                      schoolListLocator
-                                              .getPupilSchoolListEntry(
-                                                  pupil.internalId,
-                                                  pupilLists[index].originList)
-                                              .pupilListStatus ==
-                                          null)
-                                  ? false
-                                  : true,
+                              value: (pupilListEntry.pupilListStatus == false)
+                                  ? true
+                                  : false,
                               onChanged: (value) async {
                                 await schoolListLocator.patchSchoolListPupil(
                                     pupil.internalId,
@@ -126,26 +109,17 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                       Row(children: [
                         ...addCheckByTeacher(
                             index,
-                            (schoolListLocator
-                                        .getPupilSchoolListEntry(
-                                            pupil.internalId,
-                                            pupilLists[index].originList)
-                                        .pupilListStatus ==
-                                    true)
+                            ((pupilListEntry.pupilListStatus == true) &&
+                                    pupilListEntry.pupilListEntryBy != null
                                 ? true
-                                : false),
+                                : false)),
                         Icon(Icons.done, color: Colors.green[400]),
                         SizedBox(
                           width: 25,
                           height: 25,
                           child: Checkbox(
                             activeColor: Colors.green,
-                            value: (schoolListLocator
-                                        .getPupilSchoolListEntry(
-                                            pupil.internalId,
-                                            pupilLists[index].originList)
-                                        .pupilListStatus ==
-                                    true)
+                            value: (pupilListEntry.pupilListStatus == true)
                                 ? true
                                 : false,
                             onChanged: (value) async {

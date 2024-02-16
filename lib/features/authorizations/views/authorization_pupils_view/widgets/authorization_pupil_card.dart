@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
-import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';

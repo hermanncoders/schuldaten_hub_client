@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
@@ -18,11 +19,13 @@ List<Widget> pupilOgsContentList(Pupil pupil, BuildContext context) {
         InkWell(
           onTap: () => pickUpTimeDialog(context, pupil, pupil.pickUpTime),
           child: Text(pickupTimePredicate(pupil.pickUpTime),
-              style:
-                  const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: backgroundColor)),
         ),
         const Gap(5),
-        const Text('Uhr:', style: TextStyle(fontSize: 18.0)),
+        const Text('Uhr', style: TextStyle(fontSize: 18.0)),
       ],
     ),
     const Gap(10),
@@ -58,7 +61,9 @@ List<Widget> pupilOgsContentList(Pupil pupil, BuildContext context) {
                 ? Text(pupil.ogsInfo!,
                     softWrap: true,
                     style: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.bold))
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: backgroundColor))
                 : const Text(
                     'keine Informationen',
                     style:

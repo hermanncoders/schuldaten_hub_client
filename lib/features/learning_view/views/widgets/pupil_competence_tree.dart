@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
-
-import 'package:schuldaten_hub/features/competence/models/competence.dart';
-import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
-import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/goal/views/new_category_goal_view/new_category_goal_view.dart';
+import 'package:schuldaten_hub/features/competence/models/competence.dart';
+import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_category_widgets/category_status_dialog.dart';
+import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
+
+import 'package:schuldaten_hub/features/goal/views/new_category_goal_view/new_category_goal_view.dart';
 
 List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
     double indentation, Color? passedBackGroundColor, BuildContext context) {

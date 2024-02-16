@@ -12,15 +12,13 @@ BottomAppBar pupilProfileBottomNavBar(BuildContext context) {
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 800),
         child: SizedBox(
-          height: 35,
+          height: 40,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Spacer(),
-
-              const Gap(15),
+              const Gap(10),
               IconButton(
-                iconSize: 30,
+                iconSize: 35,
                 tooltip: 'zurück',
                 icon: const Icon(
                   Icons.arrow_back,
@@ -29,15 +27,15 @@ BottomAppBar pupilProfileBottomNavBar(BuildContext context) {
                   Navigator.pop(context);
                 },
               ),
-              const Gap(20),
+              const Spacer(),
               IconButton(
                   onPressed: () =>
                       Navigator.popUntil(context, (route) => route.isFirst),
                   icon: const Icon(
                     Icons.home,
-                    size: 30,
+                    size: 35,
                   )),
-              const Gap(10)
+              // const Gap(10)
 
               // IconButton(
               //   onPressed: () {},

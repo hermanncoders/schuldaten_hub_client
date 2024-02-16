@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:gap/gap.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
@@ -146,6 +147,30 @@ class SettingsView extends WatchingWidget {
                       );
                     },
                     value: const Text('Nur Instanz-ID löschen'),
+                    //onPressed:
+                  ),
+                  SettingsTile.navigation(
+                    leading: GestureDetector(
+                        onTap: () async {
+                          bool? confirm = await confirmationDialog(context,
+                              'Bilder-Cache löschen', 'Cached Bilder löschen?');
+                          if (confirm == true && context.mounted) {
+                            final cacheManager = DefaultCacheManager();
+                            await cacheManager.emptyCache();
+                            snackbarSuccess(
+                                context, 'der Bilder-Cache wurde gelöscht');
+                          }
+                          return;
+                        },
+                        child: const Row(
+                          children: [
+                            Icon(Icons.logout),
+                            Gap(5),
+                            Icon(Icons.delete_forever_outlined)
+                          ],
+                        )),
+                    title: const Text('Cache löschen'),
+                    value: const Text('Lokal gespeicherte Bilder löschen'),
                     //onPressed:
                   ),
                   SettingsTile.navigation(

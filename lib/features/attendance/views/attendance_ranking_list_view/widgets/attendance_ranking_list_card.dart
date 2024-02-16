@@ -32,8 +32,7 @@ class _AttendanceRankingListCardState extends State<AttendanceRankingListCard> {
 
   @override
   Widget build(BuildContext context) {
-    List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
-    final Pupil pupil = pupils
+    Pupil pupil = watchValue((PupilFilterManager x) => x.filteredPupils)
         .where((element) => element.internalId == widget.passedPupil.internalId)
         .first;
 

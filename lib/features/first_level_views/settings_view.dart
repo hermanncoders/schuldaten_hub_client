@@ -9,7 +9,6 @@ import 'package:schuldaten_hub/common/services/session_helper_functions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/first_level_views/login_view/controller/login_controller.dart';
-import 'package:schuldaten_hub/features/first_level_views/login_view/login_view.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/qr_views.dart';

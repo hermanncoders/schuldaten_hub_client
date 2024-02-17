@@ -138,6 +138,8 @@ class SettingsView extends WatchingWidget {
                     title: const Text('Instanz-ID-Schlüssel löschen'),
                     onPressed: (context) async {
                       locator<EnvManager>().deleteEnv();
+                      final cacheManager = DefaultCacheManager();
+                      await cacheManager.emptyCache();
                       //locator<SessionManager>().logout();
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(

@@ -11,9 +11,11 @@ import 'package:watch_it/watch_it.dart';
 
 class BottomNavManager {
   ValueListenable<int> get bottomNavState => _bottomNavState;
+  ValueListenable<int> get pupilProfileNavState => _pupilProfileNavState;
   ValueListenable<PageController> get pageViewController => _pageViewController;
   final _bottomNavState = ValueNotifier<int>(0);
   final _pageViewController = ValueNotifier<PageController>(PageController());
+  final _pupilProfileNavState = ValueNotifier<int>(0);
   BottomNavManager() {
     _bottomNavState.value = 0;
     _pageViewController.value = PageController();
@@ -23,6 +25,10 @@ class BottomNavManager {
     if (_pageViewController.value.hasClients) {
       _pageViewController.value.jumpToPage(index);
     }
+  }
+
+  setPupilProfileNavPage(index) {
+    _pupilProfileNavState.value = index;
   }
 
   disposePageViewController() {

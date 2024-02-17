@@ -35,10 +35,11 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
     const Row(
       children: [
         Text(
-          'Deutsch - Sprachkompetenz:',
+          'Deutsch - Sprachkompetenz',
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 18.0,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ],
@@ -95,32 +96,36 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
       ],
     ),
     const Gap(10),
-    pupil.communicationTutor1 == null
-        ? const Text(
-            'kein Eintrag',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: backgroundColor),
-          )
-        : Card(
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: InkWell(
-                onTap: () => languageDialog(context, pupil,
-                    'communication_tutor1', pupil.communicationTutor1),
-                onLongPress: () => locator<PupilManager>()
-                    .patchPupil(pupil.internalId, 'communication_tutor1', null),
+    InkWell(
+      onTap: () => languageDialog(
+          context, pupil, 'communication_tutor1', pupil.communicationTutor1),
+      onLongPress: () => locator<PupilManager>()
+          .patchPupil(pupil.internalId, 'communication_tutor1', null),
+      child: pupil.communicationTutor1 == null
+          ? const Text(
+              'kein Eintrag',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: backgroundColor),
+            )
+          : Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                        child: communicationValues(pupil.communicationTutor1!))
+                    const Gap(10),
+                    InkWell(
+                      child: Container(
+                          child:
+                              communicationValues(pupil.communicationTutor1!)),
+                    )
                   ],
                 ),
               ),
             ),
-          ),
+    ),
     const Gap(10),
     const Row(
       children: [
@@ -132,21 +137,36 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
       ],
     ),
     const Gap(10),
-    Row(children: [
-      InkWell(
-        onTap: () => languageDialog(
-            context, pupil, 'communication_tutor2', pupil.communicationTutor2),
-        onLongPress: () => locator<PupilManager>()
-            .patchPupil(pupil.internalId, 'communication_tutor2', null),
-        child: Container(
-            child: pupil.communicationTutor2 == null
-                ? const Text(
-                    'kein Eintrag',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                : communicationValues(pupil.communicationTutor2!)),
-      )
-    ]),
+    InkWell(
+      onTap: () => languageDialog(
+          context, pupil, 'communication_tutor2', pupil.communicationTutor2),
+      onLongPress: () => locator<PupilManager>()
+          .patchPupil(pupil.internalId, 'communication_tutor2', null),
+      child: pupil.communicationTutor2 == null
+          ? const Text(
+              'kein Eintrag',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: backgroundColor),
+            )
+          : Card(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Gap(10),
+                    InkWell(
+                      child: Container(
+                          child:
+                              communicationValues(pupil.communicationTutor2!)),
+                    )
+                  ],
+                ),
+              ),
+            ),
+    ),
     const Gap(10)
   ];
 }

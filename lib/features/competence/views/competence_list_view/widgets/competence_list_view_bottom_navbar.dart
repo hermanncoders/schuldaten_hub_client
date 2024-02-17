@@ -9,42 +9,38 @@ import 'package:schuldaten_hub/features/competence/views/competence_list_view/wi
 BottomAppBar competenceListViewBottomNavBar(
     BuildContext context, List<Competence> competences) {
   return BottomAppBar(
-    // padding: EdgeInsets.all(9),
     shape: null,
     color: backgroundColor,
     child: IconTheme(
       data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: Row(
-          children: [
-            IconButton(
-              tooltip: 'Open navigation menu',
-              icon: const Icon(
-                Icons.arrow_back,
-                size: 35,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+      child: Row(
+        children: [
+          const Spacer(),
+          IconButton(
+            tooltip: 'zurück',
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 30,
             ),
-            const Spacer(),
-            IconButton(
-              tooltip: 'aktualisieren',
-              icon: const Icon(Icons.update_rounded),
-              onPressed: () {
-                locator<CompetenceFilterManager>()
-                    .refreshFilteredCompetences(competences);
-              },
-            ),
-            IconButton(
-              tooltip: 'Filter',
-              icon: const Icon(Icons.filter_list_rounded),
-              onPressed: () => showCompetenceFilterBottomSheet(context),
-            ),
-            const Gap(10)
-          ],
-        ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          IconButton(
+            tooltip: 'aktualisieren',
+            icon: const Icon(Icons.update_rounded),
+            onPressed: () {
+              locator<CompetenceFilterManager>()
+                  .refreshFilteredCompetences(competences);
+            },
+          ),
+          IconButton(
+            tooltip: 'Filter',
+            icon: const Icon(Icons.filter_list_rounded),
+            onPressed: () => showCompetenceFilterBottomSheet(context),
+          ),
+          const Gap(10)
+        ],
       ),
     ),
   );

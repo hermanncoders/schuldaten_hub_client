@@ -10,7 +10,6 @@ import '../../../../pupil/services/pupil_filter_manager.dart';
 BottomAppBar admonitionListViewBottomNavBar(
     BuildContext context, bool filtersOn) {
   return BottomAppBar(
-    padding: const EdgeInsets.all(10),
     shape: null,
     color: backgroundColor,
     child: IconTheme(

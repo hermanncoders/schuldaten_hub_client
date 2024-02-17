@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/common/widgets/list_tile.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_stats_pupil.dart';
+import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
@@ -65,11 +67,16 @@ class _AttendanceRankingListCardState extends State<AttendanceRankingListCard> {
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: InkWell(
-                                  onTap: () => Navigator.of(context)
-                                      .push(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        PupilProfile(pupil),
-                                  )),
+                                  onTap: () {
+                                    locator<BottomNavManager>()
+                                        .setPupilProfileNavPage(3);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            PupilProfile(pupil),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     '${pupil.firstName!} ${pupil.lastName!}',
                                     overflow: TextOverflow.ellipsis,
@@ -87,19 +94,19 @@ class _AttendanceRankingListCardState extends State<AttendanceRankingListCard> {
                           ],
                         ),
                         const Gap(10),
-                        InkWell(
-                            onTap: () {
-                              _tileController.isExpanded
-                                  ? _tileController.collapse()
-                                  : _tileController.expand();
-                            },
-                            child: Row(
-                              children: [
-                                const Spacer(),
-                                attendanceStats(pupil),
-                                const Gap(20),
-                              ],
-                            )),
+                        Row(
+                          children: [
+                            const Spacer(),
+                            InkWell(
+                                onTap: () {
+                                  _tileController.isExpanded
+                                      ? _tileController.collapse()
+                                      : _tileController.expand();
+                                },
+                                child: attendanceStats(pupil)),
+                            const Gap(20),
+                          ],
+                        ),
                       ],
                     ),
                     const Gap(10),

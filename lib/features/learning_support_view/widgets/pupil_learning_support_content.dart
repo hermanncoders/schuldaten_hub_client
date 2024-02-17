@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/features/learning_support_view/widgets/learning_support_goal_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/individual_development_plan_dialog.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/preschool_revision_dialog.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_category_widgets/category_goal_card.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/list_tiles/pupil_category_widgets/pupil_category_tree.dart';
 
 List<Widget> pupilLearningSupportContentList(
@@ -75,28 +75,16 @@ List<Widget> pupilLearningSupportContentList(
       ],
     ),
     const Gap(10),
-    pupil.pupilGoals!.isNotEmpty
-        ? const Row(
-            children: [
-              Text(
-                'Förderziele',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ],
-          )
-        : const SizedBox.shrink(),
-    pupil.pupilGoals!.isNotEmpty ? const Gap(15) : const SizedBox.shrink(),
-    pupil.pupilGoals!.isNotEmpty
-        ? ListView.builder(
-            padding: const EdgeInsets.all(0),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: pupil.pupilGoals!.length,
-            itemBuilder: (context, int index) {
-              return categoryGoalCard(context, pupil, index);
-            })
-        : const SizedBox.shrink(),
-    const Gap(20),
+    const Row(
+      children: [
+        Text(
+          'Förderziele',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+    const Gap(5),
+    ...learningSupportGoalList(context, pupil),
     const Row(
       children: [
         Text(
@@ -105,6 +93,7 @@ List<Widget> pupilLearningSupportContentList(
         ),
       ],
     ),
+    const Gap(10),
     ...buildPupilCategoryTree(context, pupil, null, 0, null),
     const Gap(15),
   ];

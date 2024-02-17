@@ -13,7 +13,7 @@ import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_badg
 List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
   List<MissedClass> missedClasses = List.from(pupil.pupilMissedClasses!);
   // sort by missedDay
-  missedClasses.sort((a, b) => a.missedDay.compareTo(b.missedDay));
+  missedClasses.sort((b, a) => a.missedDay.compareTo(b.missedDay));
   return [
     ListView.builder(
       padding: const EdgeInsets.only(top: 5, bottom: 15),

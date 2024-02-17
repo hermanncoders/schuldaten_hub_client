@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/late_in_minutes_dialog.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/multiple_entries_dialog.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/returned_time_picker.dart';
+import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -74,6 +75,8 @@ class AttendanceCard extends WatchingWidget {
                         scrollDirection: Axis.horizontal,
                         child: InkWell(
                           onTap: () {
+                            locator<BottomNavManager>()
+                                .setPupilProfileNavPage(3);
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (ctx) => PupilProfile(
                                 pupil,
@@ -206,25 +209,60 @@ class AttendanceCard extends WatchingWidget {
                           : const SizedBox.shrink(),
                     ),
                   ),
-                  const Row(
+                  Row(
                     children: [
-                      Gap(5),
-                      Text(
-                        'U',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                      Container(
+                        width: 20.0,
+                        height: 20.0,
+                        decoration: const BoxDecoration(
+                          color: excusedCheckColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'U',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
-                      Gap(28),
-                      Text(
-                        'K',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                      const Gap(18),
+                      Container(
+                        width: 20.0,
+                        height: 20.0,
+                        decoration: BoxDecoration(
+                          color: Colors.red[900],
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'K',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
-                      Gap(25),
-                      Text(
-                        'H',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                      const Gap(19),
+                      Container(
+                        width: 20.0,
+                        height: 20.0,
+                        decoration: const BoxDecoration(
+                          color: homeColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'H',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
                     ],
                   ),

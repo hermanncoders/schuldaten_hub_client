@@ -60,25 +60,25 @@ List<DropdownMenuItem<String>> missedTypeMenuItems = [
               )),
         ),
       )),
-  DropdownMenuItem(
-      value: 'home',
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        decoration: const BoxDecoration(
-          color: homeColor,
-          shape: BoxShape.circle,
-        ),
-        child: const Center(
-          child: Text("H",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              )),
-        ),
-      )),
+  // DropdownMenuItem(
+  //     value: 'home',
+  //     child: Container(
+  //       width: 30.0,
+  //       height: 30.0,
+  //       decoration: const BoxDecoration(
+  //         color: homeColor,
+  //         shape: BoxShape.circle,
+  //       ),
+  //       child: const Center(
+  //         child: Text("H",
+  //             textAlign: TextAlign.center,
+  //             style: TextStyle(
+  //               color: Colors.white,
+  //               fontWeight: FontWeight.bold,
+  //               fontSize: 18,
+  //             )),
+  //       ),
+  //     )),
 ];
 
 List<DropdownMenuItem<String>> dropdownContactedMenuItems = [

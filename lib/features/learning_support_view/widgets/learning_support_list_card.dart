@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
-import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
+import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
+import 'package:schuldaten_hub/common/widgets/list_tile.dart';
+import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/learning_support_view/controller/learning_support_list_controller.dart';
+import 'package:schuldaten_hub/features/learning_support_view/widgets/learning_support_goal_list.dart';
+import 'package:schuldaten_hub/features/learning_support_view/widgets/learning_support_goals_batches.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 
@@ -11,14 +16,22 @@ import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controlle
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/dialogs/individual_development_plan_dialog.dart';
 import 'package:watch_it/watch_it.dart';
 
-class LearningSupportCard extends WatchingWidget {
+class LearningSupportCard extends WatchingStatefulWidget {
   final LearningSupportListController controller;
   final Pupil passedPupil;
   const LearningSupportCard(this.controller, this.passedPupil, {super.key});
+
+  @override
+  State<LearningSupportCard> createState() => _LearningSupportCardState();
+}
+
+class _LearningSupportCardState extends State<LearningSupportCard> {
+  final CustomExpansionTileController _tileController =
+      CustomExpansionTileController();
   @override
   Widget build(BuildContext context) {
     Pupil pupil = watchValue((PupilFilterManager x) => x.filteredPupils)
-        .where((element) => element.internalId == passedPupil.internalId)
+        .where((element) => element.internalId == widget.passedPupil.internalId)
         .first;
 
     return Card(
@@ -27,132 +40,138 @@ class LearningSupportCard extends WatchingWidget {
       elevation: 1.0,
       margin:
           const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      child: Column(
         children: [
-          avatarWithBadges(pupil, 80),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Gap(15),
-                Row(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              avatarWithBadges(pupil, 80),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => PupilProfile(
-                                pupil,
+                    const Gap(15),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: InkWell(
+                              onTap: () {
+                                locator<BottomNavManager>()
+                                    .setPupilProfileNavPage(8);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => PupilProfile(
+                                    pupil,
+                                  ),
+                                ));
+                              },
+                              child: Text(
+                                '${pupil.firstName!} ${pupil.lastName!}',
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ));
-                          },
-                          child: Text(
-                            '${pupil.firstName!} ${pupil.lastName!}',
-                            overflow: TextOverflow.fade,
-                            softWrap: false,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-                const Gap(5),
-                Row(
-                  children: [
-                    const Text('FöSchw.:'),
-                    const Gap(10),
-                    Text(
-                      pupil.specialNeeds != null
-                          ? pupil.specialNeeds!.length == 4
-                              ? '${pupil.specialNeeds!.substring(0, 2)} ${pupil.specialNeeds!.substring(2, 4)}'
-                              : pupil.specialNeeds!.substring(0, 2)
-                          : '',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                    const Gap(5),
+                    Row(
+                      children: [
+                        const Text('ärztl. U.:'),
+                        const Gap(10),
+                        Text(
+                          widget.controller
+                              .preschoolRevision(pupil.preschoolRevision!),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const Gap(5),
-                Row(
-                  children: [
-                    const Text('ärztl. U.:'),
-                    const Gap(10),
-                    Text(
-                      controller.preschoolRevision(pupil.preschoolRevision!),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                if (pupil.pupilGoals!.isNotEmpty) const Gap(5),
-                if (pupil.pupilGoals!.isNotEmpty)
-                  Row(
-                    children: [
-                      const Text('Ziele:'),
-                      const Gap(10),
-                      Container(
-                        width: 12.0,
-                        height: 12.0,
-                        decoration: BoxDecoration(
-                          color: locator<GoalManager>().getRootCategoryColor(
-                              locator<GoalManager>().getRootCategory(
-                                  pupil.pupilGoals![0].goalCategoryId)),
-                          shape: BoxShape.circle,
+                    const Gap(15),
+                    if (pupil.pupilGoals!.isNotEmpty)
+                      InkWell(
+                        onTap: () {
+                          _tileController.isExpanded
+                              ? _tileController.collapse()
+                              : _tileController.expand();
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ...learningSupportGoalsBatches(pupil),
+                          ],
                         ),
                       ),
-                      const Gap(5),
-                      Text(
-                        pupil.pupilGoals![0].description ?? '',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                if (pupil.pupilGoals!.isNotEmpty) const Gap(10),
-              ],
-            ),
-          ),
-          const Gap(20),
-          Column(
-            children: [
-              const Gap(20),
-              const Text('Ebene'),
-              Center(
-                child: InkWell(
-                  onTap: () async {
-                    individualDevelopmentPlanDialog(
-                        context, pupil, pupil.individualDevelopmentPlan);
-                  },
-                  child: Text(
-                    pupil.individualDevelopmentPlan.toString(),
-                    style: const TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  ],
                 ),
               ),
+              const Gap(8),
+              Column(
+                children: [
+                  const Gap(20),
+                  const Text('Ebene'),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        _tileController.isExpanded
+                            ? _tileController.collapse()
+                            : _tileController.expand();
+                      },
+                      onLongPress: () async {
+                        individualDevelopmentPlanDialog(
+                            context, pupil, pupil.individualDevelopmentPlan);
+                      },
+                      child: Text(
+                        pupil.individualDevelopmentPlan.toString(),
+                        style: const TextStyle(
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    pupil.specialNeeds != null
+                        ? pupil.specialNeeds!.length == 4
+                            ? '${pupil.specialNeeds!.substring(0, 2)} ${pupil.specialNeeds!.substring(2, 4)}'
+                            : pupil.specialNeeds!.substring(0, 2)
+                        : '',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: groupColor,
+                    ),
+                  ),
+                ],
+              ),
+              const Gap(15),
             ],
           ),
-          const Gap(20),
+          Padding(
+            padding: const EdgeInsets.all(5),
+            child: listTiles(
+                null,
+                context,
+                _tileController,
+                learningSupportGoalList(
+                  context,
+                  pupil,
+                )),
+          )
         ],
       ),
     );

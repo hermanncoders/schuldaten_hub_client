@@ -4,6 +4,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
+import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
@@ -20,6 +21,8 @@ class PupilDetailsView extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
+    int pupilProfileNavState =
+        watchValue((BottomNavManager x) => x.pupilProfileNavState);
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
     final passedPupil = controller.widget.pupil;
     final pupil = pupils
@@ -180,7 +183,9 @@ class PupilDetailsView extends WatchingWidget {
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: pupilProfileNavigation(
-                      controller, MediaQuery.of(context).size.width / 5)),
+                      controller,
+                      pupilProfileNavState,
+                      MediaQuery.of(context).size.width / 5)),
             ),
           ],
         ),

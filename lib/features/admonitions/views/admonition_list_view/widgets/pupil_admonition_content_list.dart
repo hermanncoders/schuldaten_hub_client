@@ -65,13 +65,13 @@ List<Widget> pupilAdmonitionsContentList(
             },
             onLongPress: () async {
               bool? confirm = await confirmationDialog(
-                  context, 'Vorfall löschen', 'Den Vorfall löschen?');
+                  context, 'Ereignis löschen', 'Das Ereignis löschen?');
               if (confirm! == false) return;
               await locator<AdmonitionManager>()
                   .deleteAdmonition(admonitions[index].admonitionId);
               if (context.mounted) {
-                informationDialog(
-                    context, 'Vorfall gelöscht', 'Der Vorfall wurde gelöscht!');
+                informationDialog(context, 'Ereignis gelöscht',
+                    'Das Ereignis wurde gelöscht!');
               }
             },
             child: Card(
@@ -244,21 +244,21 @@ List<Widget> pupilAdmonitionsContentList(
                           onTap: () async {
                             bool? confirm = await confirmationDialog(
                                 context,
-                                'Vorfall bearbeitet?',
-                                'Den Vorfall als erledigt markieren?');
+                                'Ereignis bearbeitet?',
+                                'Ereignis als bearbeitet markieren?');
                             if (confirm! == false) return;
                             await locator<AdmonitionManager>()
                                 .patchAdmonitionAsProcessed(
                                     admonitions[index].admonitionId, true);
                             if (context.mounted) {
-                              snackbarSuccess(context, 'Vorfall markiert');
+                              snackbarSuccess(context, 'Ereignis markiert');
                             }
                           },
                           onLongPress: () async {
                             bool? confirm = await confirmationDialog(
                                 context,
-                                'Vorfall bearbeitet?',
-                                'Den Vorfall als unbearbeitet markieren?');
+                                'Ereignis unbearbeitet?',
+                                'Ereignis als unbearbeitet markieren?');
                             if (confirm! == false) return;
                             await locator<AdmonitionManager>()
                                 .patchAdmonitionAsProcessed(

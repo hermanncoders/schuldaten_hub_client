@@ -136,6 +136,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                   );
                 }).toList(),
               ),
+              const Gap(10),
               Row(
                 children: [
                   const Text('am', style: subtitle),
@@ -290,10 +291,8 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                     minimumSize: const Size.fromHeight(60)),
                 onPressed: () {
                   if (admonitionTypeDropdown == 'choose') {
-                    informationDialog(
-                        context,
-                        'Keine Vorfall-Kategorie ausgewählt',
-                        'Bitte waehle eine Kategorie aus!');
+                    informationDialog(context, 'Kein Ereignis ausgewählt',
+                        'Bitte eine Ereignis-Art auswählen!');
                     return;
                   }
                   if (violenceAgainstPeople == false &&
@@ -302,8 +301,8 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                       ignoreTeacherInstructions == false &&
                       disturbLesson == false &&
                       other == false) {
-                    informationDialog(context, 'Keine Vorfall-Art ausgewählt',
-                        'Bitte waehle mindestens eine Eigenschaft aus!');
+                    informationDialog(context, 'Kein Grund ausgewählt',
+                        'Bitte mindestens einen Grund auswählen!');
                     return;
                   }
                   postAdmonition(context);

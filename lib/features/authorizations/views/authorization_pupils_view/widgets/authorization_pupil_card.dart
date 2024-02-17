@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
@@ -99,7 +100,7 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                         ),
                         const Gap(10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const Icon(
                               Icons.close,
@@ -247,6 +248,7 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                       pupilAuthorization.comment != null
                           ? pupilAuthorization.comment!
                           : 'kein Kommentar',
+                      style: const TextStyle(color: backgroundColor),
                       textAlign: TextAlign.left,
                       maxLines: 3,
                       softWrap: true,

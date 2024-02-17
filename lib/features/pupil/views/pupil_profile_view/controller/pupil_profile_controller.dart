@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
+import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -20,18 +21,6 @@ class PupilProfile extends StatefulWidget {
 }
 
 class PupilProfileController extends State<PupilProfile> {
-  int pupilProfileNavState = 0;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void changeNavState(int state) {
-    setState(() {
-      pupilProfileNavState = state;
-    });
-  }
-
   final CustomExpansionTileController infoTileController =
       CustomExpansionTileController();
   final CustomExpansionTileController languageTileController =
@@ -54,7 +43,9 @@ class PupilProfileController extends State<PupilProfile> {
       CustomExpansionTileController();
 
   Color navigationBackgroundColor(int page) {
-    return page == pupilProfileNavState ? Colors.white : backgroundColor;
+    return page == locator<BottomNavManager>().pupilProfileNavState.value
+        ? Colors.white
+        : backgroundColor;
   }
 
   Color navigationBackgroundActive = accentColor;

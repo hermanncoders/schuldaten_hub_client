@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
+import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/ogs_view/controller/ogs_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -52,6 +54,8 @@ class OgsCard extends WatchingWidget {
                                   scrollDirection: Axis.horizontal,
                                   child: InkWell(
                                     onTap: () {
+                                      locator<BottomNavManager>()
+                                          .setPupilProfileNavPage(5);
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                         builder: (ctx) => PupilProfile(
@@ -100,9 +104,9 @@ class OgsCard extends WatchingWidget {
                               child: Text(
                                 controller.pickUpValue(pupil.pickUpTime),
                                 style: const TextStyle(
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold,
+                                    color: backgroundColor),
                               ),
                             ),
                           ),
@@ -147,7 +151,8 @@ class OgsCard extends WatchingWidget {
                           maxLines: 3,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 14,
+                            fontSize: 16,
+                            color: backgroundColor,
                           ),
                         ),
                       ),

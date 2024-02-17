@@ -7,7 +7,9 @@ String getAdmonitionTypeText(String value) {
     case 'rkogs':
       return 'OGS';
     case 'other':
-      return 'Vorfall';
+      return 'Sonstiges';
+    case 'Eg':
+      return 'Elterngespräch';
     default:
       return '';
   }

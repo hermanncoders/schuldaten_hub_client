@@ -10,7 +10,7 @@ Widget communicationValues(String values) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.hearing),
           const Gap(5),
@@ -20,7 +20,7 @@ Widget communicationValues(String values) {
       ),
       const Gap(10),
       Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.chat_bubble_outline_rounded),
           const Gap(5),
@@ -29,7 +29,7 @@ Widget communicationValues(String values) {
       ),
       const Gap(5),
       Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.book),
           const Gap(5),

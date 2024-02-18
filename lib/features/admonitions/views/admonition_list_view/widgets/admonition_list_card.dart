@@ -8,7 +8,7 @@ import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/pupil_admonition_content_list.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';

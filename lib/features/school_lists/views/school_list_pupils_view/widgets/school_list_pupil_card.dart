@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/school_lists/models/pupil_list.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_helper_functions.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
@@ -52,6 +55,17 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                         ));
                       },
                       onLongPress: () async {
+                        if (!locator<SessionManager>().isAdmin.value) {
+                          if (listOwner(pupilList.originList) !=
+                              locator<SessionManager>()
+                                  .credentials
+                                  .value
+                                  .username) {
+                            snackbarWarning(context,
+                                'Löchen nicht möglich - keine Berechtigung!');
+                            return;
+                          }
+                        }
                         final bool? confirm = await confirmationDialog(
                             context,
                             'Kind aus der Liste löschen',

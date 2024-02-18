@@ -8,7 +8,7 @@ import 'package:schuldaten_hub/common/models/session_models/env.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/secure_storage.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 
 class EnvManager {
   ValueListenable<Env> get env => _env;

@@ -357,10 +357,6 @@ class PupilFilterManager {
         toList = false;
       }
 
-      // Filter pupils with learning goals
-
-      // Filter pupils without learning goals
-
       // Filter boys
       if (activeFilters[PupilFilter.justBoys]! &&
           pupil.gender == 'm' &&

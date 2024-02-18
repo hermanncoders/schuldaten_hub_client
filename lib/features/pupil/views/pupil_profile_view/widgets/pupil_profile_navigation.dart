@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 
 double boxHeight = 35;

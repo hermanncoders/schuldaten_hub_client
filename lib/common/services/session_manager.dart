@@ -19,8 +19,8 @@ import 'package:schuldaten_hub/features/attendance/services/attendance_manager.d
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_filter_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
-import 'package:schuldaten_hub/features/goal/services/goal_manager.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';

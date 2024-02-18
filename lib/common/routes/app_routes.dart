@@ -1,9 +1,9 @@
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/controller/attendance_list_controller.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
-import 'package:schuldaten_hub/features/first_level_views/learn_list_view.dart';
-import 'package:schuldaten_hub/features/first_level_views/login_view/controller/login_controller.dart';
-import 'package:schuldaten_hub/features/first_level_views/scan_tools_view.dart';
-import 'package:schuldaten_hub/features/first_level_views/settings_view.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/learn_list_view.dart';
+import 'package:schuldaten_hub/features/landing_views/login_view/controller/login_controller.dart';
+import 'package:schuldaten_hub/features/landing_views/scan_tools_view.dart';
+import 'package:schuldaten_hub/features/landing_views/settings_view.dart';
 import 'package:schuldaten_hub/main.dart';
 
 import 'routes.dart';

@@ -8,7 +8,7 @@ import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/late_in_minutes_dialog.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/multiple_entries_dialog.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/returned_time_picker.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';

@@ -1,5 +1,15 @@
+import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
+import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
+
+String listOwner(String listId) {
+  final SchoolList schoolList = locator<SchoolListManager>()
+      .schoolLists
+      .value
+      .firstWhere((element) => element.listId == listId);
+  return schoolList.createdBy;
+}
 
 String listOwners(SchoolList schoolList) {
   String owners = '';

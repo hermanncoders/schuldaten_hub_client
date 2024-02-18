@@ -1,11 +1,12 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:schuldaten_hub/features/goal/models/category/pupil_category_status.dart';
+
 import 'package:schuldaten_hub/features/competence/models/competence_check.dart';
 import 'package:schuldaten_hub/features/competence/models/competence_goal.dart';
-import 'package:schuldaten_hub/features/goal/models/goal/pupil_goal.dart';
+import 'package:schuldaten_hub/features/learning_support/models/goal/pupil_goal.dart';
 import 'package:schuldaten_hub/features/authorizations/models/pupil_authorization.dart';
 import 'package:schuldaten_hub/features/books/models/pupil_book.dart';
+import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
 import 'package:schuldaten_hub/features/school_lists/models/pupil_list.dart';
 import 'package:schuldaten_hub/features/workbooks/models/pupil_workbook.dart';
 import 'package:schuldaten_hub/features/pupil/models/credit_history_log.dart';

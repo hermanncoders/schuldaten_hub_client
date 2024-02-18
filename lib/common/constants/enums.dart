@@ -97,6 +97,12 @@ enum PupilFilter {
   authorizationNoResponse,
   authorizationNullResponse,
   authorizationCommentResponse,
+  supportAreaMotorics,
+  supportAreaLanguage,
+  supportAreaMath,
+  supportAreaGerman,
+  supportAreaEmotions,
+  supportAreaLearning,
 }
 
 Map<PupilFilter, bool> initialFilterValues = {
@@ -149,4 +155,10 @@ Map<PupilFilter, bool> initialFilterValues = {
   PupilFilter.authorizationNoResponse: false,
   PupilFilter.authorizationNullResponse: false,
   PupilFilter.authorizationCommentResponse: false,
+  PupilFilter.supportAreaMotorics: false,
+  PupilFilter.supportAreaLanguage: false,
+  PupilFilter.supportAreaMath: false,
+  PupilFilter.supportAreaGerman: false,
+  PupilFilter.supportAreaEmotions: false,
+  PupilFilter.supportAreaLearning: false,
 };

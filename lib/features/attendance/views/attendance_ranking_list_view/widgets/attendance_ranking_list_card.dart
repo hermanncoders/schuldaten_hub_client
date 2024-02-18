@@ -6,7 +6,7 @@ import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/common/widgets/list_tile.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_stats_pupil.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';

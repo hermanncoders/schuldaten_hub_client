@@ -7,21 +7,21 @@ import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/pupil_admonition_content_list.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
-import 'package:schuldaten_hub/features/attendance/views/attendance_view/controller/attendance_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_stats_pupil.dart';
 import 'package:schuldaten_hub/features/attendance/views/widgets/pupil_attendance_content_list.dart';
 import 'package:schuldaten_hub/features/authorizations/views/pupil_authorizations_content_list.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
-import 'package:schuldaten_hub/features/learning_view/views/widgets/pupil_learning_content_list.dart';
-import 'package:schuldaten_hub/features/ogs_view/widgets/pupil_ogs_content_list.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/learning_support/views/learning_support_list_view/controller/learning_support_list_controller.dart';
+import 'package:schuldaten_hub/features/learning/views/widgets/pupil_learning_content_list.dart';
+import 'package:schuldaten_hub/features/ogs/widgets/pupil_ogs_content_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/pupil/views/credit_list_view/controller/credit_list_controller.dart';
-import 'package:schuldaten_hub/features/pupil/views/credit_list_view/widgets/pupil_credit_content_list.dart';
+import 'package:schuldaten_hub/features/credit/controller/credit_list_controller.dart';
+import 'package:schuldaten_hub/features/credit/widgets/pupil_credit_content_list.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
 
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_infos_content_list.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_language_content_list.dart';
-import 'package:schuldaten_hub/features/learning_support_view/widgets/pupil_learning_support_content.dart';
+import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_profile_language_content_list.dart';
+import 'package:schuldaten_hub/features/learning_support/widgets/pupil_learning_support_content.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/pupil_school_list_content_list.dart';
 
 Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
@@ -328,22 +328,27 @@ Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
               child: Padding(
                 padding: pupilProfileCardPadding,
                 child: Column(children: [
-                  const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.support_rounded,
-                          color: Colors.red,
-                          size: 24,
-                        ),
-                        Gap(5),
-                        Text('Förderung',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: backgroundColor,
-                            ))
-                      ]),
+                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                    const Icon(
+                      Icons.support_rounded,
+                      color: Colors.red,
+                      size: 24,
+                    ),
+                    const Gap(5),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => const LearningSupportList(),
+                        ));
+                      },
+                      child: const Text('Förderung',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: backgroundColor,
+                          )),
+                    )
+                  ]),
                   const Gap(15),
                   ...pupilLearningSupportContentList(pupil, context),
                 ]),

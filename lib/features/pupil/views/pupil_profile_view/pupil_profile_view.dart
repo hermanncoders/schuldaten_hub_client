@@ -4,7 +4,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
-import 'package:schuldaten_hub/features/first_level_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';

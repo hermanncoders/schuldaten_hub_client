@@ -223,7 +223,7 @@ class GoalManager {
   }
 
   GoalCategory getRootCategory(int categoryId) {
-    GoalCategory goalCategory = goalCategories.value
+    GoalCategory goalCategory = _goalCategories.value
         .firstWhere((element) => element.categoryId == categoryId);
     if (goalCategory.parentCategory == null) {
       return goalCategory;

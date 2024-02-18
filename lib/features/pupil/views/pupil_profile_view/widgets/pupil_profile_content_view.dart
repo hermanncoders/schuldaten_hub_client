@@ -21,7 +21,7 @@ import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controlle
 
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_infos_content_list.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/widgets/pupil_profile_language_content_list.dart';
-import 'package:schuldaten_hub/features/learning_support/widgets/pupil_learning_support_content.dart';
+import 'package:schuldaten_hub/features/learning_support/views/pupil_profile_learning_support_content.dart';
 import 'package:schuldaten_hub/features/school_lists/views/school_list_pupils_view/widgets/pupil_school_list_content_list.dart';
 
 Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,

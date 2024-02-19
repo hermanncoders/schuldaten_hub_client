@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
-import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
+
 import 'package:schuldaten_hub/features/learning_support/views/learning_support_list_view/learning_support_list_view.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -75,21 +75,6 @@ class LearningSupportListController extends State<LearningSupportList> {
       default:
         return 'keine';
     }
-  }
-
-  List<Widget> learningSupportCategoriesStatusesList(Pupil pupil) {
-    if (pupil.pupilCategoryStatuses != null) {
-      List<Widget> statuses = [];
-      for (PupilCategoryStatus status in pupil.pupilCategoryStatuses!) {
-        Widget statusWidget = Row(children: [
-          // Text(
-          //   (status.goalCategoryId),
-          // )
-        ]);
-        return [];
-      }
-    }
-    return [];
   }
 
   void cancelSearch({bool unfocus = true}) {

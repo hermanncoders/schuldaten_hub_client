@@ -249,7 +249,35 @@ class GoalManager {
     return null;
   }
 
-  Color getCategoryStatusColor(Pupil pupil, int goalCategoryId) {
+  Color getCategoryStatusColor(
+      Pupil pupil, int goalCategoryId, String statusId) {
+    if (pupil.pupilCategoryStatuses!.isNotEmpty) {
+      final PupilCategoryStatus categoryStatus = pupil.pupilCategoryStatuses!
+          .firstWhere((element) =>
+              element.goalCategoryId == goalCategoryId &&
+              element.statusId == statusId);
+
+      if (categoryStatus != null) {
+        switch (categoryStatus.state) {
+          case 'none':
+            return Colors.white;
+          case 'green':
+            return Colors.green;
+          case 'yellow':
+            return Colors.yellow;
+          case 'orange':
+            return Colors.orange;
+          case 'red':
+            return Colors.red;
+        }
+      }
+      return Colors.white;
+    }
+
+    return Colors.white;
+  }
+
+  Color getLastCategoryStatusColor(Pupil pupil, int goalCategoryId) {
     if (pupil.pupilCategoryStatuses!.isNotEmpty) {
       final PupilCategoryStatus? categoryStatus = pupil.pupilCategoryStatuses!
           .lastWhereOrNull(

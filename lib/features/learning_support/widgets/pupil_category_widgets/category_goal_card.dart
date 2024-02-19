@@ -5,6 +5,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
+import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_goal_card_banner.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 
 Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
@@ -37,28 +38,8 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
                             pupil.pupilGoals![index].goalCategoryId)),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              locator<GoalManager>()
-                                  .getRootCategory(
-                                      pupil.pupilGoals![index].goalCategoryId)
-                                  .categoryName,
-                              style: const TextStyle(
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: categoryGoalCardBanner(
+                      pupil.pupilGoals![index].goalCategoryId),
                 ),
               ),
               Padding(
@@ -72,8 +53,9 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
                         width: 20.0,
                         height: 20.0,
                         decoration: BoxDecoration(
-                          color: locator<GoalManager>().getCategoryStatusColor(
-                              pupil, pupil.pupilGoals![index].goalCategoryId),
+                          color: locator<GoalManager>()
+                              .getLastCategoryStatusColor(pupil,
+                                  pupil.pupilGoals![index].goalCategoryId),
                           shape: BoxShape.circle,
                         ),
                       ),

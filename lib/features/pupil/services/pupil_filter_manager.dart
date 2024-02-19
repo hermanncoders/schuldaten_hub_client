@@ -58,13 +58,37 @@ class PupilFilterManager {
   refreshFilteredPupils() {
     final List<Pupil> filteredPupils = List.from(_filteredPupils.value);
     final List<Pupil> pupils = locator<PupilManager>().pupils.value;
-    for (Pupil filteredPupil in filteredPupils) {
-      Pupil pupil = pupils
-          .where((pupil) => pupil.internalId == filteredPupil.internalId)
-          .single;
-      filteredPupil = pupil.copyWith();
+
+    Map<int, Pupil> pupilMap = {
+      for (Pupil pupil in pupils) pupil.internalId: pupil
+    };
+
+    // Update each element in filteredPupils with matching pupil from pupils
+    for (int i = 0; i < filteredPupils.length; i++) {
+      Pupil pupil = filteredPupils[i];
+      if (pupilMap.containsKey(pupil.internalId)) {
+        filteredPupils[i] = pupilMap[pupil.internalId]!;
+      } else {
+        // Remove the pupil from filteredPupils if it's not in pupils
+        filteredPupils.removeAt(i);
+        i--; // Decrement i to account for the removed element
+      }
     }
-    _filteredPupils.value = filteredPupils;
+
+    // Add any pupils from pupils that are not in filteredPupils yet
+    for (var pupil in pupils) {
+      if (!filteredPupils.any(
+          (filteredPupil) => filteredPupil.internalId == pupil.internalId)) {
+        filteredPupils.add(pupil);
+      }
+      // for (Pupil filteredPupil in filteredPupils) {
+      //   Pupil pupil = pupils
+      //       .where((pupil) => pupil.internalId == filteredPupil.internalId)
+      //       .single;
+      //   filteredPupil = pupil;
+      // }
+      _filteredPupils.value = filteredPupils;
+    }
   }
 
   cloneToFilteredPupil(Pupil pupil) {

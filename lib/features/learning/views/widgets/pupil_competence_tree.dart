@@ -8,7 +8,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_status_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/new_category_goal_view.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
 
 List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
     double indentation, Color? passedBackGroundColor, BuildContext context) {
@@ -89,7 +89,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                         height: 20.0,
                                         decoration: BoxDecoration(
                                           color: locator<GoalManager>()
-                                              .getCategoryStatusColor(pupil,
+                                              .getLastCategoryStatusColor(pupil,
                                                   competence.competenceId),
                                           shape: BoxShape.circle,
                                         ),
@@ -131,7 +131,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                   pupil, competence.competenceId, context),
                               onLongPress: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => NewCategoryGoalView(
+                                  builder: (ctx) => NewCategoryGoal(
                                     appBarTitle: 'Neues Förderziel',
                                     pupilId: pupil.internalId,
                                     goalCategoryId: competence.competenceId,
@@ -143,7 +143,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                 height: 20.0,
                                 decoration: BoxDecoration(
                                   color: locator<GoalManager>()
-                                      .getCategoryStatusColor(
+                                      .getLastCategoryStatusColor(
                                           pupil, competence.competenceId),
                                   shape: BoxShape.circle,
                                 ),

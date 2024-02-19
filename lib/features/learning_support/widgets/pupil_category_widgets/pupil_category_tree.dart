@@ -5,11 +5,10 @@ import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart
 
 import 'package:schuldaten_hub/features/learning_support/models/category/goal_category.dart';
 import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
+import 'package:schuldaten_hub/features/learning_support/views/selectable_category_tree_view/controller/selectable_category_tree_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/new_category_goal_view.dart';
-import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_status_dialog.dart';
 
 List<Widget> buildPupilCategoryTree(
   BuildContext context,
@@ -17,6 +16,7 @@ List<Widget> buildPupilCategoryTree(
   int? parentId,
   double indentation,
   Color? backGroundColor,
+  SelectableCategoryTreeController controller,
 ) {
   List<Widget> goalCategoryWidgets = [];
   final goalLocator = locator<GoalManager>();
@@ -34,12 +34,12 @@ List<Widget> buildPupilCategoryTree(
 
     if (goalCategory.parentCategory == parentId) {
       final children = buildPupilCategoryTree(
-        context,
-        pupil,
-        goalCategory.categoryId,
-        indentation + 15,
-        categoryBackgroundColor,
-      );
+          context,
+          pupil,
+          goalCategory.categoryId,
+          indentation + 15,
+          categoryBackgroundColor,
+          controller);
 
       goalCategoryWidgets.add(
         Padding(
@@ -100,27 +100,34 @@ List<Widget> buildPupilCategoryTree(
                           Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: InkWell(
-                              onTap: () => categoryStatusDialog(
-                                  pupil, goalCategory.categoryId, context),
-                              onLongPress: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => NewCategoryGoalView(
-                                    appBarTitle: 'Neues Förderziel',
-                                    pupilId: pupil.internalId,
-                                    goalCategoryId: goalCategory.categoryId,
-                                  ),
-                                ));
-                              },
-                              child: Container(
-                                width: 20.0,
-                                height: 20.0,
-                                decoration: BoxDecoration(
-                                  color: locator<GoalManager>()
-                                      .getCategoryStatusColor(
-                                          pupil, goalCategory.categoryId),
-                                  shape: BoxShape.circle,
-                                ),
+                              // onTap: () => categoryStatusDialog(
+                              //     pupil, goalCategory.categoryId, context),
+                              // onLongPress: () {
+                              //   Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (ctx) => NewCategoryGoalView(
+                              //       appBarTitle: 'Neues Förderziel',
+                              //       pupilId: pupil.internalId,
+                              //       goalCategoryId: goalCategory.categoryId,
+                              //     ),
+                              //   ));
+                              // },
+                              child: Radio(
+                                value: goalCategory.categoryId,
+                                groupValue: controller.selectedCategoryId,
+                                onChanged: (value) {
+                                  controller.selectCategory(value!);
+                                },
                               ),
+                              // Container(
+                              //   width: 20.0,
+                              //   height: 20.0,
+                              //   decoration: BoxDecoration(
+                              //     color: locator<GoalManager>()
+                              //         .getLastCategoryStatusColor(
+                              //             pupil, goalCategory.categoryId),
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              // ),
                             ),
                           ),
                           const Gap(5),

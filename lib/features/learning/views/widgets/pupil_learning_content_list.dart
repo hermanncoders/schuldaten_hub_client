@@ -61,7 +61,7 @@ List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
                             height: 20.0,
                             decoration: BoxDecoration(
                               color: locator<GoalManager>()
-                                  .getCategoryStatusColor(
+                                  .getLastCategoryStatusColor(
                                       pupil, pupilGoals[index].competenceId),
                               shape: BoxShape.circle,
                             ),

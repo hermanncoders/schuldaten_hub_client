@@ -4,6 +4,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/services/learning_support_helper_functions.dart';
@@ -92,7 +93,7 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                     const Gap(10),
                   ],
                 ),
-                statusEntry(pupil, status),
+                statusEntry(pupil, status, context),
               ],
             ),
           ),
@@ -112,6 +113,7 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
           Card(
             child: Column(children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Padding(
@@ -126,6 +128,7 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                           ),
                         ),
                         child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             ...categoryTreeAncestorsNames(
                               key,
@@ -166,7 +169,8 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
               for (int i = 0;
                   i < mappedStatusesWithSameGoalCategory.length;
                   i++) ...<Widget>[
-                statusEntry(pupil, mappedStatusesWithSameGoalCategory[i]),
+                statusEntry(
+                    pupil, mappedStatusesWithSameGoalCategory[i], context),
               ]
             ]),
           ),
@@ -178,43 +182,61 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
   return [];
 }
 
-Widget statusEntry(Pupil pupil, PupilCategoryStatus status) {
+Widget statusEntry(
+    Pupil pupil, PupilCategoryStatus status, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 8),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          children: [
-            Container(
-              width: 20.0,
-              height: 20.0,
-              decoration: BoxDecoration(
-                color: locator<GoalManager>()
-                    .getCategoryStatusColor(pupil, status.goalCategoryId),
-                shape: BoxShape.circle,
+    child: InkWell(
+      onLongPress: () async {
+        bool? confirm = await confirmationDialog(
+            context, 'Status löschen?', 'Status löschen?');
+        if (confirm != true) return;
+        locator<GoalManager>().deleteCategoryStatus(status.statusId);
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              Container(
+                width: 20.0,
+                height: 20.0,
+                decoration: BoxDecoration(
+                  color: locator<GoalManager>().getCategoryStatusColor(
+                      pupil, status.goalCategoryId, status.statusId),
+                  shape: BoxShape.circle,
+                ),
               ),
-            ),
-          ],
-        ),
-        const Gap(10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(status.comment),
-            Row(
-              children: [
-                Text(status.createdBy,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    )),
-                const Gap(5),
-                Text(status.createdAt.formatForUser()),
-              ],
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+          const Gap(10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(status.comment),
+              Row(
+                children: [
+                  Text(status.createdBy,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      )),
+                  const Gap(5),
+                  Text(status.createdAt.formatForUser()),
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          Column(
+            children: [
+              SizedBox.fromSize(
+                  size: const Size.square(40),
+                  child:
+                      const Image(image: AssetImage('assets/Blume_4-4.png'))),
+            ],
+          )
+        ],
+      ),
     ),
   );
 }

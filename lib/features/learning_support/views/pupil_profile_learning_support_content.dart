@@ -97,16 +97,9 @@ List<Widget> pupilLearningSupportContentList(
     ),
     const Gap(5),
     ...learningSupportGoalList(context, pupil),
-    const Row(
-      children: [
-        Text(
-          'Status Förderkategorien',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-      ],
-    ),
-    const Gap(10),
-    ...buildPupilCategoryTree(context, pupil, null, 0, null),
+
+    // const Gap(10),
+    // ...buildPupilCategoryTree(context, pupil, null, 0, null),
     const Gap(15),
   ];
 }

@@ -29,7 +29,7 @@ List<Widget> categoryTreeAncestorsNames(int categoryId) {
                 locator<GoalManager>().getRootCategory(categoryId).categoryName,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 )),
           ],
@@ -43,12 +43,14 @@ List<Widget> categoryTreeAncestorsNames(int categoryId) {
         ancestors.add(
           Padding(
             padding: const EdgeInsets.only(left: 10.0, bottom: 5),
-            child: Text(
-              currentCategory.categoryName,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
+            child: Flexible(
+              child: Text(
+                currentCategory.categoryName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
               ),
             ),
           ),

@@ -37,10 +37,112 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
         //- GECHECKT
         //- This one is returning a unique status for this category
         statusesWidgetList.add(
-          Card(
-            child: Column(
-              children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(25.0),
+            child: Card(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                              color: locator<GoalManager>()
+                                  .getCategoryColor(status.goalCategoryId),
+                            ),
+                            child: InkWell(
+                              onLongPress: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (ctx) => NewCategoryGoal(
+                                          appBarTitle: 'Neuer Förderbereich',
+                                          pupilId: pupil.internalId,
+                                          goalCategoryId: status.goalCategoryId,
+                                        )));
+                              },
+                              child: Wrap(
+                                children: [
+                                  ...categoryTreeAncestorsNames(
+                                    status.goalCategoryId,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Gap(10),
+                      Text(
+                        locator<GoalManager>()
+                            .getGoalCategory(status.goalCategoryId)
+                            .categoryName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: locator<GoalManager>()
+                                .getCategoryColor(status.goalCategoryId)),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: 20.0,
+                            height: 20.0,
+                            decoration: const BoxDecoration(
+                              color: interactiveColor,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                getGoalsForCategory(
+                                        pupil, status.goalCategoryId)
+                                    .length
+                                    .toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Gap(10),
+                    ],
+                  ),
+                  statusEntry(pupil, status, context),
+                ],
+              ),
+            ),
+          ),
+        );
+      }
+    }
+    //- Now let's build the statuses with multiple entries for a category
+    if (statusesWithDuplicateGoalCategory.isNotEmpty) {
+      for (int key in statusesWithDuplicateGoalCategory.keys) {
+        debug.warning('KEY: $key');
+        List<PupilCategoryStatus> mappedStatusesWithSameGoalCategory = [];
+
+        mappedStatusesWithSameGoalCategory =
+            statusesWithDuplicateGoalCategory[key]!;
+
+        statusesWidgetList.add(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(25.0),
+            child: Card(
+              child: Column(children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: Padding(
@@ -48,8 +150,11 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
-                            color: locator<GoalManager>()
-                                .getCategoryColor(status.goalCategoryId),
+                            color: locator<GoalManager>().getRootCategoryColor(
+                              locator<GoalManager>().getRootCategory(
+                                key,
+                              ),
+                            ),
                           ),
                           child: InkWell(
                             onLongPress: () {
@@ -57,13 +162,14 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                                   builder: (ctx) => NewCategoryGoal(
                                         appBarTitle: 'Neuer Förderbereich',
                                         pupilId: pupil.internalId,
-                                        goalCategoryId: status.goalCategoryId,
+                                        goalCategoryId: key,
                                       )));
                             },
                             child: Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
                                 ...categoryTreeAncestorsNames(
-                                  status.goalCategoryId,
+                                  key,
                                 ),
                               ],
                             ),
@@ -76,15 +182,16 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                 Row(
                   children: [
                     const Gap(10),
-                    Text(
-                      locator<GoalManager>()
-                          .getGoalCategory(status.goalCategoryId)
-                          .categoryName,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: locator<GoalManager>()
-                              .getCategoryColor(status.goalCategoryId)),
+                    Flexible(
+                      child: Text(
+                        locator<GoalManager>()
+                            .getGoalCategory(key)
+                            .categoryName,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
                     ),
                   ],
                 ),
@@ -102,9 +209,7 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                           ),
                           child: Center(
                             child: Text(
-                              getGoalsForCategory(pupil, status.goalCategoryId)
-                                  .length
-                                  .toString(),
+                              getGoalsForCategory(pupil, key).length.toString(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -116,108 +221,14 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                     const Gap(10),
                   ],
                 ),
-                statusEntry(pupil, status, context),
-              ],
+                for (int i = 0;
+                    i < mappedStatusesWithSameGoalCategory.length;
+                    i++) ...<Widget>[
+                  statusEntry(
+                      pupil, mappedStatusesWithSameGoalCategory[i], context),
+                ]
+              ]),
             ),
-          ),
-        );
-      }
-    }
-    //- Now let's build the statuses with multiple entries for a category
-    if (statusesWithDuplicateGoalCategory.isNotEmpty) {
-      for (int key in statusesWithDuplicateGoalCategory.keys) {
-        debug.warning('KEY: $key');
-        List<PupilCategoryStatus> mappedStatusesWithSameGoalCategory = [];
-
-        mappedStatusesWithSameGoalCategory =
-            statusesWithDuplicateGoalCategory[key]!;
-
-        statusesWidgetList.add(
-          Card(
-            child: Column(children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: locator<GoalManager>().getRootCategoryColor(
-                            locator<GoalManager>().getRootCategory(
-                              key,
-                            ),
-                          ),
-                        ),
-                        child: InkWell(
-                          onLongPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => NewCategoryGoal(
-                                      appBarTitle: 'Neuer Förderbereich',
-                                      pupilId: pupil.internalId,
-                                      goalCategoryId: key,
-                                    )));
-                          },
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              ...categoryTreeAncestorsNames(
-                                key,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  const Gap(10),
-                  Text(
-                    locator<GoalManager>().getGoalCategory(key).categoryName,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: 20.0,
-                        height: 20.0,
-                        decoration: const BoxDecoration(
-                          color: interactiveColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            getGoalsForCategory(pupil, key).length.toString(),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Gap(10),
-                ],
-              ),
-              for (int i = 0;
-                  i < mappedStatusesWithSameGoalCategory.length;
-                  i++) ...<Widget>[
-                statusEntry(
-                    pupil, mappedStatusesWithSameGoalCategory[i], context),
-              ]
-            ]),
           ),
         );
       }

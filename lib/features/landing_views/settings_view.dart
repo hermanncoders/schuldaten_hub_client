@@ -141,12 +141,14 @@ class SettingsView extends WatchingWidget {
                       final cacheManager = DefaultCacheManager();
                       await cacheManager.emptyCache();
                       //locator<SessionManager>().logout();
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (ctx) => const Login(),
-                        ),
-                        (route) => false,
-                      );
+                      if (context.mounted) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (ctx) => const Login(),
+                          ),
+                          (route) => false,
+                        );
+                      }
                     },
                     value: const Text('Nur Instanz-ID löschen'),
                     //onPressed:
@@ -159,8 +161,10 @@ class SettingsView extends WatchingWidget {
                           if (confirm == true && context.mounted) {
                             final cacheManager = DefaultCacheManager();
                             await cacheManager.emptyCache();
-                            snackbarSuccess(
-                                context, 'der Bilder-Cache wurde gelöscht');
+                            if (context.mounted) {
+                              snackbarSuccess(
+                                  context, 'der Bilder-Cache wurde gelöscht');
+                            }
                           }
                           return;
                         },

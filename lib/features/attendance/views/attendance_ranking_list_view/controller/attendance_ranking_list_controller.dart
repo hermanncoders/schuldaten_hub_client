@@ -57,18 +57,18 @@ class AttendanceRankingListController extends State<AttendanceRankingList> {
     await locator.get<PupilManager>().fetchPupilsById(pupilsToFetch);
   }
 
-  void _search() async {
-    if (!isSearching) {
-      setState(() {
-        isSearching = true;
-      });
-    }
+  // void _search() async {
+  //   if (!isSearching) {
+  //     setState(() {
+  //       isSearching = true;
+  //     });
+  //   }
 
-    if (!isSearchMode) return;
-    setState(() {
-      isSearching = false;
-    });
-  }
+  //   if (!isSearchMode) return;
+  //   setState(() {
+  //     isSearching = false;
+  //   });
+  // }
 
   void cancelSearch({bool unfocus = true}) {
     setState(() {

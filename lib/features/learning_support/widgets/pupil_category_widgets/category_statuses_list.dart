@@ -9,6 +9,7 @@ import 'package:schuldaten_hub/features/learning_support/models/category/pupil_c
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/services/learning_support_helper_functions.dart';
 import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
+import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_tree_ancestors_names.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 
 List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {

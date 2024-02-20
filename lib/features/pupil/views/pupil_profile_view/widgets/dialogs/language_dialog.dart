@@ -229,7 +229,7 @@ Future<void> languageDialog(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               )),
-                          const Gap(5),
+                          Gap(5),
                         ],
                       ),
                       Row(

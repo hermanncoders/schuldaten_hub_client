@@ -114,17 +114,17 @@ class _CreditListCardState extends State<CreditListCard> {
                 ),
               ),
               const Gap(20),
-              Column(
-                children: [
-                  const Gap(20),
-                  const Text('Credit'),
-                  Center(
-                    child: InkWell(
-                      onTap: () {
-                        _tileController.isExpanded
-                            ? _tileController.collapse()
-                            : _tileController.expand();
-                      },
+              InkWell(
+                onTap: () {
+                  _tileController.isExpanded
+                      ? _tileController.collapse()
+                      : _tileController.expand();
+                },
+                child: Column(
+                  children: [
+                    const Gap(20),
+                    const Text('Credit'),
+                    Center(
                       child: Text(
                         pupil.credit.toString(),
                         style: const TextStyle(
@@ -134,8 +134,8 @@ class _CreditListCardState extends State<CreditListCard> {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const Gap(20),
             ],

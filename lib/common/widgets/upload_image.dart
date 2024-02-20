@@ -75,47 +75,47 @@ class _CropAvatarState extends State<CropAvatarView> {
         ],
       );
 
-  Future<void> _aspectRatios() async {
-    final value = await showDialog<double>(
-      context: context,
-      builder: (context) {
-        return SimpleDialog(
-          title: const Text('Select aspect ratio'),
-          children: [
-            // special case: no aspect ratio
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, -1.0),
-              child: const Text('free'),
-            ),
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, 1.0),
-              child: const Text('square'),
-            ),
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, 2.0),
-              child: const Text('2:1'),
-            ),
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, 1 / 2),
-              child: const Text('1:2'),
-            ),
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, 4.0 / 3.0),
-              child: const Text('4:3'),
-            ),
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, 16.0 / 9.0),
-              child: const Text('16:9'),
-            ),
-          ],
-        );
-      },
-    );
-    if (value != null) {
-      controller.aspectRatio = value == -1 ? null : value;
-      controller.crop = const Rect.fromLTRB(0.1, 0.1, 0.9, 0.9);
-    }
-  }
+  // Future<void> _aspectRatios() async {
+  //   final value = await showDialog<double>(
+  //     context: context,
+  //     builder: (context) {
+  //       return SimpleDialog(
+  //         title: const Text('Select aspect ratio'),
+  //         children: [
+  //           // special case: no aspect ratio
+  //           SimpleDialogOption(
+  //             onPressed: () => Navigator.pop(context, -1.0),
+  //             child: const Text('free'),
+  //           ),
+  //           SimpleDialogOption(
+  //             onPressed: () => Navigator.pop(context, 1.0),
+  //             child: const Text('square'),
+  //           ),
+  //           SimpleDialogOption(
+  //             onPressed: () => Navigator.pop(context, 2.0),
+  //             child: const Text('2:1'),
+  //           ),
+  //           SimpleDialogOption(
+  //             onPressed: () => Navigator.pop(context, 1 / 2),
+  //             child: const Text('1:2'),
+  //           ),
+  //           SimpleDialogOption(
+  //             onPressed: () => Navigator.pop(context, 4.0 / 3.0),
+  //             child: const Text('4:3'),
+  //           ),
+  //           SimpleDialogOption(
+  //             onPressed: () => Navigator.pop(context, 16.0 / 9.0),
+  //             child: const Text('16:9'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  //   if (value != null) {
+  //     controller.aspectRatio = value == -1 ? null : value;
+  //     controller.crop = const Rect.fromLTRB(0.1, 0.1, 0.9, 0.9);
+  //   }
+  // }
 
   Future<void> _rotateLeft() async => controller.rotateLeft();
 

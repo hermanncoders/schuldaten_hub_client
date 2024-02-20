@@ -232,6 +232,11 @@ class GoalManager {
     }
   }
 
+  Color getCategoryColor(int categoryId) {
+    final GoalCategory rootCategory = getRootCategory(categoryId);
+    return getRootCategoryColor(rootCategory)!;
+  }
+
   Color? getRootCategoryColor(GoalCategory goalCategory) {
     if (goalCategory.categoryName == 'Körper, Wahrnehmung, Motorik') {
       return koerperWahrnehmungMotorikColor;

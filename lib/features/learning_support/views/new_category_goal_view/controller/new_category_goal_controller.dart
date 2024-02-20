@@ -20,12 +20,25 @@ class NewCategoryGoal extends StatefulWidget {
 }
 
 class NewCategoryGoalController extends State<NewCategoryGoal> {
+  @override
+  void initState() {
+    super.initState();
+    goalCategoryId = widget.goalCategoryId;
+  }
+
   final TextEditingController textField1Controller = TextEditingController();
   final TextEditingController textField2Controller = TextEditingController();
   int? goalCategoryId;
+  String categoryStatusValue = 'white';
   void setGoalCategoryId(int id) {
     setState(() {
       goalCategoryId = id;
+    });
+  }
+
+  void setCategoryStatusValue(String value) {
+    setState(() {
+      categoryStatusValue = value;
     });
   }
 

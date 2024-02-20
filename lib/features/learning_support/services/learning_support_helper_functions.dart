@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/learning_support/models/category/goal_category.dart';
 import 'package:schuldaten_hub/features/learning_support/models/goal/pupil_goal.dart';
@@ -18,39 +19,42 @@ List<Widget> categoryTreeAncestorsNames(int categoryId) {
     if (currentCategory.parentCategory != null) {
       collectAncestors(currentCategory.parentCategory!);
     }
-
-    // Add current category name to the list after recursion
-    ancestors.add(
-      Padding(
-        padding: currentCategory.categoryId ==
-                locator<GoalManager>().getRootCategory(categoryId).categoryId
-            ? const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0)
-            : currentCategory.categoryId == categoryId
-                ? const EdgeInsets.only(left: 10.0, bottom: 10, right: 10.0)
-                : const EdgeInsets.only(left: 10.0, right: 10.0),
-        child: Text(
-          currentCategory.categoryName,
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: currentCategory.categoryId == categoryId ||
-                    currentCategory.categoryId ==
-                        locator<GoalManager>()
-                            .getRootCategory(categoryId)
-                            .categoryId
-                ? FontWeight.bold
-                : FontWeight.normal,
-            fontSize: currentCategory.categoryId == categoryId
-                ? 13
-                : currentCategory.categoryId ==
-                        locator<GoalManager>()
-                            .getRootCategory(categoryId)
-                            .categoryId
-                    ? 16
-                    : 12,
-          ),
+    if (currentCategory.categoryId ==
+        locator<GoalManager>().getRootCategory(categoryId).categoryId) {
+      ancestors.add(
+        Row(
+          children: [
+            const Gap(10),
+            Text(
+                locator<GoalManager>().getRootCategory(categoryId).categoryName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                )),
+          ],
         ),
-      ),
-    );
+      );
+    }
+    // Add current category name to the list after recursion
+    if (currentCategory.categoryId !=
+        locator<GoalManager>().getRootCategory(categoryId).categoryId) {
+      if (currentCategory.categoryId != categoryId) {
+        ancestors.add(
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, bottom: 5),
+            child: Text(
+              currentCategory.categoryName,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        );
+      }
+    }
   }
 
   // Start the recursion from the input category

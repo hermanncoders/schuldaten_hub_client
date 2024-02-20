@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart
 import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/services/learning_support_helper_functions.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 
 List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
@@ -34,7 +35,7 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
         debug.warning('Adding ${status.comment}');
       } else {
         //- GECHECKT
-        //- This one is returning a unique status category
+        //- This one is returning a unique status for this category
         statusesWidgetList.add(
           Card(
             child: Column(
@@ -47,21 +48,43 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
-                            color: locator<GoalManager>().getRootCategoryColor(
-                              locator<GoalManager>().getRootCategory(
-                                status.goalCategoryId,
-                              ),
-                            ),
+                            color: locator<GoalManager>()
+                                .getCategoryColor(status.goalCategoryId),
                           ),
-                          child: Wrap(
-                            children: [
-                              ...categoryTreeAncestorsNames(
-                                status.goalCategoryId,
-                              ),
-                            ],
+                          child: InkWell(
+                            onLongPress: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => NewCategoryGoal(
+                                        appBarTitle: 'Neuer Förderbereich',
+                                        pupilId: pupil.internalId,
+                                        goalCategoryId: status.goalCategoryId,
+                                      )));
+                            },
+                            child: Wrap(
+                              children: [
+                                ...categoryTreeAncestorsNames(
+                                  status.goalCategoryId,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Gap(10),
+                    Text(
+                      locator<GoalManager>()
+                          .getGoalCategory(status.goalCategoryId)
+                          .categoryName,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: locator<GoalManager>()
+                              .getCategoryColor(status.goalCategoryId)),
                     ),
                   ],
                 ),
@@ -127,16 +150,38 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                             ),
                           ),
                         ),
-                        child: Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            ...categoryTreeAncestorsNames(
-                              key,
-                            ),
-                          ],
+                        child: InkWell(
+                          onLongPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => NewCategoryGoal(
+                                      appBarTitle: 'Neuer Förderbereich',
+                                      pupilId: pupil.internalId,
+                                      goalCategoryId: key,
+                                    )));
+                          },
+                          child: Wrap(
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              ...categoryTreeAncestorsNames(
+                                key,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  const Gap(10),
+                  Text(
+                    locator<GoalManager>().getGoalCategory(key).categoryName,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black),
                   ),
                 ],
               ),

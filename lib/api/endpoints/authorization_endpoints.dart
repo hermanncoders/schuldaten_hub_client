@@ -15,6 +15,9 @@ class EndpointsAuthorization {
     return '/pupil/$id/authorization';
   }
 
+  static const String postAuthorizationWithPupilsFromList =
+      '/authorization/group';
+
   //-PUPIL AUTHORIZATIONS -------------------------------------------
 
   String getPupilAuthorizationFile(int pupilId, String authorizationId) {

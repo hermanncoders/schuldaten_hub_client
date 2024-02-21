@@ -53,6 +53,22 @@ class AuthorizationManager {
     return;
   }
 
+  Future postAuthorizationWithPupils(
+      String name, String description, List<int> pupilIds) async {
+    final data = jsonEncode({
+      "authorization_description": description,
+      "authorization_name": name,
+      "pupils": pupilIds
+    });
+    final Response response = await client.post(
+        EndpointsAuthorization.postAuthorizationWithPupilsFromList,
+        data: data);
+    final List<Pupil> responsePupils = (List<Pupil>.from(
+        (response.data as List).map((e) => Pupil.fromJson(e))));
+    locator<PupilManager>().updateListOfPupils(responsePupils);
+    fetchAuthorizations();
+  }
+
   Future postPupilAuthorization(int pupilId, String authId) async {
     final data =
         jsonEncode({"comment": null, "file_url": null, "status": null});

@@ -77,7 +77,7 @@ List<Widget> pupilAdmonitionsContentList(
             child: Card(
               color: cardInCardColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(7),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),

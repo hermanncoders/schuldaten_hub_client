@@ -25,6 +25,9 @@ List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
         //     (a, b) => a.missedDay.compareTo(b.missedDay));
 
         return Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           color: cardInCardColor,
           child: Padding(
             padding: const EdgeInsets.all(15.0),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
+import 'package:schuldaten_hub/features/authorizations/views/new_authorization_view/new_authorization_view.dart';
 
 BottomAppBar authorizationListBottomNavBar(BuildContext context) {
   return BottomAppBar(
@@ -23,18 +26,19 @@ BottomAppBar authorizationListBottomNavBar(BuildContext context) {
             },
           ),
           const Gap(30),
-          IconButton(
-            tooltip: 'Neue Liste',
-            icon: const Icon(
-              Icons.add,
-              size: 35,
+          if (locator<SessionManager>().isAdmin.value == true)
+            IconButton(
+              tooltip: 'Neue Liste',
+              icon: const Icon(
+                Icons.add,
+                size: 35,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => const NewAuthorizationView(),
+                ));
+              },
             ),
-            onPressed: () {
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (ctx) => NewSchoolListView(),
-              // ));
-            },
-          ),
           const Gap(15)
         ],
       ),

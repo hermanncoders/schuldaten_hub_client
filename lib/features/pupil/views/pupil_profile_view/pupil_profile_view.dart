@@ -167,7 +167,7 @@ class PupilDetailsView extends WatchingWidget {
                           )
                         ],
                       ),
-                      //const Gap(10),
+                      const Gap(10),
                       pupilProfileContentView(
                           pupil, admonitions, context, controller),
                       const Gap(60),

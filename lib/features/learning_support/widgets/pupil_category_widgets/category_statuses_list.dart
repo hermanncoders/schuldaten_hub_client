@@ -33,53 +33,55 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
           statusesWithDuplicateGoalCategory[(status.goalCategoryId)]!
               .add(status);
         }
-        debug.warning('Adding ${status.comment}');
+        debug.warning(
+            'Adding status vom ${status.createdAt.formatForUser()} erstellt von ${status.createdBy}');
       } else {
         //- GECHECKT
         //- This one is returning a unique status for this category
         statusesWidgetList.add(
-          ClipRRect(
-            borderRadius: BorderRadius.circular(25.0),
-            child: Card(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              color: locator<GoalManager>()
-                                  .getCategoryColor(status.goalCategoryId),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              children: [
+                const Gap(10),
+                Row(
+                  children: [
+                    const Gap(10),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: locator<GoalManager>()
+                              .getCategoryColor(status.goalCategoryId),
+                        ),
+                        child: InkWell(
+                          onLongPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => NewCategoryGoal(
+                                      appBarTitle: 'Neuer Förderbereich',
+                                      pupilId: pupil.internalId,
+                                      goalCategoryId: status.goalCategoryId,
+                                    )));
+                          },
+                          child: Column(children: [
+                            const Gap(5),
+                            ...categoryTreeAncestorsNames(
+                              status.goalCategoryId,
                             ),
-                            child: InkWell(
-                              onLongPress: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (ctx) => NewCategoryGoal(
-                                          appBarTitle: 'Neuer Förderbereich',
-                                          pupilId: pupil.internalId,
-                                          goalCategoryId: status.goalCategoryId,
-                                        )));
-                              },
-                              child: Wrap(
-                                children: [
-                                  ...categoryTreeAncestorsNames(
-                                    status.goalCategoryId,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          ]),
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Gap(10),
-                      Text(
+                    ),
+                    const Gap(10),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Gap(15),
+                    Flexible(
+                      child: Text(
                         locator<GoalManager>()
                             .getGoalCategory(status.goalCategoryId)
                             .categoryName,
@@ -89,40 +91,40 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                             color: locator<GoalManager>()
                                 .getCategoryColor(status.goalCategoryId)),
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 20.0,
-                            height: 20.0,
-                            decoration: const BoxDecoration(
-                              color: interactiveColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Text(
-                                getGoalsForCategory(
-                                        pupil, status.goalCategoryId)
-                                    .length
-                                    .toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Gap(10),
-                    ],
-                  ),
-                  statusEntry(pupil, status, context),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                const Gap(10),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Column(
+                //       children: [
+                //         Container(
+                //           width: 20.0,
+                //           height: 20.0,
+                //           decoration: const BoxDecoration(
+                //             color: interactiveColor,
+                //             shape: BoxShape.circle,
+                //           ),
+                //           child: Center(
+                //             child: Text(
+                //               getGoalsForCategory(pupil, status.goalCategoryId)
+                //                   .length
+                //                   .toString(),
+                //               style: const TextStyle(
+                //                   color: Colors.white,
+                //                   fontWeight: FontWeight.bold),
+                //             ),
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //     const Gap(10),
+                //   ],
+                // ),
+                statusEntry(pupil, status, context),
+              ],
             ),
           ),
         );
@@ -145,35 +147,32 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: locator<GoalManager>().getRootCategoryColor(
-                              locator<GoalManager>().getRootCategory(
-                                key,
-                              ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: locator<GoalManager>().getRootCategoryColor(
+                            locator<GoalManager>().getRootCategory(
+                              key,
                             ),
                           ),
-                          child: InkWell(
-                            onLongPress: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => NewCategoryGoal(
-                                        appBarTitle: 'Neuer Förderbereich',
-                                        pupilId: pupil.internalId,
-                                        goalCategoryId: key,
-                                      )));
-                            },
-                            child: Wrap(
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: [
-                                ...categoryTreeAncestorsNames(
-                                  key,
-                                ),
-                              ],
-                            ),
+                        ),
+                        child: InkWell(
+                          onLongPress: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => NewCategoryGoal(
+                                      appBarTitle: 'Neuer Förderbereich',
+                                      pupilId: pupil.internalId,
+                                      goalCategoryId: key,
+                                    )));
+                          },
+                          child: Column(
+                            children: [
+                              ...categoryTreeAncestorsNames(
+                                key,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -253,6 +252,7 @@ Widget statusEntry(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Gap(5),
           Column(
             children: [
               Container(
@@ -267,31 +267,34 @@ Widget statusEntry(
             ],
           ),
           const Gap(10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(status.comment),
-              Row(
-                children: [
-                  Text(status.createdBy,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(status.comment),
+                const Gap(5),
+                Wrap(
+                  children: [
+                    const Text('Eingetragen von '),
+                    const Gap(5),
+                    Text(
+                      status.createdBy,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                      )),
-                  const Gap(5),
-                  Text(status.createdAt.formatForUser()),
-                ],
-              ),
-            ],
+                      ),
+                    ),
+                    const Text(' am '),
+                    Text(
+                      status.createdAt.formatForUser(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
-          Column(
-            children: [
-              SizedBox.fromSize(
-                  size: const Size.square(40),
-                  child:
-                      const Image(image: AssetImage('assets/Blume_4-4.png'))),
-            ],
-          )
         ],
       ),
     ),

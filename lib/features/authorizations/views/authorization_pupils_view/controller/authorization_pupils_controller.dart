@@ -31,7 +31,7 @@ class AuthorizationPupilsController extends State<AuthorizationPupils> {
 
   @override
   void initState() {
-    locator<PupilFilterManager>().refreshFilteredPupils();
+    //locator<PupilFilterManager>().refreshFilteredPupils();
     super.initState();
   }
 

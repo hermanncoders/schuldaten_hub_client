@@ -6,6 +6,7 @@ import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/school_lists/models/pupil_list.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -48,6 +49,7 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                   children: [
                     InkWell(
                       onTap: () {
+                        locator<BottomNavManager>().setPupilProfileNavPage(6);
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => PupilProfile(
                             pupil,

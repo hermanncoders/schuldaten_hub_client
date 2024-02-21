@@ -79,7 +79,7 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
               const Gap(5),
               Row(
                 children: [
-                  const Gap(10),
+                  const Gap(15),
                   Flexible(
                     child: Text(
                       pupil.pupilGoals![index].description!,
@@ -95,7 +95,7 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
               const Gap(5),
               const Row(
                 children: [
-                  Gap(10),
+                  Gap(15),
                   Text('Strategien:',
                       style: TextStyle(
                         fontSize: 16,
@@ -106,7 +106,7 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
               const Gap(5),
               Row(
                 children: [
-                  const Gap(10),
+                  const Gap(15),
                   Flexible(
                     child: Text(
                       pupil.pupilGoals![index].strategies!,
@@ -120,7 +120,7 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
               const Gap(5),
               Row(
                 children: [
-                  const Gap(10),
+                  const Gap(15),
                   const Text('Erstellt von:'),
                   const Gap(10),
                   Text(

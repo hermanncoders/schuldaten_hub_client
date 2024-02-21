@@ -327,31 +327,35 @@ Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
               ),
               child: Padding(
                 padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.support_rounded,
-                      color: Colors.red,
-                      size: 24,
-                    ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const LearningSupportList(),
-                        ));
-                      },
-                      child: const Text('Förderung',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor,
-                          )),
-                    )
-                  ]),
-                  const Gap(15),
-                  ...pupilLearningSupportContentList(pupil, context),
-                ]),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.support_rounded,
+                              color: Colors.red,
+                              size: 24,
+                            ),
+                            const Gap(5),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => const LearningSupportList(),
+                                ));
+                              },
+                              child: const Text('Förderung',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: backgroundColor,
+                                  )),
+                            )
+                          ]),
+                      const Gap(15),
+                      ...pupilLearningSupportContentList(pupil, context),
+                    ]),
               ),
             ),
           ],

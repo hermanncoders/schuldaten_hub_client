@@ -20,22 +20,23 @@ List<Widget> categoryTreeAncestorsNames(int categoryId) {
     if (currentCategory.categoryId ==
         locator<GoalManager>().getRootCategory(categoryId).categoryId) {
       ancestors.add(
-        Padding(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: Row(
-            children: [
-              const Gap(10),
-              Text(
+        Row(
+          children: [
+            const Gap(10),
+            Flexible(
+              child: Text(
                   locator<GoalManager>()
                       .getRootCategory(categoryId)
                       .categoryName,
                   style: const TextStyle(
+                    overflow: TextOverflow.fade,
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   )),
-            ],
-          ),
+            ),
+            const Gap(10),
+          ],
         ),
       );
     }
@@ -44,18 +45,21 @@ List<Widget> categoryTreeAncestorsNames(int categoryId) {
         locator<GoalManager>().getRootCategory(categoryId).categoryId) {
       if (currentCategory.categoryId != categoryId) {
         ancestors.add(
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0, bottom: 10),
-            child: Flexible(
-              child: Text(
-                currentCategory.categoryName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+          Row(
+            children: [
+              const Gap(10),
+              Flexible(
+                child: Text(
+                  currentCategory.categoryName,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
               ),
-            ),
+              const Gap(10),
+            ],
           ),
         );
       }
@@ -65,6 +69,6 @@ List<Widget> categoryTreeAncestorsNames(int categoryId) {
   // Start the recursion from the input category
   collectAncestors(categoryId);
 
-  // No need to reverse as recursion ensures root first order
+  ancestors.add(const Gap(5));
   return ancestors;
 }

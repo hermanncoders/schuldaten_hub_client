@@ -12,6 +12,7 @@ import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/common/widgets/upload_image.dart';
 
 import 'package:schuldaten_hub/features/authorizations/models/pupil_authorization.dart';
+import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
@@ -57,6 +58,8 @@ class AuthorizationPupilCard extends StatelessWidget with WatchItMixin {
                       children: [
                         InkWell(
                           onTap: () {
+                            locator<BottomNavManager>()
+                                .setPupilProfileNavPage(7);
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (ctx) => PupilProfile(
                                 pupil,

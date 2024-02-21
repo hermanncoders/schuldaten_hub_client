@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
+import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
@@ -28,8 +29,8 @@ class NewAuthorizationViewState extends State<NewAuthorizationView> {
     if (_isOn == true) {
       listType = 'public';
     }
-    await locator<SchoolListManager>()
-        .postSchoolListWithGroup(text1, text2, pupilIds.toList(), listType);
+    await locator<AuthorizationManager>()
+        .postAuthorizationWithPupils(text1, text2, pupilIds.toList());
   }
 
   @override

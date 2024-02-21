@@ -90,6 +90,9 @@ List<Widget> pupilLearningSupportContentList(
       padding: const EdgeInsets.all(10.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
             backgroundColor: accentColor,
             minimumSize: const Size.fromHeight(50)),
         onPressed: () {

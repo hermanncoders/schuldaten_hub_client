@@ -28,10 +28,12 @@ class NewCategoryGoalView extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Center(
+          child: SingleChildScrollView(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 800),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   const Row(
                     children: [
@@ -48,6 +50,9 @@ class NewCategoryGoalView extends StatelessWidget {
                           controller.goalCategoryId == 0
                       ? ElevatedButton(
                           style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                               backgroundColor: backgroundColor,
                               minimumSize: const Size.fromHeight(60)),
                           onPressed: () async {
@@ -106,7 +111,7 @@ class NewCategoryGoalView extends StatelessWidget {
                                             controller.goalCategoryId!)
                                         .categoryName,
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       color: locator<GoalManager>()
                                           .getCategoryColor(
                                               controller.goalCategoryId!),
@@ -118,6 +123,7 @@ class NewCategoryGoalView extends StatelessWidget {
                             ),
                   const Gap(15),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                           (controller.widget.appBarTitle == 'Neues Förderziel')
@@ -213,9 +219,12 @@ class NewCategoryGoalView extends StatelessWidget {
                         )
                       ],
                     ),
-                  const Spacer(),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 40)),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         backgroundColor: Colors.amber[800],
                         minimumSize: const Size.fromHeight(60)),
                     onPressed: () {
@@ -238,6 +247,9 @@ class NewCategoryGoalView extends StatelessWidget {
                   const Gap(15),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         backgroundColor: const Color.fromARGB(255, 235, 67, 67),
                         minimumSize: const Size.fromHeight(60)),
                     onPressed: () {

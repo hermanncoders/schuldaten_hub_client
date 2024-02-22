@@ -54,31 +54,31 @@ For now, all stored images.
   
 #### Accounts
 
-In our school, we have an own currency. We use it as a reward system to motivate our pupils. With this currency, they can buy stuff in our own shop (like school t-shirts or buttons, but also pencils, erasers, or little games like yoyos and such).
+- In our school, we have an own currency. We use it as a reward system to motivate our pupils. With this currency, they can buy stuff in our own shop (like school t-shirts or buttons, but also pencils, erasers, or little games like yoyos and such).
 
 #### Special information
 
-In case parents/guardians provide special information that everyone needs to know (like allergies, emergency medication, likelyhood of having an epilleptic stroke..), it can be called in a special list.
+- In case parents/guardians provide special information that everyone needs to know (like allergies, emergency medication, likelyhood of having an epilleptic stroke..), it can be called in a special list.
 
 #### Individual learning support
 
 Pupils have the right to get learning support according to their individual needs. Being an inclusive school, this also includes special needs. Our local school authority provides mandatory categories that we have to use to describe individual needs and formulate/follow specific educational goals. These have to be documented / kept record of, too. It is also essential, that this information is available to any colleague working with the pupil, and that all colleagues involved cooperate and share information.
 
-This app can work with any category tree - that means, you could use your own.
+- This app can work with any category tree - that means, you could use your own.
 
-Based on this tree, the app can document category statuses - as estimated by the responsible colleague for the pupil - and keep track of progress collaboratively.
+- Based on this tree, the app can document category statuses - as estimated by the responsible colleague for the pupil - and keep track of progress collaboratively.
 
-It also can document development goals, which are ideally formulated together with the pupil. 
+- It also can document development goals, which are ideally formulated together with the pupil. 
 
 #### Pupil profile
 
-All information about a pupil is bundled in a pupil profile view. Here you can call additional information like the parents' language proficiency in German (since over 90% of the families in our school do not speak German at home, this is relevant to us), siblings information, or information about afterschool care.
+- All information about a pupil is bundled in a pupil profile view. Here you can call additional information like the parents' language proficiency in German (since over 90% of the families in our school do not speak German at home, this is relevant to us), siblings information, or information about afterschool care.
 
 #### Filters
 
-Filters are incredibly useful when dealing with lists. There are general filters (like class, schoolyear) and specific filters for the different views implemented, as well as different ordering of the list elements according to different criteria depending on the view.
+- Filters are incredibly useful when dealing with lists. There are general filters (like class, schoolyear) and specific filters for the different views implemented, as well as different ordering of the list elements according to different criteria depending on the view.
 
-#### Roadmap
+### Roadmap
 
 The export of reports in a printable format (pdf) is crucial for us and because of that on top of the list.
 
@@ -86,19 +86,20 @@ There are also a couple of models in the backend that are not implemented in the
 
 ### TO-DO:
 
-##### Design
+#### Design
 
 - review widgets (I'm still not very good at it)
   
-##### Functionality
+#### Functionality
 
 - generally, improve code quality O:-)
 - implement stream checking connection (don't know how to generate/handle streams yet)
 - review state management (specially filters) across views
 - subsitute hard coded enum filters with dynamic solution for other schools
-- implement navigation when needed
+- implement navigation?
+- internationalization
 
-##### Features
+#### Features
 
 - pdf export feature (individual development plan, competence report)
 - competence feature
@@ -107,3 +108,7 @@ There are also a couple of models in the backend that are not implemented in the
 - workbook feature
 - book feature (library lending system)
 - generate qr stickers as shortcuts for documenting features
+
+### Thanks to the open source community
+
+I have great admiration for everybody contributing to the frameworks and packages that I used for this project, and are deeply grateful for their generosity sharing their work. The more I learn about programming, the more I appreciate it. So thank you, open source community!

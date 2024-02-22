@@ -24,7 +24,7 @@ List<Widget> pupilInfosContentList(Pupil pupil, BuildContext context) {
     InkWell(
       onTap: () async {
         final String? specialInformation = await longTextFieldDialog(
-            'Besondere Informationen', pupil.specialInformation, context);
+            'Besondere Infos', pupil.specialInformation, context);
         if (specialInformation == null) return;
         await locator<PupilManager>().patchPupil(
             pupil.internalId, 'special_information', specialInformation);

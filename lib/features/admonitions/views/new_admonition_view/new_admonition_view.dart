@@ -286,9 +286,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
               ),
               const Spacer(),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber[800],
-                    minimumSize: const Size.fromHeight(60)),
+                style: successButtonStyle,
                 onPressed: () {
                   if (admonitionTypeDropdown == 'choose') {
                     informationDialog(context, 'Kein Ereignis ausgewählt',
@@ -315,9 +313,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
               ),
               const Gap(15),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 235, 67, 67),
-                    minimumSize: const Size.fromHeight(60)),
+                style: cancelButtonStyle,
                 onPressed: () {
                   Navigator.pop(context);
                 },

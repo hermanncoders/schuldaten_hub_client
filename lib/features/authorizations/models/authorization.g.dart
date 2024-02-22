@@ -11,7 +11,7 @@ _$AuthorizationImpl _$$AuthorizationImplFromJson(Map<String, dynamic> json) =>
       authorizationDescription: json['authorization_description'] as String,
       authorizationId: json['authorization_id'] as String,
       authorizationName: json['authorization_name'] as String,
-      createdBy: json['created_by'] as String,
+      createdBy: json['created_by'] as String?,
     );
 
 Map<String, dynamic> _$$AuthorizationImplToJson(_$AuthorizationImpl instance) =>

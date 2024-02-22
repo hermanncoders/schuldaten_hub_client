@@ -70,7 +70,7 @@ Widget avatarWithBadges(Pupil pupil, double size) {
             height: 30.0,
             decoration: BoxDecoration(
               color: locator<AttendanceManager>().pupilIsMissedToday(pupil)
-                  ? buttonWarningColor
+                  ? warningButtonColor
                   : groupColor,
               shape: BoxShape.circle,
             ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+
 import 'package:schuldaten_hub/common/constants/colors.dart';
 
 Future longTextFieldDialog(
@@ -20,13 +20,13 @@ Future longTextFieldDialog(
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: backgroundColor),
-                    borderRadius: BorderRadius.circular(5.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  width: 300,
+                  width: 400,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
-                      maxLines: 3,
+                      maxLines: 4,
                       textAlign: TextAlign.start,
                       style: const TextStyle(fontSize: 17),
                       keyboardType: TextInputType.multiline,
@@ -35,82 +35,60 @@ Future longTextFieldDialog(
                     ),
                   ),
                 ),
-                const Gap(10),
               ],
             ),
             title: Text(title),
             actions: <Widget>[
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonDangerColor,
-                      minimumSize: const Size.fromHeight(50)),
-                  onPressed: () {
-                    textEditingController.dispose();
-                    Navigator.of(parentContext).pop(null);
-                    return;
-                  },
-                  child: const Text(
-                    "ABBRECHEN",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
-                    ),
+              TextButton(
+                onPressed: () {
+                  textEditingController.dispose();
+                  Navigator.of(parentContext).pop(null);
+                  return;
+                },
+                child: const Text(
+                  "ZURÜCK",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.0,
+                    color: dangerButtonColor,
                   ),
                 ),
               ),
               textinField != null
-                  ? Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15, right: 15, bottom: 10.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                            minimumSize: const Size.fromHeight(50)),
-                        onPressed: () {
-                          String newSpecialInformation = '';
+                  ? TextButton(
+                      onPressed: () {
+                        String newSpecialInformation = '';
 
-                          textEditingController.dispose();
-                          Navigator.of(parentContext)
-                              .pop(newSpecialInformation);
-                        },
-                        child: const Text(
-                          "LÖSCHEN",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.0,
-                            color: Colors.white,
-                          ),
+                        textEditingController.dispose();
+                        Navigator.of(parentContext).pop(newSpecialInformation);
+                      },
+                      child: const Text(
+                        "LÖSCHEN",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17.0,
+                          color: warningButtonColor,
                         ),
                       ),
                     )
                   : const SizedBox.shrink(),
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonSuccessColor,
-                      minimumSize: const Size.fromHeight(50)),
-                  onPressed: () {
-                    String? newSpecialInformation = textEditingController.text;
+              TextButton(
+                onPressed: () {
+                  String? newSpecialInformation = textEditingController.text;
 
-                    if (newSpecialInformation.isEmpty) {
-                      return;
-                    }
+                  if (newSpecialInformation.isEmpty) {
+                    return;
+                  }
 
-                    textEditingController.dispose();
-                    Navigator.of(parentContext).pop(newSpecialInformation);
-                  },
-                  child: const Text(
-                    "OKAY",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
-                      color: Colors.white,
-                    ),
+                  textEditingController.dispose();
+                  Navigator.of(parentContext).pop(newSpecialInformation);
+                },
+                child: const Text(
+                  "OKAY",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17.0,
+                    color: successButtonColor,
                   ),
                 ),
               ),

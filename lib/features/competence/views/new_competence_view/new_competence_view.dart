@@ -89,7 +89,7 @@ class NewCompetenceViewState extends State<NewCompetenceView> {
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonSuccessColor,
+                      backgroundColor: successButtonColor,
                       minimumSize: const Size.fromHeight(60)),
                   onPressed: () {
                     postNewCompetence();
@@ -102,7 +102,7 @@ class NewCompetenceViewState extends State<NewCompetenceView> {
                 const Gap(15),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonDangerColor,
+                      backgroundColor: dangerButtonColor,
                       minimumSize: const Size.fromHeight(60)),
                   onPressed: () {
                     Navigator.pop(context);

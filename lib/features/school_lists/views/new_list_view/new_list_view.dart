@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
@@ -184,9 +185,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                       ),
                 if (pupilIds.isEmpty) const Spacer(),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: accentColor,
-                      minimumSize: const Size.fromHeight(60)),
+                  style: actionButtonStyle,
                   onPressed: () async {
                     final List<int> selectedPupilIds =
                         await Navigator.of(context).push(MaterialPageRoute(
@@ -207,9 +206,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                 ),
                 const Gap(15),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber[800],
-                      minimumSize: const Size.fromHeight(60)),
+                  style: successButtonStyle,
                   onPressed: () {
                     postNewSchoolList();
                     Navigator.pop(context);
@@ -221,9 +218,7 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                 ),
                 const Gap(15),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 235, 67, 67),
-                      minimumSize: const Size.fromHeight(60)),
+                  style: cancelButtonStyle,
                   onPressed: () {
                     Navigator.pop(context);
                   },

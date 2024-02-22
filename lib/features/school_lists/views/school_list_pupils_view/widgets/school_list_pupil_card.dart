@@ -190,7 +190,7 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
                       Text(
                         pupilList.pupilListEntryBy!,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                     ],
                   )

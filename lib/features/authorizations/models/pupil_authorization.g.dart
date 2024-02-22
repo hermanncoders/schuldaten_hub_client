@@ -9,7 +9,7 @@ part of 'pupil_authorization.dart';
 _$AuthorizationImpl _$$AuthorizationImplFromJson(Map<String, dynamic> json) =>
     _$AuthorizationImpl(
       comment: json['comment'] as String?,
-      createdBy: json['created_by'] as String,
+      createdBy: json['created_by'] as String?,
       fileUrl: json['file_url'] as String?,
       originAuthorization: json['origin_authorization'] as String,
       pupilId: json['pupil_id'] as int,

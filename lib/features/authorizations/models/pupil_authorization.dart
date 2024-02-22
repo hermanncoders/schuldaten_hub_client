@@ -9,7 +9,7 @@ part 'pupil_authorization.g.dart';
 class PupilAuthorization with _$PupilAuthorization {
   factory PupilAuthorization({
     String? comment,
-    @JsonKey(name: 'created_by') required String createdBy,
+    @JsonKey(name: 'created_by') String? createdBy,
     @JsonKey(name: 'file_url') String? fileUrl,
     @JsonKey(name: 'origin_authorization') required String originAuthorization,
     @JsonKey(name: 'pupil_id') required int pupilId,

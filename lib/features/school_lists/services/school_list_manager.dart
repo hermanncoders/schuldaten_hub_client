@@ -57,6 +57,7 @@ class SchoolListManager {
 
   Future patchSchoolList(String listId, String? name, String? description,
       String? visibility) async {
+    final schoolListToUpdate = getSchoolListById(listId);
     Map<String, String> jsonMap = {};
     if (name != null) {
       jsonMap["list_name"] = name;
@@ -65,7 +66,7 @@ class SchoolListManager {
       jsonMap["list_description"] = description;
     }
     if (visibility != null) {
-      jsonMap["visibility"] = visibility;
+      jsonMap["visibility"] = '${schoolListToUpdate.visibility}*$visibility';
     }
     final String data = jsonEncode(jsonMap);
     final Response response = await client

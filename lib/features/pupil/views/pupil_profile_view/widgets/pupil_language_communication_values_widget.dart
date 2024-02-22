@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 
 Widget communicationValues(String values) {
@@ -13,9 +14,11 @@ Widget communicationValues(String values) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.hearing),
-          const Gap(5),
-          Text(communicationPredicate(understandingValue)),
-          const Gap(5),
+          const Gap(10),
+          Text(
+            communicationPredicate(understandingValue),
+            style: const TextStyle(fontSize: 16, color: interactiveColor),
+          ),
         ],
       ),
       const Gap(10),
@@ -23,8 +26,11 @@ Widget communicationValues(String values) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.chat_bubble_outline_rounded),
-          const Gap(5),
-          Text(communicationPredicate(speakingValue)),
+          const Gap(10),
+          Text(
+            communicationPredicate(speakingValue),
+            style: const TextStyle(fontSize: 16, color: interactiveColor),
+          ),
         ],
       ),
       const Gap(5),
@@ -32,8 +38,11 @@ Widget communicationValues(String values) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.book),
-          const Gap(5),
-          Text(communicationPredicate(readingValue)),
+          const Gap(10),
+          Text(
+            communicationPredicate(readingValue),
+            style: const TextStyle(fontSize: 16, color: interactiveColor),
+          ),
         ],
       ),
       const Gap(5),

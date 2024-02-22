@@ -10,7 +10,7 @@ Widget infinityButton(Function function) {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: buttonAppStyleColor,
+            backgroundColor: appStyleButtonColor,
             minimumSize: const Size.fromHeight(50)),
         onPressed: () {
           function;

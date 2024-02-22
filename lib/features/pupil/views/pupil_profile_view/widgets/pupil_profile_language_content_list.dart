@@ -69,6 +69,9 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
                   color: backgroundColor),
             )
           : Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -110,6 +113,9 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
                   color: backgroundColor),
             )
           : Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
@@ -151,6 +157,9 @@ List<Widget> pupilLanguageContentList(Pupil pupil, BuildContext context) {
                   color: backgroundColor),
             )
           : Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(

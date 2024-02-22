@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:schuldaten_hub/api/endpoints.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
@@ -34,9 +35,7 @@ List<Widget> pupilAdmonitionsContentList(
         //margin: const EdgeInsets.only(bottom: 16),
         width: double.infinity,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: buttonAppStyleColor,
-              minimumSize: const Size.fromHeight(50)),
+          style: actionButtonStyle,
           onPressed: () async {
             Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => NewAdmonitionView(
@@ -90,40 +89,42 @@ List<Widget> pupilAdmonitionsContentList(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    DateFormat('dd.MM.yyyy')
-                                        .format(
-                                            admonitions[index].admonishedDay)
-                                        .toString(),
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                              SingleChildScrollView(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      DateFormat('dd.MM.yyyy')
+                                          .format(
+                                              admonitions[index].admonishedDay)
+                                          .toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
                                     ),
-                                  ),
-                                  const Gap(5),
-                                  admonitions[index]
-                                          .admonitionType
-                                          .contains('rk')
-                                      ? const Icon(Icons.rectangle_rounded,
-                                          color: Colors.red)
-                                      : const SizedBox.shrink(),
-                                  admonitions[index]
-                                          .admonitionType
-                                          .contains('rk')
-                                      ? const Gap(5)
-                                      : const SizedBox.shrink(),
-                                  Text(
-                                    getAdmonitionTypeText(
-                                        admonitions[index].admonitionType),
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
+                                    const Gap(5),
+                                    admonitions[index]
+                                            .admonitionType
+                                            .contains('rk')
+                                        ? const Icon(Icons.rectangle_rounded,
+                                            color: Colors.red)
+                                        : const SizedBox.shrink(),
+                                    admonitions[index]
+                                            .admonitionType
+                                            .contains('rk')
+                                        ? const Gap(5)
+                                        : const SizedBox.shrink(),
+                                    Text(
+                                      getAdmonitionTypeText(
+                                          admonitions[index].admonitionType),
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                               ),
                               const Gap(5),
                               Wrap(

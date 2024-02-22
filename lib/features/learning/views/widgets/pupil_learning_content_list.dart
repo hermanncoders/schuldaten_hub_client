@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/competence/models/competence_goal.dart';
@@ -20,8 +20,7 @@ List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
     ),
     const Gap(10),
     ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: accentColor, minimumSize: const Size.fromHeight(50)),
+      style: actionButtonStyle,
       onPressed: () async {},
       child: const Text(
         "NEUES LERNZIEL",

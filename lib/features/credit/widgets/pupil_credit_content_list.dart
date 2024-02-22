@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/pupil/models/credit_history_log.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/credit/widgets/change_credit_dialog.dart';
@@ -15,9 +16,7 @@ List<Widget> pupilCreditContentList(Pupil pupil, BuildContext context) {
         //margin: const EdgeInsets.only(bottom: 16),
         width: double.infinity,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: groupColor,
-              minimumSize: const Size.fromHeight(50)),
+          style: successButtonStyle,
           onPressed: () async {
             changeCreditDialog(context, pupil);
           },
@@ -59,6 +58,7 @@ List<Widget> pupilCreditContentList(Pupil pupil, BuildContext context) {
         ),
       ],
     ),
+    const Gap(10),
     ListView.builder(
       padding: const EdgeInsets.only(left: 20, top: 5, bottom: 15),
       shrinkWrap: true,
@@ -83,7 +83,7 @@ List<Widget> pupilCreditContentList(Pupil pupil, BuildContext context) {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 5),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

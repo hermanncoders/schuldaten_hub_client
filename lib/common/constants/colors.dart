@@ -12,11 +12,11 @@ const Color cardInCardColor = Color.fromARGB(255, 248, 248, 255);
 const Color mainMenuCardsColor = Color.fromARGB(255, 220, 220, 255);
 //button colors
 
-const buttonAppStyleColor = Color.fromRGBO(252, 160, 39, 1);
-const buttonSuccessColor = Color.fromARGB(255, 139, 195, 74);
-const buttonWarningColor = Color.fromARGB(255, 239, 108, 0);
-const buttonDangerColor = Color.fromARGB(255, 239, 56, 0);
-
+const appStyleButtonColor = Color.fromRGBO(252, 160, 39, 1);
+const successButtonColor = Color.fromARGB(255, 139, 195, 74);
+const warningButtonColor = Color.fromARGB(255, 239, 108, 0);
+const dangerButtonColor = Color.fromARGB(255, 239, 56, 0);
+const cancelButtonColor = Color.fromARGB(255, 250, 65, 19);
 //- attendance card colors
 
 // missedType dropdown

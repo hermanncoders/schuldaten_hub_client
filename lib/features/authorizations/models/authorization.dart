@@ -11,7 +11,7 @@ class Authorization with _$Authorization {
     required String authorizationDescription,
     @JsonKey(name: "authorization_id") required String authorizationId,
     @JsonKey(name: "authorization_name") required String authorizationName,
-    @JsonKey(name: "created_by") required String createdBy,
+    @JsonKey(name: "created_by") required String? createdBy,
   }) = _Authorization;
 
   factory Authorization.fromJson(Map<String, dynamic> json) =>

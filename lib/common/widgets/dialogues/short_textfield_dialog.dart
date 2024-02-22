@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 
 shortTextfieldDialog(BuildContext context, String title, String labelText) {
   TextEditingController textEditingController = TextEditingController();
@@ -31,9 +32,7 @@ shortTextfieldDialog(BuildContext context, String title, String labelText) {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonDangerColor,
-                  minimumSize: const Size.fromHeight(50)),
+              style: cancelButtonStyle,
               child: const Text(
                 'ABBRECHEN',
                 style: TextStyle(
@@ -50,9 +49,7 @@ shortTextfieldDialog(BuildContext context, String title, String labelText) {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: buttonSuccessColor,
-                  minimumSize: const Size.fromHeight(50)),
+              style: successButtonStyle,
               child: const Text(
                 'OKAY',
                 style: TextStyle(

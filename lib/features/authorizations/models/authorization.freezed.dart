@@ -27,7 +27,7 @@ mixin _$Authorization {
   @JsonKey(name: "authorization_name")
   String get authorizationName => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
-  String get createdBy => throw _privateConstructorUsedError;
+  String? get createdBy => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,7 +46,7 @@ abstract class $AuthorizationCopyWith<$Res> {
       String authorizationDescription,
       @JsonKey(name: "authorization_id") String authorizationId,
       @JsonKey(name: "authorization_name") String authorizationName,
-      @JsonKey(name: "created_by") String createdBy});
+      @JsonKey(name: "created_by") String? createdBy});
 }
 
 /// @nodoc
@@ -65,7 +65,7 @@ class _$AuthorizationCopyWithImpl<$Res, $Val extends Authorization>
     Object? authorizationDescription = null,
     Object? authorizationId = null,
     Object? authorizationName = null,
-    Object? createdBy = null,
+    Object? createdBy = freezed,
   }) {
     return _then(_value.copyWith(
       authorizationDescription: null == authorizationDescription
@@ -80,10 +80,10 @@ class _$AuthorizationCopyWithImpl<$Res, $Val extends Authorization>
           ? _value.authorizationName
           : authorizationName // ignore: cast_nullable_to_non_nullable
               as String,
-      createdBy: null == createdBy
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -101,7 +101,7 @@ abstract class _$$AuthorizationImplCopyWith<$Res>
       String authorizationDescription,
       @JsonKey(name: "authorization_id") String authorizationId,
       @JsonKey(name: "authorization_name") String authorizationName,
-      @JsonKey(name: "created_by") String createdBy});
+      @JsonKey(name: "created_by") String? createdBy});
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ class __$$AuthorizationImplCopyWithImpl<$Res>
     Object? authorizationDescription = null,
     Object? authorizationId = null,
     Object? authorizationName = null,
-    Object? createdBy = null,
+    Object? createdBy = freezed,
   }) {
     return _then(_$AuthorizationImpl(
       authorizationDescription: null == authorizationDescription
@@ -133,10 +133,10 @@ class __$$AuthorizationImplCopyWithImpl<$Res>
           ? _value.authorizationName
           : authorizationName // ignore: cast_nullable_to_non_nullable
               as String,
-      createdBy: null == createdBy
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -165,7 +165,7 @@ class _$AuthorizationImpl implements _Authorization {
   final String authorizationName;
   @override
   @JsonKey(name: "created_by")
-  final String createdBy;
+  final String? createdBy;
 
   @override
   String toString() {
@@ -215,7 +215,7 @@ abstract class _Authorization implements Authorization {
       @JsonKey(name: "authorization_name")
       required final String authorizationName,
       @JsonKey(name: "created_by")
-      required final String createdBy}) = _$AuthorizationImpl;
+      required final String? createdBy}) = _$AuthorizationImpl;
 
   factory _Authorization.fromJson(Map<String, dynamic> json) =
       _$AuthorizationImpl.fromJson;
@@ -231,7 +231,7 @@ abstract class _Authorization implements Authorization {
   String get authorizationName;
   @override
   @JsonKey(name: "created_by")
-  String get createdBy;
+  String? get createdBy;
   @override
   @JsonKey(ignore: true)
   _$$AuthorizationImplCopyWith<_$AuthorizationImpl> get copyWith =>

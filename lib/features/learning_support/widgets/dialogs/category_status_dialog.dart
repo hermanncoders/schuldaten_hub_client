@@ -81,7 +81,7 @@ Future categoryStatusDialog(
                     const EdgeInsets.only(left: 15, right: 15, bottom: 10.0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonDangerColor,
+                      backgroundColor: dangerButtonColor,
                       minimumSize: const Size.fromHeight(50)),
                   onPressed: () {
                     _textEditingController.clear();

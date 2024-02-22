@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_goal_card.dart';
@@ -10,12 +10,7 @@ List<Widget> learningSupportGoalList(BuildContext context, Pupil pupil) {
     Padding(
       padding: const EdgeInsets.all(10.0),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            backgroundColor: accentColor,
-            minimumSize: const Size.fromHeight(50)),
+        style: actionButtonStyle,
         onPressed: () async {
           await Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => NewCategoryGoal(

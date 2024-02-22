@@ -100,7 +100,15 @@ class NewSchoolListViewState extends State<NewSchoolListView> {
                       pupilsFromIds.length.toString(),
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.bold),
-                    )
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text('aus Liste',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: interactiveColor)),
+                    ),
                   ],
                 ),
                 if (pupilIds.isEmpty) const Gap(30),

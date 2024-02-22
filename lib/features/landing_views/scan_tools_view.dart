@@ -47,11 +47,14 @@ class QrToolsView extends WatchingWidget {
                 Platform.isWindows
                     ? ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             backgroundColor: Colors.amber[800],
                             minimumSize: const Size.fromHeight(90)),
                         onPressed: () => importFileWithWindows('schild'),
                         child: const Text(
-                          'Daten aus SchiLD-Export importieren',
+                          'Daten aus SchiLD importieren',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
@@ -62,6 +65,9 @@ class QrToolsView extends WatchingWidget {
                 Platform.isWindows
                     ? ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
                             backgroundColor: Colors.amber[800],
                             minimumSize: const Size.fromHeight(90)),
                         onPressed: () => importFileWithWindows('pupilbase'),

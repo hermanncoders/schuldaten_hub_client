@@ -9,7 +9,7 @@ import 'package:schuldaten_hub/features/learning_support/views/learning_support_
 import 'package:schuldaten_hub/features/ogs/controller/ogs_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/special_info_view/controller/special_info_controller.dart';
 
-List<Widget> pupilListButtons(BuildContext context) {
+List<Widget> pupilListButtons(BuildContext context, double screenWidth) {
   return [
     Padding(
       padding: const EdgeInsets.all(4.0),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/landing_views/pupil_lists_buttons.dart';
 
 class PupilMenuView extends StatelessWidget {
@@ -16,7 +17,7 @@ class PupilMenuView extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Kinderlisten'),
+        title: const Text('Kinderlisten', style: appBarTextStyle),
       ),
       body: Center(
         child: SizedBox(

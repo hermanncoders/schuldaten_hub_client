@@ -4,6 +4,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/competence/models/competence.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
+import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_status_comment.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/dialogs/category_status_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
@@ -164,8 +165,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                           ),
                         ],
                       ),
-                      locator<GoalManager>().getCategoryStatusComment(
-                          pupil, competence.competenceId),
+                      getCategoryStatusComment(pupil, competence.competenceId)!,
                     ],
                   ),
                 ),

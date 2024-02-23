@@ -25,6 +25,12 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
           return;
         },
         child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              side: const BorderSide(
+                color: groupColor,
+                width: 2,
+              )),
           color: cardInCardColor,
           child: Column(
             children: [

@@ -4,6 +4,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/paddings.dart';
 import 'package:schuldaten_hub/common/pdf/learning_support_plan.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/pupil_admonition_content_list.dart';
@@ -374,7 +375,11 @@ Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
                             const Spacer(),
                             IconButton(
                               onPressed: () async {
-                                await generatePdf(pupil.internalId);
+                                informationDialog(
+                                    context,
+                                    'Förderplan ausdrucken noch nicht freigeschaltet',
+                                    'Es wird daran gearbeitet - noch ein bisschen Geduld!');
+                                // await generatePdf(pupil.internalId);
                               },
                               icon: const Icon(Icons.print_rounded),
                               color: backgroundColor,

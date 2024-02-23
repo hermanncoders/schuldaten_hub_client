@@ -23,26 +23,32 @@ class SelectableCategoryTreeView extends StatelessWidget {
           title: const Text('Förderung'),
           // automaticallyImplyLeading: false,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Bitte eine Kategorie auswählen!',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ],
-                ),
+        body: Center(
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('Bitte eine Kategorie auswählen!',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ],
+                    ),
+                  ),
+                  ...buildPupilCategoryTree(context, controller.widget.pupil,
+                      null, 0, null, controller),
+                ]),
               ),
-              ...buildPupilCategoryTree(
-                  context, controller.widget.pupil, null, 0, null, controller),
-            ]),
+            ),
           ),
         ),
         floatingActionButton: controller.selectedCategoryId != null

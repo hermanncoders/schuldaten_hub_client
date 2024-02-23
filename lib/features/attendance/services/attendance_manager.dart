@@ -48,8 +48,9 @@ class AttendanceManager {
 
   bool pupilIsMissedToday(Pupil pupil) {
     if (pupil.pupilMissedClasses!.isEmpty) return false;
-    if (pupil.pupilMissedClasses!
-        .any((element) => element.missedDay.isSameDate(DateTime.now()))) {
+    if (pupil.pupilMissedClasses!.any((element) =>
+        element.missedDay.isSameDate(DateTime.now()) &&
+        element.missedType != 'late')) {
       return true;
     }
     return false;

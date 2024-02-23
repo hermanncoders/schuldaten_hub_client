@@ -41,8 +41,11 @@ List<Widget> pupilCategoryStatusesList(Pupil pupil, BuildContext context) {
         statusesWidgetList.add(
           Card(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+                borderRadius: BorderRadius.circular(10.0),
+                side: const BorderSide(
+                  color: accentColor,
+                  width: 2,
+                )),
             child: Column(
               children: [
                 const Gap(10),

@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
+const TextStyle appBarTextStyle = TextStyle(
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 25,
+);
 const TextStyle filterItemsTextStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,

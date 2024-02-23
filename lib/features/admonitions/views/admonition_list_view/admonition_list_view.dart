@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_card.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_search_bar.dart';
@@ -30,9 +31,15 @@ class AdmonitionListView extends WatchingWidget {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.warning_amber_rounded),
+            Icon(
+              Icons.warning_amber_rounded,
+              size: 25,
+            ),
             Gap(10),
-            Text('Ereignisse'),
+            Text(
+              'Ereignisse',
+              style: appBarTextStyle,
+            ),
           ],
         ),
       ),

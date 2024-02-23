@@ -31,7 +31,10 @@ class AttendanceListView extends WatchingWidget {
         backgroundColor: backgroundColor,
         title: InkWell(
           onTap: () async => controller.setThisDate(context, thisDate),
-          child: Text(controller.thisDateAsString(context, thisDate)),
+          child: Text(
+            controller.thisDateAsString(context, thisDate),
+            style: const TextStyle(fontSize: 25),
+          ),
         ),
         automaticallyImplyLeading: false,
       ),

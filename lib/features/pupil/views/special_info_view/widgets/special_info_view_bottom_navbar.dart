@@ -6,6 +6,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/special_info_view/widgets/special_info_filter_bottom_sheet.dart';
+import 'package:schuldaten_hub/features/pupil/views/special_info_view/widgets/special_info_reset_filter_button.dart';
 
 BottomAppBar specialInfoViewBottomNavBar(BuildContext context, bool filtersOn) {
   return BottomAppBar(
@@ -39,20 +40,7 @@ BottomAppBar specialInfoViewBottomNavBar(BuildContext context, bool filtersOn) {
             },
           ),
           const Gap(30),
-          InkWell(
-            onTap: () => showSpecialInfoFilterBottomSheet(context),
-            onLongPress: () {
-              locator<PupilFilterManager>().resetFilters();
-
-              locator<PupilFilterManager>().setFilter(PupilFilter.ogs, true);
-              locator<PupilFilterManager>().filtersOnSwitch(false);
-            },
-            child: Icon(
-              Icons.filter_list,
-              color: filtersOn ? Colors.deepOrange : Colors.white,
-              size: 30,
-            ),
-          ),
+          specialInfoResetFilterButton(context, filtersOn),
           const Gap(10)
         ],
       ),

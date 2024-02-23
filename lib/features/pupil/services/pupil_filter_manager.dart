@@ -1,18 +1,16 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/models/manager_report.dart';
 import 'package:schuldaten_hub/common/services/search_textfield_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
-import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_filters.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
-import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
 
 class PupilFilterManager {
   ValueListenable<bool> get filtersOn => _filtersOn;
@@ -37,7 +35,7 @@ class PupilFilterManager {
   PupilFilterManager() {
     debug.warning('PupilFilterManager says hello!');
   }
-  changeSwitch(bool value) {
+  isRunningSwitch(bool value) {
     _isRunning.value = value;
   }
 
@@ -73,21 +71,6 @@ class PupilFilterManager {
         filteredPupils.removeAt(i);
         i--; // Decrement i to account for the removed element
       }
-    }
-
-    // Add any pupils from pupils that are not in filteredPupils yet
-    for (var pupil in pupils) {
-      if (!filteredPupils.any(
-          (filteredPupil) => filteredPupil.internalId == pupil.internalId)) {
-        filteredPupils.add(pupil);
-      }
-      // for (Pupil filteredPupil in filteredPupils) {
-      //   Pupil pupil = pupils
-      //       .where((pupil) => pupil.internalId == filteredPupil.internalId)
-      //       .single;
-      //   filteredPupil = pupil;
-      // }
-      _filteredPupils.value = filteredPupils;
     }
   }
 
@@ -177,7 +160,6 @@ class PupilFilterManager {
     final pupils = locator<PupilManager>().pupils.value;
     final activeFilters = _filterState.value;
 
-    final thisDate = locator<SchooldayManager>().thisDate.value;
     if (_filterState.value == initialFilterValues) {
       _filtersOn.value = false;
       _filteredPupils.value = pupils;
@@ -226,58 +208,7 @@ class PupilFilterManager {
 
       //- Attendance filters -//
 
-      // Filter pupils present
-      if ((activeFilters[PupilFilter.present]! &&
-                  pupil.pupilMissedClasses!.any((missedClass) =>
-                      missedClass.missedDay.isSameDate(thisDate) &&
-                          missedClass.missedType == 'late' ||
-                      (pupil.pupilMissedClasses!.firstWhereOrNull(
-                              (missedClass) => missedClass.missedDay
-                                  .isSameDate(thisDate))) ==
-                          null) ||
-              pupil.pupilMissedClasses!.isEmpty) &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.present] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
-
-      // Filter pupils not present
-      if (activeFilters[PupilFilter.notPresent]! &&
-          pupil.pupilMissedClasses!.any((missedClass) =>
-              missedClass.missedDay.isSameDate(thisDate) &&
-              (missedClass.missedType == 'missed' ||
-                  missedClass.missedType == 'home' ||
-                  missedClass.returned == true)) &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.notPresent] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
-
-      // Filter unexcused pupils
-      if (activeFilters[PupilFilter.unexcused]! &&
-          pupil.pupilMissedClasses!.any((missedClass) =>
-              missedClass.missedDay.isSameDate(thisDate) &&
-              missedClass.excused == true &&
-              missedClass.missedType == 'missed' &&
-              toList == true)) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.unexcused] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
+      toList = attendanceFilter(pupil, toList);
 
       //- OGS filters -//
       // Filter ogs

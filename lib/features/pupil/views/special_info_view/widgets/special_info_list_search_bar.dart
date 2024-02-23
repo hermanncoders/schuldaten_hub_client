@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/views/special_info_view/controller/special_info_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/special_info_view/widgets/special_info_filter_bottom_sheet.dart';
+import 'package:schuldaten_hub/features/pupil/views/special_info_view/widgets/special_info_reset_filter_button.dart';
 
 Widget specialInfoListSearchBar(BuildContext context, List<Pupil> pupils,
     SpecialInfoListController controller, bool filtersOn) {
@@ -47,25 +48,7 @@ Widget specialInfoListSearchBar(BuildContext context, List<Pupil> pupils,
               Expanded(
                   child: searchTextField('Schüler/in suchen', controller,
                       locator<PupilFilterManager>().refreshFilteredPupils)),
-              InkWell(
-                onTap: () => showSpecialInfoFilterBottomSheet(context),
-                onLongPress: () {
-                  locator<PupilFilterManager>().resetFilters();
-
-                  locator<PupilFilterManager>()
-                      .setFilter(PupilFilter.ogs, true);
-                  locator<PupilFilterManager>().filtersOnSwitch(false);
-                },
-                // onPressed: () => showBottomSheetFilters(context),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    Icons.filter_list,
-                    color: filtersOn ? Colors.deepOrange : Colors.grey,
-                    size: 30,
-                  ),
-                ),
-              ),
+              specialInfoResetFilterButton(context, filtersOn),
             ],
           ),
         ),

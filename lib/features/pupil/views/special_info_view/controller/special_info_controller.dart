@@ -56,7 +56,7 @@ class SpecialInfoListController extends State<SpecialInfoList> {
 
   @override
   void dispose() {
-    locator<PupilFilterManager>().setFilter(PupilFilter.ogs, false);
+    locator<PupilFilterManager>().setFilter(PupilFilter.specialInfo, false);
     super.dispose();
   }
 

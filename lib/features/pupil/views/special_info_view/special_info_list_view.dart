@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
@@ -26,7 +27,17 @@ class SpecialInfoListView extends WatchingWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Besondere Infos'),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.emergency_rounded, size: 25),
+            Gap(10),
+            Text(
+              'Besondere Infos',
+              style: appBarTextStyle,
+            ),
+          ],
+        ),
         automaticallyImplyLeading: false,
       ),
       body: RefreshIndicator(

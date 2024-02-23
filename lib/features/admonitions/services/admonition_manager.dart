@@ -99,13 +99,21 @@ class AdmonitionManager {
 
   //- PATCH ADMONITION
 
-  patchAdmonition(String admonitionId, String? admonisher, String? reason,
-      bool? processed, String? file) async {
+  patchAdmonition(
+      String admonitionId,
+      String? admonisher,
+      String? reason,
+      bool? processed,
+      String? file,
+      String? processedBy,
+      DateTime? processedAt) async {
     final data = jsonEncode({
       if (admonisher != null) "admonishing_user": admonisher,
       if (reason != null) "admonition_reason": reason,
       if (processed != null) "processed": processed,
-      if (file != null) "file_url": file
+      if (file != null) "file_url": file,
+      if (processedBy != null) "processed_by": processedBy,
+      if (processedAt != null) "processed_at": processedAt.formatForJson()
     });
     final Response response = await client
         .patch(EndpointsAdmonition().patchAdmonition(admonitionId), data: data);

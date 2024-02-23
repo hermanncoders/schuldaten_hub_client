@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/ogs/controller/ogs_list_controller.dart';
 import 'package:schuldaten_hub/features/ogs/widgets/ogs_list_card.dart';
@@ -27,7 +28,7 @@ class OgsListView extends WatchingWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('OGS Infos'),
+        title: const Text('OGS Infos', style: appBarTextStyle),
         automaticallyImplyLeading: false,
       ),
       body: RefreshIndicator(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 
@@ -37,9 +38,12 @@ class CreditListView extends WatchingWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.money),
+            const Icon(Icons.credit_card, size: 25),
             const Gap(10),
-            Text('Guthaben: $userCredit'),
+            Text(
+              'Guthaben: $userCredit',
+              style: appBarTextStyle,
+            ),
           ],
         ),
       ),

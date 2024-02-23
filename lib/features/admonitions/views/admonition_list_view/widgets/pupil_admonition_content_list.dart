@@ -10,6 +10,7 @@ import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/common/widgets/date_picker.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
@@ -156,12 +157,14 @@ List<Widget> pupilAdmonitionsContentList(
                                             if (admonishingUser != null) {
                                               await locator<AdmonitionManager>()
                                                   .patchAdmonition(
-                                                admonitions[index].admonitionId,
-                                                admonishingUser,
-                                                null,
-                                                null,
-                                                null,
-                                              );
+                                                      admonitions[index]
+                                                          .admonitionId,
+                                                      admonishingUser,
+                                                      null,
+                                                      null,
+                                                      null,
+                                                      null,
+                                                      null);
                                             }
                                           },
                                           child: Text(
@@ -274,19 +277,75 @@ List<Widget> pupilAdmonitionsContentList(
                         ),
                         const Gap(10),
                         if (admonitions[index].processedBy != null)
-                          Text(
-                            admonitions[index].processedBy!,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
+                          locator<SessionManager>().isAdmin.value
+                              ? InkWell(
+                                  onTap: () async {
+                                    final String? processingUser =
+                                        await shortTextfieldDialog(
+                                            context,
+                                            'Bearbeitet von:',
+                                            'Kürzel eingeben');
+                                    if (processingUser != null) {
+                                      await locator<AdmonitionManager>()
+                                          .patchAdmonition(
+                                              admonitions[index].admonitionId,
+                                              null,
+                                              null,
+                                              null,
+                                              null,
+                                              processingUser,
+                                              null);
+                                    }
+                                  },
+                                  child: Text(
+                                    admonitions[index].processedBy!,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: interactiveColor),
+                                  ),
+                                )
+                              : Text(
+                                  admonitions[index].processedBy!,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
                         if (admonitions[index].processedAt != null)
                           const Gap(10),
                         if (admonitions[index].processedAt != null)
-                          Text(
-                            'am ${admonitions[index].processedAt!.formatForUser()}',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
+                          locator<SessionManager>().isAdmin.value
+                              ? InkWell(
+                                  onTap: () async {
+                                    final DateTime newDate = await selectDate(
+                                        context, DateTime.now());
+
+                                    if (newDate != null) {
+                                      await locator<AdmonitionManager>()
+                                          .patchAdmonition(
+                                              admonitions[index].admonitionId,
+                                              null,
+                                              null,
+                                              null,
+                                              null,
+                                              null,
+                                              newDate);
+                                    }
+                                  },
+                                  child: Text(
+                                    'am ${admonitions[index].processedAt!.formatForUser()}',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: interactiveColor),
+                                  ),
+                                )
+                              : Text(
+                                  'am ${admonitions[index].processedAt!.formatForUser()}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
                       ],
                     )
                   ],

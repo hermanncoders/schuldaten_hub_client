@@ -1,12 +1,12 @@
 # School Data Hub
 
-Software tool to handle school information flows in an effective, collaborative way.
+Software tool to handle school information flows between teachers / administrative office in an effective, collaborative way.
 
 ### Origins
 
 This software originated during the COVID-pandemic in our primary school "Hermannschule" in Stolberg (Germany). In order to keep track on attendance and quarantine statuses I developed a simple app to keep records in a collaborative way with a simple backend built with flask.
 
-As I realized the time saving potential that brought handling this information digitally, I started to build a data model with information sets that we handle every day and cause long ways (walking across the school), cost time and organization resources, and leave long paper trails.
+As I realized the time saving potential that brought handling this information digitally, I started to build a data model with information sets that we handle every day and cause long ways (walking across the school), cost time and organization resources, or leave long paper trails.
 
 While learning more and more how programming works, I extended the model more and more...
 
@@ -26,7 +26,7 @@ A singular approach that this app takes is the **transport of personal informati
 
 #### But why so complicated?
 
-Since I'm no expert in data security, this is the way I found to ensure that the pupils' personal data of the pupil isn't sent back and forth through the internet. In fact, this way the personal data only jumps through devices over encrypted qr-codes. As we are storing quite sensitive information, it is crucial that this information can't be related to a concrete pupil without proper authorization.
+Since I'm no expert in data security, this is the way I found to ensure that the pupils' personal data isn't sent back and forth through the internet. In fact, this way the personal data only jumps through devices over encrypted qr-codes. As we are storing quite sensitive information, it is crucial that this information can't be related to a concrete pupil without proper authorization.
 
 **Have you got a better idea? Pull requests welcome! :-)**
 
@@ -88,27 +88,28 @@ There are also a couple of models in the backend that are not implemented in the
 
 #### Design
 
-- review widgets (I'm still not very good at it)
+- review widgets (I'm still not very good at it), and for that matter, the overall design structure (for instance implementing a theme). **Priority: medium**
   
 #### Functionality
 
-- generally, improve code quality O:-)
-- implement stream checking connection (don't know how to generate/handle streams yet)
-- review state management (specially filters) across views
-- subsitute hard coded enum filters with dynamic solution for other schools
-- implement navigation?
+- error handling in API calls. **Priority: high**
+- review state management (specially filters, but also controllers and get_it managers) across views. **Priority: high**
+- subsitute hard coded enum filters with a more dynamic solution, so that the app can be used for other schools. **Priority: high**
+- implement stream checking connection (don't know how to generate/handle streams yet), and generally review the start-up process. **Priority: high**
+- review / implement navigation **Priority: medium**
 - internationalization
+
+- generally, improve code quality. The naming of models, functions and such should definitely be revisited by an actual programming person. O:-) **Priority: low (it works like this)**
 
 #### Features
 
-- pdf export feature (individual development plan, competence report)
-- competence feature
-- implement competence report, school semester
-- UI to CRUD schooldays
-- workbook feature
-- book feature (library lending system)
-- generate qr stickers as shortcuts for documenting features
+- pdf export feature: individual development plan report. **Priority: high**
+- implement competence feature, competence report for a school semester and pdf export. **Priority: high**
+- UI to CRUD schooldays **Priority: high**
+- workbook feature **Priority: medium**
+- book feature (library lending system) **Priority: medium**
+- generate qr stickers as shortcuts for documenting features **Priority: low**
 
 ### Thanks to the open source community
 
-I have great admiration for everybody contributing to the frameworks and packages that I used for this project, and are deeply grateful for their generosity sharing their work. The more I learn about programming, the more I appreciate it. So thank you, open source community!
+I have great admiration for the work of everybody contributing to the frameworks, packages and tools that I used for this project, and are deeply grateful for their generosity sharing their work. The more I learn about programming, the more I appreciate it. So thank you, open source community! You make things possible and this world a better place.

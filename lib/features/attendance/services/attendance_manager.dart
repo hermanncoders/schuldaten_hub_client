@@ -46,16 +46,6 @@ class AttendanceManager {
     _isRunning.value = bool;
   }
 
-  bool pupilIsMissedToday(Pupil pupil) {
-    if (pupil.pupilMissedClasses!.isEmpty) return false;
-    if (pupil.pupilMissedClasses!.any((element) =>
-        element.missedDay.isSameDate(DateTime.now()) &&
-        element.missedType != 'late')) {
-      return true;
-    }
-    return false;
-  }
-
   Future<void> fetchMissedClassesOnASchoolday(DateTime schoolday) async {
     final Response response = await client
         .get(EndpointsMissedClass().getMissedClassesOnDate(schoolday));

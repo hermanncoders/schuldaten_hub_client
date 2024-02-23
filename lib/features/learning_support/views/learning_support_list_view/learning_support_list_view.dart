@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/learning_support/services/pupil_goal_filters.dart';
 import 'package:schuldaten_hub/features/learning_support/views/learning_support_list_view/controller/learning_support_list_controller.dart';
@@ -31,7 +32,17 @@ class LearningSupportListView extends WatchingWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Förderung'),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.support_rounded, size: 25),
+            Gap(10),
+            Text(
+              'Förderung',
+              style: appBarTextStyle,
+            ),
+          ],
+        ),
         automaticallyImplyLeading: false,
       ),
       body: RefreshIndicator(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
 import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -28,8 +29,19 @@ class AuthorizationsView extends WatchingWidget {
       backgroundColor: canvasColor,
       appBar: AppBar(
         centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: backgroundColor,
-        title: const Text('Einwilligungen'),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.fact_check_rounded, size: 25),
+            Gap(10),
+            Text(
+              'Einwilligungen',
+              style: appBarTextStyle,
+            ),
+          ],
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async =>

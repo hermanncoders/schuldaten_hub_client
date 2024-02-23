@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 
 import 'package:schuldaten_hub/features/school_lists/models/school_list.dart';
 import 'package:schuldaten_hub/common/models/session_models/session.dart';
@@ -39,7 +40,17 @@ class SchoolListsView extends WatchingWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Eintragelisten'),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.rule_rounded, size: 25),
+            Gap(10),
+            Text(
+              'Listen',
+              style: appBarTextStyle,
+            ),
+          ],
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async => locator<SchoolListManager>().fetchSchoolLists(),

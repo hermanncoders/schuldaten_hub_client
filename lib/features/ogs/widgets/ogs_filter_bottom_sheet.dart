@@ -40,7 +40,7 @@ class OgsFilterBottomSheet extends WatchingWidget {
           const Row(
             children: [
               Text(
-                'Förderebene',
+                'OGS-Filter',
                 style: subtitle,
               )
             ],

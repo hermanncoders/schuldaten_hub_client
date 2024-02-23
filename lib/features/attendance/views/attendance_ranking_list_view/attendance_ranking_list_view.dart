@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
@@ -34,9 +35,15 @@ class AttendanceRankingListView extends WatchingWidget {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.calendar_month_rounded),
+            Icon(
+              Icons.calendar_month_rounded,
+              size: 25,
+            ),
             Gap(10),
-            Text('Fehlzeiten'),
+            Text(
+              'Fehlzeiten',
+              style: appBarTextStyle,
+            ),
           ],
         ),
       ),

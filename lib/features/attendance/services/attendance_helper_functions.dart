@@ -1,4 +1,5 @@
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 int missedclassSum(Pupil pupil) {
   // count the number of missed classes - avoid null when missedClasses is empty
@@ -41,4 +42,14 @@ int contactedSum(Pupil pupil) {
       .length;
 
   return contactedCount;
+}
+
+bool pupilIsMissedToday(Pupil pupil) {
+  if (pupil.pupilMissedClasses!.isEmpty) return false;
+  if (pupil.pupilMissedClasses!.any((element) =>
+      element.missedDay.isSameDate(DateTime.now()) &&
+      element.missedType != 'late')) {
+    return true;
+  }
+  return false;
 }

@@ -151,7 +151,7 @@ class PupilBaseManager {
     await secureStorageWrite('pupilBase', jsonEncode(_pupilbase.value));
     debug.success(
         'Pupilbase extended: ${oldPupilbase.length} pupils before, now ${_pupilbase.value.length} | ${StackTrace.current}');
-    await locator<PupilManager>().getAllPupils();
+    await locator<PupilManager>().fetchAllPupils();
 
     locator<BottomNavManager>().setBottomNavPage(0);
   }
@@ -231,7 +231,7 @@ class PupilBaseManager {
     _availablePupilIds.value = availablePupils;
 
     await secureStorageWrite('pupilBase', jsonEncode(_pupilbase.value));
-    await locator<PupilManager>().getAllPupils();
+    await locator<PupilManager>().fetchAllPupils();
     locator<PupilFilterManager>().refreshFilteredPupils();
     locator<BottomNavManager>().setBottomNavPage(0);
   }

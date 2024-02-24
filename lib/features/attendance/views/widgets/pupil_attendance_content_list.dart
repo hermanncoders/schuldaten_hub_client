@@ -75,7 +75,6 @@ List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Gap(3),
                       if (missedClasses[index].missedType == 'late')
                         Row(
                           children: [
@@ -86,13 +85,17 @@ List<Widget> pupilAttendanceContentList(Pupil pupil, context) {
                                     fontWeight: FontWeight.bold)),
                           ],
                         ),
+                      const Gap(10),
                       if (missedClasses[index].returned == true)
                         RichText(
                             text: TextSpan(
                           text: 'abgeholt um: ',
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
-                            TextSpan(text: missedClasses[index].returnedAt)
+                            TextSpan(
+                                text: missedClasses[index].returnedAt,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
                           ],
                         )),
                     ],

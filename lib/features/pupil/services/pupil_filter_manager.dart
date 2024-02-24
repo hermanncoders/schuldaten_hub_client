@@ -65,13 +65,28 @@ class PupilFilterManager {
     for (int i = 0; i < filteredPupils.length; i++) {
       Pupil pupil = filteredPupils[i];
       if (pupilMap.containsKey(pupil.internalId)) {
-        filteredPupils[i] = pupilMap[pupil.internalId]!;
+        pupil = pupilMap[pupil.internalId]!;
       } else {
         // Remove the pupil from filteredPupils if it's not in pupils
         filteredPupils.removeAt(i);
         i--; // Decrement i to account for the removed element
       }
     }
+
+    // // Add any pupils from pupils that are not in filteredPupils yet
+    // for (var pupil in pupils) {
+    //   if (!filteredPupils.any(
+    //       (filteredPupil) => filteredPupil.internalId == pupil.internalId)) {
+    //     filteredPupils.add(pupil);
+    //   }
+    //   // for (Pupil filteredPupil in filteredPupils) {
+    //   //   Pupil pupil = pupils
+    //   //       .where((pupil) => pupil.internalId == filteredPupil.internalId)
+    //   //       .single;
+    //   //   filteredPupil = pupil;
+    //   // }
+    _filteredPupils.value = filteredPupils;
+    // }
   }
 
   cloneToFilteredPupil(Pupil pupil) {
@@ -83,7 +98,8 @@ class PupilFilterManager {
     _filteredPupils.value = updatedPupils;
   }
 
-  resetFilteredPupils() {
+  rebuildFilteredPupils() {
+    // List<Pupil> pupils = locator<PupilManager>().pupils.value;
     _filteredPupils.value = locator<PupilManager>().pupils.value;
     filterPupils();
     sortPupils();
@@ -97,7 +113,7 @@ class PupilFilterManager {
     _searchText.value = '';
     _sortMode.value = {...initialSortModeValues};
     _filtersOn.value = false;
-    resetFilteredPupils();
+    rebuildFilteredPupils();
   }
 
   // Set modified filter value

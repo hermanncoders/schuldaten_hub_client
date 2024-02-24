@@ -65,7 +65,7 @@ class AuthorizationManager {
         data: data);
     final List<Pupil> responsePupils = (List<Pupil>.from(
         (response.data as List).map((e) => Pupil.fromJson(e))));
-    locator<PupilManager>().updateListOfPupils(responsePupils);
+    locator<PupilManager>().updateListOfPupilsInRepository(responsePupils);
     fetchAuthorizations();
   }
 
@@ -99,7 +99,7 @@ class AuthorizationManager {
     }
     final List<Pupil> responsePupils = (List<Pupil>.from(
         (response.data as List).map((e) => Pupil.fromJson(e))));
-    locator<PupilManager>().updateListOfPupils(responsePupils);
+    locator<PupilManager>().updateListOfPupilsInRepository(responsePupils);
   }
 
   Future deletePupilAuthorization(int pupilId, String authId) async {

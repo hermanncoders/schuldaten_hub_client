@@ -44,7 +44,7 @@ class AdmonitionListView extends WatchingWidget {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async => locator<PupilManager>().getAllPupils(),
+        onRefresh: () async => locator<PupilManager>().fetchAllPupils(),
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),

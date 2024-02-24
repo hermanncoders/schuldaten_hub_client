@@ -33,8 +33,110 @@ class PupilManager {
   final client = locator.get<ApiManager>().dioClient.value;
   PupilManager();
   Future init() async {
-    await getAllPupils();
+    await fetchAllPupils();
     return;
+  }
+
+  //- Fetch all available pupils from the backend
+  Future fetchAllPupils() async {
+    final pupilsToFetch =
+        locator.get<PupilBaseManager>().availablePupilIds.value;
+    if (pupilsToFetch.isEmpty) {
+      return;
+    }
+    debug.warning('availablePupils im PupilManager $pupilsToFetch');
+    await fetchPupilsById(pupilsToFetch);
+  }
+
+  //- Fetch listed pupils from the backend
+  Future fetchThesePupils(List<Pupil> pupils) async {
+    List<int> pupilIds = [];
+    for (Pupil pupil in pupils) {
+      pupilIds.add(pupil.internalId);
+      await fetchPupilsById(pupilIds);
+    }
+  }
+
+  //-Fetch pupils with the given ids from the backend
+  Future fetchPupilsById(List<int> pupilIds) async {
+    _isRunning.value = true;
+    // we request the data posting a json with the id list - let's build that
+    final data = jsonEncode({"pupils": pupilIds});
+    // we'll need the pupilbase to parse the response - let's prepare it
+    final pupilbase = locator.get<PupilBaseManager>().pupilbase.value;
+    // and a list to manipulate the matched pupils
+    // and outdated pupilbase that did not get a response later
+    List<Pupil> matchedPupils = [];
+    List<PupilBase> outdatedPupilbase = [];
+    // request
+    try {
+      final response = await client.post(EndpointsPupil.getPupils, data: data);
+      debug.info('Pupil request sent!');
+      // we have the response - let's build unidentified Pupils with it
+      final fetchedPupilsWithoutBase =
+          (response.data as List).map((e) => Pupil.fromJson(e)).toList();
+      debug.success(
+          'PupilManager fetched ${fetchedPupilsWithoutBase.length} pupils! | ${StackTrace.current}');
+
+      // now we match them with the pupilbase and add the id key values
+      for (PupilBase pupilBaseElement in pupilbase) {
+        if (fetchedPupilsWithoutBase
+            .where((element) => element.internalId == pupilBaseElement.id)
+            .isNotEmpty) {
+          Pupil pupilMatch = fetchedPupilsWithoutBase
+              .where((element) => element.internalId == pupilBaseElement.id)
+              .single;
+          Pupil namedPupil =
+              patchPupilWithPupilbaseData(pupilBaseElement, pupilMatch);
+          matchedPupils.add(namedPupil);
+        } else {
+          // if the pupilbase element was sent and didn't get a response from the server,
+          // this means it is outdated -
+          // let's remove those
+          if (pupilIds.contains(pupilBaseElement.id)) {
+            outdatedPupilbase.add(pupilBaseElement);
+          }
+        }
+      }
+      // now check if the pupilbase was modified - if so, store the modified base
+      if (outdatedPupilbase.isNotEmpty) {
+        locator<PupilBaseManager>().deletePupilBaseElements(outdatedPupilbase);
+        // debug print the internal_id of every element of the outdated pupilbase in one string
+        String deletedPupils = '';
+        for (PupilBase element in outdatedPupilbase) {
+          deletedPupils += '${element.id}, ';
+        }
+        debug.warning(
+            '$deletedPupils had no match and have been deleted from the pupilbase! | ${StackTrace.current}');
+      }
+
+      updateListOfPupilsInRepository(matchedPupils);
+
+      // let's update the filtered pupils too
+      // handle errors...
+      if (matchedPupils.isEmpty) {
+        debug.info('PUPILS FETCHED: No matches! | ${StackTrace.current}');
+      } else {
+        debug.success(
+            'PUPILS FETCHED: There are ${matchedPupils.length} matches! | ${StackTrace.current}');
+      }
+      if (locator.isReadySync<PupilFilterManager>()) {
+        //locator<PupilFilterManager>().refreshFilteredPupils();
+        locator<PupilFilterManager>().rebuildFilteredPupils();
+      }
+
+      _isRunning.value = false;
+
+      // //! This one gives an error
+      // final pupilFilterManager = locator<PupilFilterManager>();
+      // pupilFilterManager.refreshFilteredPupils();
+    } on DioException catch (e) {
+      // handle errors...
+      final errorMessage = DioExceptions.fromDioError(e);
+      debug.error(
+          'Dio error: ${errorMessage.toString()} | ${StackTrace.current}');
+      rethrow;
+    }
   }
 
   List<Pupil> readPupils() {
@@ -47,6 +149,7 @@ class PupilManager {
     return;
   }
 
+  //- update pupil in repository
   updatePupilInRepository(Pupil pupil) {
     List<Pupil> pupils = List.from(_pupils.value);
     int index =
@@ -54,6 +157,29 @@ class PupilManager {
     pupils[index] = pupilCopiedWith(pupils[index], pupil);
     _pupils.value = pupils;
     locator<PupilFilterManager>().cloneToFilteredPupil(pupil);
+  }
+
+  //- update list of pupils in repository
+  Future updateListOfPupilsInRepository(List<Pupil> pupils) async {
+    _isRunning.value = true;
+    List<Pupil> repositoryPupils = List.from(_pupils.value);
+    for (Pupil pupil in pupils) {
+      int match = repositoryPupils
+          .indexWhere((element) => element.internalId == pupil.internalId);
+      if (match != -1) {
+        repositoryPupils[match] = pupil;
+      } else {
+        repositoryPupils.add(pupil);
+      }
+    }
+
+    sortPupilsByName(repositoryPupils);
+
+    await locator.isReady<PupilFilterManager>();
+
+    locator<PupilFilterManager>().refreshFilteredPupils();
+
+    _isRunning.value = false;
   }
 
   sortPupilsByName(List<Pupil> pupils) {
@@ -112,125 +238,12 @@ class PupilManager {
     locator<PupilFilterManager>().refreshFilteredPupils();
   }
 
-  Future fetchPupilsById(List<int> pupilIds) async {
-    _isRunning.value = true;
-    // we request the data posting a json with the id list - let's build that
-    final data = jsonEncode({"pupils": pupilIds});
-    // we'll need the pupilbase to parse the response - let's prepare it
-    final pupilbase = locator.get<PupilBaseManager>().pupilbase.value;
-    // and a list to manipulate the matched pupils
-    // and outdated pupilbase that did not get a response later
-    List<Pupil> matchedPupils = [];
-    List<PupilBase> outdatedPupilbase = [];
-    // request
-    try {
-      final response = await client.post(EndpointsPupil.getPupils, data: data);
-      debug.info('Pupil request sent!');
-      // we have the response - let's build unidentified Pupils with it
-      final pupilsWithoutBase =
-          (response.data as List).map((e) => Pupil.fromJson(e)).toList();
-      debug.success(
-          'PupilManager fetched ${pupilsWithoutBase.length} pupils! | ${StackTrace.current}');
-      // now we match them with the pupilbase and add the id key values
-
-      for (PupilBase pupilBaseElement in pupilbase) {
-        if (pupilsWithoutBase
-            .where((element) => element.internalId == pupilBaseElement.id)
-            .isNotEmpty) {
-          Pupil pupilMatch = pupilsWithoutBase
-              .where((element) => element.internalId == pupilBaseElement.id)
-              .single;
-          Pupil namedPupil =
-              patchPupilWithPupilbaseData(pupilBaseElement, pupilMatch);
-          matchedPupils.add(namedPupil);
-        } else {
-          // if the pupilbase was sent andidn't get a response from the server,
-          // this means it is outdated -
-          // let's remove those
-          if (pupilIds.contains(pupilBaseElement.id)) {}
-        }
-      }
-      // now check if the pupilbase was modified - if so, store the modified base
-      if (outdatedPupilbase.isNotEmpty) {
-        // print the internal_id of every element of the outdated pupilbase in one string
-        String deletedPupils = '';
-        for (PupilBase element in outdatedPupilbase) {
-          deletedPupils += '${element.id}, ';
-        }
-        debug.warning(
-            '$deletedPupils had no match and have been deleted from the pupilbase! | ${StackTrace.current}');
-        locator<PupilBaseManager>().deletePupilBaseElements(outdatedPupilbase);
-      }
-      // sort the list alphabetically before writing to the manager
-      sortPupilsByName(matchedPupils);
-      _pupils.value = matchedPupils;
-      // let's update the filtered pupils too
-      // handle errors...
-      if (matchedPupils.isEmpty) {
-        debug.info('PUPILS FETCHED: No matches! | ${StackTrace.current}');
-      } else {
-        debug.success(
-            'PUPILS FETCHED: There are ${matchedPupils.length} matches! | ${StackTrace.current}');
-      }
-      if (locator.isReadySync<PupilFilterManager>()) {
-        locator<PupilFilterManager>().refreshFilteredPupils();
-      }
-
-      _isRunning.value = false;
-
-      // //! This one gives an error
-      // final pupilFilterManager = locator<PupilFilterManager>();
-      // pupilFilterManager.refreshFilteredPupils();
-    } on DioException catch (e) {
-      // handle errors...
-      final errorMessage = DioExceptions.fromDioError(e);
-      debug.error(
-          'Dio error: ${errorMessage.toString()} | ${StackTrace.current}');
-      rethrow;
-    }
-  }
-
-  Future updateListOfPupils(List<Pupil> pupils) async {
-    _isRunning.value = true;
-    List<Pupil> repositoryPupils = List.from(_pupils.value);
-    for (Pupil pupil in pupils) {
-      int index = repositoryPupils
-          .indexWhere((element) => element.internalId == pupil.internalId);
-
-      repositoryPupils[index] = pupilCopiedWith(repositoryPupils[index], pupil);
-    }
-    _pupils.value = repositoryPupils;
-
-    locator<PupilFilterManager>().refreshFilteredPupils();
-
-    _isRunning.value = false;
-  }
-
   Future fetchShownPupils() async {
     if (locator.isReadySync<PupilFilterManager>()) {
       final List<Pupil> shownPupils =
           locator<PupilFilterManager>().filteredPupils.value;
       final List<int> shownPupilIds = pupilIdsFromPupils(shownPupils);
       await fetchPupilsById(shownPupilIds);
-    }
-  }
-
-  Future getAllPupils() async {
-    // Get **all** available pupils in the pupilbase
-    final pupilsToFetch =
-        locator.get<PupilBaseManager>().availablePupilIds.value;
-    if (pupilsToFetch.isEmpty) {
-      return;
-    }
-    debug.warning('availablePupils im PupilManager $pupilsToFetch');
-    await fetchPupilsById(pupilsToFetch);
-  }
-
-  Future fetchThesePupils(List<Pupil> pupils) async {
-    List<int> pupilIds = [];
-    for (Pupil pupil in pupils) {
-      pupilIds.add(pupil.internalId);
-      await fetchPupilsById(pupilIds);
     }
   }
 

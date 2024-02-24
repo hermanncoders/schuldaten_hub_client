@@ -120,6 +120,20 @@ class AttendanceManager {
     return returnedindex;
   }
 
+  String? setReturnedTime(int pupilId, DateTime date) {
+    resetOperationReport();
+    _setIsRunning(true);
+    final Pupil pupil = findPupilById(pupilId);
+    final int? missedClass = _findMissedClassIndex(pupil, date);
+    if (missedClass == -1) {
+      _setIsRunning(false);
+      return null;
+    }
+    final returnedTime = pupil.pupilMissedClasses![missedClass!].returnedAt;
+    _setIsRunning(false);
+    return returnedTime;
+  }
+
   Future<void> deleteMissedClass(int pupilId, DateTime date) async {
     final response = await client
         .delete(EndpointsMissedClass().deleteMissedClass(pupilId, date));

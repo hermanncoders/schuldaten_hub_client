@@ -54,7 +54,7 @@ class SchoolListPupilsView extends WatchingWidget {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async => locator<PupilManager>().getAllPupils(),
+        onRefresh: () async => locator<PupilManager>().fetchAllPupils(),
         child: Padding(
           padding: const EdgeInsets.only(left: 5.0, right: 5),
           child: Center(

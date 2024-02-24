@@ -53,3 +53,10 @@ bool pupilIsMissedToday(Pupil pupil) {
   }
   return false;
 }
+
+bool schooldayIsToday(DateTime schoolday) {
+  if (schoolday.isSameDate(DateTime.now())) {
+    return true;
+  }
+  return false;
+}

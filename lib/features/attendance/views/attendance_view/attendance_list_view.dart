@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
+import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/controller/attendance_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/atendance_list_card.dart';
@@ -31,9 +32,23 @@ class AttendanceListView extends WatchingWidget {
         backgroundColor: backgroundColor,
         title: InkWell(
           onTap: () async => controller.setThisDate(context, thisDate),
-          child: Text(
-            controller.thisDateAsString(context, thisDate),
-            style: const TextStyle(fontSize: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Icon(
+                Icons.today_rounded,
+                color: schooldayIsToday(thisDate)
+                    ? const Color.fromARGB(255, 83, 196, 55)
+                    : Colors.white,
+                size: 30,
+              ),
+              const Gap(10),
+              Text(
+                controller.thisDateAsString(context, thisDate),
+                style: TextStyle(fontSize: 25, color: Colors.white),
+              ),
+            ],
           ),
         ),
         automaticallyImplyLeading: false,

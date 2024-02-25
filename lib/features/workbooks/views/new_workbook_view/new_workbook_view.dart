@@ -3,15 +3,9 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/utils/scanner.dart';
-import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
-import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
-import 'package:schuldaten_hub/features/pupil/views/pupil_profile_view/controller/pupil_profile_controller.dart';
-import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
-import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
+
 import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
 
 class NewWorkbookView extends StatefulWidget {
@@ -26,7 +20,6 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
   final TextEditingController textField2Controller = TextEditingController();
   final TextEditingController textField3Controller = TextEditingController();
   final TextEditingController textField4Controller = TextEditingController();
-  bool _isOn = false;
   Set<int> pupilIds = {};
   void postNewWorkbook() async {
     String workbookName = textField1Controller.text;

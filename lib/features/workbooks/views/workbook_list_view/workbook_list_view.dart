@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:watch_it/watch_it.dart';
+
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
-
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
-import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
-import 'package:schuldaten_hub/common/services/session_manager.dart';
-
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
-import 'package:schuldaten_hub/features/school_lists/views/school_lists_view/widgets/school_list_card.dart';
-import 'package:schuldaten_hub/features/school_lists/views/school_lists_view/widgets/school_lists_bottom_navbar.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/workbooks/models/workbook.dart';
 import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
 import 'package:schuldaten_hub/features/workbooks/views/workbook_list_view/controller/workbook_controller.dart';
 import 'package:schuldaten_hub/features/workbooks/views/workbook_list_view/widgets/workbook_card.dart';
 import 'package:schuldaten_hub/features/workbooks/views/workbook_list_view/widgets/workbook_list_bottom_navbar.dart';
-import 'package:watch_it/watch_it.dart';
 
 class WorkbookListView extends WatchingWidget {
   final WorkbookController controller;
@@ -38,7 +33,7 @@ class WorkbookListView extends WatchingWidget {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.rule_rounded, size: 25),
+            Icon(Icons.note_alt_rounded, size: 25),
             Gap(10),
             Text(
               'Arbeitshefte',

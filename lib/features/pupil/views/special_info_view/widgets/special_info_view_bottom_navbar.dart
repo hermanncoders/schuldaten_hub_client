@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
-import 'package:schuldaten_hub/features/pupil/views/special_info_view/widgets/special_info_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/views/special_info_view/widgets/special_info_reset_filter_button.dart';
 
 BottomAppBar specialInfoViewBottomNavBar(BuildContext context, bool filtersOn) {

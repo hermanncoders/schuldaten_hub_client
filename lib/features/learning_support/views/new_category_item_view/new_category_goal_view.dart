@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/controller/new_category_item_controller.dart';
 import 'package:schuldaten_hub/features/learning_support/views/selectable_category_tree_view/controller/selectable_category_tree_controller.dart';
 
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_status_dropdown.dart';
@@ -63,7 +63,8 @@ class NewCategoryGoalView extends StatelessWidget {
                                   .push(MaterialPageRoute(
                                       builder: (ctx) => SelectableCategoryTree(
                                           findPupilById(
-                                              controller.widget.pupilId))));
+                                              controller.widget.pupilId),
+                                          controller.widget.elementType)));
                               if (categoryId == null) {
                                 return;
                               }

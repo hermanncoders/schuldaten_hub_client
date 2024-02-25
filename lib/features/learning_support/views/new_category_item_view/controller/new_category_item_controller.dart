@@ -2,24 +2,26 @@ import 'package:flutter/material.dart';
 
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/new_category_goal_view.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/new_category_item_view.dart';
 
-class NewCategoryGoal extends StatefulWidget {
+class NewCategoryItem extends StatefulWidget {
   final String appBarTitle;
   final int pupilId;
   final int goalCategoryId;
+  final String elementType;
 
-  const NewCategoryGoal(
+  const NewCategoryItem(
       {super.key,
       required this.appBarTitle,
       required this.pupilId,
-      required this.goalCategoryId});
+      required this.goalCategoryId,
+      required this.elementType});
 
   @override
   NewCategoryGoalController createState() => NewCategoryGoalController();
 }
 
-class NewCategoryGoalController extends State<NewCategoryGoal> {
+class NewCategoryGoalController extends State<NewCategoryItem> {
   @override
   void initState() {
     super.initState();

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 
 import 'package:schuldaten_hub/features/learning_support/models/category/goal_category.dart';
@@ -18,6 +19,7 @@ List<Widget> buildPupilCategoryTree(
   double indentation,
   Color? backGroundColor,
   SelectableCategoryTreeController controller,
+  String elementType,
 ) {
   List<Widget> goalCategoryWidgets = [];
   final goalLocator = locator<GoalManager>();
@@ -40,7 +42,8 @@ List<Widget> buildPupilCategoryTree(
           goalCategory.categoryId,
           indentation + 15,
           categoryBackgroundColor,
-          controller);
+          controller,
+          elementType);
 
       goalCategoryWidgets.add(
         Padding(
@@ -98,47 +101,58 @@ List<Widget> buildPupilCategoryTree(
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: getCategoryStatus(
-                                        pupil, goalCategory.categoryId) ==
-                                    null
-                                ? Radio(
-                                    value: goalCategory.categoryId,
-                                    groupValue: controller.selectedCategoryId,
-                                    onChanged: (value) {
-                                      controller.selectCategory(value!);
-                                    },
-                                  )
-                                : const Row(children: [
-                                    Gap(7),
-                                    Icon(
-                                      Icons.support,
-                                      color: Colors.white,
-                                    )
-                                  ]),
+                            child:
+                                // getCategoryStatus(
+                                //             pupil, goalCategory.categoryId) ==
+                                //         null
+                                //     ?
+                                Radio(
+                              value: goalCategory.categoryId,
+                              groupValue: controller.selectedCategoryId,
+                              onChanged: (value) {
+                                controller.selectCategory(value!);
+                              },
+                            ),
+                            // : const Row(children: [
+                            //     Gap(7),
+                            //     Icon(
+                            //       Icons.support,
+                            //       color: Colors.white,
+                            //     )
+                            //   ]),
                           ),
                           const Gap(5),
                           Flexible(
                             child: InkWell(
-                              onLongPress: () async {
-                                if (pupil.pupilCategoryStatuses!.isEmpty) {
-                                  return;
-                                }
-                                final bool? delete = await confirmationDialog(
-                                    context,
-                                    'Kategoriestatus löschen',
-                                    'Kategoriestatus löschen?');
-                                if (delete == true) {
-                                  final PupilCategoryStatus? categoryStatus =
-                                      pupil.pupilCategoryStatuses!
-                                          .lastWhereOrNull((element) =>
-                                              element.goalCategoryId ==
-                                              goalCategory.categoryId);
-                                  await locator<GoalManager>()
-                                      .deleteCategoryStatus(
-                                          categoryStatus!.statusId);
-                                }
-                                return;
-                              },
+                              onTap: () => controller
+                                  .selectCategory(goalCategory.categoryId),
+                              onLongPress: locator<SessionManager>()
+                                      .isAdmin
+                                      .value
+                                  ? () async {
+                                      if (pupil
+                                          .pupilCategoryStatuses!.isEmpty) {
+                                        return;
+                                      }
+                                      final bool? delete =
+                                          await confirmationDialog(
+                                              context,
+                                              'Kategoriestatus löschen',
+                                              'Kategoriestatus löschen?');
+                                      if (delete == true) {
+                                        final PupilCategoryStatus?
+                                            categoryStatus = pupil
+                                                .pupilCategoryStatuses!
+                                                .lastWhereOrNull((element) =>
+                                                    element.goalCategoryId ==
+                                                    goalCategory.categoryId);
+                                        await locator<GoalManager>()
+                                            .deleteCategoryStatus(
+                                                categoryStatus!.statusId);
+                                      }
+                                      return;
+                                    }
+                                  : () {},
                               child: Text(
                                 goalCategory.categoryName,
                                 maxLines: 4,

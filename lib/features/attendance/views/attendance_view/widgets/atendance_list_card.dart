@@ -322,7 +322,8 @@ class AttendanceCard extends WatchingWidget {
                                 onTap: () {
                                   locator<BottomNavManager>()
                                       .setPupilProfileNavPage(3);
-                                  Navigator.of(context).push(MaterialPageRoute(
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
                                     builder: (ctx) => PupilProfile(
                                       pupil,
                                     ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/controller/new_category_item_controller.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/learning_support_goal_list.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_statuses_list.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -97,10 +97,11 @@ List<Widget> pupilLearningSupportContentList(
             minimumSize: const Size.fromHeight(50)),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => NewCategoryGoal(
+              builder: (ctx) => NewCategoryItem(
                     appBarTitle: 'Neuer Förderbereich',
                     pupilId: pupil.internalId,
                     goalCategoryId: 0,
+                    elementType: 'status',
                   )));
         },
         child: const Text(

@@ -45,7 +45,7 @@ class SelectableCategoryTreeView extends StatelessWidget {
                     ),
                   ),
                   ...buildPupilCategoryTree(context, controller.widget.pupil,
-                      null, 0, null, controller),
+                      null, 0, null, controller, controller.widget.elementType),
                 ]),
               ),
             ),

@@ -2,44 +2,19 @@ import 'package:flutter/material.dart';
 
 List<DropdownMenuItem<String>> categoryStatusItems = [
   DropdownMenuItem(
-      value: 'white',
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-      )),
+    value: 'white',
+    child: SizedBox(width: 40, child: Image.asset('assets/growth_1-4.png')),
+  ),
   DropdownMenuItem(
-      value: 'green',
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        decoration: const BoxDecoration(
-          color: Colors.green,
-          shape: BoxShape.circle,
-        ),
-      )),
+    value: 'red',
+    child: SizedBox(width: 40, child: Image.asset('assets/growth_2-4.png')),
+  ),
   DropdownMenuItem(
-      value: 'yellow',
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        decoration: const BoxDecoration(
-          color: Colors.yellow,
-          shape: BoxShape.circle,
-        ),
-      )),
+    value: 'yellow',
+    child: SizedBox(width: 40, child: Image.asset('assets/growth_3-4.png')),
+  ),
   DropdownMenuItem(
-      value: 'red',
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        decoration: const BoxDecoration(
-          color: Colors.red,
-          shape: BoxShape.circle,
-        ),
-      )),
+    value: 'green',
+    child: SizedBox(width: 40, child: Image.asset('assets/growth_4-4.png')),
+  ),
 ];

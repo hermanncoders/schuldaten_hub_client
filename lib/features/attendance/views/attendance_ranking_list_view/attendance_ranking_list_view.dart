@@ -3,7 +3,6 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/controller/attendance_ranking_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_list_card.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_ranking_list_view/widgets/attendance_ranking_list_view_bottom_navbar.dart';
@@ -20,10 +19,7 @@ class AttendanceRankingListView extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
-    debug.info('Widget Build started!');
-
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
 
     return Scaffold(

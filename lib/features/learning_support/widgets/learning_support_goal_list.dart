@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/controller/new_category_item_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_goal_card.dart';
 
@@ -13,10 +13,11 @@ List<Widget> learningSupportGoalList(BuildContext context, Pupil pupil) {
         style: actionButtonStyle,
         onPressed: () async {
           await Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => NewCategoryGoal(
+              builder: (ctx) => NewCategoryItem(
                     appBarTitle: 'Neues Förderziel',
                     pupilId: pupil.internalId,
                     goalCategoryId: 0,
+                    elementType: 'goal',
                   )));
         },
         child: const Text(

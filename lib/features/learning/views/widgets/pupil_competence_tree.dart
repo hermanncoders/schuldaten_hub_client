@@ -9,7 +9,7 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/dialogs/category_status_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 
-import 'package:schuldaten_hub/features/learning_support/views/new_category_goal_view/controller/new_category_goal_controller.dart';
+import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/controller/new_category_item_controller.dart';
 
 List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
     double indentation, Color? passedBackGroundColor, BuildContext context) {
@@ -85,16 +85,9 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                         //   ),
                                         // ));
                                       },
-                                      child: Container(
-                                        width: 20.0,
-                                        height: 20.0,
-                                        decoration: BoxDecoration(
-                                          color: locator<GoalManager>()
-                                              .getLastCategoryStatusColor(pupil,
-                                                  competence.competenceId),
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
+                                      child: locator<GoalManager>()
+                                          .getLastCategoryStatusImage(
+                                              pupil, competence.competenceId),
                                     ),
                                   ),
                                   Flexible(
@@ -132,23 +125,17 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                   pupil, competence.competenceId, context),
                               onLongPress: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => NewCategoryGoal(
+                                  builder: (ctx) => NewCategoryItem(
                                     appBarTitle: 'Neues Förderziel',
                                     pupilId: pupil.internalId,
                                     goalCategoryId: competence.competenceId,
+                                    elementType: 'goal',
                                   ),
                                 ));
                               },
-                              child: Container(
-                                width: 20.0,
-                                height: 20.0,
-                                decoration: BoxDecoration(
-                                  color: locator<GoalManager>()
-                                      .getLastCategoryStatusColor(
-                                          pupil, competence.competenceId),
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
+                              child: locator<GoalManager>()
+                                  .getLastCategoryStatusImage(
+                                      pupil, competence.competenceId),
                             ),
                           ),
                           const Gap(5),

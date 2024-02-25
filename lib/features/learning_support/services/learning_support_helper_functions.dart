@@ -27,3 +27,15 @@ PupilCategoryStatus? getCategoryStatus(Pupil pupil, int goalCategoryId) {
   }
   return null;
 }
+
+PupilGoal? getGoalForCategory(Pupil pupil, int goalCategoryId) {
+  if (pupil.pupilGoals != null) {
+    if (pupil.pupilGoals!.isNotEmpty) {
+      final PupilGoal? goal = pupil.pupilGoals!.lastWhereOrNull(
+          (element) => element.goalCategoryId == goalCategoryId);
+      return goal;
+    }
+    return null;
+  }
+  return null;
+}

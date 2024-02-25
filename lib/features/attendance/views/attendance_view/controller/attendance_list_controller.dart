@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
+import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/date_picker.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_manager.dart';
@@ -33,6 +34,7 @@ class AttendanceListController extends State<AttendanceList> {
     locator<AttendanceManager>().fetchMissedClassesOnASchoolday(
         locator<SchooldayManager>().thisDate.value);
     _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      debug.warning('fetching missed classes from date');
       locator<AttendanceManager>().fetchMissedClassesOnASchoolday(
           locator<SchooldayManager>().thisDate.value);
     });

@@ -46,7 +46,7 @@ Future categoryStatusDialog(
                     Row(
                       children: [
                         const Text(
-                          'Eine Farbe auswählen:',
+                          'Eine Stufe auswählen:',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const Gap(10),

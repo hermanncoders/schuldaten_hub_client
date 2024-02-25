@@ -55,16 +55,8 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
-                        width: 20.0,
-                        height: 20.0,
-                        decoration: BoxDecoration(
-                          color: locator<GoalManager>()
-                              .getLastCategoryStatusColor(pupil,
-                                  pupil.pupilGoals![index].goalCategoryId),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
+                      child: locator<GoalManager>().getLastCategoryStatusImage(
+                          pupil, pupil.pupilGoals![index].goalCategoryId),
                     ),
                     const Gap(10),
                     Flexible(

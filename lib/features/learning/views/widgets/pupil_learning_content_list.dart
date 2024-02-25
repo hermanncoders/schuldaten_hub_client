@@ -55,16 +55,8 @@ List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
                       const Gap(5),
                       Row(
                         children: [
-                          Container(
-                            width: 20.0,
-                            height: 20.0,
-                            decoration: BoxDecoration(
-                              color: locator<GoalManager>()
-                                  .getLastCategoryStatusColor(
-                                      pupil, pupilGoals[index].competenceId),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
+                          locator<GoalManager>().getLastCategoryStatusImage(
+                              pupil, pupilGoals[index].competenceId),
                           const Gap(10),
                           Flexible(
                             child: Text(

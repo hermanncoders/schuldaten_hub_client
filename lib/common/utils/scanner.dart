@@ -6,7 +6,7 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 Future<String?> scanner(BuildContext context) async {
   final controller = MobileScannerController(
     detectionSpeed: DetectionSpeed.normal,
-    formats: [BarcodeFormat.qrCode, BarcodeFormat.codebar],
+    formats: [BarcodeFormat.qrCode, BarcodeFormat.ean13],
     facing: CameraFacing.back,
     torchEnabled: false,
   );

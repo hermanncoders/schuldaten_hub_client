@@ -20,9 +20,12 @@ Workbook _$WorkbookFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Workbook {
-  int? get isbn => throw _privateConstructorUsedError;
+  int get isbn => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get subject => throw _privateConstructorUsedError;
+  String? get level => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_url')
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +38,12 @@ abstract class $WorkbookCopyWith<$Res> {
   factory $WorkbookCopyWith(Workbook value, $Res Function(Workbook) then) =
       _$WorkbookCopyWithImpl<$Res, Workbook>;
   @useResult
-  $Res call({int? isbn, String? name, String? subject});
+  $Res call(
+      {int isbn,
+      String? name,
+      String? subject,
+      String? level,
+      @JsonKey(name: 'image_url') String? imageUrl});
 }
 
 /// @nodoc
@@ -51,15 +59,17 @@ class _$WorkbookCopyWithImpl<$Res, $Val extends Workbook>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isbn = freezed,
+    Object? isbn = null,
     Object? name = freezed,
     Object? subject = freezed,
+    Object? level = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      isbn: freezed == isbn
+      isbn: null == isbn
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -67,6 +77,14 @@ class _$WorkbookCopyWithImpl<$Res, $Val extends Workbook>
       subject: freezed == subject
           ? _value.subject
           : subject // ignore: cast_nullable_to_non_nullable
+              as String?,
+      level: freezed == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -80,7 +98,12 @@ abstract class _$$WorkbookImplCopyWith<$Res>
       __$$WorkbookImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? isbn, String? name, String? subject});
+  $Res call(
+      {int isbn,
+      String? name,
+      String? subject,
+      String? level,
+      @JsonKey(name: 'image_url') String? imageUrl});
 }
 
 /// @nodoc
@@ -94,15 +117,17 @@ class __$$WorkbookImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isbn = freezed,
+    Object? isbn = null,
     Object? name = freezed,
     Object? subject = freezed,
+    Object? level = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_$WorkbookImpl(
-      isbn: freezed == isbn
+      isbn: null == isbn
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -111,6 +136,14 @@ class __$$WorkbookImplCopyWithImpl<$Res>
           ? _value.subject
           : subject // ignore: cast_nullable_to_non_nullable
               as String?,
+      level: freezed == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -118,21 +151,31 @@ class __$$WorkbookImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$WorkbookImpl implements _Workbook {
-  _$WorkbookImpl({this.isbn, this.name, this.subject});
+  _$WorkbookImpl(
+      {required this.isbn,
+      this.name,
+      this.subject,
+      this.level,
+      @JsonKey(name: 'image_url') this.imageUrl});
 
   factory _$WorkbookImpl.fromJson(Map<String, dynamic> json) =>
       _$$WorkbookImplFromJson(json);
 
   @override
-  final int? isbn;
+  final int isbn;
   @override
   final String? name;
   @override
   final String? subject;
+  @override
+  final String? level;
+  @override
+  @JsonKey(name: 'image_url')
+  final String? imageUrl;
 
   @override
   String toString() {
-    return 'Workbook(isbn: $isbn, name: $name, subject: $subject)';
+    return 'Workbook(isbn: $isbn, name: $name, subject: $subject, level: $level, imageUrl: $imageUrl)';
   }
 
   @override
@@ -142,12 +185,16 @@ class _$WorkbookImpl implements _Workbook {
             other is _$WorkbookImpl &&
             (identical(other.isbn, isbn) || other.isbn == isbn) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.subject, subject) || other.subject == subject));
+            (identical(other.subject, subject) || other.subject == subject) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, isbn, name, subject);
+  int get hashCode =>
+      Object.hash(runtimeType, isbn, name, subject, level, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -165,19 +212,26 @@ class _$WorkbookImpl implements _Workbook {
 
 abstract class _Workbook implements Workbook {
   factory _Workbook(
-      {final int? isbn,
+      {required final int isbn,
       final String? name,
-      final String? subject}) = _$WorkbookImpl;
+      final String? subject,
+      final String? level,
+      @JsonKey(name: 'image_url') final String? imageUrl}) = _$WorkbookImpl;
 
   factory _Workbook.fromJson(Map<String, dynamic> json) =
       _$WorkbookImpl.fromJson;
 
   @override
-  int? get isbn;
+  int get isbn;
   @override
   String? get name;
   @override
   String? get subject;
+  @override
+  String? get level;
+  @override
+  @JsonKey(name: 'image_url')
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$WorkbookImplCopyWith<_$WorkbookImpl> get copyWith =>

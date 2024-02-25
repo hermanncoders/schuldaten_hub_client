@@ -9,6 +9,7 @@ part 'endpoints/competence_endpoints.dart';
 part 'endpoints/school_list_endpoints.dart';
 part 'endpoints/missed_class_endpoints.dart';
 part 'endpoints/learning_support_endpoints.dart';
+part 'endpoints/workbook_endpoints.dart';
 
 class Endpoints {
   // dev environment urls:

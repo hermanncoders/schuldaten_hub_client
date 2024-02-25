@@ -11,7 +11,7 @@ class PupilWorkbook with _$PupilWorkbook {
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'created_by') required String createdBy,
     String? state,
-    @JsonKey(name: 'workbook_isbn') int? workbookIsbn,
+    @JsonKey(name: 'workbook_isbn') required int workbookIsbn,
     @JsonKey(name: 'finished_at') DateTime? finishedAt,
   }) = _PupilWorkbook;
 

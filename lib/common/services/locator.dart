@@ -15,6 +15,7 @@ import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:schuldaten_hub/features/school_lists/services/school_list_manager.dart';
 import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
 import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
+import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
 import 'package:watch_it/watch_it.dart';
 
 import '../../api/services/api_manager.dart';
@@ -80,6 +81,14 @@ Future registerDependentManagers(String token) async {
     await schooldayManager.init();
     debug.warning('SchooldayManager initialized');
     return schooldayManager;
+  }, dependsOn: [SessionManager, ApiManager]);
+
+  locator.registerSingletonAsync<WorkbookManager>(() async {
+    debug.info('Registering WorkbookManager');
+    final workbookManager = WorkbookManager();
+    await workbookManager.init();
+    debug.warning('WorkbookManager initialized');
+    return workbookManager;
   }, dependsOn: [SessionManager, ApiManager]);
 
   locator.registerSingletonAsync<SchoolListManager>(() async {

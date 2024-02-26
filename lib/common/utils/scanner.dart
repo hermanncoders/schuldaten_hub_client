@@ -1,9 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 
-Future<String?> scanner(BuildContext context) async {
+Future<String?> scanner(BuildContext context, String overlayText) async {
+  if (Platform.isWindows) {
+    snackbarError(context, 'Scannen mit Windows ist zur Zeit nicht möglich.');
+    return null;
+  }
   final controller = MobileScannerController(
     detectionSpeed: DetectionSpeed.normal,
     formats: [BarcodeFormat.qrCode, BarcodeFormat.ean13],
@@ -26,6 +33,24 @@ Future<String?> scanner(BuildContext context) async {
                 Navigator.pop(context, barcode.displayValue);
                 controller.dispose();
               }),
+          Positioned(
+            bottom: 50,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(overlayText,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        decoration: TextDecoration.none,
+                        backgroundColor: Colors.transparent,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+              ],
+            ),
+          ),
         ],
       ),
     ),

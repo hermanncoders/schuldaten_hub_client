@@ -27,7 +27,7 @@ List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
     ElevatedButton(
       style: actionButtonStyle,
       onPressed: () async {
-        final scanResult = await scanner(context);
+        final scanResult = await scanner(context, 'Isbn code scannen');
         if (scanResult != null) {
           if (!locator<WorkbookManager>()
               .workbooks

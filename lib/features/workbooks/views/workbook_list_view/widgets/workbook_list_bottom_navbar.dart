@@ -32,7 +32,7 @@ BottomAppBar workbookListBottomNavBar(BuildContext context) {
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => const NewWorkbookView(),
+                builder: (ctx) => NewWorkbookView(null, null, null, null),
               ));
             },
           ),

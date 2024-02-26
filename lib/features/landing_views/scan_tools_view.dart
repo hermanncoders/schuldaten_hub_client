@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/scanner.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
@@ -34,7 +35,10 @@ class QrToolsView extends WatchingWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Scan-Tools'),
+        title: const Text(
+          'Scan-Tools',
+          style: appBarTextStyle,
+        ),
       ),
       body: Center(
         child: ConstrainedBox(
@@ -90,7 +94,8 @@ class QrToolsView extends WatchingWidget {
                           backgroundColor: accentColor,
                           foregroundColor: Colors.white,
                           onPressed: () async {
-                            final String? scanResult = await scanner(context);
+                            final String? scanResult =
+                                await scanner(context, 'Kinder-Code scannen');
                             if (scanResult != null) {
                               locator
                                   .get<PupilBaseManager>()

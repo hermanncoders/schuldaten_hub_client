@@ -78,7 +78,7 @@ class PupilBaseManager {
   }
 
   scanNewPupilBase(BuildContext context) async {
-    final String? scanResult = await scanner(context);
+    final String? scanResult = await scanner(context, 'Kinder-Code scannen');
     if (scanResult != null) {
       addNewPupilBase(scanResult);
     } else {

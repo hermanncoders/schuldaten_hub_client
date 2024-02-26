@@ -3,6 +3,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:gap/gap.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/models/session_models/session.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -35,7 +36,10 @@ class SettingsView extends WatchingWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Einstellungen'),
+        title: const Text(
+          'Einstellungen',
+          style: appBarTextStyle,
+        ),
       ),
       body: Center(
         child: ConstrainedBox(

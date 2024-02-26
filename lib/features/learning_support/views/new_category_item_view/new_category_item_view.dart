@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/controller/new_category_item_controller.dart';
@@ -23,8 +24,13 @@ class NewCategoryGoalView extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
           backgroundColor: backgroundColor,
-          title: Text(controller.widget.appBarTitle),
+          title: Text(
+            controller.widget.appBarTitle,
+            style: appBarTextStyle,
+          ),
         ),
         body: Center(
           heightFactor: 1,
@@ -206,7 +212,7 @@ class NewCategoryGoalView extends StatelessWidget {
                       Row(
                         children: [
                           const Text(
-                            'Eine Farbe auswählen:',
+                            'Aktueller Zustand',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           const Gap(10),
@@ -214,6 +220,7 @@ class NewCategoryGoalView extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 5.0),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
+                                itemHeight: 70,
                                 icon: const Visibility(
                                     visible: false,
                                     child: Icon(Icons.arrow_downward)),

@@ -33,9 +33,10 @@ Widget pupilWorkbookCard(
       //   ));
       // },
       onLongPress: () async {
-        if (!locator<SessionManager>().isAdmin.value) {
+        if (pupilWorkbook.createdBy !=
+            locator<SessionManager>().credentials.value.username) {
           informationDialog(context, 'Keine Berechtigung',
-              'Listen können nur von ListenbesiterInnen bearbeitet werden!');
+              'Arbeitshefte können nur von der eintragenden Person bearbeitet werden!');
           return;
         }
         final bool? result = await confirmationDialog(
@@ -46,8 +47,7 @@ Widget pupilWorkbookCard(
           locator<WorkbookManager>()
               .deletePupilWorkbook(pupilId, workbook.isbn);
           if (context.mounted) {
-            informationDialog(
-                context, 'Liste gelöscht', 'Die Liste wurde gelöscht!');
+            snackbarSuccess(context, 'Das Arbeitsheft wurde gelöscht!');
           }
         }
       },

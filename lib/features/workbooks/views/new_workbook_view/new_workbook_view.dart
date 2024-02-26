@@ -10,7 +10,12 @@ import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
 
 class NewWorkbookView extends StatefulWidget {
-  const NewWorkbookView({super.key});
+  final String? wbName;
+  final int? wbIsbn;
+  final String? wbSubject;
+  final String? wbLevel;
+  const NewWorkbookView(this.wbName, this.wbIsbn, this.wbSubject, this.wbLevel,
+      {super.key});
 
   @override
   NewWorkbookViewState createState() => NewWorkbookViewState();
@@ -21,6 +26,7 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
   final TextEditingController textField2Controller = TextEditingController();
   final TextEditingController textField3Controller = TextEditingController();
   final TextEditingController textField4Controller = TextEditingController();
+
   Set<int> pupilIds = {};
   void postNewWorkbook() async {
     String workbookName = textField1Controller.text;
@@ -35,12 +41,37 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
     }
   }
 
+  void patchWorkbook() async {
+    String workbookName = textField1Controller.text;
+    int workbookIsbn = int.parse(textField2Controller.text);
+    String workbookSubject = textField3Controller.text;
+    String workbookLevel = textField4Controller.text;
+
+    await locator<WorkbookManager>().patchWorkbook(
+        workbookName, workbookIsbn, workbookSubject, workbookLevel);
+    if (context.mounted) {
+      snackbarSuccess(context, 'Arbeitsheft geändert!');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    textField1Controller.text = widget.wbName ?? '';
+    textField2Controller.text = widget.wbIsbn?.toString() ?? '';
+    textField3Controller.text = widget.wbSubject ?? '';
+    textField4Controller.text = widget.wbLevel ?? '';
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: backgroundColor,
-        title: const Text('Neues Arbeitsheft'),
+        title: Center(
+          child: Text(
+            (widget.wbIsbn != null)
+                ? 'Arbeitsheft bearbeiten'
+                : 'Neues Arbeitsheft',
+            style: appBarTextStyle,
+          ),
+        ),
       ),
       body: Center(
         heightFactor: 1,
@@ -141,7 +172,8 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
                   ElevatedButton(
                     style: actionButtonStyle,
                     onPressed: () async {
-                      final String? scannedIsbn = await scanner(context);
+                      final String? scannedIsbn =
+                          await scanner(context, 'Isbn code scannen');
                       debug.info('Scanned ISBN: $scannedIsbn');
                       if (scannedIsbn == null) {
                         return;
@@ -168,16 +200,24 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
                   ElevatedButton(
                     style: successButtonStyle,
                     onPressed: () {
-                      if (locator<WorkbookManager>().workbooks.value.any(
-                          (element) =>
-                              element.isbn ==
-                              int.parse(textField2Controller.text))) {
-                        snackbarError(
-                            context, 'Dieses Arbeitsheft gibt es schon!');
+                      if (widget.wbIsbn != null) {
+                        patchWorkbook();
+                        Navigator.pop(context);
                         return;
                       }
-                      postNewWorkbook();
-                      Navigator.pop(context);
+                      {
+                        if (locator<WorkbookManager>().workbooks.value.any(
+                            (element) =>
+                                element.isbn ==
+                                int.parse(textField2Controller.text))) {
+                          snackbarError(
+                              context, 'Dieses Arbeitsheft gibt es schon!');
+                          return;
+                        }
+                        postNewWorkbook();
+                        Navigator.pop(context);
+                        return;
+                      }
                     },
                     child: const Text(
                       'SENDEN',

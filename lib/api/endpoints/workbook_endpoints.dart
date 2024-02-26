@@ -5,7 +5,7 @@ class EndpointsWorkbook {
 
   static const postWorkbook = '/workbook/new';
 
-  String patchWorkbook(String isbn) {
+  String patchWorkbook(int isbn) {
     return '/workbook/$isbn';
   }
 

@@ -28,7 +28,7 @@ class LoginController extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
 
   scanCredentials() async {
-    final String? scanResponse = await scanner(context);
+    final String? scanResponse = await scanner(context, 'Zugangscode scannen');
     if (scanResponse != null) {
       final loginData = await json.decode(scanResponse);
       final username = loginData['username'];
@@ -43,7 +43,7 @@ class LoginController extends State<Login> {
   }
 
   scanEnv() async {
-    final String? scanResponse = await scanner(context);
+    final String? scanResponse = await scanner(context, 'Schul-Id scannen');
     if (scanResponse != null) {
       locator<EnvManager>().setEnv(scanResponse);
       if (context.mounted) {

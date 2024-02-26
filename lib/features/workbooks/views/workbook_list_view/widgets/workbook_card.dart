@@ -14,6 +14,7 @@ import 'package:schuldaten_hub/common/widgets/upload_image.dart';
 
 import 'package:schuldaten_hub/features/workbooks/models/workbook.dart';
 import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
+import 'package:schuldaten_hub/features/workbooks/views/new_workbook_view/new_workbook_view.dart';
 
 Widget workbookCard(
   BuildContext context,
@@ -43,8 +44,8 @@ Widget workbookCard(
         if (result == true) {
           await locator<WorkbookManager>().deleteWorkbook(workbook.isbn);
           if (context.mounted) {
-            informationDialog(context, 'Arbeitsheft gelöscht',
-                'Das Arbeitsheft wurde aus dem Katalog gelöscht!');
+            snackbarSuccess(
+                context, 'Das Arbeitsheft wurde aus dem Katalog gelöscht!');
           }
         }
       },
@@ -65,7 +66,7 @@ Widget workbookCard(
                         .postWorkbookFile(file, workbook.isbn);
                     if (context.mounted) {
                       snackbarSuccess(
-                          context, 'Die Einwilligung wurde geändert!');
+                          context, 'Das Arbeitsheft wurde geändert!');
                     }
                   },
                   onLongPress: (workbook.imageUrl == null)
@@ -85,7 +86,7 @@ Widget workbookCard(
                           // );
                           if (context.mounted) {
                             snackbarSuccess(
-                                context, 'Die Einwilligung wurde geändert!');
+                                context, 'Das Arbeitsheft wurde geändert!');
                           }
                         },
                   child: workbook.imageUrl != null
@@ -113,12 +114,27 @@ Widget workbookCard(
                     Row(
                       children: [
                         Expanded(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              workbook.name!,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                          child: InkWell(
+                            onLongPress:
+                                (locator<SessionManager>().isAdmin.value)
+                                    ? () async {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (ctx) => NewWorkbookView(
+                                              workbook.name,
+                                              workbook.isbn,
+                                              workbook.subject,
+                                              workbook.level),
+                                        ));
+                                      }
+                                    : () {},
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                workbook.name!,
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),

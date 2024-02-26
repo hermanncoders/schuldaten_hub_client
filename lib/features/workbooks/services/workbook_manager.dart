@@ -68,6 +68,34 @@ class WorkbookManager {
     _workbooks.value = [..._workbooks.value, newWorkbook];
   }
 
+  patchWorkbook(name, isbn, subject, level) async {
+    final Workbook workbook = _workbooks.value.firstWhere(
+      (workbook) => workbook.isbn == isbn,
+    );
+
+    final data = jsonEncode({
+      "name": name ?? workbook.name,
+      "subject": subject ?? workbook.subject,
+      "level": level ?? workbook.level,
+      "image_url": workbook.imageUrl
+    });
+    final Response response = await client
+        .patch(EndpointsWorkbook().patchWorkbook((workbook.isbn)), data: data);
+    if (response.statusCode != 200) {
+      // handle errors
+    }
+    debug.success('Workbook updated! | ${StackTrace.current}');
+    final Workbook updatedWorkbook = Workbook.fromJson(response.data);
+
+    List<Workbook> workbooks = List.from(_workbooks.value);
+    int index = workbooks.indexWhere(
+      (workbook) => workbook.isbn == updatedWorkbook.isbn,
+    );
+    workbooks[index] = updatedWorkbook;
+
+    _workbooks.value = workbooks;
+  }
+
   postWorkbookFile(File imageFile, int isbn) async {
     final encryptedFile = await customEncrypter.encryptFile(imageFile);
 

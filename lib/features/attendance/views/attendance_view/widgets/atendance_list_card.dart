@@ -81,7 +81,8 @@ class AttendanceCard extends WatchingWidget {
                                 onTap: () {
                                   locator<BottomNavManager>()
                                       .setPupilProfileNavPage(3);
-                                  Navigator.of(context).push(MaterialPageRoute(
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
                                     builder: (ctx) => PupilProfile(
                                       pupil,
                                     ),
@@ -185,6 +186,9 @@ class AttendanceCard extends WatchingWidget {
                             activeColor: goneHomeColor,
                             value: returnedValue ?? false,
                             onChanged: (bool? newValue) async {
+                              if (dropdownMissedValue == 'missed') {
+                                return;
+                              }
                               if (newValue == true) {
                                 final String? returnedTime =
                                     await returnedDayTime(context);

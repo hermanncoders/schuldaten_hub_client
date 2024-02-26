@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:schuldaten_hub/api/dio/dio_exceptions.dart';
@@ -10,6 +11,9 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/utils/custom_encrypter.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
+import 'package:schuldaten_hub/features/workbooks/models/pupil_workbook.dart';
 import 'package:schuldaten_hub/features/workbooks/models/workbook.dart';
 
 class WorkbookManager {
@@ -95,5 +99,68 @@ class WorkbookManager {
     int index = workbooks.indexWhere((wb) => wb.isbn == workbook.isbn);
     workbooks[index] = workbook;
     _workbooks.value = workbooks;
+  }
+
+  deleteWorkbook(int isbn) async {
+    final Response response =
+        await client.delete(EndpointsWorkbook().deleteWorkbook(isbn));
+    if (response.statusCode != 200) {
+      // handle errors
+    }
+
+    debug.success('Workbook deleted! | ${StackTrace.current}');
+    final workbooks =
+        (response.data as List).map((e) => Workbook.fromJson(e)).toList();
+    _workbooks.value = workbooks;
+    List<Pupil> pupils = List<Pupil>.from(locator<PupilManager>().pupils.value);
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilWorkbooks != null) {
+        final PupilWorkbook? pupilWorkbook = pupil.pupilWorkbooks!
+            .firstWhereOrNull((element) => element.workbookIsbn == isbn);
+        if (pupilWorkbook != null) {
+          List<PupilWorkbook> updatedPupilWorkbooks = [
+            ...pupil.pupilWorkbooks!
+          ];
+          updatedPupilWorkbooks.remove(pupilWorkbook);
+          Pupil updatedPupil =
+              pupil.copyWith(pupilWorkbooks: updatedPupilWorkbooks);
+
+          locator<PupilManager>().updatePupilInRepository(updatedPupil);
+        }
+      }
+    }
+  }
+
+  Workbook? getWorkbookByIsbn(int? isbn) {
+    if (isbn == null) return null;
+    final Workbook? workbook =
+        _workbooks.value.firstWhereOrNull((element) => element.isbn == isbn);
+    return workbook;
+  }
+
+  newPupilWorkbook(int pupilId, int isbn) async {
+    final pupil = locator<PupilManager>()
+        .pupils
+        .value
+        .firstWhere((element) => element.internalId == pupilId)
+        .copyWith();
+    final Response response = await client
+        .post(EndpointsPupilWorkbook().newPupilWorkbook(pupilId, isbn));
+    if (response.statusCode != 200) {
+      // handle errors
+    }
+    debug.success('Workbook created! | ${StackTrace.current}');
+
+    locator<PupilManager>().patchPupilFromResponse(response.data);
+  }
+
+  deletePupilWorkbook(int pupilId, int isbn) async {
+    final Response response = await client
+        .delete(EndpointsPupilWorkbook().deletePupilWorkbook(pupilId, isbn));
+    if (response.statusCode != 200) {
+      // handle errors
+    }
+    debug.success('Workbook deleted! | ${StackTrace.current}');
+    locator<PupilManager>().patchPupilFromResponse(response.data);
   }
 }

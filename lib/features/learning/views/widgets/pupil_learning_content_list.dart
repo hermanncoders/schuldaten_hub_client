@@ -3,13 +3,88 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/common/utils/scanner.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/competence/models/competence_goal.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning/views/widgets/pupil_competence_tree.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/workbooks/models/pupil_workbook.dart';
+import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
+import 'package:schuldaten_hub/features/workbooks/views/workbook_list_view/widgets/pupil_workbook_card.dart';
 
 List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
   return [
+    const Row(
+      children: [
+        Text(
+          'Arbeitshefte',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        )
+      ],
+    ),
+    const Gap(10),
+    ElevatedButton(
+      style: actionButtonStyle,
+      onPressed: () async {
+        final scanResult = await scanner(context);
+        if (scanResult != null) {
+          if (!locator<WorkbookManager>()
+              .workbooks
+              .value
+              .any((element) => element.isbn == int.parse(scanResult))) {
+            if (context.mounted) {
+              snackbarError(context,
+                  'Das Arbeitsheft wurde noch nicht erfasst. Bitte zuerst unter "Arbeitshefte" hinzufügen.');
+            }
+            return;
+          }
+          if (pupil.pupilWorkbooks!.isNotEmpty) {
+            if (pupil.pupilWorkbooks!.any(
+                (element) => element.workbookIsbn == int.parse(scanResult))) {
+              if (context.mounted) {
+                snackbarError(context, 'Dieses Arbeitsheft gibt es schon!');
+              }
+              return;
+            }
+          }
+          locator<WorkbookManager>()
+              .newPupilWorkbook(pupil.internalId, int.parse(scanResult));
+          return;
+        }
+        if (context.mounted) {
+          snackbarError(context, 'Fehler beim Scannen');
+        }
+      },
+      child: const Text(
+        "NEUES ARBEITSHEFT",
+        style: TextStyle(fontSize: 17.0),
+      ),
+    ),
+    pupil.pupilWorkbooks!.isNotEmpty ? const Gap(15) : const SizedBox.shrink(),
+    pupil.pupilWorkbooks!.isNotEmpty
+        ? ListView.builder(
+            padding: const EdgeInsets.all(0),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: pupil.pupilWorkbooks!.length,
+            itemBuilder: (context, int index) {
+              List<PupilWorkbook> pupilWorkbooks = pupil.pupilWorkbooks!;
+
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: Card(
+                  child: Column(
+                    children: [
+                      pupilWorkbookCard(
+                          context, pupilWorkbooks[index], pupil.internalId),
+                    ],
+                  ),
+                ),
+              );
+            })
+        : const SizedBox.shrink(),
+    const Gap(20),
     const Row(
       children: [
         Text(
@@ -55,7 +130,7 @@ List<Widget> pupilLearningContentList(Pupil pupil, BuildContext context) {
                       const Gap(5),
                       Row(
                         children: [
-                          locator<GoalManager>().getLastCategoryStatusImage(
+                          locator<GoalManager>().getLastCategoryStatusSymbol(
                               pupil, pupilGoals[index].competenceId),
                           const Gap(10),
                           Flexible(

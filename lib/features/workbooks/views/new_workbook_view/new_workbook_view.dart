@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/scanner.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 
@@ -26,6 +27,7 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
     int workbookIsbn = int.parse(textField2Controller.text);
     String workbookSubject = textField3Controller.text;
     String workbookLevel = textField4Controller.text;
+
     await locator<WorkbookManager>().postWorkbook(
         workbookName, workbookIsbn, workbookSubject, workbookLevel);
     if (context.mounted) {
@@ -40,84 +42,161 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
         backgroundColor: backgroundColor,
         title: const Text('Neues Arbeitsheft'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                TextField(
-                  minLines: 2,
-                  maxLines: 3,
-                  controller: textField1Controller,
-                  decoration:
-                      const InputDecoration(labelText: 'Name des Heftes'),
-                ),
-                const Gap(20),
-                TextField(
-                  minLines: 2,
-                  maxLines: 3,
-                  controller: textField2Controller,
-                  decoration: const InputDecoration(labelText: 'Isbn'),
-                ),
-                const Gap(10),
-                TextField(
-                  minLines: 2,
-                  maxLines: 3,
-                  controller: textField3Controller,
-                  decoration: const InputDecoration(labelText: 'Fach'),
-                ),
-                TextField(
-                  minLines: 2,
-                  maxLines: 3,
-                  controller: textField4Controller,
-                  decoration:
-                      const InputDecoration(labelText: 'Kompetenzstufe'),
-                ),
-                const Spacer(),
-                ElevatedButton(
-                  style: actionButtonStyle,
-                  onPressed: () async {
-                    final String? scannedIsbn = await scanner(context);
-                    if (scannedIsbn == null) {
-                      return;
-                    }
-
-                    setState(() {
-                      textField2Controller.text = scannedIsbn;
-                    });
-                  },
-                  child: const Text(
-                    'ISBN SCANNEN',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+      body: Center(
+        heightFactor: 1,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  TextField(
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    minLines: 2,
+                    maxLines: 2,
+                    controller: textField1Controller,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      labelStyle: TextStyle(color: backgroundColor),
+                      labelText: 'Name des Heftes',
+                    ),
                   ),
-                ),
-                const Gap(15),
-                ElevatedButton(
-                  style: successButtonStyle,
-                  onPressed: () {
-                    postNewWorkbook();
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'SENDEN',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  const Gap(20),
+                  TextField(
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    minLines: 1,
+                    maxLines: 1,
+                    controller: textField2Controller,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      labelStyle: TextStyle(color: backgroundColor),
+                      labelText: 'ISBN',
+                    ),
                   ),
-                ),
-                const Gap(15),
-                ElevatedButton(
-                  style: cancelButtonStyle,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text(
-                    'ABBRECHEN',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  const Gap(20),
+                  TextField(
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    minLines: 1,
+                    maxLines: 1,
+                    controller: textField3Controller,
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      labelStyle: TextStyle(color: backgroundColor),
+                      labelText: 'Fach',
+                    ),
                   ),
-                ),
-              ],
+                  const Gap(20),
+                  TextField(
+                    minLines: 1,
+                    maxLines: 1,
+                    controller: textField4Controller,
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(10),
+                      border: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: backgroundColor, width: 2),
+                      ),
+                      labelStyle: TextStyle(color: backgroundColor),
+                      labelText: 'Kompetenzstufe',
+                    ),
+                  ),
+                  const Gap(30),
+                  ElevatedButton(
+                    style: actionButtonStyle,
+                    onPressed: () async {
+                      final String? scannedIsbn = await scanner(context);
+                      debug.info('Scanned ISBN: $scannedIsbn');
+                      if (scannedIsbn == null) {
+                        return;
+                      }
+                      if (locator<WorkbookManager>().workbooks.value.any(
+                          (element) =>
+                              element.isbn == int.parse(scannedIsbn))) {
+                        if (context.mounted) {
+                          snackbarError(
+                              context, 'Dieses Arbeitsheft gibt es schon!');
+                        }
+                        return;
+                      }
+                      setState(() {
+                        textField2Controller.text = scannedIsbn;
+                      });
+                    },
+                    child: const Text(
+                      'ISBN SCANNEN',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const Gap(15),
+                  ElevatedButton(
+                    style: successButtonStyle,
+                    onPressed: () {
+                      if (locator<WorkbookManager>().workbooks.value.any(
+                          (element) =>
+                              element.isbn ==
+                              int.parse(textField2Controller.text))) {
+                        snackbarError(
+                            context, 'Dieses Arbeitsheft gibt es schon!');
+                        return;
+                      }
+                      postNewWorkbook();
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'SENDEN',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const Gap(15),
+                  ElevatedButton(
+                    style: cancelButtonStyle,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'ABBRECHEN',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -130,6 +209,8 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
     // Clean up the controller when the widget is removed from the tree
     textField1Controller.dispose();
     textField2Controller.dispose();
+    textField3Controller.dispose();
+    textField4Controller.dispose();
     super.dispose();
   }
 }

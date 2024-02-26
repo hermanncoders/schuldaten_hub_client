@@ -183,7 +183,7 @@ class GoalManager {
     return null;
   }
 
-  Widget getCategoryStatusColor(
+  Widget getCategoryStatusSymbol(
       Pupil pupil, int goalCategoryId, String statusId) {
     if (pupil.pupilCategoryStatuses!.isNotEmpty) {
       final PupilCategoryStatus categoryStatus = pupil.pupilCategoryStatuses!
@@ -191,31 +191,29 @@ class GoalManager {
               element.goalCategoryId == goalCategoryId &&
               element.statusId == statusId);
 
-      if (categoryStatus != null) {
-        switch (categoryStatus.state) {
-          case 'none':
-            return SizedBox(
-                width: 40, child: Image.asset('assets/growth_1-4.png'));
-          case 'green':
-            return SizedBox(
-                width: 40, child: Image.asset('assets/growth_4-4.png'));
-          case 'yellow':
-            return SizedBox(
-                width: 40, child: Image.asset('assets/growth_3-4.png'));
-          // case 'orange':
-          //   return Colors.orange;
-          case 'red':
-            return SizedBox(
-                width: 40, child: Image.asset('assets/growth_2-4.png'));
-        }
+      switch (categoryStatus.state) {
+        case 'none':
+          return SizedBox(
+              width: 50, child: Image.asset('assets/growth_1-4.png'));
+        case 'green':
+          return SizedBox(
+              width: 50, child: Image.asset('assets/growth_4-4.png'));
+        case 'yellow':
+          return SizedBox(
+              width: 50, child: Image.asset('assets/growth_3-4.png'));
+        // case 'orange':
+        //   return Colors.orange;
+        case 'red':
+          return SizedBox(
+              width: 50, child: Image.asset('assets/growth_2-4.png'));
       }
-      return SizedBox(width: 40, child: Image.asset('assets/growth_1-4.png'));
+      return SizedBox(width: 50, child: Image.asset('assets/growth_1-4.png'));
     }
 
-    return SizedBox(width: 40, child: Image.asset('assets/growth_1-4.png'));
+    return SizedBox(width: 50, child: Image.asset('assets/growth_1-4.png'));
   }
 
-  Widget getLastCategoryStatusImage(Pupil pupil, int goalCategoryId) {
+  Widget getLastCategoryStatusSymbol(Pupil pupil, int goalCategoryId) {
     if (pupil.pupilCategoryStatuses!.isNotEmpty) {
       final PupilCategoryStatus? categoryStatus = pupil.pupilCategoryStatuses!
           .lastWhereOrNull(
@@ -225,21 +223,21 @@ class GoalManager {
         switch (categoryStatus.state) {
           case 'none':
             return SizedBox(
-                width: 40, child: Image.asset('assets/growth_1-4.png'));
+                width: 50, child: Image.asset('assets/growth_1-4.png'));
           case 'green':
             return SizedBox(
-                width: 40, child: Image.asset('assets/growth_4-4.png'));
+                width: 50, child: Image.asset('assets/growth_4-4.png'));
           case 'yellow':
             return SizedBox(
-                width: 40, child: Image.asset('assets/growth_3-4.png'));
+                width: 50, child: Image.asset('assets/growth_3-4.png'));
           // case 'orange':
           //   return Colors.orange;
           case 'red':
             return SizedBox(
-                width: 40, child: Image.asset('assets/growth_2-4.png'));
+                width: 50, child: Image.asset('assets/growth_2-4.png'));
         }
       }
-      return SizedBox(width: 40, child: Image.asset('assets/growth_1-4.png'));
+      return SizedBox(width: 50, child: Image.asset('assets/growth_1-4.png'));
     }
 
     return SizedBox(width: 40, child: Image.asset('assets/growth_1-4.png'));

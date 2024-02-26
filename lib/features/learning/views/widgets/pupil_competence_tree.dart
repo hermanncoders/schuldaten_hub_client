@@ -86,7 +86,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                         // ));
                                       },
                                       child: locator<GoalManager>()
-                                          .getLastCategoryStatusImage(
+                                          .getLastCategoryStatusSymbol(
                                               pupil, competence.competenceId),
                                     ),
                                   ),
@@ -134,7 +134,7 @@ List<Widget> buildPupilCompetenceTree(Pupil pupil, int? parentId,
                                 ));
                               },
                               child: locator<GoalManager>()
-                                  .getLastCategoryStatusImage(
+                                  .getLastCategoryStatusSymbol(
                                       pupil, competence.competenceId),
                             ),
                           ),

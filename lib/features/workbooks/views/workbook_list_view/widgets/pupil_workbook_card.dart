@@ -11,14 +11,16 @@ import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart'
 import 'package:schuldaten_hub/common/widgets/document_image.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/common/widgets/upload_image.dart';
+import 'package:schuldaten_hub/features/workbooks/models/pupil_workbook.dart';
 
+// ignore: unused_import
 import 'package:schuldaten_hub/features/workbooks/models/workbook.dart';
 import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart';
 
-Widget workbookCard(
-  BuildContext context,
-  Workbook workbook,
-) {
+Widget pupilWorkbookCard(
+    BuildContext context, PupilWorkbook pupilWorkbook, int pupilId) {
+  final Workbook workbook = locator<WorkbookManager>()
+      .getWorkbookByIsbn(pupilWorkbook.workbookIsbn!)!;
   return ClipRRect(
     borderRadius: BorderRadius.circular(20),
     child: Card(
@@ -33,18 +35,19 @@ Widget workbookCard(
       onLongPress: () async {
         if (!locator<SessionManager>().isAdmin.value) {
           informationDialog(context, 'Keine Berechtigung',
-              'Arbeitshefte können nur von Admins bearbeitet werden!');
+              'Listen können nur von ListenbesiterInnen bearbeitet werden!');
           return;
         }
         final bool? result = await confirmationDialog(
             context,
             'Arbeitsheft löschen',
-            'Arbeitsheft "${workbook.name}" wirklich löschen? ACHTUNG: Alle Arbeitshefte dieser Art werden ebenfalls gelöscht!');
+            'Arbeitsheft "${workbook.name}" wirklich löschen?');
         if (result == true) {
-          await locator<WorkbookManager>().deleteWorkbook(workbook.isbn);
+          locator<WorkbookManager>()
+              .deletePupilWorkbook(pupilId, workbook.isbn);
           if (context.mounted) {
-            informationDialog(context, 'Arbeitsheft gelöscht',
-                'Das Arbeitsheft wurde aus dem Katalog gelöscht!');
+            informationDialog(
+                context, 'Liste gelöscht', 'Die Liste wurde gelöscht!');
           }
         }
       },
@@ -141,19 +144,28 @@ Widget workbookCard(
                       ],
                     ),
                     const Gap(5),
-                    Text(workbook.subject!,
-                        overflow: TextOverflow.fade,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        )),
+                    Row(
+                      children: [
+                        Text(workbook.subject!,
+                            overflow: TextOverflow.fade,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            )),
+                        const Spacer(),
+                        Text(
+                          workbook.level!,
+                          maxLines: 2,
+                          overflow: TextOverflow.fade,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        const Gap(10),
+                      ],
+                    ),
                     const Gap(5),
                     Text(
-                      workbook.level!,
-                      maxLines: 2,
-                      overflow: TextOverflow.fade,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
+                      pupilWorkbook.createdBy,
                     ),
                     const Gap(10),
                   ],

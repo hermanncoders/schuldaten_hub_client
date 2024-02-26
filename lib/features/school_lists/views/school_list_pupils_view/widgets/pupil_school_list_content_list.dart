@@ -42,7 +42,7 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
             ),
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 15.0, top: 10, bottom: 15, right: 10),
+                  left: 15.0, top: 10, bottom: 15, right: 15),
               child: Column(
                 children: [
                   Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -171,7 +171,6 @@ List<Widget> pupilSchoolListContentList(Pupil pupil) {
                       ),
                     ),
                   ]),
-                  const Gap(5),
                 ],
               ),
             ),

@@ -36,7 +36,8 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
             children: [
               const Gap(5),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(
+                    top: 8.0, bottom: 8, left: 10, right: 10),
                 child: Container(
                   decoration: BoxDecoration(
                     color: locator<GoalManager>().getRootCategoryColor(
@@ -51,11 +52,11 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 4.0),
-                      child: locator<GoalManager>().getLastCategoryStatusImage(
+                      child: locator<GoalManager>().getLastCategoryStatusSymbol(
                           pupil, pupil.pupilGoals![index].goalCategoryId),
                     ),
                     const Gap(10),
@@ -113,6 +114,7 @@ Widget categoryGoalCard(BuildContext context, Pupil pupil, int index) {
                       ),
                     ),
                   ),
+                  const Gap(10),
                 ],
               ),
               const Gap(5),

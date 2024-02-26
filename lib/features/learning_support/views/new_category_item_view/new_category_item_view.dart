@@ -181,7 +181,7 @@ class NewCategoryGoalView extends StatelessWidget {
                       const Gap(10),
                     ],
                     TextField(
-                      minLines: 3,
+                      minLines: 4,
                       maxLines: 4,
                       controller: controller.textField2Controller,
                       decoration: InputDecoration(

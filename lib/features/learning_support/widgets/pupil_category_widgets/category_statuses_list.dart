@@ -263,7 +263,7 @@ Widget statusEntry(
         children: [
           Column(
             children: [
-              locator<GoalManager>().getCategoryStatusColor(
+              locator<GoalManager>().getCategoryStatusSymbol(
                   pupil, status.goalCategoryId, status.statusId),
             ],
           ),

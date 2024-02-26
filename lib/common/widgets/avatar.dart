@@ -55,7 +55,7 @@ Widget avatarImage(Pupil pupil, double size) {
 
 Widget avatarWithBadges(Pupil pupil, double size) {
   return Padding(
-    padding: const EdgeInsets.all(11.0),
+    padding: const EdgeInsets.all(5.0),
     child: Stack(
       children: [
         Padding(

@@ -30,402 +30,397 @@ import 'package:schuldaten_hub/features/school_lists/views/school_lists_view/con
 
 Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
     BuildContext context, PupilProfileController controller) {
-  return Expanded(
-    child: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              0) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  const Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.info_rounded,
-                        color: backgroundColor,
-                        size: 24,
-                      ),
-                      Gap(5),
-                      Text(
-                        'Infos',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor),
-                      ),
-                    ],
-                  ),
-                  const Gap(15),
-                  ...pupilInfosContentList(pupil, context)
-                ]),
-              ),
-            )
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              1) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.language_rounded,
-                            color: groupColor,
-                            size: 24,
-                          ),
-                          Gap(5),
-                          Text(
-                            'Sprache(n)',
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: backgroundColor),
-                          ),
-                        ],
-                      ),
-                      const Gap(15),
-                      ...pupilLanguageContentList(pupil, context)
-                    ]),
-              ),
+  return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            0) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              2) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    const Icon(
-                      Icons.attach_money_rounded,
-                      color: accentColor,
-                      size: 24,
-                    ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const CreditList(),
-                        ));
-                      },
-                      child: const Text('Guthaben',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor,
-                          )),
-                    ),
-                    const Spacer(),
-                    Text(
-                      pupil.credit.toString(),
-                      style: const TextStyle(
-                          color: groupColor,
-                          fontSize: 60,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const Gap(20),
-                  ]),
-                  //const Gap(15),
-                  ...pupilCreditContentList(pupil, context),
-                ]),
-              ),
-            ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              3) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                const Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
                     Icon(
-                      Icons.calendar_month_rounded,
-                      color: Colors.grey[700],
-                      size: 24,
-                    ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const AttendanceRankingList(),
-                        ));
-                      },
-                      child: const Text('Fehlzeiten',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor,
-                          )),
-                    )
-                  ]),
-                  const Gap(15),
-                  attendanceStats(pupil),
-                  const Gap(10),
-                  ...pupilAttendanceContentList(pupil, context),
-                ]),
-              ),
-            ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              4) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.warning_amber_rounded,
-                      color: Color.fromARGB(255, 239, 66, 66),
-                      size: 24,
-                    ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const AdmonitionList(),
-                        ));
-                      },
-                      child: const Text('Ereignisse',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor,
-                          )),
-                    )
-                  ]),
-                  const Gap(15),
-                  ...pupilAdmonitionsContentList(pupil, context, admonitions),
-                ]),
-              ),
-            ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              5) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.restaurant,
-                      color: groupColor,
-                      size: 24,
-                    ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const OgsList(),
-                        ));
-                      },
-                      child: const Text('OGS Infos',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor,
-                          )),
-                    )
-                  ]),
-                  const Gap(15),
-                  ...pupilOgsContentList(pupil, context),
-                ]),
-              ),
-            ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              6) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.rule,
-                      color: accentColor,
-                      size: 24,
-                    ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const SchoolLists(),
-                        ));
-                      },
-                      child: const Text('Listen',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: backgroundColor,
-                          )),
-                    )
-                  ]),
-                  const Gap(15),
-                  ...pupilSchoolListContentList(pupil),
-                ]),
-              ),
-            ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              7) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    const Icon(
-                      Icons.fact_check_rounded,
+                      Icons.info_rounded,
                       color: backgroundColor,
                       size: 24,
                     ),
-                    const Gap(5),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => const Authorizations(),
-                        ));
-                      },
-                      child: const Text('Einwilligungen',
+                    Gap(5),
+                    Text(
+                      'Infos',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor),
+                    ),
+                  ],
+                ),
+                const Gap(15),
+                ...pupilInfosContentList(pupil, context)
+              ]),
+            ),
+          )
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            1) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.language_rounded,
+                          color: groupColor,
+                          size: 24,
+                        ),
+                        Gap(5),
+                        Text(
+                          'Sprache(n)',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: backgroundColor),
+                        ),
+                      ],
+                    ),
+                    const Gap(15),
+                    ...pupilLanguageContentList(pupil, context)
+                  ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            2) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  const Icon(
+                    Icons.attach_money_rounded,
+                    color: accentColor,
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const CreditList(),
+                      ));
+                    },
+                    child: const Text('Guthaben',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  ),
+                  const Spacer(),
+                  Text(
+                    pupil.credit.toString(),
+                    style: const TextStyle(
+                        color: groupColor,
+                        fontSize: 60,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const Gap(20),
+                ]),
+                //const Gap(15),
+                ...pupilCreditContentList(pupil, context),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            3) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  Icon(
+                    Icons.calendar_month_rounded,
+                    color: Colors.grey[700],
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const AttendanceRankingList(),
+                      ));
+                    },
+                    child: const Text('Fehlzeiten',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  )
+                ]),
+                const Gap(15),
+                attendanceStats(pupil),
+                const Gap(10),
+                ...pupilAttendanceContentList(pupil, context),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            4) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: Color.fromARGB(255, 239, 66, 66),
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const AdmonitionList(),
+                      ));
+                    },
+                    child: const Text('Ereignisse',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  )
+                ]),
+                const Gap(15),
+                ...pupilAdmonitionsContentList(pupil, context, admonitions),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            5) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  const Icon(
+                    Icons.restaurant,
+                    color: groupColor,
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const OgsList(),
+                      ));
+                    },
+                    child: const Text('OGS Infos',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  )
+                ]),
+                const Gap(15),
+                ...pupilOgsContentList(pupil, context),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            6) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  const Icon(
+                    Icons.rule,
+                    color: accentColor,
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const SchoolLists(),
+                      ));
+                    },
+                    child: const Text('Listen',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  )
+                ]),
+                const Gap(15),
+                ...pupilSchoolListContentList(pupil),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            7) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  const Icon(
+                    Icons.fact_check_rounded,
+                    color: backgroundColor,
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const Authorizations(),
+                      ));
+                    },
+                    child: const Text('Einwilligungen',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  )
+                ]),
+                const Gap(15),
+                ...pupilAuthorizationsContentList(pupil),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            8) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child:
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  const Icon(
+                    Icons.support_rounded,
+                    color: Colors.red,
+                    size: 24,
+                  ),
+                  const Gap(5),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const LearningSupportList(),
+                      ));
+                    },
+                    child: const Text('Förderung',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: backgroundColor,
+                        )),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () async {
+                      informationDialog(
+                          context,
+                          'Förderplan ausdrucken noch nicht freigeschaltet',
+                          'Es wird daran gearbeitet - noch ein bisschen Geduld!');
+                      // await generatePdf(pupil.internalId);
+                    },
+                    icon: const Icon(Icons.print_rounded),
+                    color: backgroundColor,
+                    iconSize: 24,
+                  ),
+                ]),
+                const Gap(15),
+                ...pupilLearningSupportContentList(pupil, context),
+              ]),
+            ),
+          ),
+        ],
+        if (locator<BottomNavManager>().pupilProfileNavState.value ==
+            9) ...<Widget>[
+          Card(
+            color: pupilProfileCardColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: pupilProfileCardPadding,
+              child: Column(children: [
+                const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.lightbulb,
+                        color: accentColor,
+                        size: 24,
+                      ),
+                      Gap(5),
+                      Text('Lernen',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: backgroundColor,
-                          )),
-                    )
-                  ]),
-                  const Gap(15),
-                  ...pupilAuthorizationsContentList(pupil),
-                ]),
-              ),
-            ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              8) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.support_rounded,
-                              color: Colors.red,
-                              size: 24,
-                            ),
-                            const Gap(5),
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => const LearningSupportList(),
-                                ));
-                              },
-                              child: const Text('Förderung',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: backgroundColor,
-                                  )),
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () async {
-                                informationDialog(
-                                    context,
-                                    'Förderplan ausdrucken noch nicht freigeschaltet',
-                                    'Es wird daran gearbeitet - noch ein bisschen Geduld!');
-                                // await generatePdf(pupil.internalId);
-                              },
-                              icon: const Icon(Icons.print_rounded),
-                              color: backgroundColor,
-                              iconSize: 24,
-                            ),
-                          ]),
-                      const Gap(15),
-                      ...pupilLearningSupportContentList(pupil, context),
+                          ))
                     ]),
-              ),
+                const Gap(15),
+                ...pupilLearningContentList(pupil, context),
+              ]),
             ),
-          ],
-          if (locator<BottomNavManager>().pupilProfileNavState.value ==
-              9) ...<Widget>[
-            Card(
-              color: pupilProfileCardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: pupilProfileCardPadding,
-                child: Column(children: [
-                  const Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.lightbulb,
-                          color: accentColor,
-                          size: 24,
-                        ),
-                        Gap(5),
-                        Text('Lernen',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: backgroundColor,
-                            ))
-                      ]),
-                  const Gap(15),
-                  ...pupilLearningContentList(pupil, context),
-                ]),
-              ),
-            ),
-          ],
-          const Gap(20),
+          ),
         ],
-      ),
+        const Gap(20),
+      ],
     ),
   );
 }

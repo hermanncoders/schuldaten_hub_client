@@ -167,11 +167,6 @@ class WorkbookManager {
   }
 
   newPupilWorkbook(int pupilId, int isbn) async {
-    final pupil = locator<PupilManager>()
-        .pupils
-        .value
-        .firstWhere((element) => element.internalId == pupilId)
-        .copyWith();
     final Response response = await client
         .post(EndpointsPupilWorkbook().newPupilWorkbook(pupilId, isbn));
     if (response.statusCode != 200) {

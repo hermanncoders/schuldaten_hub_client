@@ -8,6 +8,7 @@ import 'package:schuldaten_hub/common/models/session_models/session.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_helper_functions.dart';
+import 'package:schuldaten_hub/common/utils/secure_storage.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/short_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/landing_views/login_view/controller/login_controller.dart';
@@ -206,6 +207,51 @@ class SettingsView extends WatchingWidget {
                   ),
                 ],
               ),
+              if (isAdmin == true)
+                SettingsSection(
+                    title: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Admin-Tools',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    tiles: <SettingsTile>[
+                      SettingsTile.navigation(
+                        leading: const Icon(Icons.attach_money_rounded),
+                        title: const Text('Guthaben überweisen'),
+                        onPressed: (context) async {
+                          final bool? confirmed = await confirmationDialog(
+                              context,
+                              'Guthaben überweisen',
+                              'Sind Sie sicher?');
+                          if (confirmed != true) {
+                            return;
+                          }
+                          final bool success = await locator<SessionManager>()
+                              .increaseUsersCredit();
+                          if (context.mounted) {
+                            if (success) {
+                              snackbarSuccess(context, 'Guthaben übernommen!');
+                            } else {
+                              snackbarError(
+                                  context, 'Fehler bei der Überweisung');
+                            }
+                          }
+                        },
+                      ),
+                      SettingsTile.navigation(
+                          leading: const Icon(Icons.qr_code_rounded),
+                          title: const Text('Schulschlüssel zeigen'),
+                          onPressed: (context) async {
+                            final String? qr = await secureStorageRead('env');
+
+                            if (qr != null && context.mounted) {
+                              await showQrCode(qr, context);
+                            }
+                          }),
+                    ]),
               SettingsSection(
                 title: const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -215,28 +261,6 @@ class SettingsView extends WatchingWidget {
                   ),
                 ),
                 tiles: <SettingsTile>[
-                  if (isAdmin == true)
-                    SettingsTile.navigation(
-                      leading: const Icon(Icons.attach_money_rounded),
-                      title: const Text('Guthaben überweisen'),
-                      onPressed: (context) async {
-                        final bool? confirmed = await confirmationDialog(
-                            context, 'Guthaben überweisen', 'Sind Sie sicher?');
-                        if (confirmed != true) {
-                          return;
-                        }
-                        final bool success = await locator<SessionManager>()
-                            .increaseUsersCredit();
-                        if (context.mounted) {
-                          if (success) {
-                            snackbarSuccess(context, 'Guthaben übernommen!');
-                          } else {
-                            snackbarError(
-                                context, 'Fehler bei der Überweisung');
-                          }
-                        }
-                      },
-                    ),
                   SettingsTile.navigation(
                     leading: const Icon(Icons.bar_chart_rounded),
                     title: const Text('Statistik-Zahlen ansehen'),

@@ -220,7 +220,7 @@ Widget pupilProfileContentView(Pupil pupil, List<Admonition> admonitions,
                   )
                 ]),
                 const Gap(15),
-                ...pupilAdmonitionsContentList(pupil, context, admonitions),
+                ...pupilAdmonitionsContentList(pupil, context),
               ]),
             ),
           ),

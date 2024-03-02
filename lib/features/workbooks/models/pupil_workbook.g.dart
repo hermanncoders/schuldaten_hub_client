@@ -11,7 +11,7 @@ _$PupilWorkbookImpl _$$PupilWorkbookImplFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['created_at'] as String),
       createdBy: json['created_by'] as String,
       state: json['state'] as String?,
-      workbookIsbn: json['workbook_isbn'] as int?,
+      workbookIsbn: json['workbook_isbn'] as int,
       finishedAt: json['finished_at'] == null
           ? null
           : DateTime.parse(json['finished_at'] as String),

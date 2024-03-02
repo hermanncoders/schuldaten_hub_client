@@ -26,7 +26,7 @@ mixin _$PupilWorkbook {
   String get createdBy => throw _privateConstructorUsedError;
   String? get state => throw _privateConstructorUsedError;
   @JsonKey(name: 'workbook_isbn')
-  int? get workbookIsbn => throw _privateConstructorUsedError;
+  int get workbookIsbn => throw _privateConstructorUsedError;
   @JsonKey(name: 'finished_at')
   DateTime? get finishedAt => throw _privateConstructorUsedError;
 
@@ -46,7 +46,7 @@ abstract class $PupilWorkbookCopyWith<$Res> {
       {@JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'created_by') String createdBy,
       String? state,
-      @JsonKey(name: 'workbook_isbn') int? workbookIsbn,
+      @JsonKey(name: 'workbook_isbn') int workbookIsbn,
       @JsonKey(name: 'finished_at') DateTime? finishedAt});
 }
 
@@ -66,7 +66,7 @@ class _$PupilWorkbookCopyWithImpl<$Res, $Val extends PupilWorkbook>
     Object? createdAt = null,
     Object? createdBy = null,
     Object? state = freezed,
-    Object? workbookIsbn = freezed,
+    Object? workbookIsbn = null,
     Object? finishedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -82,10 +82,10 @@ class _$PupilWorkbookCopyWithImpl<$Res, $Val extends PupilWorkbook>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      workbookIsbn: freezed == workbookIsbn
+      workbookIsbn: null == workbookIsbn
           ? _value.workbookIsbn
           : workbookIsbn // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       finishedAt: freezed == finishedAt
           ? _value.finishedAt
           : finishedAt // ignore: cast_nullable_to_non_nullable
@@ -106,7 +106,7 @@ abstract class _$$PupilWorkbookImplCopyWith<$Res>
       {@JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'created_by') String createdBy,
       String? state,
-      @JsonKey(name: 'workbook_isbn') int? workbookIsbn,
+      @JsonKey(name: 'workbook_isbn') int workbookIsbn,
       @JsonKey(name: 'finished_at') DateTime? finishedAt});
 }
 
@@ -124,7 +124,7 @@ class __$$PupilWorkbookImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? createdBy = null,
     Object? state = freezed,
-    Object? workbookIsbn = freezed,
+    Object? workbookIsbn = null,
     Object? finishedAt = freezed,
   }) {
     return _then(_$PupilWorkbookImpl(
@@ -140,10 +140,10 @@ class __$$PupilWorkbookImplCopyWithImpl<$Res>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-      workbookIsbn: freezed == workbookIsbn
+      workbookIsbn: null == workbookIsbn
           ? _value.workbookIsbn
           : workbookIsbn // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       finishedAt: freezed == finishedAt
           ? _value.finishedAt
           : finishedAt // ignore: cast_nullable_to_non_nullable
@@ -159,7 +159,7 @@ class _$PupilWorkbookImpl implements _PupilWorkbook {
       {@JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'created_by') required this.createdBy,
       this.state,
-      @JsonKey(name: 'workbook_isbn') this.workbookIsbn,
+      @JsonKey(name: 'workbook_isbn') required this.workbookIsbn,
       @JsonKey(name: 'finished_at') this.finishedAt});
 
   factory _$PupilWorkbookImpl.fromJson(Map<String, dynamic> json) =>
@@ -175,7 +175,7 @@ class _$PupilWorkbookImpl implements _PupilWorkbook {
   final String? state;
   @override
   @JsonKey(name: 'workbook_isbn')
-  final int? workbookIsbn;
+  final int workbookIsbn;
   @override
   @JsonKey(name: 'finished_at')
   final DateTime? finishedAt;
@@ -225,7 +225,7 @@ abstract class _PupilWorkbook implements PupilWorkbook {
           {@JsonKey(name: 'created_at') required final DateTime createdAt,
           @JsonKey(name: 'created_by') required final String createdBy,
           final String? state,
-          @JsonKey(name: 'workbook_isbn') final int? workbookIsbn,
+          @JsonKey(name: 'workbook_isbn') required final int workbookIsbn,
           @JsonKey(name: 'finished_at') final DateTime? finishedAt}) =
       _$PupilWorkbookImpl;
 
@@ -242,7 +242,7 @@ abstract class _PupilWorkbook implements PupilWorkbook {
   String? get state;
   @override
   @JsonKey(name: 'workbook_isbn')
-  int? get workbookIsbn;
+  int get workbookIsbn;
   @override
   @JsonKey(name: 'finished_at')
   DateTime? get finishedAt;

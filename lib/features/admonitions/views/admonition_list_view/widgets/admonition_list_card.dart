@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/custom_expansion_tile.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/pupil_admonition_content_list.dart';
 import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
@@ -36,6 +38,8 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
   @override
   Widget build(BuildContext context) {
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
+    Map<AdmonitionFilter, bool> admonitionFilters =
+        watchValue((AdmonitionFilterManager x) => x.admonitionsFilterState);
     final Pupil pupil = pupils
         .where((element) => element.internalId == widget.passedPupil.internalId)
         .first;
@@ -70,13 +74,10 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                                 ),
                               ));
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                pupil.firstName!,
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
+                            child: Text(
+                              pupil.firstName!,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -107,7 +108,7 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                       )
                     ],
                   ),
-                  const Gap(7),
+                  const Gap(5),
                   Row(
                     children: [
                       const Text('zuletzt:'),
@@ -146,8 +147,10 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                     const Gap(5),
                     Center(
                       child: Text(
-                        pupil.pupilAdmonitions?.length.toString() ??
-                            0.toString(),
+                        locator<AdmonitionFilterManager>()
+                            .filteredAdmonitions(pupil)
+                            .length
+                            .toString(),
                         style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -168,7 +171,7 @@ class _AdmonitionListCardState extends State<AdmonitionListCard> {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
               context,
               _tileController,
-              pupilAdmonitionsContentList(pupil, context, admonitions),
+              pupilAdmonitionsContentList(pupil, context),
             )),
       ],
     ));

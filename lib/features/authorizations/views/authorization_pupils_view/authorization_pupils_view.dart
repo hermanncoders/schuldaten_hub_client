@@ -4,7 +4,6 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/widgets/authorization_pupil_list_searchbar.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/authorizations/services/authorization_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_filter_manager.dart';
 import 'package:schuldaten_hub/features/authorizations/views/authorization_pupils_view/controller/authorization_pupils_controller.dart';
@@ -26,20 +25,12 @@ class AuthorizationPupilsView extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
-    List<Pupil> pupilsInRepository = watchValue((PupilManager x) => x.pupils);
+    List<Pupil> filteredPupils =
+        watchValue((PupilFilterManager x) => x.filteredPupils);
 
-    List<Pupil> pupilsInAuthorization = locator<AuthorizationManager>()
-        .getListedPupilsInAuthorization(
-            authorization.authorizationId, pupilsInRepository);
-
-    List<Pupil> pupilsFromList = locator<AuthorizationManager>()
-        .getListedPupilsInAuthorization(
-            authorization.authorizationId, pupilsInRepository);
     List<Pupil> pupilsInList =
-        controller.addAuthorizationFiltersToFilteredPupils(pupilsFromList);
+        controller.addAuthorizationFiltersToFilteredPupils(filteredPupils);
 
-    // Map<PupilFilter, bool> activeFilters =
-    //     watchValue((PupilFilterManager x) => x.filterState);
     return Scaffold(
       backgroundColor: canvasColor,
       appBar: AppBar(
@@ -113,8 +104,8 @@ class AuthorizationPupilsView extends WatchingWidget {
           ),
         ),
       ),
-      bottomNavigationBar: authorizationPupilsBottomNavBar(context,
-          authorization, filtersOn, pupilIdsFromPupils(pupilsInAuthorization)),
+      bottomNavigationBar: authorizationPupilsBottomNavBar(
+          context, authorization, filtersOn, pupilIdsFromPupils(pupilsInList)),
     );
   }
 }

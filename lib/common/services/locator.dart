@@ -79,7 +79,7 @@ Future registerDependentManagers(String token) async {
     debug.info('Registering SchooldayManager');
     final schooldayManager = SchooldayManager();
     await schooldayManager.init();
-    debug.warning('SchooldayManager initialized');
+    debug.info('SchooldayManager initialized');
     return schooldayManager;
   }, dependsOn: [SessionManager, ApiManager]);
 
@@ -87,7 +87,7 @@ Future registerDependentManagers(String token) async {
     debug.info('Registering WorkbookManager');
     final workbookManager = WorkbookManager();
     await workbookManager.init();
-    debug.warning('WorkbookManager initialized');
+    debug.info('WorkbookManager initialized');
     return workbookManager;
   }, dependsOn: [SessionManager, ApiManager]);
 
@@ -95,7 +95,7 @@ Future registerDependentManagers(String token) async {
     debug.info('Registering SchoolListManager');
     final schoolListManager = SchoolListManager();
     await schoolListManager.init();
-    debug.warning('SchoolListManager initialized');
+    debug.info('SchoolListManager initialized');
     return schoolListManager;
   }, dependsOn: [SessionManager, ApiManager]);
 
@@ -116,7 +116,7 @@ Future registerDependentManagers(String token) async {
     debug.info('Regirstering GoalManager');
     final goalManager = GoalManager();
     await goalManager.init();
-    debug.warning('GoalManager initialized');
+    debug.info('GoalManager initialized');
     return goalManager;
   }, dependsOn: [SessionManager, ApiManager]);
 
@@ -132,7 +132,7 @@ Future registerDependentManagers(String token) async {
     debug.info('Registering PupilManager');
     final pupilManager = PupilManager();
     await pupilManager.init();
-    debug.warning('PupilManager initialized');
+    debug.info('PupilManager initialized');
     return pupilManager;
   }, dependsOn: [EnvManager, ApiManager, SessionManager, PupilBaseManager]);
 
@@ -146,4 +146,20 @@ Future registerDependentManagers(String token) async {
     () => AdmonitionFilterManager(),
     dependsOn: [PupilManager],
   );
+}
+
+Future unregisterDependentManagers() async {
+  locator.unregister<ApiManager>();
+  locator.unregister<SchooldayManager>();
+  locator.unregister<WorkbookManager>();
+  locator.unregister<GoalManager>();
+  locator.unregister<PupilManager>();
+  locator.unregister<PupilFilterManager>();
+  locator.unregister<CompetenceFilterManager>();
+  locator.unregister<CompetenceManager>();
+  locator.unregister<SchoolListManager>();
+  locator.unregister<AuthorizationManager>();
+  locator.unregister<AttendanceManager>();
+  locator.unregister<AdmonitionManager>();
+  locator.unregister<AdmonitionFilterManager>();
 }

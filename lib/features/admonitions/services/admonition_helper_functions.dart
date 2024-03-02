@@ -1,3 +1,44 @@
+import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
+import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+
+int getAdmonitionCount(List<Pupil> pupils) {
+  int admonitions = 0;
+  for (Pupil pupil in pupils) {
+    if (pupil.pupilAdmonitions != null) {
+      admonitions = admonitions + pupil.pupilAdmonitions!.length;
+    }
+  }
+  return admonitions;
+}
+
+int getSchoolAdmonitionCount(List<Pupil> pupils) {
+  int admonitions = 0;
+  for (Pupil pupil in pupils) {
+    if (pupil.pupilAdmonitions != null) {
+      for (Admonition admonition in pupil.pupilAdmonitions!) {
+        if (admonition.admonitionType == 'rk') {
+          admonitions++;
+        }
+      }
+    }
+  }
+  return admonitions;
+}
+
+int getOgsAdmonitionCount(List<Pupil> pupils) {
+  int admonitions = 0;
+  for (Pupil pupil in pupils) {
+    if (pupil.pupilAdmonitions != null) {
+      for (Admonition admonition in pupil.pupilAdmonitions!) {
+        if (admonition.admonitionType == 'rkogs') {
+          admonitions++;
+        }
+      }
+    }
+  }
+  return admonitions;
+}
+
 String getAdmonitionTypeText(String value) {
   switch (value) {
     case 'choose':

@@ -11,14 +11,34 @@ Map<CompetenceFilter, bool> initialCompetenceFilterValues = {
 
 enum AdmonitionFilter {
   sevenDays,
+  redCard,
+  redCardOgs,
+  redCardsentHome,
+  parentsMeeting,
+  otherEvent,
   violenceAgainstThings,
-  violenceAgainstPersons
+  violenceAgainstPersons,
+  annoy,
+  ignoreInstructions,
+  disturbLesson,
+  other,
+  processed,
 }
 
 Map<AdmonitionFilter, bool> initialAdmonitionFilterValues = {
   AdmonitionFilter.sevenDays: false,
+  AdmonitionFilter.redCard: false,
+  AdmonitionFilter.redCardOgs: false,
+  AdmonitionFilter.redCardsentHome: false,
+  AdmonitionFilter.parentsMeeting: false,
+  AdmonitionFilter.otherEvent: false,
   AdmonitionFilter.violenceAgainstThings: false,
-  AdmonitionFilter.violenceAgainstPersons: false
+  AdmonitionFilter.violenceAgainstPersons: false,
+  AdmonitionFilter.annoy: false,
+  AdmonitionFilter.ignoreInstructions: false,
+  AdmonitionFilter.disturbLesson: false,
+  AdmonitionFilter.other: false,
+  AdmonitionFilter.processed: false,
 };
 
 enum PupilSortMode {
@@ -32,6 +52,7 @@ enum PupilSortMode {
   sortByGoneHome,
   sortByAdmonitions,
   sortByLastAdmonition,
+  sortByLastNonProcessedAdmonition,
 }
 
 Map<PupilSortMode, bool> initialSortModeValues = {
@@ -45,6 +66,7 @@ Map<PupilSortMode, bool> initialSortModeValues = {
   PupilSortMode.sortByGoneHome: false,
   PupilSortMode.sortByAdmonitions: false,
   PupilSortMode.sortByLastAdmonition: false,
+  PupilSortMode.sortByLastNonProcessedAdmonition: false
 };
 
 enum PupilFilter {

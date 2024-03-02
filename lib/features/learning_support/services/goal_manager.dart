@@ -11,6 +11,7 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 import 'package:schuldaten_hub/features/learning_support/models/category/goal_category.dart';
+import 'package:schuldaten_hub/features/learning_support/models/goal/pupil_goal.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/api/services/api_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -53,6 +54,19 @@ class GoalManager {
     }
     _isRunning.value = false;
     return;
+  }
+
+  List<PupilGoal> getPupilGoalsForCategory(int categoryId) {
+    List<PupilGoal> goals = [];
+    final List<Pupil> pupils = locator<PupilManager>().pupils.value;
+    for (Pupil pupil in pupils) {
+      for (PupilGoal goal in pupil.pupilGoals!) {
+        if (goal.goalCategoryId == categoryId) {
+          goals.add(goal);
+        }
+      }
+    }
+    return goals;
   }
 
   Future postCategoryStatus(

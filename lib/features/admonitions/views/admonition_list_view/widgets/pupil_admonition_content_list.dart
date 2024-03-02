@@ -20,14 +20,17 @@ import 'package:schuldaten_hub/common/widgets/upload_image.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_helper_functions.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_category_icon.dart';
 import 'package:schuldaten_hub/features/admonitions/views/new_admonition_view/new_admonition_view.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
 
 List<Widget> pupilAdmonitionsContentList(
   Pupil pupil,
   BuildContext context,
-  List<Admonition> admonitions,
 ) {
+  final List<Admonition> filteredAdmonitions =
+      locator<AdmonitionFilterManager>().filteredAdmonitions(pupil);
   return <Widget>[
     Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 10),
@@ -55,7 +58,7 @@ List<Widget> pupilAdmonitionsContentList(
       padding: const EdgeInsets.only(top: 5, bottom: 15),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: admonitions.length,
+      itemCount: filteredAdmonitions.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -68,7 +71,7 @@ List<Widget> pupilAdmonitionsContentList(
                   context, 'Ereignis löschen', 'Das Ereignis löschen?');
               if (confirm! == false) return;
               await locator<AdmonitionManager>()
-                  .deleteAdmonition(admonitions[index].admonitionId);
+                  .deleteAdmonition(filteredAdmonitions[index].admonitionId);
               if (context.mounted) {
                 informationDialog(context, 'Ereignis gelöscht',
                     'Das Ereignis wurde gelöscht!');
@@ -96,8 +99,8 @@ List<Widget> pupilAdmonitionsContentList(
                                   children: [
                                     Text(
                                       DateFormat('dd.MM.yyyy')
-                                          .format(
-                                              admonitions[index].admonishedDay)
+                                          .format(filteredAdmonitions[index]
+                                              .admonishedDay)
                                           .toString(),
                                       style: const TextStyle(
                                         color: Colors.black,
@@ -106,24 +109,9 @@ List<Widget> pupilAdmonitionsContentList(
                                       ),
                                     ),
                                     const Gap(5),
-                                    admonitions[index]
-                                            .admonitionType
-                                            .contains('rk')
-                                        ? const Icon(Icons.rectangle_rounded,
-                                            color: Colors.red)
-                                        : const SizedBox.shrink(),
-                                    admonitions[index]
-                                            .admonitionType
-                                            .contains('rk')
-                                        ? const Gap(5)
-                                        : const SizedBox.shrink(),
-                                    Text(
-                                      getAdmonitionTypeText(
-                                          admonitions[index].admonitionType),
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                    admonitionTypeIcon(
+                                        filteredAdmonitions[index]
+                                            .admonitionType)
                                   ],
                                 ),
                               ),
@@ -133,7 +121,8 @@ List<Widget> pupilAdmonitionsContentList(
                                   const Gap(5),
                                   Text(
                                     getAdmonitionReasonText(
-                                        admonitions[index].admonitionReason),
+                                        filteredAdmonitions[index]
+                                            .admonitionReason),
                                     style: const TextStyle(fontSize: 16),
                                     softWrap: true,
                                     maxLines: 3,
@@ -157,7 +146,7 @@ List<Widget> pupilAdmonitionsContentList(
                                             if (admonishingUser != null) {
                                               await locator<AdmonitionManager>()
                                                   .patchAdmonition(
-                                                      admonitions[index]
+                                                      filteredAdmonitions[index]
                                                           .admonitionId,
                                                       admonishingUser,
                                                       null,
@@ -168,7 +157,8 @@ List<Widget> pupilAdmonitionsContentList(
                                             }
                                           },
                                           child: Text(
-                                            admonitions[index].admonishingUser,
+                                            filteredAdmonitions[index]
+                                                .admonishingUser,
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18,
@@ -176,7 +166,8 @@ List<Widget> pupilAdmonitionsContentList(
                                           ),
                                         )
                                       : Text(
-                                          admonitions[index].admonishingUser,
+                                          filteredAdmonitions[index]
+                                              .admonishingUser,
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18),
@@ -199,7 +190,7 @@ List<Widget> pupilAdmonitionsContentList(
                                 await locator<AdmonitionManager>()
                                     .postAdmonitionFile(
                                   file,
-                                  admonitions[index].admonitionId,
+                                  filteredAdmonitions[index].admonitionId,
                                 );
                                 if (context.mounted) {
                                   informationDialog(context, 'Vorfall geändert',
@@ -216,17 +207,17 @@ List<Widget> pupilAdmonitionsContentList(
                                 }
                                 await locator<AdmonitionManager>()
                                     .deleteAdmonitionFile(
-                                        admonitions[index].admonitionId,
-                                        admonitions[index].fileUrl!);
+                                        filteredAdmonitions[index].admonitionId,
+                                        filteredAdmonitions[index].fileUrl!);
                                 if (context.mounted) {
                                   informationDialog(context, 'Vorfall geändert',
                                       'Der Vorfall wurde geändert!');
                                 }
                               },
-                              child: admonitions[index].fileUrl != null
+                              child: filteredAdmonitions[index].fileUrl != null
                                   ? documentImage(
-                                      '${locator<EnvManager>().env.value.serverUrl}${EndpointsAdmonition().getAdmonitionFile(admonitions[index].admonitionId)}',
-                                      admonitions[index].fileUrl,
+                                      '${locator<EnvManager>().env.value.serverUrl}${EndpointsAdmonition().getAdmonitionFile(filteredAdmonitions[index].admonitionId)}',
+                                      filteredAdmonitions[index].fileUrl,
                                       70)
                                   : SizedBox(
                                       height: 70,
@@ -253,7 +244,8 @@ List<Widget> pupilAdmonitionsContentList(
                             if (confirm! == false) return;
                             await locator<AdmonitionManager>()
                                 .patchAdmonitionAsProcessed(
-                                    admonitions[index].admonitionId, true);
+                                    filteredAdmonitions[index].admonitionId,
+                                    true);
                             if (context.mounted) {
                               snackbarSuccess(context, 'Ereignis markiert');
                             }
@@ -266,17 +258,18 @@ List<Widget> pupilAdmonitionsContentList(
                             if (confirm! == false) return;
                             await locator<AdmonitionManager>()
                                 .patchAdmonitionAsProcessed(
-                                    admonitions[index].admonitionId, false);
+                                    filteredAdmonitions[index].admonitionId,
+                                    false);
                           },
                           child: Text(
-                              !admonitions[index].processed
+                              !filteredAdmonitions[index].processed
                                   ? 'Nicht bearbeitet'
                                   : 'Bearbeitet von',
                               style: const TextStyle(
                                   fontSize: 16, color: backgroundColor)),
                         ),
                         const Gap(10),
-                        if (admonitions[index].processedBy != null)
+                        if (filteredAdmonitions[index].processedBy != null)
                           locator<SessionManager>().isAdmin.value
                               ? InkWell(
                                   onTap: () async {
@@ -288,7 +281,8 @@ List<Widget> pupilAdmonitionsContentList(
                                     if (processingUser != null) {
                                       await locator<AdmonitionManager>()
                                           .patchAdmonition(
-                                              admonitions[index].admonitionId,
+                                              filteredAdmonitions[index]
+                                                  .admonitionId,
                                               null,
                                               null,
                                               null,
@@ -298,7 +292,7 @@ List<Widget> pupilAdmonitionsContentList(
                                     }
                                   },
                                   child: Text(
-                                    admonitions[index].processedBy!,
+                                    filteredAdmonitions[index].processedBy!,
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
@@ -306,14 +300,14 @@ List<Widget> pupilAdmonitionsContentList(
                                   ),
                                 )
                               : Text(
-                                  admonitions[index].processedBy!,
+                                  filteredAdmonitions[index].processedBy!,
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
-                        if (admonitions[index].processedAt != null)
+                        if (filteredAdmonitions[index].processedAt != null)
                           const Gap(10),
-                        if (admonitions[index].processedAt != null)
+                        if (filteredAdmonitions[index].processedAt != null)
                           locator<SessionManager>().isAdmin.value
                               ? InkWell(
                                   onTap: () async {
@@ -323,7 +317,8 @@ List<Widget> pupilAdmonitionsContentList(
                                     if (newDate != null) {
                                       await locator<AdmonitionManager>()
                                           .patchAdmonition(
-                                              admonitions[index].admonitionId,
+                                              filteredAdmonitions[index]
+                                                  .admonitionId,
                                               null,
                                               null,
                                               null,
@@ -333,7 +328,7 @@ List<Widget> pupilAdmonitionsContentList(
                                     }
                                   },
                                   child: Text(
-                                    'am ${admonitions[index].processedAt!.formatForUser()}',
+                                    'am ${filteredAdmonitions[index].processedAt!.formatForUser()}',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
@@ -341,7 +336,7 @@ List<Widget> pupilAdmonitionsContentList(
                                   ),
                                 )
                               : Text(
-                                  'am ${admonitions[index].processedAt!.formatForUser()}',
+                                  'am ${filteredAdmonitions[index].processedAt!.formatForUser()}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),

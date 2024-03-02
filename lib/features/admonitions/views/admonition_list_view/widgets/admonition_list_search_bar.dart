@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/widgets/search_text_field.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_helper_functions.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/controller/admonition_list_controller.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_filter_bottom_sheet.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -47,7 +48,7 @@ Widget admonitionListSearchBar(BuildContext context, List<Pupil> pupils,
                   ),
                   const Gap(10),
                   Text(
-                    controller.getAdmonitionCount(pupils).toString(),
+                    getAdmonitionCount(pupils).toString(),
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -64,7 +65,7 @@ Widget admonitionListSearchBar(BuildContext context, List<Pupil> pupils,
                   ),
                   const Gap(10),
                   Text(
-                    controller.getSchoolAdmonitionCount(pupils).toString(),
+                    getSchoolAdmonitionCount(pupils).toString(),
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -80,7 +81,7 @@ Widget admonitionListSearchBar(BuildContext context, List<Pupil> pupils,
                     ),
                   ),
                   const Gap(10),
-                  Text(controller.getOgsAdmonitionCount(pupils).toString(),
+                  Text(getOgsAdmonitionCount(pupils).toString(),
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

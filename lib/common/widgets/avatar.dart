@@ -9,6 +9,9 @@ import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
 import 'package:widget_zoom/widget_zoom.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+
+part 'avatar.g.dart';
 
 Widget avatarImage(Pupil pupil, double size) {
   return SizedBox(
@@ -53,6 +56,7 @@ Widget avatarImage(Pupil pupil, double size) {
   );
 }
 
+@swidget
 Widget avatarWithBadges(Pupil pupil, double size) {
   return Padding(
     padding: const EdgeInsets.all(5.0),

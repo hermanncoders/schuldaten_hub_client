@@ -41,11 +41,14 @@ BottomAppBar authorizationPupilsBottomNavBar(
                   tooltip: 'Kinder hinzufügen',
                   icon: const Icon(Icons.add, color: Colors.white, size: 30),
                   onPressed: () async {
-                    final List<int> selectedPupilIds =
+                    final List<int>? selectedPupilIds =
                         await Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) =>
                           SelectPupilList(restOfPupils(pupilsInAuthorization)),
                     ));
+                    if (selectedPupilIds == null) {
+                      return;
+                    }
                     if (selectedPupilIds.isNotEmpty) {
                       locator<AuthorizationManager>().postPupilAuthorizations(
                           selectedPupilIds, authorization.authorizationId);

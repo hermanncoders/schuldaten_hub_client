@@ -40,44 +40,6 @@ class AdmonitionListController extends State<AdmonitionList> {
     await locator.get<PupilManager>().fetchPupilsById(pupilsToFetch);
   }
 
-  int getAdmonitionCount(List<Pupil> pupils) {
-    int admonitions = 0;
-    for (Pupil pupil in pupils) {
-      if (pupil.pupilAdmonitions != null) {
-        admonitions = admonitions + pupil.pupilAdmonitions!.length;
-      }
-    }
-    return admonitions;
-  }
-
-  int getSchoolAdmonitionCount(List<Pupil> pupils) {
-    int admonitions = 0;
-    for (Pupil pupil in pupils) {
-      if (pupil.pupilAdmonitions != null) {
-        for (Admonition admonition in pupil.pupilAdmonitions!) {
-          if (admonition.admonitionType == 'rk') {
-            admonitions++;
-          }
-        }
-      }
-    }
-    return admonitions;
-  }
-
-  int getOgsAdmonitionCount(List<Pupil> pupils) {
-    int admonitions = 0;
-    for (Pupil pupil in pupils) {
-      if (pupil.pupilAdmonitions != null) {
-        for (Admonition admonition in pupil.pupilAdmonitions!) {
-          if (admonition.admonitionType == 'rkogs') {
-            admonitions++;
-          }
-        }
-      }
-    }
-    return admonitions;
-  }
-
   // void _search() async {
   //   if (!isSearching) {
   //     setState(() {
@@ -120,9 +82,6 @@ class AdmonitionListController extends State<AdmonitionList> {
       //     )
       //     .toList();
     });
-
-    // _coolDown?.cancel();
-    // _coolDown = Timer(const Duration(milliseconds: 500), _search);
   }
 
   @override

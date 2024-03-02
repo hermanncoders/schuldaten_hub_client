@@ -57,7 +57,9 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
   @override
   Widget build(BuildContext context) {
     textField1Controller.text = widget.wbName ?? '';
-    textField2Controller.text = widget.wbIsbn?.toString() ?? '';
+    if (textField2Controller.text == '') {
+      textField2Controller.text = widget.wbIsbn?.toString() ?? '';
+    }
     textField3Controller.text = widget.wbSubject ?? '';
     textField4Controller.text = widget.wbLevel ?? '';
     return Scaffold(

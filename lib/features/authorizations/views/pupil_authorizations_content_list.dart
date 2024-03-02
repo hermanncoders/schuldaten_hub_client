@@ -152,12 +152,13 @@ List<Widget> pupilAuthorizationsContentList(Pupil pupil) {
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold)),
                                 const Spacer(),
-                                if (pupilAuthorization.createdBy != null)
-                                  Text(pupilAuthorization.createdBy!,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      )),
+                                //- TO-DO BACKEND: model needs a modifedBy field
+                                // if (pupilAuthorization.createdBy != null)
+                                //   Text(pupilAuthorization.createdBy!,
+                                //       style: const TextStyle(
+                                //         fontSize: 14,
+                                //         fontWeight: FontWeight.bold,
+                                //       )),
                                 const Gap(5),
                                 const Icon(
                                   Icons.close,

@@ -7,6 +7,7 @@ import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_filters.dart';
 import 'package:schuldaten_hub/features/attendance/services/attendance_helper_functions.dart';
+import 'package:schuldaten_hub/features/learning_support/services/learning_support_filters.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
@@ -225,6 +226,7 @@ class PupilFilterManager {
       //- Attendance filters -//
 
       toList = attendanceFilter(pupil, toList);
+      toList = learningSupportFilter(pupil, toList);
 
       //- OGS filters -//
       // Filter ogs
@@ -264,69 +266,6 @@ class PupilFilterManager {
       }
       //- Development filters -//
       // Filter development plan 1
-      if (activeFilters[PupilFilter.developmentPlan1]! &&
-          pupil.individualDevelopmentPlan == 1 &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.developmentPlan1] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
-      // Filter development plan 2
-      if (activeFilters[PupilFilter.developmentPlan2]! &&
-          pupil.individualDevelopmentPlan == 2 &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.developmentPlan2] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
-      // Filter development plan 3
-      if (activeFilters[PupilFilter.developmentPlan3]! &&
-          pupil.individualDevelopmentPlan == 3 &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.developmentPlan3] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
-      // Filter special needs
-      if (activeFilters[PupilFilter.specialNeeds]! &&
-          pupil.specialNeeds != null &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.specialNeeds] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
-      // Filter pupils with a development goal
-
-      //- Learning filters -//
-
-      // Filter migrationSupport
-      if (activeFilters[PupilFilter.migrationSupport]! &&
-          hasLanguageSupport(pupil.migrationSupportEnds) == true &&
-          toList == true) {
-        toList = true;
-      } else if (activeFilters[PupilFilter.migrationSupport] == false &&
-          toList == true) {
-        toList = true;
-      } else {
-        _filtersOn.value = true;
-        toList = false;
-      }
 
       // Filter boys
       if (activeFilters[PupilFilter.justBoys]! &&
@@ -419,6 +358,16 @@ class PupilFilterManager {
   }
 
   int comparePupilsByAdmonishedDate(Pupil a, Pupil b) {
+    // Handle potential null cases with null-aware operators
+    return (a.pupilAdmonitions?.isEmpty ?? true) ==
+            (b.pupilAdmonitions?.isEmpty ?? true)
+        ? compareLastAdmonishedDates(a, b) // Handle empty or both empty
+        : (a.pupilAdmonitions?.isEmpty ?? true)
+            ? 1
+            : -1; // Place empty after non-empty
+  }
+
+  int comparePupilsByLastNonProcessedAdmonition(Pupil a, Pupil b) {
     // Handle potential null cases with null-aware operators
     return (a.pupilAdmonitions?.isEmpty ?? true) ==
             (b.pupilAdmonitions?.isEmpty ?? true)

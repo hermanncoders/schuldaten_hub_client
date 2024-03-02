@@ -110,7 +110,7 @@ Widget pupilWorkbookCard(
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 15, bottom: 8),
+                padding: const EdgeInsets.only(left: 10, bottom: 8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,16 +169,16 @@ Widget pupilWorkbookCard(
                     Row(
                       children: [
                         const Text('Erstellt von:'),
-                        const Gap(10),
+                        const Gap(5),
                         Text(
                           pupilWorkbook.createdBy,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const Spacer(),
+                        const Gap(5),
                         const Text('am'),
-                        const Gap(10),
+                        const Gap(5),
                         Text(
                           pupilWorkbook.createdAt.formatForUser(),
                           style: const TextStyle(

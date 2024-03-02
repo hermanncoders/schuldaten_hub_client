@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/widgets/avatar.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/controller/attendance_list_controller.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/attendance_dropdown_menu_items.dart';
 import 'package:schuldaten_hub/features/attendance/views/attendance_view/widgets/dialogues/late_in_minutes_dialog.dart';
@@ -57,7 +58,7 @@ class AttendanceCard extends WatchingWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            avatarWithBadges(pupil, 80),
+            AvatarWithBadges(pupil, 80),
             Expanded(
               child: GestureDetector(
                 onLongPress: () => createMissedClassList(context, pupil),
@@ -71,7 +72,7 @@ class AttendanceCard extends WatchingWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Gap(15),
+                      const Gap(10),
                       Row(
                         children: [
                           Expanded(
@@ -282,8 +283,8 @@ class AttendanceCard extends WatchingWidget {
                             ),
                           ],
                         ),
-                        const Gap(10),
-                      ])
+                      ]),
+                      const Gap(15),
                     ]),
               ),
             ),
@@ -371,6 +372,12 @@ class AttendanceCard extends WatchingWidget {
                                     FocusManager.instance.primaryFocus!
                                         .unfocus();
                                     if (dropdownMissedValue == newValue) {
+                                      return;
+                                    }
+                                    if (newValue == 'missed' &&
+                                        returnedValue == true) {
+                                      snackbarError(context,
+                                          'Ein Kind, das abgeholt wurde, gilt nicht als fehlend für den Tag!');
                                       return;
                                     }
                                     if (newValue == 'late') {

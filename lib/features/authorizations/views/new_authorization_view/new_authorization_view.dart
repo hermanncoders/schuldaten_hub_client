@@ -20,15 +20,12 @@ class NewAuthorizationView extends StatefulWidget {
 class NewAuthorizationViewState extends State<NewAuthorizationView> {
   final TextEditingController textField1Controller = TextEditingController();
   final TextEditingController textField2Controller = TextEditingController();
-  bool _isOn = false;
+
   Set<int> pupilIds = {};
   void postNewAuthorization() async {
     String text1 = textField1Controller.text;
     String text2 = textField2Controller.text;
-    String listType = 'private';
-    if (_isOn == true) {
-      listType = 'public';
-    }
+
     await locator<AuthorizationManager>()
         .postAuthorizationWithPupils(text1, text2, pupilIds.toList());
   }

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/enums.dart';
 import 'package:schuldaten_hub/features/authorizations/models/authorization.dart';
@@ -65,12 +66,15 @@ class AuthorizationPupilsController extends State<AuthorizationPupils> {
     List<Pupil> filteredPupils = [];
     for (Pupil pupil in pupils) {
       bool toList = true;
-      final PupilAuthorization pupilAuthorization = pupil.authorizations!
-          .where((pupilAuthorization) =>
+      // Check first if the filtered pupil is in the authorization. If not, continue with next one.
+      final PupilAuthorization? pupilAuthorization = pupil.authorizations!
+          .firstWhereOrNull((pupilAuthorization) =>
               pupilAuthorization.originAuthorization ==
-              widget.authorization.authorizationId)
-          .first;
-
+              widget.authorization.authorizationId);
+      if (pupilAuthorization == null) {
+        continue;
+      }
+      // This one is - let's apply the authorization filters
       if (filterLocator
               .filterState.value[PupilFilter.authorizationYesResponse]! &&
           pupilAuthorization.status == true) {

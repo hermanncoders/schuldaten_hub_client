@@ -3,9 +3,11 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/views/new_category_item_view/controller/new_category_item_controller.dart';
 import 'package:schuldaten_hub/features/learning_support/views/selectable_category_tree_view/controller/selectable_category_tree_controller.dart';
+import 'package:schuldaten_hub/features/learning_support/widgets/dialogs/goal_examples_dialog.dart';
 
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_status_dropdown.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/category_tree_ancestors_names.dart';
@@ -79,18 +81,6 @@ class NewCategoryGoalView extends StatelessWidget {
                             child: const Text('KATEGORIE AUSWÄHLEN'),
                           )
                         : InkWell(
-                            // onLongPress: () async {
-                            //   final int? categoryId = await Navigator.of(
-                            //           context)
-                            //       .push(MaterialPageRoute(
-                            //           builder: (ctx) => SelectableCategoryTree(
-                            //               findPupilById(
-                            //                   controller.widget.pupilId))));
-                            //   if (categoryId == null) {
-                            //     return;
-                            //   }
-                            //   controller.setGoalCategoryId(categoryId);
-                            // },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5.0),
@@ -238,6 +228,31 @@ class NewCategoryGoalView extends StatelessWidget {
                         ],
                       ),
                     const Padding(padding: EdgeInsets.symmetric(vertical: 40)),
+                    if (controller.goalCategoryId != null)
+                      if (locator<GoalManager>()
+                          .getPupilGoalsForCategory(controller.goalCategoryId!)
+                          .isNotEmpty) ...<Widget>[
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              backgroundColor: Colors.amber[800],
+                              minimumSize: const Size.fromHeight(60)),
+                          onPressed: () {
+                            goalExamplesDialog(
+                                context,
+                                'Beispiele',
+                                locator<GoalManager>().getPupilGoalsForCategory(
+                                    controller.goalCategoryId!));
+                          },
+                          child: const Text(
+                            'BEISPIELE',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    const Gap(15),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

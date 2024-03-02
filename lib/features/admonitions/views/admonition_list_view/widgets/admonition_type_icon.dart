@@ -5,19 +5,25 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 Widget admonitionTypeIcon(String category) {
   switch (category) {
     case 'Eg':
-      return const Icon(
-        Icons.group_rounded,
-        color: Colors.black,
+      return const Row(
+        children: [
+          Icon(
+            Icons.group_rounded,
+            color: accentColor,
+          ),
+          Gap(5),
+          Icon(Icons.message, color: backgroundColor),
+        ],
       );
     case 'rk':
       return const Icon(
-        Icons.rectangle_rounded,
+        Icons.sim_card_alert_rounded,
         color: Colors.red,
       );
     case 'rkogs':
       return const Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(
-          Icons.rectangle_rounded,
+          Icons.sim_card_alert_rounded,
           color: Colors.red,
         ),
         Gap(5),
@@ -28,19 +34,19 @@ Widget admonitionTypeIcon(String category) {
                 fontWeight: FontWeight.bold)),
       ]);
     case 'other':
-      return const Icon(Icons.local_offer_rounded, color: backgroundColor);
+      return const Icon(Icons.assignment_rounded, color: backgroundColor);
     case 'choose':
       return Image.asset('assets/choose.png');
     case 'rkabh':
       return const Row(mainAxisSize: MainAxisSize.min, children: [
         Icon(
-          Icons.rectangle_rounded,
+          Icons.sim_card_alert_rounded,
           color: Colors.red,
         ),
         Gap(5),
         Icon(
           Icons.home,
-          color: Colors.black,
+          color: accentColor,
         )
       ]);
     default:

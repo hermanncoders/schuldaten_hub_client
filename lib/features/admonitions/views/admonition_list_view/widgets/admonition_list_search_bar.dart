@@ -40,7 +40,7 @@ Widget admonitionListSearchBar(BuildContext context, List<Pupil> pupils,
                   ),
                   const Gap(10),
                   const Text(
-                    'Vorfälle:',
+                    'gesamt:',
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.black,

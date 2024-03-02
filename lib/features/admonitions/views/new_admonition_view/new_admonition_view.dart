@@ -30,12 +30,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
   bool disturbLesson = false;
   bool parentTalk = false;
   bool other = false;
-  Color admonitionReasonChipUnselectedColor =
-      const Color.fromARGB(255, 248, 162, 93);
-  Color admonitionReasonChipSelectedColor =
-      const Color.fromARGB(255, 239, 137, 13);
-  Color admonitionReasonChipSelectedCheckColor =
-      const Color.fromARGB(255, 249, 56, 56);
+
   DateTime thisDate = locator<SchooldayManager>().thisDate.value;
   String _getDropdownItemText(String value) {
     switch (value) {
@@ -59,25 +54,25 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
   void postAdmonition(BuildContext context) async {
     String admonitionReason = '';
     if (violenceAgainstPeople == true) {
-      admonitionReason = '${admonitionReason}gm';
+      admonitionReason = '${admonitionReason}gm*';
     }
     if (violenceAgainstThings == true) {
-      admonitionReason = '${admonitionReason}gs';
+      admonitionReason = '${admonitionReason}gs*';
     }
     if (annoyOthers == true) {
-      admonitionReason = '${admonitionReason}äa';
+      admonitionReason = '${admonitionReason}äa*';
     }
     if (ignoreTeacherInstructions == true) {
-      admonitionReason = '${admonitionReason}il';
+      admonitionReason = '${admonitionReason}il*';
     }
     if (disturbLesson == true) {
-      admonitionReason = '${admonitionReason}us';
+      admonitionReason = '${admonitionReason}us*';
     }
     if (parentTalk == true) {
-      admonitionReason = '${admonitionReason}Eg';
+      admonitionReason = '${admonitionReason}Eg*';
     }
     if (other == true) {
-      admonitionReason = '${admonitionReason}ss';
+      admonitionReason = '${admonitionReason}ss*';
     }
     await locator<AdmonitionManager>().postAdmonition(
         widget.pupilId, thisDate, admonitionTypeDropdown, admonitionReason);
@@ -189,7 +184,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                               admonitionReasonChipSelectedCheckColor,
                           backgroundColor: admonitionReasonChipUnselectedColor,
                           label: const Text(
-                            'Gewalt gegen Menschen',
+                            ' 🤜🤕 Gewalt gegen Menschen',
                             style: filterItemsTextStyle,
                           ),
                           selected: violenceAgainstPeople,
@@ -205,7 +200,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                               admonitionReasonChipSelectedCheckColor,
                           backgroundColor: admonitionReasonChipUnselectedColor,
                           label: const Text(
-                            'Gewalt gegen Sachen',
+                            '🤜🏫 Gewalt gegen Sachen',
                             style: filterItemsTextStyle,
                           ),
                           selected: violenceAgainstThings,
@@ -221,7 +216,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                               admonitionReasonChipSelectedCheckColor,
                           backgroundColor: admonitionReasonChipUnselectedColor,
                           label: const Text(
-                            'Ärgern',
+                            '🤬🤕 Ärgern',
                             style: filterItemsTextStyle,
                           ),
                           selected: annoyOthers,
@@ -237,7 +232,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                               admonitionReasonChipSelectedCheckColor,
                           backgroundColor: admonitionReasonChipUnselectedColor,
                           label: const Text(
-                            'Anweisungen ignoriert',
+                            '🎓️🙉 Anweisungen ignoriert',
                             style: filterItemsTextStyle,
                           ),
                           selected: ignoreTeacherInstructions,
@@ -253,7 +248,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                               admonitionReasonChipSelectedCheckColor,
                           backgroundColor: admonitionReasonChipUnselectedColor,
                           label: const Text(
-                            'Stören von Unterricht',
+                            '🛑🎓️ Stören von Unterricht',
                             style: filterItemsTextStyle,
                           ),
                           selected: disturbLesson,
@@ -269,7 +264,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                               admonitionReasonChipSelectedCheckColor,
                           backgroundColor: admonitionReasonChipUnselectedColor,
                           label: const Text(
-                            'Sonstiges',
+                            '📝 Sonstiges',
                             style: filterItemsTextStyle,
                           ),
                           selected: other,

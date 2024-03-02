@@ -18,9 +18,9 @@ import 'package:schuldaten_hub/common/widgets/document_image.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/common/widgets/upload_image.dart';
 import 'package:schuldaten_hub/features/admonitions/models/admonition.dart';
-import 'package:schuldaten_hub/features/admonitions/services/admonition_helper_functions.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_manager.dart';
-import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_category_icon.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_reason_chips.dart';
+import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_type_icon.dart';
 import 'package:schuldaten_hub/features/admonitions/views/new_admonition_view/new_admonition_view.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
@@ -73,8 +73,7 @@ List<Widget> pupilAdmonitionsContentList(
               await locator<AdmonitionManager>()
                   .deleteAdmonition(filteredAdmonitions[index].admonitionId);
               if (context.mounted) {
-                informationDialog(context, 'Ereignis gelöscht',
-                    'Das Ereignis wurde gelöscht!');
+                snackbarSuccess(context, 'Das Ereignis wurde gelöscht!');
               }
             },
             child: Card(
@@ -117,16 +116,12 @@ List<Widget> pupilAdmonitionsContentList(
                               ),
                               const Gap(5),
                               Wrap(
+                                direction: Axis.horizontal,
+                                spacing: 5,
                                 children: [
-                                  const Gap(5),
-                                  Text(
-                                    getAdmonitionReasonText(
-                                        filteredAdmonitions[index]
-                                            .admonitionReason),
-                                    style: const TextStyle(fontSize: 16),
-                                    softWrap: true,
-                                    maxLines: 3,
-                                  ),
+                                  ...admonitionReasonChip(
+                                      filteredAdmonitions[index]
+                                          .admonitionReason),
                                 ],
                               ),
                               const Gap(10),

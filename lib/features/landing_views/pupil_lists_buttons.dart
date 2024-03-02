@@ -92,7 +92,7 @@ List<Widget> pupilListButtons(BuildContext context, double screenWidth) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.today,
+                Icons.event_available_rounded,
                 size: 50,
                 color: gridViewColor,
               ),

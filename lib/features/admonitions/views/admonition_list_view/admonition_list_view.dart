@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/features/admonitions/services/admonition_filter_manager.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_card.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_search_bar.dart';
 import 'package:schuldaten_hub/features/admonitions/views/admonition_list_view/widgets/admonition_list_view_bottom_navbar.dart';
@@ -20,6 +21,8 @@ class AdmonitionListView extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     bool filtersOn = watchValue((PupilFilterManager x) => x.filtersOn);
+    bool admonitionFiltersOn =
+        watchValue((AdmonitionFilterManager x) => x.admonitionsFiltersOn);
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
 
     return Scaffold(
@@ -90,7 +93,8 @@ class AdmonitionListView extends WatchingWidget {
           ),
         ),
       ),
-      bottomNavigationBar: admonitionListViewBottomNavBar(context, filtersOn),
+      bottomNavigationBar: admonitionListViewBottomNavBar(
+          context, (filtersOn || admonitionFiltersOn) ? true : false),
     );
   }
 }

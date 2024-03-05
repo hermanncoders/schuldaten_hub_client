@@ -144,7 +144,7 @@ Future registerDependentManagers(String token) async {
   locator.registerLazySingleton<AdmonitionManager>(() => AdmonitionManager());
   locator.registerSingletonWithDependencies<AdmonitionFilterManager>(
     () => AdmonitionFilterManager(),
-    dependsOn: [PupilManager],
+    dependsOn: [PupilManager, PupilFilterManager],
   );
 }
 

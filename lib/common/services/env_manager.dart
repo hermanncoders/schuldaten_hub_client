@@ -12,10 +12,12 @@ import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 
 class EnvManager {
   ValueListenable<Env> get env => _env;
+  ValueListenable<Env> get testEnv => _testEnv;
   ValueListenable<bool> get envReady => _envReady;
   ValueListenable<PackageInfo> get packageInfo => _packageInfo;
 
   final _env = ValueNotifier<Env>(Env());
+  final _testEnv = ValueNotifier<Env>(Env());
   final _envReady = ValueNotifier<bool>(false);
   final _packageInfo = ValueNotifier<PackageInfo>(PackageInfo(
     appName: '',
@@ -63,6 +65,32 @@ class EnvManager {
     }
   }
 
+  Future<void> checkStoredTestEnv() async {
+    bool isStoredEnv = await secureStorageContains('testEnv');
+    if (isStoredEnv == true) {
+      final String? storedSession = await secureStorageRead('testEnv');
+      debug.success('testEnv found!');
+
+      final env = Env.fromJson(
+        json.decode(storedSession!) as Map<String, dynamic>,
+      );
+      _testEnv.value = env;
+    }
+  }
+
+  // set the test environment
+  void setTestEnv(String scanResult) async {
+    final Env env =
+        Env.fromJson(json.decode(scanResult) as Map<String, dynamic>);
+    _testEnv.value = env;
+
+    final jsonEnv = json.encode(env.toJson());
+    await secureStorageWrite('testEnv', jsonEnv);
+    _envReady.value = true;
+    debug.success('Test Env stored');
+    debug.success(jsonEnv);
+  }
+
   // set the environment from a string
   void setEnv(String scanResult) async {
     final Env env =
@@ -75,6 +103,13 @@ class EnvManager {
     debug.success('Env stored');
     debug.success(jsonEnv);
     return;
+  }
+
+  deleteTestEnv() async {
+    _testEnv.value = Env();
+    await secureStorageDelete('testEnv');
+    //await secureStorageDelete('pupilBase');
+    locator.get<BottomNavManager>().setBottomNavPage(0);
   }
 
   deleteEnv() async {

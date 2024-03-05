@@ -235,7 +235,7 @@ class PupilManager {
       }
     }
     _pupils.value = pupils;
-    locator<PupilFilterManager>().refreshFilteredPupils();
+    locator<PupilFilterManager>().filterPupils();
   }
 
   Future fetchShownPupils() async {

@@ -83,35 +83,43 @@ class AdmonitionFilterManager {
         bool toList = true;
         if (activeFilters[AdmonitionFilter.sevenDays]! &&
             admonition.admonishedDay.isBefore(sevenDaysAgo)) {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         // we keep the not processed ones
         if (activeFilters[AdmonitionFilter.processed]! &&
             admonition.processed == true) {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         if (activeFilters[AdmonitionFilter.redCard]! &&
             admonition.admonitionType != 'rk') {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         if (activeFilters[AdmonitionFilter.redCardOgs]! &&
             admonition.admonitionType != 'rkogs') {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         if (activeFilters[AdmonitionFilter.redCardsentHome]! &&
             admonition.admonitionType != 'rkabh') {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         if (activeFilters[AdmonitionFilter.otherEvent]! &&
             admonition.admonitionType == 'other') {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         if (activeFilters[AdmonitionFilter.parentsMeeting]! &&
             admonition.admonitionType != 'Eg') {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
         if (activeFilters[AdmonitionFilter.violenceAgainstPersons]! &&
             !admonition.admonitionReason.contains('gm')) {
+          _admonitionsFiltersOn.value = true;
           continue;
         }
 

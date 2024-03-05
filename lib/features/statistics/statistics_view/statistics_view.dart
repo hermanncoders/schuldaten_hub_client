@@ -48,11 +48,13 @@ class StatisticsView extends StatelessWidget {
                 const Gap(10),
                 Expanded(
                     child: SingleChildScrollView(
-                  child: Column(children: [
-                    groupListTiles(context, controller),
-                    languagesListTiles(context, controller),
-                    enrollmentListTiles(context, controller)
-                  ]),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        groupListTiles(context, controller),
+                        languagesListTiles(context, controller),
+                        enrollmentListTiles(context, controller)
+                      ]),
                 ))
               ],
             ),

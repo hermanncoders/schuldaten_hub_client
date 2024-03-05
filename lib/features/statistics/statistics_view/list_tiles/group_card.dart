@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/statistics/statistics_view/controller/statistics.dart';
 
@@ -9,110 +10,129 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
+          Row(children: [
+            const Icon(Icons.male_rounded),
+            const Gap(5),
+            Text(
+              controller.malePupils(group).length.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            const Gap(10),
+            const Icon(Icons.female_rounded),
+            const Gap(5),
+            Text(
+              controller.femalePupils(group).length.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ]),
           Row(
             children: [
-              Row(
-                children: [
-                  const Text(
-                    'E1:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(5),
-                  Text(
-                    controller
-                        .schoolyearInaGivenGroup(group, 'E1')
-                        .length
-                        .toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(20),
-                  const Text(
-                    'E2:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(5),
-                  Text(
-                    controller
-                        .schoolyearInaGivenGroup(group, 'E2')
-                        .length
-                        .toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(20),
-                  const Text(
-                    'E3:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(5),
-                  Text(
-                    controller
-                        .schoolyearInaGivenGroup(group, 'E3')
-                        .length
-                        .toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(20),
-                  const Text(
-                    'S3:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(5),
-                  Text(
-                    controller
-                        .schoolyearInaGivenGroup(group, 'S3')
-                        .length
-                        .toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(20),
-                  const Text(
-                    'S4:',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const Gap(5),
-                  Text(
-                    controller
-                        .schoolyearInaGivenGroup(group, 'S4')
-                        .length
-                        .toString(),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
+              const Text(
+                'E1:',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(5),
+              Text(
+                controller
+                    .schoolyearInaGivenGroup(group, 'E1')
+                    .length
+                    .toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(10),
+              const Text(
+                'E2:',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(5),
+              Text(
+                controller
+                    .schoolyearInaGivenGroup(group, 'E2')
+                    .length
+                    .toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(10),
+              const Text(
+                'E3:',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(5),
+              Text(
+                controller
+                    .schoolyearInaGivenGroup(group, 'E3')
+                    .length
+                    .toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(10),
+              const Text(
+                'S3:',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(5),
+              Text(
+                controller
+                    .schoolyearInaGivenGroup(group, 'S3')
+                    .length
+                    .toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(10),
+              const Text(
+                'S4:',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+              ),
+              const Gap(5),
+              Text(
+                controller
+                    .schoolyearInaGivenGroup(group, 'S4')
+                    .length
+                    .toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
             ],
           ),
@@ -120,13 +140,15 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
           Row(
             children: [
               const Text(
-                'Erstförderung:',
+                'EF',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                 ),
               ),
-              const Gap(10),
+              const Gap(5),
+              const Icon(Icons.language, color: Colors.green),
+              const Gap(5),
               Text(
                 controller.pupilsWithLanguageSupport(group).length.toString(),
                 style: const TextStyle(
@@ -137,12 +159,14 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
               ),
               const Gap(10),
               const Text(
-                'ehem. Erstförderung:',
+                'ehem. EF',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                 ),
               ),
+              const Gap(5),
+              const Icon(Icons.language, color: Colors.grey),
               const Gap(10),
               Text(
                 controller.pupilsHadLanguageSupport(group).length.toString(),
@@ -157,13 +181,15 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
           const Gap(5),
           Row(
             children: [
-              const Text(
-                'a. Familiensprache:',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-              ),
+              // const Text(
+              //   'a. Familiensprache:',
+              //   style: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 18,
+              //   ),
+              // ),
+              const Icon(Icons.translate_rounded, color: backgroundColor),
+
               const Gap(5),
               Text(
                 controller.pupilsNotSpeakingGerman(group).length.toString(),
@@ -195,8 +221,10 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
           const Gap(5),
           Row(
             children: [
+              const Icon(Icons.support_rounded, color: Colors.red),
+              const Gap(10),
               const Text(
-                'Förderebene 1:',
+                '1:',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -274,17 +302,21 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
             ],
           ),
           const Gap(5),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'schulärztliche Eingangsuntersuchung:',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           Row(
             children: [
-              const Text(
-                'schulärzt. U.:',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-              ),
-              const Gap(10),
-              const Text('n.v.'),
+              const Text('n.v.:'),
               const Gap(5),
               Text(
                 controller
@@ -310,7 +342,7 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
               ),
               const Gap(10),
               const Text(
-                'Förd:',
+                'Förd.:',
               ),
               const Gap(5),
               Text(

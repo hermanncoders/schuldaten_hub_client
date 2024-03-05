@@ -73,6 +73,26 @@ class StatisticsController extends State<Statistics> {
     return groupPupils;
   }
 
+  List<Pupil> malePupils(List<Pupil> givenPupils) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in givenPupils) {
+      if (pupil.gender == 'm') {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
+  List<Pupil> femalePupils(List<Pupil> givenPupils) {
+    List<Pupil> groupPupils = [];
+    for (Pupil pupil in givenPupils) {
+      if (pupil.gender == 'w') {
+        groupPupils.add(pupil);
+      }
+    }
+    return groupPupils;
+  }
+
   List<Pupil> pupilsWithLanguageSupport(List<Pupil> givenPupils) {
     List<Pupil> groupPupils = [];
     for (Pupil pupil in givenPupils) {

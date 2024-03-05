@@ -516,6 +516,11 @@ class AttendanceCard extends WatchingWidget {
                                   value: returnedValue ?? false,
                                   onChanged: (bool? newValue) async {
                                     if (newValue == true) {
+                                      if (dropdownMissedValue == 'missed') {
+                                        snackbarError(context,
+                                            'Ein fehlendes Kind kann nicht abgeholt werden!');
+                                        return;
+                                      }
                                       final String? returnedTime =
                                           await returnedDayTime(context);
                                       debug.warning(

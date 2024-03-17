@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:schuldaten_hub/common/models/schoolday_models/schoolday.dart';
+import 'package:schuldaten_hub/common/services/schoolday_manager.dart';
+import 'package:schuldaten_hub/common/utils/extensions.dart';
+import 'package:schuldaten_hub/features/attendance/models/missed_class.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
@@ -228,6 +232,82 @@ class StatisticsController extends State<Statistics> {
       }
     }
     return groupPupils;
+  }
+
+  List<MissedClass> totalMissedClasses(List<Pupil> pupils) {
+    List<MissedClass> missedClasses = [];
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilMissedClasses != null) {
+        for (MissedClass missedClass in pupil.pupilMissedClasses!) {
+          missedClasses.add(missedClass);
+        }
+      }
+    }
+    return missedClasses;
+  }
+
+  List<MissedClass> totalUnexcusedMissedClasses(List<Pupil> pupils) {
+    List<MissedClass> missedClasses = [];
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilMissedClasses != null) {
+        for (MissedClass missedClass in pupil.pupilMissedClasses!) {
+          if (missedClass.excused == true) {
+            missedClasses.add(missedClass);
+          }
+        }
+      }
+    }
+
+    return missedClasses;
+  }
+
+  List<MissedClass> totalContactedMissedClasses(List<Pupil> pupils) {
+    List<MissedClass> missedClasses = [];
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilMissedClasses != null) {
+        for (MissedClass missedClass in pupil.pupilMissedClasses!) {
+          if (missedClass.contacted != '0') {
+            missedClasses.add(missedClass);
+          }
+        }
+      }
+    }
+    return missedClasses;
+  }
+
+  double averageMissedClassesperPupil(List<Pupil> pupils) {
+    double totalMissedClasses = 0;
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilMissedClasses != null) {
+        totalMissedClasses += pupil.pupilMissedClasses!.length;
+      }
+    }
+    return totalMissedClasses / pupils.length;
+  }
+
+  double averageUnexcusedMissedClassesperPupil(List<Pupil> pupils) {
+    double totalMissedClasses = 0;
+    for (Pupil pupil in pupils) {
+      if (pupil.pupilMissedClasses != null) {
+        for (MissedClass missedClass in pupil.pupilMissedClasses!) {
+          if (missedClass.excused == true) {
+            totalMissedClasses++;
+          }
+        }
+      }
+    }
+    return totalMissedClasses / pupils.length;
+  }
+
+  double percentageMissedSchooldays(double amountOfmissedClasses) {
+    List<Schoolday> schooldays = locator<SchooldayManager>().schooldays.value;
+    int schooldaysUntiltoday = 0;
+    for (Schoolday schoolday in schooldays) {
+      if (schoolday.schoolday.isBeforeDate(DateTime.now())) {
+        schooldaysUntiltoday++;
+      }
+    }
+    return amountOfmissedClasses / schooldaysUntiltoday * 100;
   }
 
   Map<String, int> groupStatistics(List<Pupil> pupils) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:schuldaten_hub/common/constants/colors.dart';
 
-Future longTextFieldDialog(
+Future<String?> longTextFieldDialog(
     String title, String? textinField, BuildContext parentContext) async {
   return await showDialog(
       context: parentContext,

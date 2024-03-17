@@ -126,6 +126,9 @@ class AdmonitionFilterManager {
         filteredAdmonitions.add(admonition);
       }
     }
+    // sort admonitions, latest first
+    filteredAdmonitions
+        .sort((a, b) => b.admonishedDay.compareTo(a.admonishedDay));
     return filteredAdmonitions;
   }
 }

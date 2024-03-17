@@ -102,7 +102,7 @@ class PupilBaseManager {
     }
     List<PupilBase> oldPupilbase = _pupilbase.value;
     // The pupils in the string are separated by a '\n' - let's split them apart
-    List splittedPupilBase = decryptedResult!.split('\n');
+    List<String> splittedPupilBase = decryptedResult!.split('\n');
     // The properties are separated by commas, let's build the pupilbase objects with them
     List<PupilBase> scannedPupilBase = [];
     for (String data in splittedPupilBase) {
@@ -133,6 +133,7 @@ class PupilBaseManager {
         ));
       }
     }
+    debug.info('base verarbeitet');
     // Now we need to combine it with the stored pupilbase -
     // old elements not present in the new pupilbase are added
     List<PupilBase> newPupilBase = List<PupilBase>.from(scannedPupilBase);

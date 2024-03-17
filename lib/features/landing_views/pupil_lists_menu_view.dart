@@ -12,32 +12,47 @@ class PupilMenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: backgroundColor,
-        title: const Text('Kinderlisten', style: appBarTextStyle),
-      ),
-      body: Center(
-        child: SizedBox(
-          width: Platform.isWindows ? 750 : 380,
-          height: Platform.isWindows ? 400 : 800,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: const ScrollPhysics(),
-            child: GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: screenWidth < 400
-                  ? 2
-                  : screenWidth < 700
-                      ? 3
-                      : 4,
-              padding: const EdgeInsets.all(20),
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                ...pupilListButtons(context, screenWidth),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        primary: true,
+        backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+        appBar: AppBar(
+          toolbarHeight: 80,
+          centerTitle: true,
+          backgroundColor: backgroundColor,
+          title: const Text(
+            'Kinderlisten',
+            style: appBarTextStyle,
+            textAlign: TextAlign.end,
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 20),
+          child: Center(
+            child: SizedBox(
+              width: Platform.isWindows ? 600 : 600,
+              height: Platform.isWindows ? 600 : 800,
+              child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  physics: const ScrollPhysics(),
+                  child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [...pupilListButtons(context, screenWidth)])
+
+                  // GridView.count(
+                  //   shrinkWrap: true,
+                  //   crossAxisCount: screenWidth < 400
+                  //       ? 2
+                  //       : screenWidth < 700
+                  //           ? 3
+                  //           : 4,
+                  //   padding: const EdgeInsets.all(20),
+                  //   physics: const NeverScrollableScrollPhysics(),
+                  //   children: [
+                  //     ...pupilListButtons(context, screenWidth),
+                  //   ],
+                  // ),
+                  ),
             ),
           ),
         ),

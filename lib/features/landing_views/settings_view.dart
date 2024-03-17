@@ -17,6 +17,7 @@ import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/common/widgets/qr_views.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/pupil/views/select_pupils_list_view/controller/select_pupils_list_controller.dart';
+import 'package:schuldaten_hub/features/statistics/birthdays_view.dart';
 
 import 'package:schuldaten_hub/features/statistics/statistics_view/controller/statistics.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -123,7 +124,12 @@ class SettingsView extends WatchingWidget {
                   SettingsTile.navigation(
                     leading: GestureDetector(
                         onTap: () async {
-                          logout(context);
+                          final confirm = await confirmationDialog(
+                              context, 'Ausloggen', 'Wirklich ausloggen?');
+                          if (confirm == true && context.mounted) {
+                            logout(context);
+                            snackbarSuccess(context, 'Erfolgreich ausgeloggt!');
+                          }
                         },
                         child: const Icon(Icons.logout)),
                     title: const Text('Ausloggen'),
@@ -133,8 +139,18 @@ class SettingsView extends WatchingWidget {
                   SettingsTile.navigation(
                     leading: const Icon(Icons.delete_forever_outlined),
                     title: const Text('Lokale ID-Schlüssel löschen'),
-                    onPressed: (context) =>
-                        locator.get<PupilBaseManager>().deleteData(),
+                    onPressed: (context) async {
+                      final confirm = await confirmationDialog(
+                          context,
+                          'Lokale ID-Schlüssel löschen',
+                          'Lokale ID-Schlüssel löschen?');
+                      if (confirm == true && context.mounted) {
+                        locator.get<PupilBaseManager>().deleteData();
+                        snackbarSuccess(context, 'ID-Schlüssel gelöscht');
+                      }
+                      return;
+                    },
+
                     value: const Text('QR-IDs löschen'),
                     //onPressed:
                   ),
@@ -142,18 +158,28 @@ class SettingsView extends WatchingWidget {
                     leading: const Icon(Icons.delete_forever_outlined),
                     title: const Text('Instanz-ID-Schlüssel löschen'),
                     onPressed: (context) async {
-                      locator<EnvManager>().deleteEnv();
-                      final cacheManager = DefaultCacheManager();
-                      await cacheManager.emptyCache();
-                      //locator<SessionManager>().logout();
-                      if (context.mounted) {
-                        Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (ctx) => const Login(),
-                          ),
-                          (route) => false,
-                        );
+                      final confirm = await confirmationDialog(
+                          context,
+                          'Instanz-ID-Schlüssel löschen',
+                          'Instanz-ID-Schlüssel löschen?');
+                      if (confirm == true && context.mounted) {
+                        locator<EnvManager>().deleteEnv();
+                        snackbarSuccess(
+                            context, 'Instanz-ID-Schlüssel gelöscht');
+                        final cacheManager = DefaultCacheManager();
+                        await cacheManager.emptyCache();
+                        if (context.mounted) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (ctx) => const Login(),
+                            ),
+                            (route) => false,
+                          );
+                        }
                       }
+                      return;
+
+                      //locator<SessionManager>().logout();
                     },
                     value: const Text('Nur Instanz-ID löschen'),
                     //onPressed:
@@ -267,6 +293,15 @@ class SettingsView extends WatchingWidget {
                     onPressed: (context) {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (ctx) => const Statistics(),
+                      ));
+                    },
+                  ),
+                  SettingsTile.navigation(
+                    leading: const Icon(Icons.cake_rounded),
+                    title: const Text('Geburtstage in den letzten 7 Tagen'),
+                    onPressed: (context) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => const BirthdaysView(),
                       ));
                     },
                   ),

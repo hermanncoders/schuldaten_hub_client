@@ -5,6 +5,7 @@ import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
 import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
 import 'package:schuldaten_hub/features/learning_support/services/goal_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/services/learning_support_helper_functions.dart';
@@ -272,7 +273,27 @@ Widget statusEntry(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(status.comment),
+                isAuthorizedToChangeStatus(status)
+                    ? InkWell(
+                        onTap: () async {
+                          final String? correctedStatus =
+                              await longTextFieldDialog('Status korrigieren',
+                                  status.comment, context);
+                          if (correctedStatus != null) {
+                            locator<GoalManager>().patchCategoryStatus(
+                                pupil,
+                                status.statusId,
+                                correctedStatus,
+                                null,
+                                null,
+                                null);
+                          }
+                        },
+                        child: Text(status.comment,
+                            style: const TextStyle(
+                              color: interactiveColor,
+                            )))
+                    : Text(status.comment),
                 const Gap(5),
                 Wrap(
                   children: [

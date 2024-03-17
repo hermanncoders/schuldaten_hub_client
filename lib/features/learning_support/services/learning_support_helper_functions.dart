@@ -1,4 +1,6 @@
 import 'package:collection/collection.dart';
+import 'package:schuldaten_hub/common/services/locator.dart';
+import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/learning_support/models/category/pupil_category_status.dart';
 import 'package:schuldaten_hub/features/learning_support/models/goal/pupil_goal.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -38,4 +40,13 @@ PupilGoal? getGoalForCategory(Pupil pupil, int goalCategoryId) {
     return null;
   }
   return null;
+}
+
+bool isAuthorizedToChangeStatus(PupilCategoryStatus status) {
+  if (locator<SessionManager>().isAdmin.value == true ||
+      status.createdBy ==
+          locator<SessionManager>().credentials.value.username) {
+    return true;
+  }
+  return false;
 }

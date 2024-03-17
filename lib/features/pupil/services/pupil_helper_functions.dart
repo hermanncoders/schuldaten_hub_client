@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil_base.dart';
@@ -145,4 +146,41 @@ bool hadLanguageSupport(DateTime? date) {
     return date.isBefore(DateTime.now());
   }
   return false;
+}
+
+List<Pupil> pupilsWithBirthdayInTheLastSevenDays() {
+  final List<Pupil> pupils = locator<PupilManager>().pupils.value;
+  final DateTime now = DateTime.now();
+
+  List<Pupil> pupilsWithBirthdayInTheLastSevenDays = [];
+  for (Pupil pupil in pupils) {
+    if (pupil.birthday != null) {
+      // Extract day and month from birthday and current date
+      final int pupilBirthDay = pupil.birthday!.day;
+      final int pupilBirthMonth = pupil.birthday!.month;
+      final int currentDay = now.day;
+      final int currentMonth = now.month;
+
+      // Check if birthday falls within the last seven days (including today)
+      final bool isBirthdayTodayOrInLastSevenDays = (currentMonth ==
+                  pupilBirthMonth &&
+              // Check for birthdays within the current month
+              (currentDay >=
+                      pupilBirthDay && // Birthday falls on or after current day
+                  currentDay - pupilBirthDay <=
+                      6) || // Within 6 days of the current day
+          (currentMonth - pupilBirthMonth ==
+                  1 && // Birthday in the previous month
+              currentDay < pupilBirthDay && // Current day is before birthday
+              currentDay +
+                      DateUtils.getDaysInMonth(now.year, currentMonth - 1) -
+                      pupilBirthDay <=
+                  6));
+
+      if (isBirthdayTodayOrInLastSevenDays) {
+        pupilsWithBirthdayInTheLastSevenDays.add(pupil);
+      }
+    }
+  }
+  return pupilsWithBirthdayInTheLastSevenDays;
 }

@@ -94,6 +94,23 @@ class GoalManager {
     return;
   }
 
+  Future patchCategoryStatus(Pupil pupil, String statusId, String? state,
+      String? comment, String? createdBy, String? createdAt) async {
+    final data = jsonEncode({
+      if (state != null) "state": state,
+      if (comment != null) "comment": comment,
+      if (createdBy != null) "created_by": createdBy,
+      if (createdAt != null) "created_at": createdAt
+    });
+    final response = await client.patch(
+        EndpointsLearningSupport().patchCategoryStatus(statusId),
+        data: data);
+
+    if (response.statusCode != 200) {
+      //- TO-DO: Error handling
+    }
+  }
+
   Future deleteCategoryStatus(String statusId) async {
     _isRunning.value = true;
     try {

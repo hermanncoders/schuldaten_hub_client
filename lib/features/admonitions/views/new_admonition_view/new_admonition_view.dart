@@ -207,9 +207,22 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  ' 🤜🤕 Gewalt gegen Menschen',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '🤜🤕',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Gewalt gegen Menschen',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: violenceAgainstPeople,
                                 onSelected: (value) {
@@ -225,9 +238,21 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                       admonitionReasonChipSelectedCheckColor,
                                   backgroundColor:
                                       admonitionReasonChipUnselectedColor,
-                                  label: const Text(
-                                    '🤜🎓️ Gewalt gegen Erwachsene',
-                                    style: filterItemsTextStyle,
+                                  label: const Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        '🤜🎓️',
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                        ),
+                                      ),
+                                      Gap(5),
+                                      Text(
+                                        'Gewalt gegen Erwachsene',
+                                        style: filterItemsTextStyle,
+                                      ),
+                                    ],
                                   ),
                                   selected: violenceAgainstTeacher,
                                   onSelected: (value) {
@@ -242,9 +267,21 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '🤜🏫 Gewalt gegen Sachen',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '🤜🏫',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Gewalt gegen Sachen',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: violenceAgainstThings,
                                 onSelected: (value) {
@@ -260,27 +297,22 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '😈😖 Ärgern',
-                                  style: filterItemsTextStyle,
-                                ),
-                                selected: annoyOthers,
-                                onSelected: (value) {
-                                  setState(() {
-                                    annoyOthers = value;
-                                  });
-                                },
-                              ),
-                              FilterChip(
-                                selectedColor:
-                                    admonitionReasonChipSelectedColor,
-                                checkmarkColor:
-                                    admonitionReasonChipSelectedCheckColor,
-                                backgroundColor:
-                                    admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '🤬🤕 Beleidigen',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '🤬💔',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Beleidigen',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: insultOthers,
                                 onSelected: (value) {
@@ -296,9 +328,53 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '🚨😱 Gefahr für sich/andere',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '😈😖',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Ärgern',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
+                                ),
+                                selected: annoyOthers,
+                                onSelected: (value) {
+                                  setState(() {
+                                    annoyOthers = value;
+                                  });
+                                },
+                              ),
+                              FilterChip(
+                                selectedColor:
+                                    admonitionReasonChipSelectedColor,
+                                checkmarkColor:
+                                    admonitionReasonChipSelectedCheckColor,
+                                backgroundColor:
+                                    admonitionReasonChipUnselectedColor,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '🚨😱',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Gefahr für sich/andere',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: imminentDanger,
                                 onSelected: (value) {
@@ -314,9 +390,22 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '🎓️🙉 Anweisungen ignoriert',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '🎓️🙉',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Anweisungen ignoriert',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: ignoreTeacherInstructions,
                                 onSelected: (value) {
@@ -332,9 +421,22 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '🛑🎓️ Stören von Unterricht',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '🛑🎓️',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Stören von Unterricht',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: disturbLesson,
                                 onSelected: (value) {
@@ -350,9 +452,22 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                                     admonitionReasonChipSelectedCheckColor,
                                 backgroundColor:
                                     admonitionReasonChipUnselectedColor,
-                                label: const Text(
-                                  '📝 Sonstiges',
-                                  style: filterItemsTextStyle,
+                                label: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Gap(5),
+                                    Text(
+                                      '📝 ',
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Gap(5),
+                                    Text(
+                                      'Sonstiges',
+                                      style: filterItemsTextStyle,
+                                    ),
+                                  ],
                                 ),
                                 selected: other,
                                 onSelected: (value) {

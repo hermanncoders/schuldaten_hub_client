@@ -9,6 +9,10 @@ class EndpointsLearningSupport {
     return '/pupil/$pupilId/category_status/$categoryId';
   }
 
+  String patchCategoryStatus(String categoryStatusId) {
+    return '/pupil/category_status/$categoryStatusId';
+  }
+
   String deleteCategoryStatus(String categoryStatusId) {
     return '/pupil/category_status/$categoryStatusId/delete';
   }

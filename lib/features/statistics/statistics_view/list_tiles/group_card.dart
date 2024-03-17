@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/features/attendance/views/widgets/attendance_badges.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/features/statistics/statistics_view/controller/statistics.dart';
 
@@ -373,7 +374,93 @@ Widget statisticsGroupCard(StatisticsController controller, List<Pupil> group) {
                 ),
               )
             ],
-          )
+          ),
+          const Gap(5),
+          const Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Text(
+              'Fehlzeiten:',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            )
+          ]),
+          const Gap(5),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            missedTypeBadge('missed'),
+            const Gap(5),
+            Text(
+              controller.totalMissedClasses(group).length.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            const Gap(5),
+            excusedBadge(true),
+            const Gap(5),
+            Text(
+              controller.totalUnexcusedMissedClasses(group).length.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            const Gap(5),
+            contactedBadge(1),
+            const Gap(5),
+            Text(
+              controller.totalContactedMissedClasses(group).length.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ]),
+          const Gap(5),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const Text('Ø'),
+            const Gap(5),
+            const Text(' pro Kind:'),
+            const Gap(5),
+            Text(
+              '${controller.averageMissedClassesperPupil(group).toStringAsFixed(2)} Tage',
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ]),
+          const Gap(5),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            const Text('Tage im laufenden Schuljahr:'),
+            const Gap(5),
+            Text(
+              controller
+                  .percentageMissedSchooldays(
+                      controller.averageMissedClassesperPupil(group))
+                  .toStringAsFixed(2),
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            const Gap(5),
+            const Text(
+              '%',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ])
         ],
       ),
     ),

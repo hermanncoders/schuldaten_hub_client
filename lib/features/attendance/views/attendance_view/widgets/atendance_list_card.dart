@@ -47,248 +47,256 @@ class AttendanceCard extends WatchingWidget {
     }
 
     if (Platform.isAndroid) {
-      return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        color: Colors.white,
-        elevation: 1.0,
-        margin:
-            const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AvatarWithBadges(pupil, 80),
-            Expanded(
-              child: GestureDetector(
-                onLongPress: () => createMissedClassList(context, pupil),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => PupilProfile(
-                      pupil,
-                    ),
-                  ));
-                },
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Gap(10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: InkWell(
-                                onTap: () {
-                                  locator<BottomNavManager>()
-                                      .setPupilProfileNavPage(3);
-                                  Navigator.of(context)
-                                      .pushReplacement(MaterialPageRoute(
-                                    builder: (ctx) => PupilProfile(
-                                      pupil,
+      return Container(
+        constraints: const BoxConstraints(maxWidth: 500),
+        child: Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          color: Colors.white,
+          elevation: 1.0,
+          margin: const EdgeInsets.only(
+              left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AvatarWithBadges(pupil, 80),
+              Expanded(
+                child: GestureDetector(
+                  onLongPress: () => createMissedClassList(context, pupil),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => PupilProfile(
+                        pupil,
+                      ),
+                    ));
+                  },
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Gap(10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: InkWell(
+                                  onTap: () {
+                                    locator<BottomNavManager>()
+                                        .setPupilProfileNavPage(3);
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (ctx) => PupilProfile(
+                                        pupil,
+                                      ),
+                                    ));
+                                  },
+                                  child: Text(
+                                    '${pupil.firstName!} ${pupil.lastName!}',
+                                    overflow: TextOverflow.fade,
+                                    softWrap: false,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
                                     ),
-                                  ));
-                                },
-                                child: Text(
-                                  '${pupil.firstName!} ${pupil.lastName!}',
-                                  overflow: TextOverflow.fade,
-                                  softWrap: false,
-                                  textAlign: TextAlign.left,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Gap(20),
-                          DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              icon: const Visibility(
-                                  visible: false,
-                                  child: Icon(Icons.arrow_downward)),
-                              onTap: () {
-                                FocusManager.instance.primaryFocus!.unfocus();
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Gap(20),
+                            DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                icon: const Visibility(
+                                    visible: false,
+                                    child: Icon(Icons.arrow_downward)),
+                                onTap: () {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                },
+                                value: dropdownMissedValue,
+                                items: missedTypeMenuItems,
+                                onChanged: (newValue) async {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                  if (dropdownMissedValue == newValue) {
+                                    return;
+                                  }
+                                  if (newValue == 'late') {
+                                    final int minutesLate =
+                                        await minutesLateDialog(context);
+                                    attendanceManager.changeLateTypeValue(
+                                        pupil.internalId,
+                                        newValue!,
+                                        thisDate,
+                                        minutesLate);
+                                  } else {
+                                    attendanceManager.changeMissedTypeValue(
+                                        pupil.internalId, newValue!, thisDate);
+                                  }
+                                },
+                              ),
+                            ),
+                            const Gap(5),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: excusedCheckColor,
+                              value: excusedValue,
+                              onChanged: (bool? newvalue) {
+                                attendanceManager.changeExcusedValue(
+                                    pupil.internalId, thisDate, newvalue!);
                               },
-                              value: dropdownMissedValue,
-                              items: missedTypeMenuItems,
-                              onChanged: (newValue) async {
-                                FocusManager.instance.primaryFocus!.unfocus();
-                                if (dropdownMissedValue == newValue) {
+                            ),
+                            (dropdownMissedValue == 'missed' &&
+                                        excusedValue == true) ||
+                                    dropdownContactedValue != '0' ||
+                                    returnedValue == true
+                                ? DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                        icon: const Visibility(
+                                            visible: false,
+                                            child: Icon(Icons.arrow_downward)),
+                                        onTap: () {
+                                          FocusManager.instance.primaryFocus!
+                                              .unfocus();
+                                        },
+                                        value: dropdownContactedValue,
+                                        items: dropdownContactedMenuItems,
+                                        onChanged: (newValue) {
+                                          if (dropdownContactedValue ==
+                                                  newValue ||
+                                              excusedValue == false) {
+                                            return;
+                                          }
+                                          attendanceManager
+                                              .changeContactedValue(
+                                                  pupil.internalId,
+                                                  newValue!,
+                                                  thisDate);
+                                        }),
+                                  )
+                                : Container(
+                                    height: 45,
+                                    width: 30,
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white),
+                                  ),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: goneHomeColor,
+                              value: returnedValue ?? false,
+                              onChanged: (bool? newValue) async {
+                                if (dropdownMissedValue == 'missed') {
                                   return;
                                 }
-                                if (newValue == 'late') {
-                                  final int minutesLate =
-                                      await minutesLateDialog(context);
-                                  attendanceManager.changeLateTypeValue(
+                                if (newValue == true) {
+                                  final String? returnedTime =
+                                      await returnedDayTime(context);
+                                  debug
+                                      .warning('returned time : $returnedTime');
+                                  if (returnedTime == null) {
+                                    return;
+                                  }
+                                  attendanceManager.changeReturnedValue(
                                       pupil.internalId,
                                       newValue!,
                                       thisDate,
-                                      minutesLate);
-                                } else {
-                                  attendanceManager.changeMissedTypeValue(
-                                      pupil.internalId, newValue!, thisDate);
-                                }
-                              },
-                            ),
-                          ),
-                          const Gap(5),
-                          Checkbox(
-                            checkColor: Colors.white,
-                            activeColor: excusedCheckColor,
-                            value: excusedValue,
-                            onChanged: (bool? newvalue) {
-                              attendanceManager.changeExcusedValue(
-                                  pupil.internalId, thisDate, newvalue!);
-                            },
-                          ),
-                          (dropdownMissedValue == 'missed' &&
-                                      excusedValue == true) ||
-                                  dropdownContactedValue != '0' ||
-                                  returnedValue == true
-                              ? DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                      icon: const Visibility(
-                                          visible: false,
-                                          child: Icon(Icons.arrow_downward)),
-                                      onTap: () {
-                                        FocusManager.instance.primaryFocus!
-                                            .unfocus();
-                                      },
-                                      value: dropdownContactedValue,
-                                      items: dropdownContactedMenuItems,
-                                      onChanged: (newValue) {
-                                        if (dropdownContactedValue ==
-                                                newValue ||
-                                            excusedValue == false) {
-                                          return;
-                                        }
-                                        attendanceManager.changeContactedValue(
-                                            pupil.internalId,
-                                            newValue!,
-                                            thisDate);
-                                      }),
-                                )
-                              : Container(
-                                  height: 45,
-                                  width: 30,
-                                  decoration:
-                                      const BoxDecoration(color: Colors.white),
-                                ),
-                          Checkbox(
-                            checkColor: Colors.white,
-                            activeColor: goneHomeColor,
-                            value: returnedValue ?? false,
-                            onChanged: (bool? newValue) async {
-                              if (dropdownMissedValue == 'missed') {
-                                return;
-                              }
-                              if (newValue == true) {
-                                final String? returnedTime =
-                                    await returnedDayTime(context);
-                                debug.warning('returned time : $returnedTime');
-                                if (returnedTime == null) {
+                                      returnedTime);
                                   return;
                                 }
                                 attendanceManager.changeReturnedValue(
                                     pupil.internalId,
                                     newValue!,
                                     thisDate,
-                                    returnedTime);
-                                return;
-                              }
-                              attendanceManager.changeReturnedValue(
-                                  pupil.internalId, newValue!, thisDate, null);
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(children: [
-                        SizedBox(
-                          width: 70,
-                          child: Center(
-                            child:
-                                createdModifiedValue(pupil.internalId) != null
-                                    ? Text(
-                                        createdModifiedValue(pupil.internalId)!,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      )
-                                    : const SizedBox.shrink(),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 20.0,
-                              height: 20.0,
-                              decoration: const BoxDecoration(
-                                color: excusedCheckColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'U',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ),
-                            const Gap(18),
-                            Container(
-                              width: 20.0,
-                              height: 20.0,
-                              decoration: BoxDecoration(
-                                color: Colors.red[900],
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'K',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ),
-                            const Gap(19),
-                            Container(
-                              width: 20.0,
-                              height: 20.0,
-                              decoration: const BoxDecoration(
-                                color: homeColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'H',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white),
-                                ),
-                              ),
+                                    null);
+                              },
                             ),
                           ],
                         ),
+                        Row(children: [
+                          SizedBox(
+                            width: 70,
+                            child: Center(
+                              child: createdModifiedValue(pupil.internalId) !=
+                                      null
+                                  ? Text(
+                                      createdModifiedValue(pupil.internalId)!,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: const BoxDecoration(
+                                  color: excusedCheckColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'U',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              const Gap(18),
+                              Container(
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.red[900],
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'K',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              const Gap(19),
+                              Container(
+                                width: 20.0,
+                                height: 20.0,
+                                decoration: const BoxDecoration(
+                                  color: homeColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    'H',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ]),
+                        const Gap(15),
                       ]),
-                      const Gap(15),
-                    ]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     } else {

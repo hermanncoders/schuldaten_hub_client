@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
 import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
@@ -24,7 +25,6 @@ class AdmonitionListView extends WatchingWidget {
     bool admonitionFiltersOn =
         watchValue((AdmonitionFilterManager x) => x.admonitionsFiltersOn);
     List<Pupil> pupils = watchValue((PupilFilterManager x) => x.filteredPupils);
-
     return Scaffold(
       backgroundColor: canvasColor,
       appBar: AppBar(
@@ -37,6 +37,7 @@ class AdmonitionListView extends WatchingWidget {
             Icon(
               Icons.warning_amber_rounded,
               size: 25,
+              color: Colors.white,
             ),
             Gap(10),
             Text(

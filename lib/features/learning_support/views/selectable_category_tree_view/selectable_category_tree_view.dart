@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/learning_support/views/selectable_category_tree_view/controller/selectable_category_tree_controller.dart';
 import 'package:schuldaten_hub/features/learning_support/widgets/pupil_category_widgets/pupil_category_tree.dart';
 
@@ -18,9 +19,10 @@ class SelectableCategoryTreeView extends StatelessWidget {
           )),
       child: Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.white,
           centerTitle: true,
           backgroundColor: backgroundColor,
-          title: const Text('Förderung'),
+          title: const Text('Förderung', style: appBarTextStyle),
           // automaticallyImplyLeading: false,
         ),
         body: Center(
@@ -56,6 +58,8 @@ class SelectableCategoryTreeView extends StatelessWidget {
                 backgroundColor: backgroundColor,
                 child: const Icon(
                   Icons.check,
+                  color: Colors.white,
+                  size: 35,
                 ),
                 onPressed: () {
                   Navigator.of(context).pop(controller.selectedCategoryId);

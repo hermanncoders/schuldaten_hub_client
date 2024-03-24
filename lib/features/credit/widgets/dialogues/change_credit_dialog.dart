@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
@@ -36,33 +37,30 @@ Future<void> changeCreditDialog(BuildContext context, Pupil pupil) async {
                     ),
                   ],
                 )),
-            title: const Text('Guthaben ändern'),
+            title: const Text(
+              'Guthaben ändern',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber[800],
-                      minimumSize: const Size.fromHeight(50)),
+                  style: actionButtonStyle,
                   onPressed: () {
                     _textEditingController.clear();
                     Navigator.of(context).pop();
                   },
                   child: const Text(
                     "ABBRECHEN",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
-                    ),
+                    style: buttonTextStyle,
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      minimumSize: const Size.fromHeight(50)),
+                  style: cancelButtonStyle,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       int amount = -int.parse(_textEditingController.text);
@@ -75,18 +73,12 @@ Future<void> changeCreditDialog(BuildContext context, Pupil pupil) async {
                   },
                   child: const Text(
                     "MINUS",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
-                      color: Colors.white,
-                    ),
+                    style: buttonTextStyle,
                   ),
                 ),
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    minimumSize: const Size.fromHeight(50)),
+                style: successButtonStyle,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     int amount = int.parse(_textEditingController.text);
@@ -100,11 +92,7 @@ Future<void> changeCreditDialog(BuildContext context, Pupil pupil) async {
                 },
                 child: const Text(
                   "PLUS",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.0,
-                    color: Colors.white,
-                  ),
+                  style: buttonTextStyle,
                 ),
               ),
             ],

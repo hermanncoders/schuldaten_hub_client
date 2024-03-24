@@ -9,7 +9,9 @@ shortTextfieldDialog(BuildContext context, String title, String labelText) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(title),
+        title: Text(title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
         content: Container(
           decoration: BoxDecoration(
             border: Border.all(color: backgroundColor),
@@ -35,14 +37,11 @@ shortTextfieldDialog(BuildContext context, String title, String labelText) {
               style: cancelButtonStyle,
               child: const Text(
                 'ABBRECHEN',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0,
-                ),
+                style: buttonTextStyle,
               ),
               onPressed: () {
-                textEditingController.dispose();
                 Navigator.of(context).pop();
+                textEditingController.dispose();
               },
             ),
           ),
@@ -52,14 +51,11 @@ shortTextfieldDialog(BuildContext context, String title, String labelText) {
               style: successButtonStyle,
               child: const Text(
                 'OKAY',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.0,
-                  color: Colors.white,
-                ),
+                style: buttonTextStyle,
               ),
               onPressed: () {
                 Navigator.of(context).pop(textEditingController.text);
+                textEditingController.dispose();
               },
             ),
           ),

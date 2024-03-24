@@ -40,9 +40,13 @@ class AuthorizationPupilsView extends WatchingWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.list),
+            const Icon(Icons.list, color: Colors.white),
             const Gap(5),
-            Text(authorization.authorizationName),
+            Text(authorization.authorizationName,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
           ],
         ),
       ),

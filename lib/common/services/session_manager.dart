@@ -131,7 +131,7 @@ class SessionManager {
 
   Future<bool> attemptLogin(String? username, String? password) async {
     String auth = 'Basic ${base64Encode(utf8.encode('$username:$password'))}';
-    _operationReport.value = Report(null, null);
+    //_operationReport.value = Report(null, null);
     _isRunning.value = true;
     final response = await _dio.get(EndpointsUser.login,
         options: Options(headers: <String, String>{'Authorization': auth}));

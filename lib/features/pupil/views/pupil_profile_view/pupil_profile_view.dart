@@ -29,7 +29,6 @@ class PupilDetailsView extends WatchingWidget {
         .firstWhere((element) => element.internalId == passedPupil.internalId);
     final List<Admonition> admonitions = List.from(pupil.pupilAdmonitions!);
     admonitions.sort((a, b) => b.admonishedDay.compareTo(a.admonishedDay));
-
     return Scaffold(
       backgroundColor: canvasColor,
       body: RefreshIndicator(

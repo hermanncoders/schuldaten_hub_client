@@ -94,8 +94,10 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: backgroundColor,
-        title: const Text('Neues Ereignis'),
+        title: const Text('Neues Ereignis', style: appBarTextStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -505,10 +507,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                     postAdmonition(context);
                     Navigator.pop(context);
                   },
-                  child: const Text(
-                    'SENDEN',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                  child: const Text('SENDEN', style: buttonTextStyle),
                 ),
                 const Gap(15),
                 ElevatedButton(
@@ -518,7 +517,7 @@ class NewAdmonitionViewState extends State<NewAdmonitionView> {
                   },
                   child: const Text(
                     'ABBRECHEN',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: buttonTextStyle,
                   ),
                 ),
               ],

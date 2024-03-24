@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/competence/models/competence.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_filter_manager.dart';
 import 'package:schuldaten_hub/features/competence/services/competence_manager.dart';
@@ -23,7 +24,10 @@ class CompetenceListView extends WatchingWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Kompetenzen'),
+        title: const Text(
+          'Kompetenzen',
+          style: appBarTextStyle,
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async => locator<CompetenceManager>().fetchCompetences(),

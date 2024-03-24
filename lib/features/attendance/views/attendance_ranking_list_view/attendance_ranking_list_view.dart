@@ -34,6 +34,7 @@ class AttendanceRankingListView extends WatchingWidget {
             Icon(
               Icons.calendar_month_rounded,
               size: 25,
+              color: Colors.white,
             ),
             Gap(10),
             Text(

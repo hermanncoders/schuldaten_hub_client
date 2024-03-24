@@ -34,7 +34,7 @@ class AuthorizationsView extends WatchingWidget {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.fact_check_rounded, size: 25),
+            Icon(Icons.fact_check_rounded, size: 25, color: Colors.white),
             Gap(10),
             Text(
               'Einwilligungen',

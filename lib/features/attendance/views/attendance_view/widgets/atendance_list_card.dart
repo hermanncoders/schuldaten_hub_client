@@ -50,8 +50,9 @@ class AttendanceCard extends WatchingWidget {
       return Container(
         constraints: const BoxConstraints(maxWidth: 500),
         child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           color: Colors.white,
+          surfaceTintColor: Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           elevation: 1.0,
           margin: const EdgeInsets.only(
               left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
@@ -141,7 +142,7 @@ class AttendanceCard extends WatchingWidget {
                                 },
                               ),
                             ),
-                            const Gap(5),
+                            const Gap(8),
                             Checkbox(
                               checkColor: Colors.white,
                               activeColor: excusedCheckColor,
@@ -151,6 +152,7 @@ class AttendanceCard extends WatchingWidget {
                                     pupil.internalId, thisDate, newvalue!);
                               },
                             ),
+                            const Gap(4),
                             (dropdownMissedValue == 'missed' &&
                                         excusedValue == true) ||
                                     dropdownContactedValue != '0' ||
@@ -185,6 +187,7 @@ class AttendanceCard extends WatchingWidget {
                                     decoration: const BoxDecoration(
                                         color: Colors.white),
                                   ),
+                            const Gap(4),
                             Checkbox(
                               checkColor: Colors.white,
                               activeColor: goneHomeColor,
@@ -236,8 +239,8 @@ class AttendanceCard extends WatchingWidget {
                           Row(
                             children: [
                               Container(
-                                width: 20.0,
-                                height: 20.0,
+                                width: 25.0,
+                                height: 25.0,
                                 decoration: const BoxDecoration(
                                   color: excusedCheckColor,
                                   shape: BoxShape.circle,
@@ -254,8 +257,8 @@ class AttendanceCard extends WatchingWidget {
                               ),
                               const Gap(18),
                               Container(
-                                width: 20.0,
-                                height: 20.0,
+                                width: 25.0,
+                                height: 25.0,
                                 decoration: BoxDecoration(
                                   color: Colors.red[900],
                                   shape: BoxShape.circle,
@@ -272,8 +275,8 @@ class AttendanceCard extends WatchingWidget {
                               ),
                               const Gap(19),
                               Container(
-                                width: 20.0,
-                                height: 20.0,
+                                width: 25.0,
+                                height: 25.0,
                                 decoration: const BoxDecoration(
                                   color: homeColor,
                                   shape: BoxShape.circle,
@@ -301,8 +304,9 @@ class AttendanceCard extends WatchingWidget {
       );
     } else {
       return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         color: Colors.white,
+        surfaceTintColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         elevation: 1.0,
         margin:
             const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),

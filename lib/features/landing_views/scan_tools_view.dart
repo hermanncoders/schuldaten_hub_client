@@ -61,7 +61,9 @@ class QrToolsView extends WatchingWidget {
                           'Daten aus SchiLD importieren',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
                         ),
                       )
                     : const SizedBox.shrink(),
@@ -79,7 +81,9 @@ class QrToolsView extends WatchingWidget {
                           'ID-Liste importieren',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white),
                         ))
                     : Container(
                         height: 90,

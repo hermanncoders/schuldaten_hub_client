@@ -6,45 +6,47 @@ import 'package:schuldaten_hub/features/authorizations/views/authorization_pupil
 
 Card authorizationCard(BuildContext context, Authorization authorization) {
   return Card(
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
       child: Padding(
-    padding: const EdgeInsets.all(15.0),
-    child: InkWell(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) => AuthorizationPupils(
-            authorization,
-          ),
-        ));
-      },
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(15.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (ctx) => AuthorizationPupils(
+                authorization,
+              ),
+            ));
+          },
+          child: Row(
             children: [
-              Text(
-                authorization.authorizationName,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const Gap(5),
-              SizedBox(
-                width: 250,
-                child: Text(
-                  authorization.authorizationDescription,
-                  maxLines: 2,
-                  overflow: TextOverflow.fade,
-                  style: const TextStyle(
-                    fontSize: 14,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    authorization.authorizationName,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                ),
+                  const Gap(5),
+                  SizedBox(
+                    width: 250,
+                    child: Text(
+                      authorization.authorizationDescription,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  const Column(
+                    children: [],
+                  )
+                ],
               ),
-              const Column(
-                children: [],
-              )
             ],
           ),
-        ],
-      ),
-    ),
-  ));
+        ),
+      ));
 }

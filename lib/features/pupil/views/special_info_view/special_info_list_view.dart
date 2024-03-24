@@ -30,7 +30,11 @@ class SpecialInfoListView extends WatchingWidget {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.emergency_rounded, size: 25),
+            Icon(
+              Icons.emergency_rounded,
+              size: 25,
+              color: Colors.white,
+            ),
             Gap(10),
             Text(
               'Besondere Infos',

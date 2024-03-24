@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,6 +15,7 @@ import 'package:schuldaten_hub/features/landing_views/login_view/controller/logi
 import 'package:schuldaten_hub/common/services/session_manager.dart';
 import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/landing_views/loading_page.dart';
+import 'package:schuldaten_hub/features/landing_views/no_connection_view.dart';
 import 'package:schuldaten_hub/features/pupil/services/pupilbase_manager.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:window_manager/window_manager.dart';
@@ -66,8 +69,14 @@ class MyApp extends WatchingWidget {
   Widget build(BuildContext context) {
     bool envIsReady = watchValue((EnvManager x) => x.envReady);
     bool isAuthenticated = watchValue((SessionManager x) => x.isAuthenticated);
+    AsyncSnapshot<List<ConnectivityResult>?> connectionStatus =
+        watchStream((ConnectionManager x) => x.connectivity.value);
 
-    bool isConnected = locator<ConnectionManager>().isConnected;
+    bool isConnected = connectionStatus.hasData
+        ? connectionStatus.data!.last != ConnectivityResult.none
+            ? true
+            : false
+        : false;
 
     return MaterialApp(
       localizationsDelegates: const <LocalizationsDelegate<Object>>[
@@ -81,21 +90,15 @@ class MyApp extends WatchingWidget {
       title: 'Schuldaten Hub',
       routes: AppRoutes.routes,
       home: !isConnected
-          ? Container(
-              color: Colors.white,
-              child: const Center(
-                child: Text(
-                  'Keine Internetverbindung!',
-                  style: title,
-                ),
-              ),
-            )
+          ? const NoConnectionView()
           : envIsReady && isAuthenticated
               ? FutureBuilder(
                   future: locator.allReady(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Scaffold(bottomNavigationBar: BottomNavigation());
+                      return SafeArea(
+                          child: Scaffold(
+                              bottomNavigationBar: BottomNavigation()));
                     } else {
                       return const LoadingPage();
                     }

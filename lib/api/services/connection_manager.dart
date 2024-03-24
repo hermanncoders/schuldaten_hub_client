@@ -3,20 +3,20 @@ import 'package:flutter/foundation.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 
 class ConnectionManager {
-  ValueListenable<ConnectivityResult> get connectivity => _connectivity;
+  ValueListenable<Stream<List<ConnectivityResult>>> get connectivity =>
+      _connectivity;
 
-  final _connectivity =
-      ValueNotifier<ConnectivityResult>(ConnectivityResult.none);
+  final _connectivity = ValueNotifier<Stream<List<ConnectivityResult>>>(
+      Connectivity().onConnectivityChanged);
 
-  bool get isConnected => _connectivity.value != ConnectivityResult.none;
   ConnectionManager() {
     debug.warning('ConnectionManager initialized');
   }
 
   Future checkConnectivity() async {
+    _connectivity.value = _connectivity.value;
     final connection = await (Connectivity().checkConnectivity());
-    _connectivity.value = connection;
-
-    return;
+    return connection;
+    // //_connectivity.value = connection;
   }
 }

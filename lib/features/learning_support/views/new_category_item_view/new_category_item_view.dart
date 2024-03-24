@@ -77,7 +77,10 @@ class NewCategoryGoalView extends StatelessWidget {
                               }
                               controller.setGoalCategoryId(categoryId);
                             },
-                            child: const Text('KATEGORIE AUSWÄHLEN'),
+                            child: const Text(
+                              'KATEGORIE AUSWÄHLEN',
+                              style: buttonTextStyle,
+                            ),
                           )
                         : InkWell(
                             child: Container(
@@ -253,12 +256,7 @@ class NewCategoryGoalView extends StatelessWidget {
                       ],
                     const Gap(15),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          backgroundColor: Colors.amber[800],
-                          minimumSize: const Size.fromHeight(60)),
+                      style: actionButtonStyle,
                       onPressed: () {
                         if (controller.widget.appBarTitle ==
                             'Neues Förderziel') {
@@ -274,24 +272,18 @@ class NewCategoryGoalView extends StatelessWidget {
                       },
                       child: const Text(
                         'SENDEN',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: buttonTextStyle,
                       ),
                     ),
                     const Gap(15),
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          backgroundColor:
-                              const Color.fromARGB(255, 235, 67, 67),
-                          minimumSize: const Size.fromHeight(60)),
+                      style: cancelButtonStyle,
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       child: const Text(
                         'ABBRECHEN',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: buttonTextStyle,
                       ),
                     ),
                   ],

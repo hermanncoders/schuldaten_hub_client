@@ -47,9 +47,16 @@ class SchoolListPupilsView extends WatchingWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.list),
+            const Icon(
+              Icons.list,
+              color: Colors.white,
+            ),
             const Gap(10),
-            Text(schoolList.listName),
+            Text(schoolList.listName,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
           ],
         ),
       ),
@@ -70,8 +77,8 @@ class SchoolListPupilsView extends WatchingWidget {
                     automaticallyImplyLeading: false,
                     leading: const SizedBox.shrink(),
                     backgroundColor: Colors.transparent,
-                    collapsedHeight: 130,
-                    expandedHeight: 130.0,
+                    collapsedHeight: 140,
+                    expandedHeight: 140.0,
                     stretch: false,
                     elevation: 0,
                     flexibleSpace: FlexibleSpaceBar(

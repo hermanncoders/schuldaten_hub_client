@@ -5,7 +5,7 @@ import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/pupil/models/credit_history_log.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
-import 'package:schuldaten_hub/features/credit/widgets/change_credit_dialog.dart';
+import 'package:schuldaten_hub/features/credit/widgets/dialogues/change_credit_dialog.dart';
 
 List<Widget> pupilCreditContentList(Pupil pupil, BuildContext context) {
   return [
@@ -22,7 +22,7 @@ List<Widget> pupilCreditContentList(Pupil pupil, BuildContext context) {
           },
           child: const Text(
             "GUTHABEN ÄNDERN",
-            style: TextStyle(fontSize: 17.0),
+            style: buttonTextStyle,
           ),
         ),
       ),

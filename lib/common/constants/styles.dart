@@ -18,6 +18,7 @@ const TextStyle filterItemsTextStyle = TextStyle(
 const TextStyle buttonTextStyle = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
+  fontSize: 18,
 );
 
 const TextStyle title = TextStyle(
@@ -33,6 +34,8 @@ const TextStyle subtitle = TextStyle(
 );
 
 ButtonStyle actionButtonStyle = ElevatedButton.styleFrom(
+    textStyle:
+        const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     ),

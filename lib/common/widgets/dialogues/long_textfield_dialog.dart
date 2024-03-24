@@ -37,7 +37,10 @@ Future<String?> longTextFieldDialog(
                 ),
               ],
             ),
-            title: Text(title),
+            title: Text(title,
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

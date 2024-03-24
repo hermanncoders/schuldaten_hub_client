@@ -49,7 +49,10 @@ List<Widget> pupilAdmonitionsContentList(
           },
           child: const Text(
             "NEUES EREIGNIS",
-            style: TextStyle(fontSize: 17.0),
+            style: TextStyle(
+                fontSize: 17.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -188,8 +191,7 @@ List<Widget> pupilAdmonitionsContentList(
                                   filteredAdmonitions[index].admonitionId,
                                 );
                                 if (context.mounted) {
-                                  informationDialog(context, 'Vorfall geändert',
-                                      'Der Vorfall wurde geändert!');
+                                  snackbarSuccess(context, 'Vorfall geändert!');
                                 }
                               },
                               onLongPress: () async {
@@ -205,8 +207,7 @@ List<Widget> pupilAdmonitionsContentList(
                                         filteredAdmonitions[index].admonitionId,
                                         filteredAdmonitions[index].fileUrl!);
                                 if (context.mounted) {
-                                  informationDialog(context, 'Vorfall geändert',
-                                      'Der Vorfall wurde geändert!');
+                                  snackbarSuccess(context, 'Vorfall geändert!');
                                 }
                               },
                               child: filteredAdmonitions[index].fileUrl != null

@@ -1,18 +1,18 @@
 name: schuldaten_hub
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.2.13
+version: 0.2.6
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
   camera_windows: ^0.2.1+9
-  cached_network_image: ^3.3.0
+  cached_network_image: ^3.3.1
   carousel_slider: ^4.2.1
   collection: ^1.17.1
-  connectivity_plus: ^5.0.2
-  crop_image: ^1.0.11
+  connectivity_plus: ^6.0.1
+  crop_image: ^1.0.12
   cupertino_icons: ^1.0.6
   dio: ^5.3.3
   encrypt: ^5.0.3
@@ -40,14 +40,14 @@ dependencies:
   qr_flutter: ^4.1.0
   settings_ui: ^2.0.2
   top_snackbar_flutter: ^3.1.0
-  watch_it: ^1.1.0
+  watch_it: ^1.4.0
   widget_zoom: ^0.0.2
   window_manager: ^0.3.8
   image_picker_platform_interface: ^2.9.3
   camera: ^0.10.5+9
 
 dev_dependencies:
-  flutter_test:
+  flutter_test: 
     sdk: flutter
   flutter_lints: ^2.0.0
   functional_widget: ^0.10.2

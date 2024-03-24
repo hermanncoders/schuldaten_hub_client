@@ -33,7 +33,11 @@ class WorkbookListView extends WatchingWidget {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.note_alt_rounded, size: 25),
+            Icon(
+              Icons.note_alt_rounded,
+              size: 25,
+              color: Colors.white,
+            ),
             Gap(10),
             Text(
               'Arbeitshefte',

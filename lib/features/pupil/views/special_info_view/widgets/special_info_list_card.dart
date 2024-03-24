@@ -13,8 +13,9 @@ class SpecialInfoCard extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       color: Colors.white,
+      surfaceTintColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 1.0,
       margin:
           const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),

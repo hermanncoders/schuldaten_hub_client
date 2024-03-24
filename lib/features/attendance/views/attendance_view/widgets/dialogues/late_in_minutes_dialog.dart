@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 
 final GlobalKey<FormState> _minutesLateKey = GlobalKey<FormState>();
 final TextEditingController _textEditingController = TextEditingController();
@@ -32,31 +34,25 @@ Future<int> minutesLateDialog(BuildContext context) async {
                     ),
                   ],
                 )),
-            title: const Text('Minuten Verspätung'),
+            title: const Text(
+              'Minuten Verspätung',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
             actions: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber[800],
-                      minimumSize: const Size.fromHeight(50)),
+                  style: cancelButtonStyle,
                   onPressed: () {
                     _textEditingController.clear();
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    "ABBRECHEN",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17.0,
-                    ),
-                  ),
+                  child: const Text("ABBRECHEN", style: buttonTextStyle),
                 ),
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    minimumSize: const Size.fromHeight(50)),
+                style: successButtonStyle,
                 onPressed: () {
                   if (_minutesLateKey.currentState!.validate()) {
                     int amount = int.parse(_textEditingController.text);

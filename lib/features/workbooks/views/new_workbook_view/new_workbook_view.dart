@@ -195,7 +195,7 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
                     },
                     child: const Text(
                       'ISBN SCANNEN',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: buttonTextStyle,
                     ),
                   ),
                   const Gap(15),
@@ -223,7 +223,7 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
                     },
                     child: const Text(
                       'SENDEN',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: buttonTextStyle,
                     ),
                   ),
                   const Gap(15),
@@ -234,7 +234,7 @@ class NewWorkbookViewState extends State<NewWorkbookView> {
                     },
                     child: const Text(
                       'ABBRECHEN',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: buttonTextStyle,
                     ),
                   ),
                 ],

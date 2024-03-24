@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/features/learning_support/views/goal_category_list_view/controller/category_list_controller.dart';
 import 'package:schuldaten_hub/features/learning_support/views/goal_category_list_view/widgets/category_tree.dart';
 import 'package:watch_it/watch_it.dart';
@@ -12,9 +13,13 @@ class CategoryListView extends WatchingWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         centerTitle: true,
         backgroundColor: backgroundColor,
-        title: const Text('Förderkategorien'),
+        title: const Text(
+          'Förderkategorien',
+          style: appBarTextStyle,
+        ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

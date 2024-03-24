@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:schuldaten_hub/common/constants/colors.dart';
+import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/landing_views/login_view/controller/login_controller.dart';
 
@@ -17,6 +19,11 @@ class LoginView extends WatchingWidget {
 
   @override
   Widget build(BuildContext context) {
+    registerHandler(
+      select: (SessionManager x) => x.operationReport,
+      handler: (context, value, cancel) =>
+          snackbar(context, value.type, value.message),
+    );
     bool isAuthenticated = watchValue((SessionManager x) => x.isAuthenticated);
     bool envReady = watchValue((EnvManager x) => x.envReady);
 
@@ -126,16 +133,17 @@ class LoginView extends WatchingWidget {
                             //margin: const EdgeInsets.only(bottom: 16),
                             width: double.infinity,
                             child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: appStyleButtonColor,
-                                  minimumSize: const Size.fromHeight(50)),
+                              style: actionButtonStyle,
                               onPressed: () async {
                                 // locator<EnvManager>().deleteEnv();
                                 await controller.textFieldCredentials();
                               },
                               child: const Text(
                                 "EINLOGGEN",
-                                style: TextStyle(fontSize: 17.0),
+                                style: TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
                               ),
                             ),
                           ),
@@ -174,9 +182,7 @@ class LoginView extends WatchingWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           //margin: const EdgeInsets.only(bottom: 16),
                           child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.amber[800],
-                                  minimumSize: const Size.fromHeight(50)),
+                              style: actionButtonStyle,
                               onPressed: () async {
                                 envReady
                                     ? controller.scanCredentials()
@@ -185,13 +191,11 @@ class LoginView extends WatchingWidget {
                                         : controller.scanEnv();
                               },
                               child: Platform.isWindows
-                                  ? const Text(
-                                      'DATEI AUSWÄHLEN',
-                                      style: TextStyle(fontSize: 17.0),
-                                    )
+                                  ? const Text('DATEI AUSWÄHLEN',
+                                      style: buttonTextStyle)
                                   : const Text(
                                       "SCANNEN",
-                                      style: TextStyle(fontSize: 17.0),
+                                      style: buttonTextStyle,
                                     )),
                         ),
                       ),

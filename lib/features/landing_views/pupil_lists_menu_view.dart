@@ -17,7 +17,6 @@ class PupilMenuView extends StatelessWidget {
         primary: true,
         backgroundColor: const Color.fromARGB(255, 243, 243, 243),
         appBar: AppBar(
-          toolbarHeight: 80,
           centerTitle: true,
           backgroundColor: backgroundColor,
           title: const Text(

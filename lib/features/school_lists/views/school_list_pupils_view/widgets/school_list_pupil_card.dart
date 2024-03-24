@@ -34,6 +34,8 @@ class SchoolListPupilCard extends StatelessWidget with WatchItMixin {
         .first;
 
     return Card(
+      color: Colors.white,
+      surfaceTintColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8, right: 15),
         child: Row(

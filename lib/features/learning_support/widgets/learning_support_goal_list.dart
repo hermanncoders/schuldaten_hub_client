@@ -22,7 +22,8 @@ List<Widget> learningSupportGoalList(BuildContext context, Pupil pupil) {
         },
         child: const Text(
           "NEUES FÖRDERZIEL",
-          style: TextStyle(fontSize: 17.0),
+          style: TextStyle(
+              fontSize: 17.0, color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     ),

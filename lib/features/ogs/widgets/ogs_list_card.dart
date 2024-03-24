@@ -6,6 +6,7 @@ import 'package:schuldaten_hub/common/widgets/avatar.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/confirmation_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/information_dialog.dart';
 import 'package:schuldaten_hub/common/widgets/dialogues/long_textfield_dialog.dart';
+import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/landing_views/bottom_nav_bar.dart';
 import 'package:schuldaten_hub/features/ogs/controller/ogs_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
@@ -22,8 +23,9 @@ class OgsCard extends WatchingWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       color: Colors.white,
+      surfaceTintColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       elevation: 1.0,
       margin:
           const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
@@ -128,10 +130,8 @@ class OgsCard extends WatchingWidget {
                           await locator<PupilManager>().patchPupil(
                               pupil.internalId, 'ogs_info', ogsInfo);
                           if (context.mounted) {
-                            informationDialog(
-                                context,
-                                'Besondere Informationen geändert',
-                                'Die neuen Infos wurden im Server geschrieben!');
+                            snackbarSuccess(
+                                context, 'OGS-Informationen geändert');
                           }
                         },
                         onLongPress: () async {
@@ -145,7 +145,9 @@ class OgsCard extends WatchingWidget {
                               .patchPupil(pupil.internalId, 'ogs_info', null);
                         },
                         child: Text(
-                          pupil.ogsInfo ?? 'keine Infos',
+                          pupil.ogsInfo == null || pupil.ogsInfo!.isEmpty
+                              ? 'keine Infos'
+                              : pupil.ogsInfo!,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
                           maxLines: 3,

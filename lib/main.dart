@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -27,7 +26,7 @@ void main() async {
   if (Platform.isWindows) {
     await windowManager.ensureInitialized();
     WindowOptions windowOptions = const WindowOptions(
-      size: Size(1000, 700),
+      size: Size(1200, 800),
       center: true,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
@@ -97,6 +96,7 @@ class MyApp extends WatchingWidget {
                     if (snapshot.hasData) {
                       return SafeArea(
                           child: Scaffold(
+                              backgroundColor: canvasColor,
                               bottomNavigationBar: BottomNavigation()));
                     } else {
                       return const LoadingPage();

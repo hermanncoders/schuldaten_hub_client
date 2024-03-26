@@ -9,7 +9,7 @@ import 'package:schuldaten_hub/features/learning_support/views/learning_support_
 import 'package:schuldaten_hub/features/ogs/controller/ogs_list_controller.dart';
 import 'package:schuldaten_hub/features/pupil/views/special_info_view/controller/special_info_controller.dart';
 
-double buttonSize = 130;
+double buttonSize = 150;
 List<Widget> pupilListButtons(BuildContext context, double screenWidth) {
   return [
     Padding(

@@ -2,19 +2,19 @@ part of '../endpoints.dart';
 
 class EndpointsCompetence {
   //-POST
-  String postNewCompetence = '/competence/new';
+  String postNewCompetence = '/competences/new';
 
   //- GET
-  String fetchCompetences = '/competence/all/flat';
+  String fetchCompetences = '/competences/all/flat';
 
   //- PATCH
   String patchCompetence(int competenceId) {
-    return '/competence/$competenceId/patch';
+    return '/competences/$competenceId/patch';
   }
 
   //- DELETE
   String deleteCompetence(int id) {
-    return '/competence/$id/delete';
+    return '/competences/$id/delete';
   }
 
   //- COMPETENCE CHECKS ------------------------------------------------
@@ -22,23 +22,23 @@ class EndpointsCompetence {
   //- GET
 
   String getCompetenceCheckFile(String fileId) {
-    return '/competence/check/$fileId';
+    return '/competence_checks/$fileId';
   }
 
   //- POST
 
   String postCompetenceCheck(int pupilId) {
-    return '/pupil/$pupilId/competence/check';
+    return '/competence_checks/$pupilId/new';
   }
 
   String postCompetenceCheckFile(String competenceCheckId) {
-    return '/competence/check/$competenceCheckId/file';
+    return '/competence_checks/$competenceCheckId/file';
   }
 
   //- PATCH
 
   String patchCompetenceCheck(String competenceCheckId) {
-    return '/competence/check/$competenceCheckId';
+    return '/competence_checks/$competenceCheckId';
   }
 
   // String patchCompetenceCheckWithFile(String competenceCheckId) {
@@ -48,27 +48,27 @@ class EndpointsCompetence {
   //- DELETE
 
   String deleteCompetenceCheck(String competenceCheckId) {
-    return '/competence/check/$competenceCheckId';
+    return '/competence_checks/$competenceCheckId';
   }
 
   String deleteCompetenceCheckFile(String fileId) {
-    return '/competence/check/$fileId';
+    return '/competence_checks/$fileId';
   }
 
   //- COMPETENCE GOALS -------------------------------------------------
 
   //- POST
   String postCompetenceGoal(int pupilId) {
-    return '/pupil/$pupilId/competence/goal';
+    return '/competence_goals/new/$pupilId';
   }
 
   //- PATCH
   String patchCompetenceGoal(String competenceGoalId) {
-    return '/competence/goal/$competenceGoalId';
+    return '/competence_goals/$competenceGoalId';
   }
 
   //- DELETE
   String deleteCompetenceGoal(String competenceGoalId) {
-    return '/competence/goal/$competenceGoalId/delete';
+    return '/competence_goals/$competenceGoalId/delete';
   }
 }

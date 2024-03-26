@@ -29,6 +29,7 @@ dependencies:
   freezed_annotation: ^2.4.1
   functional_widget_annotation: ^0.10.0
   gap: ^3.0.1
+  icon_decoration: ^2.0.2
   image_picker: ^1.0.4
   intl: ^0.18.0
   json_annotation: ^4.8.1

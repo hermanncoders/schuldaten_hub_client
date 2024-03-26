@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:schuldaten_hub/common/utils/extensions.dart';
 
 part 'endpoints/schooldays_endpoints.dart';

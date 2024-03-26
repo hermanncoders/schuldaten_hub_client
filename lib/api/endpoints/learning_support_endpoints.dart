@@ -3,18 +3,25 @@ part of '../endpoints.dart';
 class EndpointsLearningSupport {
   //- GOAL CATEGORIES --------------------------------------------------
 
-  String fetchGoalCategories = '/goalcategories/flat';
+  String fetchGoalCategoriesWithChildren = '/goal_categories/all';
+  String fetchGoalCategories = '/goal_categories/all/flat';
+
+  //- STATUSES ---------------------------------------------------------
 
   String postCategoryStatus(int pupilId, int categoryId) {
-    return '/pupil/$pupilId/category_status/$categoryId';
+    return '/category/statuses/$pupilId/$categoryId';
   }
 
   String patchCategoryStatus(String categoryStatusId) {
-    return '/pupil/category_status/$categoryStatusId';
+    return '/category/statuses/$categoryStatusId';
+  }
+
+  String postFileForCategoryStatus(String categoryStatusId) {
+    return '/category/statuses/$categoryStatusId/file';
   }
 
   String deleteCategoryStatus(String categoryStatusId) {
-    return '/pupil/category_status/$categoryStatusId/delete';
+    return '/pupil/category/statuses/$categoryStatusId/delete';
   }
 
   //- GOALS ------------------------------------------------------------
@@ -22,28 +29,28 @@ class EndpointsLearningSupport {
   //-POST
 
   String postGoal(int pupilId) {
-    return '/pupil/$pupilId/goal';
+    return '/category_goals/$pupilId/new';
   }
 
   //- PATCH
 
   String patchgoal(String goalId) {
-    return '/goal/$goalId';
+    return '/categor_goals/$goalId';
   }
 
   //- DELETE
 
   String deleteGoal(String goalId) {
-    return '/goal/$goalId/delete';
+    return '/category_goals/$goalId/delete';
   }
 
   //- GOAL CHECKS ------------------------------------------------------
 
   String postGoalCheck(int id) {
-    return '/goal/$id/check';
+    return '/category_goals/$id/check/new';
   }
 
-  String patchGoalCheck(int id) {
-    return '/goal/check/$id';
+  String patchGoalCheck(int goalId, String checkId) {
+    return '/category_goals/$goalId/check/$checkId';
   }
 }

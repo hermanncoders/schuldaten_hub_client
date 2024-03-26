@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:schuldaten_hub/common/constants/colors.dart';
 import 'package:schuldaten_hub/common/constants/styles.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/utils/debug_printer.dart';
@@ -136,7 +135,7 @@ class LoginView extends WatchingWidget {
                               style: actionButtonStyle,
                               onPressed: () async {
                                 // locator<EnvManager>().deleteEnv();
-                                await controller.textFieldCredentials();
+                                await controller.textFieldCredentials(context);
                               },
                               child: const Text(
                                 "EINLOGGEN",
@@ -185,10 +184,10 @@ class LoginView extends WatchingWidget {
                               style: actionButtonStyle,
                               onPressed: () async {
                                 envReady
-                                    ? controller.scanCredentials()
+                                    ? controller.scanCredentials(context)
                                     : Platform.isWindows
                                         ? controller.importEnvFromTxt()
-                                        : controller.scanEnv();
+                                        : controller.scanEnv(context);
                               },
                               child: Platform.isWindows
                                   ? const Text('DATEI AUSWÄHLEN',

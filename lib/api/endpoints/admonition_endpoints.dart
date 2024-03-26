@@ -2,17 +2,17 @@ part of '../endpoints.dart';
 
 class EndpointsAdmonition {
   //- POST
-  static const postAdmonition = '/admonition';
+  static const postAdmonition = '/admonitions/new';
 
   //- GET
-  static const fetchAdmonitions = '/admonition/all';
+  static const fetchAdmonitions = '/admonitions/all';
 
   String getAdmonition(String id) {
-    return '/admonition/$id';
+    return '/admonitions/$id';
   }
 
   String getAdmonitionFile(String id) {
-    return '/admonition/$id/file';
+    return '/admonitions/$id/file';
   }
 
   //- PATCH
@@ -26,11 +26,11 @@ class EndpointsAdmonition {
 
   //- DELETE
   String deleteAdmonition(String id) {
-    return '/admonition/$id/delete';
+    return '/admonitions/$id/delete';
   }
 
 //- DELETE
   String deleteAdmonitionFile(String id) {
-    return '/admonition/$id/file';
+    return '/admonitions/$id/file';
   }
 }

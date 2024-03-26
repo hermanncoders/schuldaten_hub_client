@@ -1,17 +1,20 @@
 part of '../endpoints.dart';
 
 class EndpointsSchoolday {
-  static const postSchoolday = '/schoolday';
-
   //- GET
-  static const getAllSchooldays = '/schoolday/all';
-  static const getSchooldays = '/schoolday/only';
+  static const getSchooldaysWithChildren = '/schooldays/all';
+  static const getSchooldays = '/schooldays/all/flat';
+
   String getOneSchoolday(DateTime date) {
-    return '/schoolday/${date.formatForJson()}';
+    return '/schooldays/${date.formatForJson()}';
   }
+
+  //- POST
+  static const postSchoolday = '/schooldays/new';
+  static const postMultipleSchooldays = '/schooldays/new/list';
 
   //- DELETE
   String deleteSchoolday(DateTime date) {
-    return '/schoolday/${date.formatForJson()}';
+    return '/schooldays/${date.formatForJson()}';
   }
 }

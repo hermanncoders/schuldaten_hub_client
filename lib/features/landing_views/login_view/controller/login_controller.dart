@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:schuldaten_hub/common/services/env_manager.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
 import 'package:schuldaten_hub/common/services/session_manager.dart';
-import 'package:schuldaten_hub/common/utils/debug_printer.dart';
 import 'package:schuldaten_hub/common/utils/scanner.dart';
 import 'package:schuldaten_hub/common/widgets/snackbars.dart';
 import 'package:schuldaten_hub/features/landing_views/loading_page.dart';
@@ -27,13 +26,13 @@ class LoginController extends State<Login> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  scanCredentials() async {
+  scanCredentials(BuildContext context) async {
     final String? scanResponse = await scanner(context, 'Zugangscode scannen');
     if (scanResponse != null) {
       final loginData = await json.decode(scanResponse);
       final username = loginData['username'];
       final password = loginData['password'];
-      attemptLogin(username, password);
+      attemptLogin(username, password, context);
     } else {
       if (context.mounted) {
         snackbarWarning(context, 'Scanvorgang abgebrochen');
@@ -42,7 +41,7 @@ class LoginController extends State<Login> {
     }
   }
 
-  scanEnv() async {
+  scanEnv(BuildContext context) async {
     final String? scanResponse = await scanner(context, 'Schul-Id scannen');
     if (scanResponse != null) {
       locator<EnvManager>().setEnv(scanResponse);
@@ -58,25 +57,24 @@ class LoginController extends State<Login> {
     }
   }
 
-  textFieldCredentials() {
+  textFieldCredentials(BuildContext context) {
     String username = usernameController.text;
     String password = passwordController.text;
-    attemptLogin(username, password);
+    attemptLogin(username, password, context);
   }
 
-  attemptLogin(String username, String password) async {
+  attemptLogin(String username, String password, BuildContext context) async {
     bool isAuthenticated =
         await locator<SessionManager>().attemptLogin(username, password);
-    // if (isAuthenticated == true) {
-    //   if (context.mounted) {
-    //     snackbarSuccess(context, 'Login erfolgreich!');
-    //   }
-    //   debug.success('Is authenticated is $isAuthenticated');
-    // } else {
-    //   if (context.mounted) {
-    //     snackbarWarning(context, 'Login fehlgeschlagen!');
-    //   }
-    // }
+    if (isAuthenticated == true) {
+      if (context.mounted) {
+        snackbarSuccess(context, 'Login erfolgreich!');
+      }
+    } else {
+      if (context.mounted) {
+        snackbarWarning(context, 'Login fehlgeschlagen!');
+      }
+    }
   }
 
   importEnvFromTxt() async {

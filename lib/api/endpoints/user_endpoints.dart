@@ -2,27 +2,23 @@ part of '../endpoints.dart';
 
 class EndpointsUser {
   static const login = '/login';
+  //- GET
+  static const getAllUsers = '/users/all';
+  static const getSelfUser = '/users/me';
 
   //- POST
-
-  static const createUser = '/user';
-
-  //- GET
-
-  static const getAllUsers = '/user/all';
+  static const createUser = '/users/new';
 
   //- PATCH
-
   String patchUser(String publicId) {
-    return 'user/$publicId';
+    return 'users/$publicId';
   }
 
   //- DELETE
-
   String deleteUser(String publicId) {
-    return 'user/$publicId';
+    return 'users/$publicId';
   }
 
   //- increase credit
-  static const increaseCredit = '/user/all/credit';
+  static const increaseCredit = '/users/all/credit';
 }

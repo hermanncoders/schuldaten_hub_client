@@ -10,7 +10,7 @@ import 'package:schuldaten_hub/features/attendance/services/attendance_helper_fu
 import 'package:schuldaten_hub/features/learning_support/services/learning_support_filters.dart';
 import 'package:schuldaten_hub/features/pupil/models/pupil.dart';
 import 'package:schuldaten_hub/common/services/locator.dart';
-import 'package:schuldaten_hub/features/pupil/services/pupil_helper_functions.dart';
+
 import 'package:schuldaten_hub/features/pupil/services/pupil_manager.dart';
 
 class PupilFilterManager {

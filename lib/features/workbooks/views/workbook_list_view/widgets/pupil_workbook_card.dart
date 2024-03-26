@@ -20,8 +20,8 @@ import 'package:schuldaten_hub/features/workbooks/services/workbook_manager.dart
 
 Widget pupilWorkbookCard(
     BuildContext context, PupilWorkbook pupilWorkbook, int pupilId) {
-  final Workbook workbook = locator<WorkbookManager>()
-      .getWorkbookByIsbn(pupilWorkbook.workbookIsbn!)!;
+  final Workbook workbook =
+      locator<WorkbookManager>().getWorkbookByIsbn(pupilWorkbook.workbookIsbn)!;
   return ClipRRect(
     borderRadius: BorderRadius.circular(20),
     child: Card(
